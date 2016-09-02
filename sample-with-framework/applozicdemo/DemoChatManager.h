@@ -10,14 +10,13 @@
 #import <Applozic/ALChatLauncher.h>
 #import <Applozic/ALUser.h>
 
-//#define APPLICATION_ID @"APPLOZIC"
 #define APPLICATION_ID @"applozic-sample-app"
 
 @interface DemoChatManager : NSObject
 
-@property(nonatomic,strong) ALChatLauncher * chatLauncher;
+@property(nonatomic, strong) ALChatLauncher * chatLauncher;
 
--(void)registerUser:(ALUser * )alUser;
+-(void)registerUser:(ALUser *)alUser;
 
 @property(nonatomic,retain) NSString * userID;
 

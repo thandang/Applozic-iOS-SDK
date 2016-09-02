@@ -41,10 +41,10 @@
     NSMutableURLRequest * theRequest = [ALRequestHandler createPOSTRequestWithUrlString:theUrlString paramString:theParamString];
     
     [ALResponseHandler processRequest:theRequest andTag:@"CREATE ACCOUNT" WithCompletionHandler:^(id theJson, NSError *theError) {
-        NSLog(@"server response received %@", theJson);
         
         NSString *statusStr = (NSString *)theJson;
-        
+        NSLog(@"REGISTRATION_RESPONSE :: %@", statusStr);
+
         /*NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         
         if ([statusStr rangeOfString: @"<html"].location != NSNotFound) {
@@ -57,36 +57,36 @@
             theError = [NSError errorWithDomain:@"server" code:200 userInfo:errorDetail];
         }*/
         
-        if (theError) {
-            
+        if (theError)
+        {
             completion(nil,theError);
-            
-            return ;
+            return;
         }
-        
 
         ALRegistrationResponse *response = [[ALRegistrationResponse alloc] initWithJSONString:statusStr];
         
         //Todo: figure out how to set country code
         //mobiComUserPreference.setCountryCode(user.getCountryCode());
         //mobiComUserPreference.setContactNumber(user.getContactNumber());
-@try{
-        [ALUserDefaultsHandler setUserId:user.userId];
-        [ALUserDefaultsHandler setEmailVerified: user.emailVerified];
-        [ALUserDefaultsHandler setDisplayName: user.displayName];
-        [ALUserDefaultsHandler setEmailId:user.emailId];
-        [ALUserDefaultsHandler setDeviceKeyString:response.deviceKey];
-        [ALUserDefaultsHandler setUserKeyString:response.userKey];
-        //[ALUserDefaultsHandler setLastSyncTime:(NSNumber *)response.lastSyncTime];
-}
-        
-@catch (NSException *exception) {
-NSLog(@"EXCEPTION: %@",exception);
-}
-        
-@finally {
-NSLog(@"..");
-}
+        @try
+        {
+            [ALUserDefaultsHandler setUserId:user.userId];
+            [ALUserDefaultsHandler setEmailVerified: user.emailVerified];
+            [ALUserDefaultsHandler setDisplayName: user.displayName];
+            [ALUserDefaultsHandler setEmailId:user.emailId];
+            [ALUserDefaultsHandler setDeviceKeyString:response.deviceKey];
+            [ALUserDefaultsHandler setUserKeyString:response.userKey];
+            //[ALUserDefaultsHandler setLastSyncTime:(NSNumber *)response.lastSyncTime];
+        }
+        @catch (NSException *exception)
+        {
+            NSLog(@"EXCEPTION: %@",exception);
+        }
+                
+        @finally
+        {
+            NSLog(@"..");
+        }
         [ALUserDefaultsHandler setLastSyncTime:(NSNumber *)response.currentTimeStamp];
 
         [self connect];
@@ -94,7 +94,6 @@ NSLog(@"..");
         [ALMessageService processLatestMessagesGroupByContact];
         completion(response,nil);
     }];
-    
 }
 
 -(void) updateApnDeviceTokenWithCompletion:(NSString *)apnDeviceToken withCompletion:(void(^)(ALRegistrationResponse * response, NSError *error)) completion
@@ -110,16 +109,15 @@ NSLog(@"..");
     }
 }
 
--(void) connect {
-    
+-(void) connect
+{
     //[[ALMQTTService sharedInstance] connectToApplozic];
 }
 
--(void) disconnect {
-    
+-(void) disconnect
+{
     ALMQTTConversationService *ob  = [[ALMQTTConversationService alloc] init];
     [ob sendTypingStatus:[ALUserDefaultsHandler getApplicationKey] userID:[ALUserDefaultsHandler getUserId] typing:NO];
-    
 //    [[ALMQTTConversationService sharedInstance] unsubscribeToConversation];
 }
 

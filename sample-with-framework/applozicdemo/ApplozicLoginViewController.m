@@ -170,6 +170,8 @@
     [ALUserDefaultsHandler setUserId:user.userId];
     [ALUserDefaultsHandler setEmailId:user.emailId];
 
+    DemoChatManager *dm = [DemoChatManager new];
+    [dm registerUser:user];
 
     [self.mActivityIndicator startAnimating];
     //mbChatManger...

@@ -25,7 +25,7 @@
 #define PROCESSED_NOTIFICATION_IDS  @"PROCESSED_NOTIFICATION_IDS"
 #define LAST_SEEN_SYNC_TIME @"LAST_SEEN_SYNC_TIME"
 #define SHOW_LOAD_MORE_BUTTON @":SHOW_LOAD_MORE_BUTTON"
-
+#define DEVICE_APNS_TYPE_ID @"DEVICE_APNS_TYPE"
 
 
 #import <Foundation/Foundation.h>
@@ -104,6 +104,8 @@
 
 +(NSString *)getNotificationTitle;
 
++(void)setDeviceApnsType:(short)type;
++(short)getDeviceApnsType;
 
 +(NSNumber *)getLastSyncTime;
 +(NSString *)getUserKeyString;

@@ -5,8 +5,6 @@
 //  Copyright (c) 2015 AppLozic. All rights reserved.
 //
 
-
-
 //Prod URL.....
 #define KBASE_URL @"https://apps.applozic.com"
 #define MQTT_URL @"apps.applozic.com"
@@ -14,8 +12,6 @@
 //Test URL ...
 //#define KBASE_URL @"http://test.applozic.com"
 //#define MQTT_URL @"test.applozic.com"
-
-
 
 #define MQTT_PORT @"1883"
 #define KBASE_FILE_URL @"https://applozic.appspot.com"

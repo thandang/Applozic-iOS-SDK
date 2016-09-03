@@ -382,8 +382,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/devashish/framework/applozicdemo,
 					"$(PROJECT_DIR)",
@@ -405,9 +405,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/devashish/framework/applozicdemo,
 					"$(PROJECT_DIR)",

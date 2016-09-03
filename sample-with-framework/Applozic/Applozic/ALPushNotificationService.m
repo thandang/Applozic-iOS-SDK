@@ -24,7 +24,8 @@
     static NSArray *notificationTypes;
     if (!notificationTypes)
     {
-        notificationTypes = [[NSArray alloc] initWithObjects:MT_SYNC, MT_CONVERSATION_READ, MT_DELIVERED,MT_SYNC_PENDING, MT_DELETE_MESSAGE, MT_DELETE_MULTIPLE_MESSAGE, MT_CONVERSATION_DELETED, MTEXTER_USER, MT_CONTACT_VERIFIED, MT_CONTACT_VERIFIED, MT_DEVICE_CONTACT_SYNC, MT_EMAIL_VERIFIED,MT_DEVICE_CONTACT_MESSAGE, MT_CANCEL_CALL, MT_MESSAGE,MT_MESSAGE_DELIVERED_AND_READ,nil];
+        notificationTypes = [[NSArray alloc] initWithObjects:MT_SYNC, MT_CONVERSATION_READ, MT_DELIVERED,MT_SYNC_PENDING, MT_DELETE_MESSAGE, MT_DELETE_MULTIPLE_MESSAGE, MT_CONVERSATION_DELETED, MTEXTER_USER, MT_CONTACT_VERIFIED, MT_CONTACT_VERIFIED, MT_DEVICE_CONTACT_SYNC,
+                             MT_EMAIL_VERIFIED,MT_DEVICE_CONTACT_MESSAGE, MT_CANCEL_CALL, MT_MESSAGE,MT_MESSAGE_DELIVERED_AND_READ,nil];
     }
     return notificationTypes;
 }
@@ -48,7 +49,8 @@
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myMethod) name:UIApplicationWillEnterForegroundNotification object:nil];
     
-    if ([self isApplozicNotification:dictionary]) {
+    if ([self isApplozicNotification:dictionary])
+    {
         //Todo: process it
         NSString *alertValue = [[dictionary valueForKey:@"aps"] valueForKey:@"alert"];
         
@@ -80,44 +82,55 @@
             
             ALPushAssist* assistant=[[ALPushAssist alloc] init];
             
-            if(!assistant.isChatViewOnTop){
+            if(!assistant.isChatViewOnTop)
+            {
                 [dict setObject:@"apple push notification.." forKey:@"Calledfrom"];
-                
                 [assistant assist:notificationMsg and:dict ofUser:notificationMsg];
-                
-            }else {
+            }
+            else
+            {
                 NSLog(@"OUR View Opened");
                 
                 //[dict setObject:alertValue forKey:@"alertValue"];
-                [[ NSNotificationCenter defaultCenter] postNotificationName:@"pushNotification" object:notificationMsg
-                                                                   userInfo:dict];
+                [[ NSNotificationCenter defaultCenter] postNotificationName:@"pushNotification" object:notificationMsg userInfo:dict];
                 [[ NSNotificationCenter defaultCenter] postNotificationName:@"notificationIndividualChat" object:notificationMsg userInfo:dict];
             }
-        }else if ([type isEqualToString:@"MESSAGE_DELIVERED"] || [type isEqualToString:@"MESSAGE_DELIVERED_READ"]||[type isEqualToString:MT_DELIVERED]||[type isEqualToString:@"APPLOZIC_08"])  {
+        }
+        else if ([type isEqualToString:@"MESSAGE_DELIVERED"] || [type isEqualToString:@"MESSAGE_DELIVERED_READ"] ||
+                 [type isEqualToString:MT_DELIVERED]||[type isEqualToString:@"APPLOZIC_08"])
+        {
             
             NSArray *deliveryParts = [notificationMsg componentsSeparatedByString:@","];
             ALMessageDBService* messageDBService = [[ALMessageDBService alloc] init];
             [messageDBService updateMessageDeliveryReport:deliveryParts[0]];
             NSLog(@"delivery report for %@", deliveryParts[0]);
             [[ NSNotificationCenter defaultCenter] postNotificationName:@"deliveryReport" object:deliveryParts[0] userInfo:dictionary];
-        }else if ([type isEqualToString: MT_CONVERSATION_DELETED]){
+        }
+        else if ([type isEqualToString: MT_CONVERSATION_DELETED]){
             ALMessageDBService* messageDBService = [[ALMessageDBService alloc] init];
             [messageDBService deleteAllMessagesByContact:notificationMsg];
-        }else if ([type isEqualToString: @"APPLOZIC_05"])
+        }
+        else if ([type isEqualToString: @"APPLOZIC_05"])
         {
             ALMessageDBService* messageDBService = [[ALMessageDBService alloc] init];
             [messageDBService deleteMessageByKey: notificationMsg];
-        }else if ([type isEqualToString:@"APPLOZIC_10"]) {
+        }
+        else if ([type isEqualToString:@"APPLOZIC_10"])
+        {
             [self.alSyncCallService updateDeliveryStatusForContact: notificationMsg];
             //[self.mqttConversationDelegate updateDeliveryStatusForContact: contactId];
-        } else if ([type isEqualToString: @"APPLOZIC_11"]) {
+        }
+        else if ([type isEqualToString: @"APPLOZIC_11"])
+        {
             ALUserDetail *alUserDetail = [[ALUserDetail alloc] init];
             alUserDetail.userId = notificationMsg;
             alUserDetail.lastSeenAtTime = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
             alUserDetail.connected = YES;
             [self.alSyncCallService updateConnectedStatus: alUserDetail];
             //[self.mqttConversationDelegate updateLastSeenAtStatus: alUserDetail];
-        } else if ([type isEqualToString:@"APPLOZIC_12"]) {
+        }
+        else if ([type isEqualToString:@"APPLOZIC_12"])
+        {
             
             NSArray *parts = [notificationMsg componentsSeparatedByString:@","];
             

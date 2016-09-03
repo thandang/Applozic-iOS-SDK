@@ -136,7 +136,7 @@
 
 -(void)registerUserAndLaunchChat:(ALUser *)alUser andFromController:(UIViewController*)viewController forUser:(NSString*)userId
 {
-    self.chatLauncher = [[ALChatLauncher alloc]initWithApplicationId:APPLICATION_ID];
+    self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:APPLICATION_ID];
    
     //User is already registered ..directly launch the chat...
     if([ALUserDefaultsHandler getDeviceKeyString]){

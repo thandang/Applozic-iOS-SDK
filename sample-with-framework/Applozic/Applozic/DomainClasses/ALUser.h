@@ -10,6 +10,12 @@
 #import <Foundation/Foundation.h>
 #import "ALJson.h"
 
+typedef enum
+{
+    DEVELOPMENT = 0,
+    DISTRIBUTION = 1,
+
+} deviceApnsType;
 
 @interface ALUser : ALJson
 
@@ -27,6 +33,7 @@
 @property NSString *appVersionCode;
 @property NSString *roleName;
 @property short deviceType;
+@property short deviceApnsType;
 
 @end
 

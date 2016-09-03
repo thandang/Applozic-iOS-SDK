@@ -142,6 +142,11 @@
 
 -(void)mbChatViewSettings
 {
+    //For DEVELOPMENT CERT::
+    [ALUserDefaultsHandler setDeviceApnsType:(short)DEVELOPMENT];
+    //For Distribution CERT::
+    //[ALUserDefaultsHandler setDeviceApnsType:(short)DISTRIBUTION];
+    
     [ALUserDefaultsHandler setLogoutButtonHidden:YES];
     [ALUserDefaultsHandler setBottomTabBarHidden:YES];
     [ALApplozicSettings setUserProfileHidden:YES];

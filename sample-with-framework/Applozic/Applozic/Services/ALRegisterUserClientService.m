@@ -32,6 +32,7 @@
     [user setDeviceType:4];
     [user setAppVersionCode: VERSION_CODE];
     [user setRegistrationId: [ALUserDefaultsHandler getApnDeviceToken]];
+    [user setDeviceApnsType:[ALUserDefaultsHandler getDeviceApnsType]];
     
     //NSString * theParamString = [ALUtilityClass generateJsonStringFromDictionary:userInfo];
     NSError *error;

@@ -301,4 +301,16 @@
     return [[NSUserDefaults standardUserDefaults] valueForKey:NOTIFICATION_TITLE];
 }
 
++(void)setDeviceApnsType:(short)type
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:type forKey:DEVICE_APNS_TYPE_ID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(short)getDeviceApnsType
+{
+    short type = [[NSUserDefaults standardUserDefaults] integerForKey:DEVICE_APNS_TYPE_ID];
+    return type ? type : 0;
+}
+
 @end

@@ -164,7 +164,8 @@
     return formattedDateStr;
 }
 
--(NSString *)getCreatedAtTimeChat:(BOOL)today {
+-(NSString *)getCreatedAtTimeChat:(BOOL)today
+{
     
     //NSString *formattedStr = today?@"hh:mm a":@"dd MMM hh:mm a";
      NSString *formattedStr = @"hh:mm a";
@@ -174,7 +175,9 @@
     return formattedDateStr;
     
 }
--(BOOL)isDownloadRequire{
+
+-(BOOL)isDownloadRequire
+{
     
     //TODO:check for SD card
     if ( self.fileMeta && !self.imageFilePath){
@@ -183,12 +186,29 @@
     return NO;
 }
 
--(BOOL)isUploadRequire{
+-(BOOL)isUploadRequire
+{
     //TODO:check for SD card
     if ( (self.imageFilePath && !self.fileMeta && [ self.type  isEqualToString:@"5"]) || self.isUploadFailed==YES){
         return YES;
     }
     return NO;
+}
+
+-(NSString *)getNotificationText
+{
+    if(self.message && ![self.message isEqualToString:@""])
+    {
+        return self.message;
+    }
+    else if(self.contentType == ALMESSAGE_CONTENT_LOCATION)
+    {
+        return @"Location";
+    }
+    else
+    {
+        return @"Attachment";
+    }
 }
 
 @end

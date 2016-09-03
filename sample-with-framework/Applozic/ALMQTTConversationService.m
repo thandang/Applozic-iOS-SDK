@@ -125,12 +125,14 @@ static MQTTSession *session;
             NSArray *deliveryParts = [[theMessageDict objectForKey:@"message"] componentsSeparatedByString:@","];
             [self.alSyncCallService updateMessageDeliveryReport:deliveryParts[0]];
             [self.mqttConversationDelegate delivered: deliveryParts[0] contactId:deliveryParts[1]];
-        } else if ([type isEqualToString: @"MESSAGE_RECEIVED"]||[type isEqualToString:@"APPLOZIC_01"]) {
+        } else if ([type isEqualToString: @"MESSAGE_RECEIVED"]||[type isEqualToString:@"APPLOZIC_01"])
+        {
             
             ALPushAssist* assistant=[[ALPushAssist alloc] init];
             ALMessage *alMessage = [[ALMessage alloc] initWithDictonary:[theMessageDict objectForKey:@"message"]];
             NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
-            [dict setObject:alMessage.message forKey:@"alertValue"];
+            [dict setObject:[alMessage getNotificationText] forKey:@"alertValue"];
+            
             NSLog(@"the dictionary %@",theMessageDict);
             [dict setObject:[NSNumber numberWithBool:NO] forKey:@"updateUI"];
         

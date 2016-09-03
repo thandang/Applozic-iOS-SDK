@@ -75,5 +75,6 @@
 -(BOOL)isUploadRequire;
 
 -(NSString *)getCreatedAtTimeChat:(BOOL)today;
+-(NSString *)getNotificationText;
 
 @end

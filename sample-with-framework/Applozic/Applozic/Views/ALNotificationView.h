@@ -15,7 +15,7 @@
 
 @property (retain ,nonatomic) NSString * checkContactId;
 
--(instancetype)initWithContactId:(NSString*) contactId withAlertMessage: (NSString *) alertMessage;
+-(instancetype)initWithContactId:(NSString*) contactId withAlertMessage: (NSString *) alertMessage andContentType:(short)type;
 
 -(void)displayNotification:(id)delegate;
 -(void)displayNotificationNew:(id)delegate;

@@ -1132,11 +1132,13 @@ ALMessageDBService  * dbService;
     NSDictionary *dict = notification.userInfo;
     NSNumber *updateUI = [dict valueForKey:@"updateUI"];
     NSString *alertValue = [dict valueForKey:@"alertValue"];
+    NSNumber *num = [dict valueForKey:@"contentType"];
+    short contentType = [num shortValue];
     NSLog(@"Notification received by Individual chat list: %@", contactId);
-    [self syncCall:contactId updateUI:updateUI alertValue:alertValue];
+    [self syncCall:contactId updateUI:updateUI alertValue:alertValue andContentType:contentType];
 }
 
--(void) syncCall:(NSString *) contactId updateUI:(NSNumber *) updateUI alertValue: (NSString *) alertValue
+-(void) syncCall:(NSString *) contactId updateUI:(NSNumber *) updateUI alertValue: (NSString *) alertValue andContentType:(short)type
 {
     
     [self setRefreshMainView:TRUE];
@@ -1152,7 +1154,7 @@ ALMessageDBService  * dbService;
         [self fetchAndRefresh:YES];
     }else {
         NSLog(@"show notification as someone else thread is already opened");
-        ALNotificationView * alnotification = [[ALNotificationView alloc]initWithContactId:contactId withAlertMessage:alertValue];
+        ALNotificationView * alnotification = [[ALNotificationView alloc] initWithContactId:contactId withAlertMessage:alertValue andContentType:type];
         [alnotification displayNotificationNew:self];
         [self fetchAndRefresh:YES];
     }
@@ -1467,7 +1469,7 @@ ALMessageDBService  * dbService;
 //------------------------------------------------------------------------------------------------------------------
 
 -(void) syncCall:(ALMessage *) alMessage {
-    [self syncCall:alMessage.contactIds updateUI:[NSNumber numberWithInt: 1] alertValue:alMessage.message];
+    [self syncCall:alMessage.contactIds updateUI:[NSNumber numberWithInt: 1] alertValue:alMessage.message andContentType:alMessage.contentType];
 }
 
 

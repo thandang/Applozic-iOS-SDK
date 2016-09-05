@@ -38,7 +38,7 @@
 
 -(void)updateDeliveryStatus:(NSNotification *) notification;
 
--(void) syncCall:(NSString *) contactId updateUI:(NSNumber *) updateUI alertValue: (NSString *) alertValue;
+-(void) syncCall:(NSString *) contactId updateUI:(NSNumber *) updateUI alertValue: (NSString *) alertValue andContentType:(short)type;
 -(void) syncCall:(ALMessage *) alMessage;
 -(void)showTypingLabel:(BOOL)flag userId:(NSString *)userId;
 

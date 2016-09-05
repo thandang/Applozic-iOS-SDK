@@ -726,10 +726,12 @@
        // NSLog(@"executing if part...");
 
         //Todo: set value of updateUI and [self.detailChatViewController contactIds] with actual contactId of the message
-        [self.detailChatViewController syncCall:alMessage.contactIds updateUI:[NSNumber numberWithInt: 1] alertValue:alMessage.message];
+        [self.detailChatViewController syncCall:alMessage.contactIds updateUI:[NSNumber numberWithInt: 1]
+                                     alertValue:alMessage.message andContentType:alMessage.contentType];
     } else {
        // NSLog(@"executing else part....");
-        ALNotificationView * alnotification = [[ALNotificationView alloc]initWithContactId:alMessage.contactIds withAlertMessage:alMessage.message];
+        ALNotificationView * alnotification = [[ALNotificationView alloc] initWithContactId:alMessage.contactIds
+                                                                           withAlertMessage:alMessage.message andContentType:alMessage.contentType];
         if (top.isMessageViewOnTop) {
             [dBService fetchAndRefreshQuickConversationWithCompletion:^(NSMutableArray * array, NSError * error) {
                 [alnotification displayNotificationNew:self];

@@ -21,9 +21,10 @@
 
 
 
--(instancetype)initWithContactId:(NSString*) contactId withAlertMessage: (NSString *) alertMessage{
+-(instancetype)initWithContactId:(NSString*) contactId withAlertMessage: (NSString *) alertMessage andContentType:(short)type
+{
     self = [super init];
-    self.text = alertMessage;
+    self.text = [self getNotificationText:type andAlertMessage:alertMessage];
     self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueNotify.png"]];
     //    self.backgroundColor=[UIColor grayColor];
     self.textColor = [UIColor whiteColor];
@@ -34,6 +35,21 @@
     return self;
 }
 
+-(NSString *)getNotificationText:(short)contentType andAlertMessage:(NSString *)alertMessage
+{
+    if(contentType == ALMESSAGE_CONTENT_LOCATION)
+    {
+        return @"Shared a Location";
+    }
+    else if(contentType == 1)
+    {
+        return @"Shared a Attachment";
+    }
+    else
+    {
+        return alertMessage;
+    }
+}
 
 -(void)displayNotification:(id)delegate
 {
@@ -82,11 +98,12 @@
 
     ALContact* dpName=[[ALContact alloc] init];
     ALContactDBService * contactDb=[[ALContactDBService alloc] init];
-    dpName=[contactDb loadContactByKey:@"userId" value:self.contactId];
+    dpName = [contactDb loadContactByKey:@"userId" value:self.contactId];
     
     NSString *message = [NSString stringWithFormat:@"%@",self.text]; //20 characters fixed
     
-    if([message isEqualToString:@""]){
+    if([message isEqualToString:@""])
+    {
         message=[NSString stringWithFormat:@"Attachment"];
     }
 

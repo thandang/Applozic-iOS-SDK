@@ -90,7 +90,7 @@
         message=[NSString stringWithFormat:@"Attachment"];
     }
 
-    message = [NSString stringWithFormat:@"%@:%@",dpName.displayName,message];
+    message = [NSString stringWithFormat:@"%@:%@",dpName.getDisplayName,message];
     message = (message.length > 20) ? [NSString stringWithFormat:@"%@...",[message substringToIndex:17]] : message;
     
    

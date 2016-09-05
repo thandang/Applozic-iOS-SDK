@@ -482,7 +482,7 @@
     
     ALContactDBService *theContactDBService = [[ALContactDBService alloc] init];
     ALContact *alContact = [theContactDBService loadContactByKey:@"userId" value: message.to];             
-    contactCell.mUserNameLabel.text = [alContact displayName];
+    contactCell.mUserNameLabel.text = [alContact getDisplayName];
     contactCell.mMessageLabel.text = message.message;
     contactCell.mMessageLabel.hidden = FALSE;
     if ([message.type integerValue] == [FORWARD_STATUS integerValue])
@@ -496,7 +496,8 @@
     [self displayAttachmentMediaType:message andContactCell: contactCell];
    
     // here for msg dashboard profile pic
-    NSString *firstLetter = [[[alContact displayName] substringToIndex:1] uppercaseString];
+    NSLog(@"DP_NAME :: %@",[alContact getDisplayName]);
+    NSString *firstLetter = [[[alContact getDisplayName] substringToIndex:1] uppercaseString];
     nameIcon.text=firstLetter;
    
     if(alContact.connected)
@@ -560,7 +561,7 @@
     else
     {
          nameIcon.hidden = FALSE;
-         NSString *firstLetter = [[alContact displayName] substringToIndex:1];
+         NSString *firstLetter = [[alContact getDisplayName] substringToIndex:1];
          nameIcon.text=[firstLetter uppercaseString];
 //         contactCell.mUserImageView.hidden=TRUE;
 

@@ -103,7 +103,7 @@
     ALRegisterUserClientService * alUserClientService = [[ALRegisterUserClientService alloc]init];
     
     if([ALUserDefaultsHandler getDeviceKeyString]){
-        alUserClientService.logout;
+        [alUserClientService logout];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

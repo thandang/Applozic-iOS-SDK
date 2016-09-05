@@ -248,7 +248,7 @@ ALMessageDBService  * dbService;
         _alContact = [theDBHandler loadContactByKey:@"userId" value: self.contactIds];
     }
     
-    self.navigationItem.title = [_alContact displayName];
+    self.navigationItem.title = [_alContact getDisplayName];
     ALUserDetail *userDetail = [[ALUserDetail alloc] init];
     userDetail.connected = self.alContact.connected;
     userDetail.userId = self.alContact.userId;
@@ -1331,7 +1331,7 @@ ALMessageDBService  * dbService;
 {
     if(flag && [self.alContact.userId isEqualToString: userId])
     {
-        NSString *msg = self.alContact.displayName;
+        NSString *msg = self.alContact.getDisplayName;
         [self.typingLabel setText:[msg stringByAppendingString:@" is typing..."]];
         [self.typingLabel setHidden:NO];
     }

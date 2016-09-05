@@ -35,13 +35,21 @@
     self.unreadCount = [dict objectForKey:@"unreadCount"];
 }
 
--(NSString *)getDisplayName{
+-(NSString *)getDisplayName
+{
+    NSString * trimDisplayName = [self.displayName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString * trimFullName = [self.fullName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    if(self.displayName){
-        return _displayName;
-    }else if (self.fullName){
-        return _fullName;
-    }else{
+    if(self.displayName && trimDisplayName.length)
+    {
+        return self.displayName;
+    }
+    else if (self.fullName && trimFullName.length)
+    {
+        return self.fullName;
+    }
+    else
+    {
         return self.userId;
     }
     

@@ -155,7 +155,7 @@
     [ALApplozicSettings setFontFace:@"Helvetica"];
     [ALApplozicSettings setColourForReceiveMessages:[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:1]];
     [ALApplozicSettings setColourForSendMessages:[UIColor colorWithRed:66.0/255 green:173.0/255 blue:247.0/255 alpha:1]];
-    [ALUserDefaultsHandler setNotificationTitle:@"Applozic"];
+    [ALUserDefaultsHandler setNotificationTitle:@"MagicBricks"];
     [ALApplozicSettings setColourForNavigation:[UIColor colorWithRed:181.0/255 green:31.0/255 blue:35.0/255 alpha:1]];
     [ALApplozicSettings setColourForNavigationItem:[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:1]];
     

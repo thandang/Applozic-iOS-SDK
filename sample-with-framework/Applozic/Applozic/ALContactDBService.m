@@ -14,7 +14,8 @@
 #pragma mark - Delete Contacts API -
 
 
-- (BOOL)purgeListOfContacts:(NSArray *)contacts {
+- (BOOL)purgeListOfContacts:(NSArray *)contacts
+{
     BOOL result = NO;
     
     for (ALContact *contact in contacts) {
@@ -31,7 +32,8 @@
     return result;
 }
 
-- (BOOL)purgeContact:(ALContact *)contact {
+- (BOOL)purgeContact:(ALContact *)contact
+{
     
     BOOL success = NO;
     ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
@@ -69,7 +71,8 @@
     return success;
 }
 
-- (BOOL)purgeAllContact {
+- (BOOL)purgeAllContact
+{
     BOOL success = NO;
     ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
 
@@ -103,7 +106,8 @@
 
 #pragma mark - Update Contacts API -
 
-- (BOOL)updateListOfContacts:(NSArray *)contacts {
+- (BOOL)updateListOfContacts:(NSArray *)contacts
+{
     
     BOOL result = NO;
     
@@ -149,6 +153,8 @@
         userContact.contactImageUrl = contact.contactImageUrl;
         userContact.displayName = contact.displayName;
         userContact.localImageResourceName = contact.localImageResourceName;
+        userContact.connected = contact.connected;
+        userContact.lastSeenAt = contact.lastSeenAt;
         
     }
     
@@ -182,7 +188,8 @@
     return result;
 }
 
-- (ALContact *) loadContactByKey:(NSString *) key value:(NSString*) value {
+- (ALContact *) loadContactByKey:(NSString *) key value:(NSString*) value
+{
     DB_CONTACT *dbContact = [self getContactByKey:key value:value];
     ALContact *contact = [[ALContact alloc]init];
     
@@ -200,11 +207,13 @@
     contact.localImageResourceName = dbContact.localImageResourceName;
     contact.connected = dbContact.connected;
     contact.lastSeenAt = dbContact.lastSeenAt;
+    
     return contact;
 }
 
 
-- (DB_CONTACT *)getContactByKey:(NSString *) key value:(NSString*) value {
+- (DB_CONTACT *)getContactByKey:(NSString *) key value:(NSString*) value
+{
     ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"DB_CONTACT" inManagedObjectContext:dbHandler.managedObjectContext];
@@ -246,18 +255,14 @@
     DB_CONTACT * contact = [NSEntityDescription insertNewObjectForEntityForName:@"DB_CONTACT" inManagedObjectContext:dbHandler.managedObjectContext];
     
     contact.userId = userContact.userId;
-    
     contact.fullName = userContact.fullName;
-    
     contact.contactNo = userContact.contactNumber;
-    
     contact.displayName = userContact.displayName;
-    
     contact.email = userContact.email;
-    
     contact.contactImageUrl = userContact.contactImageUrl;
-    
-    contact.localImageResourceName =userContact.localImageResourceName;
+    contact.localImageResourceName = userContact.localImageResourceName;
+    contact.connected = userContact.connected;
+    contact.lastSeenAt = userContact.lastSeenAt;
     
     NSError *error = nil;
     
@@ -324,7 +329,7 @@
 {
     ALUserDetail *ob = [[ALUserDetail alloc]init];
     ob.lastSeenAtTime = lastSeenAt;
-    ob.connected =  connected;
+    ob.connected = connected;
     ob.userId = userId;
     
     [self updateUserDetail:ob];
@@ -353,11 +358,11 @@
     if(result.count>0)
     {
 
-        NSManagedObject *ob = [result objectAtIndex:0];
-        [ob setValue: userDetail.lastSeenAtTime forKey:@"lastSeenAt"];
-        [ob setValue:[NSNumber numberWithBool:userDetail.connected] forKey:@"connected"];
+        DB_CONTACT *dbContact = [result objectAtIndex:0];
+        dbContact.lastSeenAt = userDetail.lastSeenAtTime;
+        dbContact.connected = userDetail.connected;
         if(userDetail.displayName){
-            [ob setValue:userDetail.displayName forKey:@"displayName"];
+            dbContact.displayName = userDetail.displayName;
         }
     }
     NSError *error = nil;

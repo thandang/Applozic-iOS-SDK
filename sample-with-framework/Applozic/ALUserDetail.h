@@ -13,15 +13,15 @@
 @interface ALUserDetail : ALJson
 
 
-@property NSString *userId;
+@property (nonatomic, strong) NSString *userId;
 
-@property BOOL connected;
+@property (nonatomic) BOOL connected;
 
-@property NSNumber *lastSeenAtTime;
+@property (nonatomic, strong) NSNumber *lastSeenAtTime;
 
-@property NSString *unreadCount;
+@property (nonatomic, strong) NSString *unreadCount;
 
-@property NSString *displayName;
+@property (nonatomic, strong) NSString *displayName;
 
 @property(nonatomic, copy) NSManagedObjectID *userDetailDBObjectId;
 

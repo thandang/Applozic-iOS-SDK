@@ -53,7 +53,7 @@
     self.connected = [self getBoolFromJsonValue:json[@"connected"]];
     self.lastSeenAtTime = [self getNSNumberFromJsonValue:json[@"lastSeenAtTime"]];
     self.displayName = [self getStringFromJsonValue:json[@"displayName"]];
-   // self.self.unreadCount = [self getStringFromJsonValue:messageJson[@"self.unreadCount"]];
+   // self.unreadCount = [self getStringFromJsonValue:messageJson[@"self.unreadCount"]];
 }
 
 

@@ -26,7 +26,8 @@
 
 static ALMessageClientService * alMsgClientService;
 
-+(void) processLatestMessagesGroupByContact {
++(void) processLatestMessagesGroupByContact
+{
     /*ALMessageDBService *almessageDBService =  [[ALMessageDBService alloc] init];
     [ almessageDBService fetchAndRefreshFromServer];*/
     [self getLatestMessageGroupByContactWithCompletion:^(ALMessageList *alMessageList, NSError *error) {
@@ -66,7 +67,7 @@ static ALMessageClientService * alMsgClientService;
         ALMessageList *messageListResponse =  [[ALMessageList alloc] initWithJSONString:theJson] ;
         
         completion(messageListResponse,nil);
-       // NSLog(@"message list response THE JSON %@",theJson);
+        NSLog(@"message list response THE JSON %@",theJson);
         //        [ALUserService processContactFromMessages:[messageListResponse messageList]];
     }];
     
@@ -92,7 +93,7 @@ static ALMessageClientService * alMsgClientService;
         ALMessageList *messageListResponse =  [[ALMessageList alloc] initWithJSONString:theJson] ;
         
         completion(messageListResponse.messageList,nil);
-       // NSLog(@"message list response THE JSON %@",theJson);
+        NSLog(@"message list response THE JSON %@",theJson);
 //        [ALUserService processContactFromMessages:[messageListResponse messageList]];
     }];
     
@@ -449,8 +450,9 @@ static ALMessageClientService * alMsgClientService;
         else
         {
            //NSLog(@"SEVER RESPONSE FROM JSON : %@", (NSString *)theJson);
-           ALUserDetail *userDetailObject = [[ALUserDetail alloc] initWithJSONString:theJson];
-          // [userDetailObject userDetail];
+//           ALUserDetail *userDetailObject = [[ALUserDetail alloc] initWithJSONString:theJson];
+            ALUserDetail *userDetailObject = [[ALUserDetail alloc] initWithDictonary:[theJson objectAtIndex:0]];
+//           [userDetailObject userDetail];
          completionMark(userDetailObject);
             
         }

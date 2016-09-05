@@ -16,7 +16,7 @@
 #import "ALPushAssist.h"
 #import "ALAppLocalNotifications.h"
 #import "ALApplozicSettings.h"
-
+#import "ALUserDefaultsHandler.h"
 
 @implementation ALUtilityClass
 
@@ -230,7 +230,7 @@
 
     
     [TSMessage showNotificationInViewController:top.topViewController
-                                          title:@"Applozic"
+                                          title:[ALUserDefaultsHandler getNotificationTitle]
                                        subtitle:[NSString stringWithFormat:@"%@",toastMessage]
                                           image:appIcon
                                            type:TSMessageNotificationTypeMessage

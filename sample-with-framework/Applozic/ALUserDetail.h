@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) NSNumber *lastSeenAtTime;
 
-@property (nonatomic, strong) NSString *unreadCount;
+@property (nonatomic, strong) NSNumber *unreadCount;
 
 @property (nonatomic, strong) NSString *displayName;
 

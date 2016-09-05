@@ -45,6 +45,7 @@
         
     }];
 }
+
 -(void)updateUserDisplayName:(ALContact *)alContact withCompletion:(void(^)(id theJson, NSError *theError))completion
 {
     NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/name", KBASE_URL];
@@ -65,7 +66,37 @@
         }
         
     }];
+}
+
+-(void)subProcessUserDetailServerCall:(NSString *)paramString withCompletion:(void(^)(NSMutableArray * userDetailArray, NSError * theError))completionMark
+{
+    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/detail",KBASE_URL];
+    NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:paramString];
     
+    [ALResponseHandler processRequest:theRequest andTag:@"USERS_DETAIL" WithCompletionHandler:^(id theJson, NSError *theError) {
+        
+        if (theError)
+        {
+            completionMark(nil, theError);
+            NSLog(@"ERROR_IN_USERS_DETAILS : %@", theError);
+            return;
+        }
+        
+        NSLog(@"SEVER_RESPONSE :: %@", (NSString *)theJson);
+        NSArray * jsonArray = [NSArray arrayWithArray:(NSArray *)theJson];
+        
+        if(jsonArray.count)
+        {
+            NSMutableArray * ALLUserDetailArray = [NSMutableArray new];
+            NSDictionary * JSONDictionary = (NSDictionary *)theJson;
+            for (NSDictionary * theDictionary in JSONDictionary)
+            {
+                ALUserDetail * userDetail = [[ALUserDetail alloc] initWithDictonary:theDictionary];
+                [ALLUserDetailArray addObject:userDetail];
+            }
+            completionMark(ALLUserDetailArray, theError);
+        }
+    }];
 }
 
 @end

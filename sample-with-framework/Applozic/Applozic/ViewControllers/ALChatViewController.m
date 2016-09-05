@@ -91,7 +91,8 @@ ALMessageDBService  * dbService;
 
 }
 
--(void)processMarkRead{
+-(void)processMarkRead
+{
     [ALMessageService markConversationAsRead: self.contactIds withCompletion:^(NSString* string,NSError* error){
         if(!error) {
             NSLog(@"Marked messages as read for %@", self.contactIds);
@@ -104,7 +105,8 @@ ALMessageDBService  * dbService;
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
     [self.view endEditing:YES];
     [self processMarkRead];
@@ -174,7 +176,7 @@ ALMessageDBService  * dbService;
         self.sendMessageTextView.text = @"";
     }
     
-    
+    [self setTitle];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -232,16 +234,18 @@ ALMessageDBService  * dbService;
     [navigationController.navigationBar setTintColor:[ALApplozicSettings getColourForNavigationItem]];
 }
 
--(void) setTitle {
-    if(self.displayName){
+-(void) setTitle
+{
+    if(self.displayName)
+    {
        
         ALContactService * contactService = [[ALContactService alloc]init];
         _alContact = [contactService loadOrAddContactByKeyWithDisplayName:self.contactIds value: self.displayName];
         
-    }else{
+    }else
+    {
         ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];
         _alContact = [theDBHandler loadContactByKey:@"userId" value: self.contactIds];
-        
     }
     
     self.navigationItem.title = [_alContact displayName];
@@ -1237,7 +1241,6 @@ ALMessageDBService  * dbService;
 
         if(!error )
         {
-            
             NSLog(@"No Error");
             self.loadEarlierAction.hidden=YES;
             if( messages.count< 50 ){
@@ -1301,7 +1304,7 @@ ALMessageDBService  * dbService;
         }
         else
         {
-            NSLog(@"some error");
+            NSLog(@"ERROR ALCHATVC GETLATESMSG :: %@",error.description);
         }
         
     }];

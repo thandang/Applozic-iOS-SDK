@@ -32,6 +32,7 @@
     self.lastSeenAt = [dict objectForKey:@"lastSeenAtTime"];
 //    self.connected = [dict objectForKey:@"connected"];
     self.connected = [[dict valueForKey:@"connected"] boolValue];
+    self.unreadCount = [dict objectForKey:@"unreadCount"];
 }
 
 -(NSString *)getDisplayName{

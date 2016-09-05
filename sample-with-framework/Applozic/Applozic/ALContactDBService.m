@@ -365,6 +365,18 @@
             dbContact.displayName = userDetail.displayName;
         }
     }
+    else
+    {
+        // Add contact in DB.
+        ALContact * contact = [[ALContact alloc] init];
+        contact.userId = userDetail.userId;
+        contact.unreadCount = userDetail.unreadCount;
+        contact.lastSeenAt = userDetail.lastSeenAtTime;
+        contact.displayName = userDetail.displayName;
+        contact.connected = userDetail.connected;
+        
+        [self addContact:contact];
+    }
     NSError *error = nil;
     
     success = [dbHandler.managedObjectContext save:&error];

@@ -48,33 +48,29 @@
          completionMark();
         return;
     };
-    for(NSString* strr in contactIdsArr){
+    for(NSString* strr in contactIdsArr)
+    {
         [repString appendString:strr];
     }
     
-    NSLog(@"rep String %@",repString);
-        //    [ALUserService getUserInfo:repString];
-    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/v1/info",KBASE_URL];
-    NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:repString];
+    NSLog(@"USER_ID_STRING :: %@",repString);
     
-    [ALResponseHandler processRequest:theRequest andTag:@"GET ALl DISPLAY NAMES" WithCompletionHandler:^(id theJson, NSError *theError) {
+    ALUserClientService * client = [ALUserClientService new];
+    [client subProcessUserDetailServerCall:repString withCompletion:^(NSMutableArray * userDetailArray, NSError * error) {
         
-        if (theError) {
-            return ;
+        if(error)
+        {
+            completionMark();
+            return;
         }
-        NSDictionary* userIDs=[[NSDictionary alloc] initWithDictionary:theJson];
-       
-        for(id key in userIDs){
-            ALContact * createNew=[[ALContact alloc] init];
-            createNew.displayName=[userIDs objectForKey:key];
-            createNew.userId=key;
-            NSLog(@"DISPLAY NAME %@ and ID %@",[userIDs objectForKey:key],key);
-            
-            ALContactDBService * adding=[[ALContactDBService alloc] init];
-            [adding addContact:createNew];
-            
+        ALContactDBService * contactDB = [ALContactDBService new];
+        for(ALUserDetail * userDetail in userDetailArray)
+        {
+            [contactDB updateUserDetail: userDetail];
         }
+        
         completionMark();
+        
     }];
 }
 

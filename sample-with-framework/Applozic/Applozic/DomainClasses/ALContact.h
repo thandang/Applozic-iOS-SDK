@@ -32,6 +32,8 @@
 
 @property (nonatomic,retain) NSNumber *lastSeenAt;
 
+@property (nonatomic,retain) NSNumber *unreadCount;
+
 -(instancetype)initWithDict:(NSDictionary * ) dictionary;
 -(void)populateDataFromDictonary:(NSDictionary *)dict;
 -(NSString *)getDisplayName;

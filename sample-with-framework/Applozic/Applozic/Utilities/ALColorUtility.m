@@ -36,4 +36,30 @@
     return image;
 }
 
++(NSString *)getAlphabetForProfileImage:(NSString *)actualName
+{
+    NSString * iconAlphabet = @"";
+    NSString * trimmed = [actualName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if(trimmed.length == 0)
+    {
+        return actualName;
+    }
+    NSString *firstLetter = [trimmed substringToIndex:1];
+    NSRange whiteSpaceRange = [trimmed rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *listNames = [trimmed componentsSeparatedByString:@" "];
+    
+    if (whiteSpaceRange.location != NSNotFound)
+    {
+        NSString *firstLetter = [[listNames[0] substringToIndex:1] uppercaseString];
+        NSString *lastLetter = [[listNames[1] substringToIndex:1] uppercaseString];
+        iconAlphabet = [[firstLetter stringByAppendingString:lastLetter] uppercaseString];
+    }
+    else
+    {
+        iconAlphabet = [firstLetter uppercaseString];
+    }
+    
+    return iconAlphabet;
+}
+
 @end

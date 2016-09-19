@@ -497,9 +497,12 @@
    
     // here for msg dashboard profile pic
     NSLog(@"DP_NAME :: %@",[alContact getDisplayName]);
-    NSString *firstLetter = [[[alContact getDisplayName] substringToIndex:1] uppercaseString];
-    nameIcon.text=firstLetter;
+     NSLog(@"USER_ID :: %@",[alContact userId]);
+//    NSString *firstLetter = [[[alContact getDisplayName] substringToIndex:1] uppercaseString];
+//    nameIcon.text=firstLetter;
    
+    [nameIcon setText:[ALColorUtility getAlphabetForProfileImage:[alContact getDisplayName]]];
+    
     if(alContact.connected)
     {
         [contactCell.onlineImageMarker setHidden:NO];
@@ -512,7 +515,7 @@
     ///////////$$$$$$$$$$$$$$$$//////////////////////COUNT//////////////////////$$$$$$$$$$$$$$$$///////////
     
     ALMessageDBService* messageDBService = [[ALMessageDBService alloc]init];
-    self.unreadCount=[messageDBService getUnreadMessages:[alContact userId]];
+    self.unreadCount = [messageDBService getUnreadMessages:[alContact userId]];
     
    // NSLog(@"self.unreadCount Array of ||%@|| withCount ||%lu|| is %@",[alContact userId],(unsigned long)self.unreadCount.count,self.unreadCount);
     
@@ -560,11 +563,8 @@
     
     else
     {
-         nameIcon.hidden = FALSE;
-         NSString *firstLetter = [[alContact getDisplayName] substringToIndex:1];
-         nameIcon.text=[firstLetter uppercaseString];
+         nameIcon.hidden = NO;
 //         contactCell.mUserImageView.hidden=TRUE;
-
     }
     
     return contactCell;

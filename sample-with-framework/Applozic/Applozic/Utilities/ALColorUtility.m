@@ -45,19 +45,19 @@
         return actualName;
     }
     NSString *firstLetter = [trimmed substringToIndex:1];
-    NSRange whiteSpaceRange = [trimmed rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSArray *listNames = [trimmed componentsSeparatedByString:@" "];
-    
-    if (whiteSpaceRange.location != NSNotFound)
-    {
-        NSString *firstLetter = [[listNames[0] substringToIndex:1] uppercaseString];
-        NSString *lastLetter = [[listNames[1] substringToIndex:1] uppercaseString];
-        iconAlphabet = [[firstLetter stringByAppendingString:lastLetter] uppercaseString];
-    }
-    else
-    {
+//    NSRange whiteSpaceRange = [trimmed rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+//    NSArray *listNames = [trimmed componentsSeparatedByString:@" "];
+//    
+//    if (whiteSpaceRange.location != NSNotFound)
+//    {
+//        NSString *firstLetter = [[listNames[0] substringToIndex:1] uppercaseString];
+//        NSString *lastLetter = [[listNames[1] substringToIndex:1] uppercaseString];
+//        iconAlphabet = [[firstLetter stringByAppendingString:lastLetter] uppercaseString];
+//    }
+//    else
+//    {
         iconAlphabet = [firstLetter uppercaseString];
-    }
+//    }
     
     return iconAlphabet;
 }

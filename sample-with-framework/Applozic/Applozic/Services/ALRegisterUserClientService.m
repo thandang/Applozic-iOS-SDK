@@ -125,7 +125,7 @@
 -(void) logout
 {
     NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+//    [[UIApplication sharedApplication] unregisterForRemoteNotifications];  // CHANGES AS PER REQUIREMENT
     [ALUserDefaultsHandler clearAll];
     ALMessageDBService* messageDBService = [[ALMessageDBService alloc]init];
     [messageDBService deleteAllObjectsInCoreData];

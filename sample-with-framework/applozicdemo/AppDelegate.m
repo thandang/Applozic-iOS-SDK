@@ -105,7 +105,7 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
     
-    NSLog(@" token is: %@", deviceToken);
+    NSLog(@"TOKEN : %@", deviceToken);
     
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
@@ -114,7 +114,7 @@
                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
     
     NSString *apnDeviceToken = hexToken; //[[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
-    NSLog(@"apnDeviceToken: %@", hexToken);
+    NSLog(@"APN_DEVICE_TOKEN :: %@", hexToken);
     
     
     if ([[ALUserDefaultsHandler getApnDeviceToken] isEqualToString:apnDeviceToken])

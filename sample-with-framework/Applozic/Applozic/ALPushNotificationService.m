@@ -39,6 +39,7 @@
 
 -(BOOL) processPushNotification:(NSDictionary *)dictionary updateUI:(BOOL)updateUI
 {
+    NSLog(@"Received APNS :: %@", dictionary.description);
     NSLog(@"update ui: %@", updateUI ? @"Yes": @"No");
     //[dictionary setObject:@"Yes" forKey:@"updateUI"]; // adds @"Bar"
     

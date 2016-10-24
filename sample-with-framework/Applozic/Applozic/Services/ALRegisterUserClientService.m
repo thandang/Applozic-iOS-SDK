@@ -127,7 +127,6 @@
     NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
     [ALUserDefaultsHandler clearAll];
-    [ALApplozicSettings clearAllSettings];
     ALMessageDBService* messageDBService = [[ALMessageDBService alloc]init];
     [messageDBService deleteAllObjectsInCoreData];
     

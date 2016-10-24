@@ -10,16 +10,19 @@
 
 @implementation ALUserDefaultsHandler
 
-+(void) setConversationContactImageVisibility:(BOOL)visibility{
++(void) setConversationContactImageVisibility:(BOOL)visibility
+{
     [[NSUserDefaults standardUserDefaults] setBool:visibility forKey:CONVERSATION_CONTACT_IMAGE_VISIBILITY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(BOOL) isConversationContactImageVisible {
++(BOOL) isConversationContactImageVisible
+{
     return [[NSUserDefaults standardUserDefaults] boolForKey:CONVERSATION_CONTACT_IMAGE_VISIBILITY];
 }
 
-+(void) setBottomTabBarHidden:(BOOL)visibleStatus {
++(void) setBottomTabBarHidden:(BOOL)visibleStatus
+{
     [[NSUserDefaults standardUserDefaults] setBool:visibleStatus forKey:BOTTOM_TAB_BAR_VISIBLITY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -67,11 +70,19 @@
     return [ALUserDefaultsHandler getDeviceKeyString] != nil;
 }
 
-+(void) clearAll
++(void)clearAll
 {
-    NSLog(@"cleared");
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    NSLog(@"APPLOZIC : CLEARING_USER_DEFAULTS");
+    NSDictionary * dictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+    NSArray * keyArray = [dictionary allKeys];
+    for(NSString * defaultKeyString in keyArray)
+    {
+        if([defaultKeyString hasPrefix:KEY_PREFIX])
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:defaultKeyString];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
 }
 
 +(void) setApnDeviceToken:(NSString *)apnDeviceToken
@@ -97,11 +108,9 @@
 }
 
 // isConversationDbSynced
-
 +(void)setBoolForKey_isConversationDbSynced:(BOOL)value
 {
     [[NSUserDefaults standardUserDefaults] setBool:value forKey:CONVERSATION_DB_SYNCED];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -113,14 +122,13 @@
 +(void)setEmailId:(NSString *)emailId
 {
     [[NSUserDefaults standardUserDefaults] setValue:emailId forKey:EMAIL_ID];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSString *)getEmailId{
++(NSString *)getEmailId
+{
     return [[NSUserDefaults standardUserDefaults] valueForKey:EMAIL_ID];
 }
-    
 
 +(void)setDisplayName:(NSString *)displayName
 {
@@ -129,7 +137,8 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSString *)getDisplayName{
++(NSString *)getDisplayName
+{
     return [[NSUserDefaults standardUserDefaults] valueForKey:DISPLAY_NAME];
 }
 
@@ -138,11 +147,11 @@
 +(void)setDeviceKeyString:(NSString *)deviceKeyString
 {
     [[NSUserDefaults standardUserDefaults] setValue:deviceKeyString forKey:DEVICE_KEY_STRING];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSString *)getDeviceKeyString{
++(NSString *)getDeviceKeyString
+{
     return [[NSUserDefaults standardUserDefaults] valueForKey:DEVICE_KEY_STRING];
 }
 
@@ -162,142 +171,153 @@
 +(void )setUserId:(NSString *)userId
 {
     [[NSUserDefaults standardUserDefaults] setValue:userId forKey:USER_ID];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
 +(NSString *)getUserId
 {
-    return [[NSUserDefaults standardUserDefaults]
-            valueForKey:USER_ID];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:USER_ID];
 }
 
 //last sync time
 
-+(void )setLastSyncTime :( NSNumber *) lstSyncTime
++(void )setLastSyncTime:( NSNumber *)lstSyncTime
 {
    lstSyncTime = @([lstSyncTime doubleValue]);
     NSLog(@"saving last Sync time in the preference ...%@" ,lstSyncTime);
     [[NSUserDefaults standardUserDefaults] setDouble:[lstSyncTime doubleValue] forKey:LAST_SYNC_TIME];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSNumber *)getLastSyncTime{
-    
++(NSNumber *)getLastSyncTime
+{
    // NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
     return [[NSUserDefaults standardUserDefaults] valueForKey:LAST_SYNC_TIME];
 }
 
 
-+(void)setServerCallDoneForMSGList:(BOOL) value forContactId:(NSString*)contactId{
-    if(!contactId){
++(void)setServerCallDoneForMSGList:(BOOL)value forContactId:(NSString *)contactId
+{
+    if(!contactId)
+    {
         return;
     }
-    NSString *key = [ contactId stringByAppendingString:MSG_LIST_CALL_SUFIX];
+    
+//    NSString *key = [contactId stringByAppendingString:MSG_LIST_CALL_SUFIX];
+    NSString *key = [NSString stringWithFormat:@"%@:%@",MSG_LIST_CALL_SUFIX, contactId];
     [[NSUserDefaults standardUserDefaults] setBool:true forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
 
-+(BOOL)isServerCallDoneForMSGList: (NSString *)contactId{
-    
-    if(!contactId){
++(BOOL)isServerCallDoneForMSGList:(NSString *)contactId
+{
+    if(!contactId)
+    {
         return NO;
     }
-    NSString *key = [ contactId stringByAppendingString:MSG_LIST_CALL_SUFIX];
-    if ( ![[NSUserDefaults standardUserDefaults] valueForKey:key] ){
+    
+//    NSString *key = [contactId stringByAppendingString:MSG_LIST_CALL_SUFIX];
+    NSString *key = [NSString stringWithFormat:@"%@:%@",MSG_LIST_CALL_SUFIX, contactId];
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:key])
+    {
         return NO;
-    }else{
+    }
+    else
+    {
         return [[NSUserDefaults standardUserDefaults] boolForKey:key];
     }
-    
 }
 
-
-+(void) setProcessedNotificationIds:(NSMutableArray*) arrayWithIds{
-
++(void) setProcessedNotificationIds:(NSMutableArray*) arrayWithIds
+{
     [[NSUserDefaults standardUserDefaults] setObject:arrayWithIds forKey:PROCESSED_NOTIFICATION_IDS];
-
 }
 
-
-+(NSMutableArray*) getProcessedNotificationIds{
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"PROCESSED_NOTIFICATION_IDS"] mutableCopy];
-
++(NSMutableArray*) getProcessedNotificationIds
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:PROCESSED_NOTIFICATION_IDS] mutableCopy];
 }
 
-+(BOOL)isNotificationProcessd:(NSString*)withNotificationId{
-   
++(BOOL)isNotificationProcessd:(NSString*)withNotificationId
+{
     NSMutableArray * mutableArray = [ self getProcessedNotificationIds];
-    if(mutableArray ==nil){
-        mutableArray = [[NSMutableArray alloc]init];
+    if(mutableArray == nil)
+    {
+        mutableArray = [[NSMutableArray alloc] init];
     }
     
     BOOL isTheObjectThere = [mutableArray containsObject:withNotificationId];
     
-    if ( isTheObjectThere ){
+    if (isTheObjectThere)
+    {
         //[mutableArray removeObject:withNotificationId];
     }else {
         [mutableArray addObject:withNotificationId];
     }
     //WE will just store 20 notificationIds for processing...
-    if(mutableArray.count > 20){
-        [ mutableArray removeObjectAtIndex:0];
+    if(mutableArray.count > 20)
+    {
+        [mutableArray removeObjectAtIndex:0];
     }
     [self setProcessedNotificationIds:mutableArray];
     return isTheObjectThere;
     
 }
 
-+(void) setLastSeenSyncTime :(NSNumber*) lastSeenTime{
-    
++(void)setLastSeenSyncTime :(NSNumber*) lastSeenTime
+{
     NSLog(@"saving last seen time in the preference ...%@" ,lastSeenTime);
     [[NSUserDefaults standardUserDefaults] setDouble:[lastSeenTime doubleValue] forKey:LAST_SEEN_SYNC_TIME];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSNumber *) getLastSeenSyncTime{
++(NSNumber *)getLastSeenSyncTime
+{
     return [[NSUserDefaults standardUserDefaults] objectForKey:LAST_SEEN_SYNC_TIME];
-
 }
 
-+(void)setShowLoadMore:(BOOL) value forContactId:(NSString*)contactId{
-   
-    if(!contactId){
++(void)setShowLoadMore:(BOOL) value forContactId:(NSString*)contactId
+{
+    if(!contactId)
+    {
         return;
     }
-    NSString *key = [ contactId stringByAppendingString:SHOW_LOAD_MORE_BUTTON];
+    
+//    NSString *key = [contactId stringByAppendingString:SHOW_LOAD_MORE_BUTTON];
+    NSString *key = [NSString stringWithFormat:@"%@:%@",SHOW_LOAD_MORE_BUTTON, contactId];
     [[NSUserDefaults standardUserDefaults] setBool:value forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-
 }
 
-+(BOOL)isShowLoadMore:(NSString *) contactId{
-   
-    if(!contactId){
++(BOOL)isShowLoadMore:(NSString *)contactId
+{
+    if(!contactId)
+    {
         return NO;
     }
-    NSString *key = [ contactId stringByAppendingString:SHOW_LOAD_MORE_BUTTON];
-    if ( ![[NSUserDefaults standardUserDefaults] valueForKey:key] ){
+//    NSString *key = [ contactId stringByAppendingString:SHOW_LOAD_MORE_BUTTON];
+    NSString *key = [NSString stringWithFormat:@"%@:%@",SHOW_LOAD_MORE_BUTTON, contactId];
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:key])
+    {
         return YES;
-    }else{
+    }
+    else
+    {
         return [[NSUserDefaults standardUserDefaults] boolForKey:key];
     }
-
 }
 //Notification settings...
 
 +(void)setNotificationTitle:(NSString *)notificationTitle
 {
     [[NSUserDefaults standardUserDefaults] setValue:notificationTitle forKey:NOTIFICATION_TITLE];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSString *)getNotificationTitle{
++(NSString *)getNotificationTitle
+{
     return [[NSUserDefaults standardUserDefaults] valueForKey:NOTIFICATION_TITLE];
 }
 

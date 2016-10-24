@@ -6,15 +6,15 @@
 //  Copyright © 2015 applozic Inc. All rights reserved.
 //
 
-#define USER_PROFILE_PROPERTY @"USER_PROFILE_PROPERTY"
-#define SEND_MSG_COLOUR @"SEND_MSG_COLOUR"
-#define RECEIVE_MSG_COLOUR @"RECEIVE_MSG_COLOUR"
-#define NAVIGATION_BAR_COLOUR @"NAVIGATION_BAR_COLOUR"
-#define NAVIGATION_BAR_ITEM_COLOUR @"NAVIGATION_BAR_ITEM_COLOUR"
-#define REFRESH_BUTTON_VISIBILITY @"REFRESH_BUTTON_VISIBILITY"
-#define CONVERSATION_TITLE @"CONVERSATION_TITLE"
-#define BACK_BUTTON_TITLE @"BACK_BUTTON_TITLE"
-#define FONT_FACE @"FONT_FACE"
+#define USER_PROFILE_PROPERTY @"com.applozic.userdefault.USER_PROFILE_PROPERTY"
+#define SEND_MSG_COLOUR @"com.applozic.userdefault.SEND_MSG_COLOUR"
+#define RECEIVE_MSG_COLOUR @"com.applozic.userdefault.RECEIVE_MSG_COLOUR"
+#define NAVIGATION_BAR_COLOUR @"com.applozic.userdefault.NAVIGATION_BAR_COLOUR"
+#define NAVIGATION_BAR_ITEM_COLOUR @"com.applozic.userdefault.NAVIGATION_BAR_ITEM_COLOUR"
+#define REFRESH_BUTTON_VISIBILITY @"com.applozic.userdefault.REFRESH_BUTTON_VISIBILITY"
+#define CONVERSATION_TITLE @"com.applozic.userdefault.CONVERSATION_TITLE"
+#define BACK_BUTTON_TITLE @"com.applozic.userdefault.BACK_BUTTON_TITLE"
+#define FONT_FACE @"com.applozic.userdefault.FONT_FACE"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -44,8 +44,6 @@
 +(void)setColourForNavigationItem:(UIColor *)barItemColour;
 
 +(UIColor *)getColourForNavigationItem;
-
-+(void) clearAllSettings;
 
 +(void)hideRefreshButton:(BOOL)state;
 

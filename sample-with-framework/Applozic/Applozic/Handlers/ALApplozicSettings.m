@@ -47,13 +47,6 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:USER_PROFILE_PROPERTY];
 }
 
-+(void) clearAllSettings
-{
-    NSLog(@"cleared");
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-}
-
 +(void)setColourForSendMessages:(UIColor *)sendMsgColour
 {
     NSData *sendColorData = [NSKeyedArchiver archivedDataWithRootObject:sendMsgColour];
@@ -70,14 +63,14 @@
 
 +(UIColor *)getSendMsgColour
 {
-    NSData *sendColorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"SEND_MSG_COLOUR"];
+    NSData *sendColorData = [[NSUserDefaults standardUserDefaults] objectForKey:SEND_MSG_COLOUR];
     UIColor *sendColour = [NSKeyedUnarchiver unarchiveObjectWithData:sendColorData];
     return sendColour;
 }
 
 +(UIColor *)getReceiveMsgColour
 {
-    NSData *receiveColorData = [[NSUserDefaults standardUserDefaults] objectForKey:@"RECEIVE_MSG_COLOUR"];
+    NSData *receiveColorData = [[NSUserDefaults standardUserDefaults] objectForKey:RECEIVE_MSG_COLOUR];
     UIColor *receiveColour = [NSKeyedUnarchiver unarchiveObjectWithData:receiveColorData];
     return receiveColour;
 }
@@ -92,7 +85,7 @@
 
 +(UIColor *)getColourForNavigation
 {
-    NSData *barColourData = [[NSUserDefaults standardUserDefaults] objectForKey:@"NAVIGATION_BAR_COLOUR"];
+    NSData *barColourData = [[NSUserDefaults standardUserDefaults] objectForKey:NAVIGATION_BAR_COLOUR];
     UIColor *barColour = [NSKeyedUnarchiver unarchiveObjectWithData:barColourData];
     return barColour;
 }
@@ -107,7 +100,7 @@
 
 +(UIColor *)getColourForNavigationItem
 {
-    NSData *barItemColourData = [[NSUserDefaults standardUserDefaults] objectForKey:@"NAVIGATION_BAR_ITEM_COLOUR"];
+    NSData *barItemColourData = [[NSUserDefaults standardUserDefaults] objectForKey:NAVIGATION_BAR_ITEM_COLOUR];
     UIColor *barItemColour = [NSKeyedUnarchiver unarchiveObjectWithData:barItemColourData];
     return barItemColour;
 }

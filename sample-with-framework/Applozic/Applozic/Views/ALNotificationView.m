@@ -194,7 +194,12 @@
                  self.groupId = nil;
              }
              NSLog(@"onTopMessageVC: ContactID %@ and ChannelID %@",self.contactId, self.groupId);
-             [class2 createDetailChatViewController:_contactId];
+             if(self.conversationId){
+                 [class2 createDetailChatViewController:_contactId andWithConversationId:self.conversationId];
+
+             }else{
+                 [class2 createDetailChatViewController:_contactId];
+             }
              self.checkContactId = [NSString stringWithFormat:@"%@",self.contactId];
          }
          else if([delegate isKindOfClass:[ALChatViewController class]] && top.isChatViewOnTop){
@@ -221,7 +226,7 @@
                  msgVC.channelKey = nil;
                  self.groupId = nil;
              }
-             [msgVC createDetailChatViewController:self.contactId];
+             [msgVC createDetailChatViewController:self.contactId andWithConversationId:self.conversationId];
          }
          else if ([delegate isKindOfClass:[ALNewContactsViewController class]] && top.isContactVCOnTop)
          {
@@ -239,7 +244,7 @@
                  self.groupId = nil;
              }
              
-             [msgVC createDetailChatViewController:self.contactId];
+             [msgVC createDetailChatViewController:self.contactId andWithConversationId:self.conversationId];
 
              NSMutableArray * viewsArray = [NSMutableArray arrayWithArray:msgVC.navigationController.viewControllers];
              
@@ -275,17 +280,18 @@
         self.groupId = nil;
         [class1 updateChannelSubscribing:class1.channelKey andNewChannel:self.groupId];
         class1.channelKey=nil;
+        class1.contactIds=self.contactId;
     }
     
     if (self.conversationId) {
         class1.conversationId = self.conversationId;
-        [[class1.alMessageWrapper messageArray] removeAllObjects];
+        [class1 reloadView];
         [class1 processLoadEarlierMessages:YES];
+      //  [class1 reloadView];
     }
     else
     {
         class1.conversationId = nil;
-        class1.contactIds=self.contactId;
         [class1 reloadView];
         [class1 markConversationRead];
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;

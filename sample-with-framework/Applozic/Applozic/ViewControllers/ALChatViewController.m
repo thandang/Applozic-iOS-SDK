@@ -881,6 +881,8 @@
 
 -(void)setupPickerView
 {
+    NSLog(@"setupPickerView::::");
+    
     self.pickerConvIdsArray = [[NSMutableArray alloc] init];
     ALConversationService * alconversationService = [[ALConversationService alloc] init];
     NSMutableArray * conversationList;
@@ -2726,13 +2728,19 @@
         NSString * appendedContactId = [NSString stringWithFormat:@"%@",componentsContactId[2]];
         alMessage.contactIds =appendedContactId;
         
-        NSArray * componentsAlertValue = [alertValue componentsSeparatedByString:@":"];
-        if(componentsAlertValue.count > 1)
-        {
-            alertValue = [NSString stringWithFormat:@"%@",componentsAlertValue[1]];
-        }
+        
     }
-    
+    else if ( componentsContactId.count >1)
+    {
+        alMessage.groupId = nil;
+        alMessage.contactIds = componentsContactId[0];
+        alMessage.conversationId = @([componentsContactId[1] intValue]);
+    }
+    NSArray * componentsAlertValue = [alertValue componentsSeparatedByString:@":"];
+    if(componentsAlertValue.count > 1)
+    {
+        alertValue = [NSString stringWithFormat:@"%@",componentsAlertValue[1]];
+    }
     alMessage.message = alertValue;
     [self syncCall:alMessage updateUI:updateUI alertValue:alertValue];
 }
@@ -2908,8 +2916,8 @@
         NSLog(@"LIST_CALL_CALLED");
         if(self.conversationId && [ALApplozicSettings getContextualChatOption])
         {
-            [self setupPickerView];
-            [self.pickerView reloadAllComponents];
+           [self setupPickerView];
+           [self.pickerView reloadAllComponents];
         }
         
         if(!error)

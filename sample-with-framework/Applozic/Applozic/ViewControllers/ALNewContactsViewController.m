@@ -231,9 +231,16 @@
     
     NSArray * myArray = [contactId componentsSeparatedByString:@":"];
     NSNumber * channelKey = nil;
-    if(myArray.count > 2)
+    NSNumber *  conversationId = nil;
+
+    if(myArray.count > 2 &&  [myArray[0] isEqualToString:@"AL_GROUP"])
     {
         channelKey = @([myArray[1] intValue]);
+    }
+    else if(myArray.count >1)
+    {
+        contactId = myArray[0];
+        conversationId = @([myArray[1] intValue]);
     }
     ALPushAssist *pushAssist = [ALPushAssist new];
     if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_ACTIVE]] && pushAssist.isContactVCOnTop)
@@ -256,7 +263,7 @@
         alMessage.message = alertValue;
         alMessage.contactIds = contactId;
         alMessage.groupId = channelKey;
-        
+        alMessage.conversationId = conversationId;
         ALNotificationView * alNotification = [[ALNotificationView alloc] initWithAlMessage:alMessage
                                                                            withAlertMessage:alMessage.message];
         [alNotification nativeNotification:self];

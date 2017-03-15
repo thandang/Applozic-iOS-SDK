@@ -26,9 +26,14 @@
 @property (nonatomic) BOOL flag;
 @property(strong,nonatomic) NSDictionary *dict ;
 @property(strong,nonatomic) NSString * contactId;
+@property(strong,nonatomic) NSNumber * conversationId;
 @property(strong,nonatomic) NSMutableDictionary* dict2;
 
 -(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber*) groupID;
+
+-(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber*) groupID
+            withConversationId:(NSNumber*)conversationId;
+
 
 -(void)proactivelyConnectMQTT;
 -(void)proactivelyDisconnectMQTT;

@@ -227,14 +227,20 @@
 -(void)thirdPartyNotificationHandler:(NSNotification *)notification
 {
     NSNumber *groupId = nil;
+    NSNumber *ConversationId=nil;
     NSArray *notificationComponents = [notification.object componentsSeparatedByString:@":"];
 
-    if(notificationComponents.count>1)
+    if(notificationComponents.count>1 && [notificationComponents[0] isEqualToString:@"AL_GROUP"])
     {
         NSString *groupIdString = notificationComponents[1];
         groupId = [NSNumber numberWithInt:groupIdString.intValue];
+    }else if (notificationComponents.count>1 ){
+        self.contactId = notificationComponents[0];
+        NSString *conversationId = notificationComponents[1];
+        self.conversationId=[NSNumber numberWithInt:conversationId.intValue];
+    }else{
+        self.contactId = notification.object;
     }
-    self.contactId = notification.object;
     self.dict = notification.userInfo;
     NSNumber * updateUI = [self.dict valueForKey:@"updateUI"];
     NSString * alertValue = [self.dict valueForKey:@"alertValue"];
@@ -242,7 +248,7 @@
     if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
         NSLog(@"App launched from Background....Directly opening view from %@",self.dict);
-        [self thirdPartyNotificationTap1:self.contactId withGroupId:groupId]; // Directly launching Chat
+        [self thirdPartyNotificationTap1:self.contactId withGroupId:groupId withConversationId:self.conversationId]; // Directly launching Chat
         return;
     }
     
@@ -255,7 +261,11 @@
             {
                 return;
             }
-            [ALUtilityClass thirdDisplayNotificationTS:alertValue andForContactId:self.contactId withGroupId:groupId delegate:self];
+            [ALUtilityClass thirdDisplayNotificationTS:alertValue
+                                        andForContactId:self.contactId
+                                        withGroupId:groupId
+                                        andWithConversationId:self.conversationId
+                                              delegate:self];
         }
         else
         {
@@ -276,15 +286,37 @@
     }
 }
 
--(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber *)groupID
+-(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber *)groupID withConversationId:(NSNumber*)conversationId
 {
     ALPushAssist* pushAssistant = [[ALPushAssist alloc] init];
-    NSLog(@"Chat Launch Contact ID: %@",self.contactId);
+    NSLog(@"Chat Launch Contact ID: %@,%@",self.contactId,conversationId);
     
     if(!pushAssistant.isOurViewOnTop)
     {
         self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:APPLICATION_KEY];
-        [self.chatLauncher launchIndividualChat:contactId withGroupId:groupID andViewControllerObject:pushAssistant.topViewController andWithText:nil];
+        
+        [self.chatLauncher launchIndividualChat:contactId
+                                    withGroupId:groupID
+                                    withDisplayName:contactId withConversationId:conversationId
+                                    andViewControllerObject:pushAssistant.topViewController
+                                    andWithText:nil];
+    }
+}
+
+-(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber *)groupID
+{
+    ALPushAssist* pushAssistant = [[ALPushAssist alloc] init];
+    NSLog(@"Chat Launch Contact ID: %@,%@",self.contactId);
+    
+    if(!pushAssistant.isOurViewOnTop)
+    {
+        self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:APPLICATION_KEY];
+        
+        [self.chatLauncher launchIndividualChat:contactId
+                                    withGroupId:groupID
+                                withDisplayName:contactId
+                        andViewControllerObject:pushAssistant.topViewController
+                                    andWithText:nil];
     }
 }
 

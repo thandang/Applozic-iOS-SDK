@@ -912,6 +912,20 @@
     [self.navigationController pushViewController:self.detailChatViewController animated:YES];
 }
 
+-(void)createDetailChatViewController:(NSString *)contactIds andWithConversationId:(NSNumber*)conversationId
+{
+    if (!(self.detailChatViewController))
+    {
+        self.detailChatViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ALChatViewController"];
+    }
+    self.detailChatViewController.contactIds = contactIds;
+    self.detailChatViewController.conversationId=conversationId;
+    self.detailChatViewController.chatViewDelegate = self;
+    self.detailChatViewController.channelKey = self.channelKey;
+    [self.navigationController pushViewController:self.detailChatViewController animated:YES];
+}
+
+
 -(void)createDetailChatViewControllerWithMessage:(ALMessage *)message
 {   
     if(!(self.detailChatViewController))
@@ -1282,16 +1296,19 @@
 -(void)pushNotificationhandler:(NSNotification *) notification
 {
     NSString * contactId = notification.object;
+    self.conversationId= nil;
     
     NSArray * myArray = [contactId componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
     
-    if(myArray.count > 2)
+    if(myArray.count > 2 && [myArray[0] isEqualToString:@"AL_GROUP"])
     {
         self.channelKey = @([ myArray[1] intValue]);
     }
-    else
+    else if (myArray.count > 1 )
     {
         self.channelKey = nil;
+        self.conversationId=  @([ myArray[1] intValue]);
+        contactId = myArray[0];
     }
     
     NSDictionary *dict = notification.userInfo;
@@ -1304,7 +1321,7 @@
         msg.message = alertValue;
         NSArray *myArray = [msg.message componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
         
-        if(myArray.count > 1)
+        if(myArray.count > 1 )
         {
             alertValue = [NSString stringWithFormat:@"%@", myArray[1]];
         }
@@ -1315,13 +1332,14 @@
         msg.message = alertValue;
         msg.contactIds = contactId;
         msg.groupId = self.channelKey;
+        msg.conversationId= self.conversationId;
 
         [self syncCall:msg andMessageList:nil];
     }
     else if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
         NSLog(@"######## IT SHOULD NEVER COME HERE #########");
-        [self createDetailChatViewController: contactId];
+        [self createDetailChatViewController: contactId andWithConversationId:_conversationId];
 //      [self.detailChatViewController fetchAndRefresh];
         [self.detailChatViewController setRefresh: YES];
     }

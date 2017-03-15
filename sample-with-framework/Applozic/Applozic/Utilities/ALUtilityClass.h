@@ -29,7 +29,12 @@
 +(void)displayToastWithMessage:(NSString *)toastMessage;
 
 
-+(void)thirdDisplayNotificationTS:(NSString *)toastMessage andForContactId:(NSString *)contactId withGroupId:(NSNumber*) groupID delegate:(id)delegate;
++(void)thirdDisplayNotificationTS:(NSString *)toastMessage
+                  andForContactId:(NSString *)contactId
+                      withGroupId:(NSNumber*)groupID
+               andWithConversationId:(NSNumber*)conversationId
+                         delegate:(id)delegate;
+
 +(UIView *)setStatusBarStyle;
 
 +(NSString *)getNameAlphabets:(NSString *)actualName;

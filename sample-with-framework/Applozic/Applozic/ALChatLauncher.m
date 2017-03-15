@@ -73,9 +73,8 @@
     }
 }
 
-
 -(void)launchIndividualChat:(NSString *)userId withGroupId:(NSNumber*)groupID
-            withDisplayName:(NSString*)displayName
+            withDisplayName:(NSString*)displayName withConversationId:(NSNumber*)conversationId
     andViewControllerObject:(UIViewController *)viewController andWithText:(NSString *)text
 {
     
@@ -93,11 +92,27 @@
         chatView.individualLaunch = YES;
         chatView.displayName = displayName;
         chatView.chatViewDelegate = self;
-        
+        if(conversationId){
+            chatView.conversationId=conversationId;
+        }
         UINavigationController *conversationViewNavController = [self createNavigationControllerForVC:chatView];;
         conversationViewNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve ;
         [viewController presentViewController:conversationViewNavController animated:YES completion:nil];
     }
+}
+
+
+
+-(void)launchIndividualChat:(NSString *)userId withGroupId:(NSNumber*)groupID
+            withDisplayName:(NSString*)displayName
+    andViewControllerObject:(UIViewController *)viewController andWithText:(NSString *)text
+{
+   [self launchIndividualChat:userId
+                  withGroupId:groupID
+                  withDisplayName:displayName
+                  withConversationId:nil
+                  andViewControllerObject:viewController
+                  andWithText:text];
 }
 
 -(void)launchIndividualChatForGroup:(NSString *)userId withGroupId:(NSNumber*)groupID

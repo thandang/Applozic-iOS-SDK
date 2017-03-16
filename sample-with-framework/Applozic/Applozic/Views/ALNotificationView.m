@@ -287,6 +287,8 @@
         class1.conversationId = self.conversationId;
         [class1 reloadView];
         [class1 processLoadEarlierMessages:YES];
+        [class1 markConversationRead];
+
       //  [class1 reloadView];
     }
     else

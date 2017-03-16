@@ -3533,17 +3533,25 @@
 -(void)addMessageToList:(NSMutableArray  *)messageList
 {
     NSCompoundPredicate *compoundPredicate;
+    NSPredicate *conversationIdPredicate=nil;
+    if(self.conversationId){
+        conversationIdPredicate= [NSPredicate predicateWithFormat:@"conversationId = %@",self.conversationId];
+ 
+    }
     
     if(self.isGroup)
     {
         NSPredicate * groupP=[NSPredicate predicateWithFormat:@"groupId = %@",self.channelKey];
-        compoundPredicate=[NSCompoundPredicate andPredicateWithSubpredicates:@[groupP]];
+        compoundPredicate= conversationIdPredicate ? [NSCompoundPredicate andPredicateWithSubpredicates:@[groupP,conversationIdPredicate]]:
+        [NSCompoundPredicate andPredicateWithSubpredicates:@[groupP]];
     }
     else
     {  //self.channelKey not Nil
         NSPredicate *groupPredicate=[NSPredicate predicateWithFormat:@"groupId == %d or groupId == nil",0];
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"contactIds == %@",self.contactIds];
-        compoundPredicate=[NSCompoundPredicate andPredicateWithSubpredicates:@[groupPredicate,predicate]];
+        compoundPredicate= conversationIdPredicate ?
+            [NSCompoundPredicate andPredicateWithSubpredicates:@[groupPredicate,predicate,conversationIdPredicate]] :
+        [NSCompoundPredicate andPredicateWithSubpredicates:@[groupPredicate,predicate]];
     }
     
     NSArray * theFilteredArray = [messageList filteredArrayUsingPredicate:compoundPredicate];

@@ -279,8 +279,16 @@
             if(deviceKey != nil)
             {
                 ALConversationProxy * finalProxy = [self makeFinalProxyWithGeneratedProxy:alConversationProxy andFinalProxy:proxyObject];
-                [self.chatLauncher launchIndividualContextChat:finalProxy andViewControllerObject:fromViewController userDisplayName:@"Adarsh" andWithText:nil];
+                ALChatLauncher * chatLauncher = [ALChatLauncher new];
+                
+                [chatLauncher launchIndividualChat:finalProxy.userId
+                                                  withGroupId:nil
+                                              withDisplayName:nil
+                                           withConversationId:finalProxy.Id
+                                      andViewControllerObject:fromViewController
+                                                  andWithText:nil];
             }
+                 
         }
     }];
 }

@@ -63,6 +63,8 @@ Download ALChatManager.h and ALChatManager.m file and add to your project.
 
 Change value of applicationID in ALChatManager.h with the [Applozic Application Key](https://www.applozic.com/docs/ios-chat-sdk.html#first-level). 
 
+At the top of your Objective‑C source files, use `#import "ALChatManager.h"`
+
 
 ii) Login/Register User:
 

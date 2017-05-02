@@ -1,4 +1,9 @@
-**Integrate using:** 
+### Prerequisites
+
+- Apps using Applozic can target iOS 8 or later.
+- Xcode 8.0 or later required.
+
+**Integrate using:**
 
 1. [**Objective-C**](https://www.applozic.com/docs/ios-chat-sdk.html#objective-c)
 2. [**Swift**](https://www.applozic.com/docs/ios-chat-sdk.html#swift)

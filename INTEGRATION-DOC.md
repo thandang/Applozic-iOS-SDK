@@ -373,6 +373,8 @@ ii) Add New cocoa class NSObject+ApplozicBridge in objective-c. On adding it wil
 
 iii) Login/Register User:
 
+At the top of your Swift source files, use `import Applozic`.
+
 Convenient methods are present in ALChatManager.swift to register user with applozic. For simple user registration in background, you can use below method:
 
 ```

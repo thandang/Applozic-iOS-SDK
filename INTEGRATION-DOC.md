@@ -381,12 +381,12 @@ Convenient methods are present in ALChatManager.swift to register user with appl
   let alUser : ALUser =  ALUser();
   alUser.applicationId = ALChatManager.applicationId
   alUser.userId = "demoUserId"       // NOTE : +,*,? are not allowed chars in userId.
-  alUser.emailId = "github@applozic.om"
+  alUser.email = "github@applozic.om"
   alUser.imageLink = ""    // User's profile image link.
   alUser.displayName = "DemoUserName"  // User's Display Name
   
   ALUserDefaultsHandler.setUserId(alUser.userId)
-  ALUserDefaultsHandler.setEmailId(alUser.emailId)
+  ALUserDefaultsHandler.setEmailId(alUser.email)
   ALUserDefaultsHandler.setDisplayName(alUser.displayName)
 ```
 

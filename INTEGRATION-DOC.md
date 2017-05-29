@@ -23,6 +23,8 @@ ii) Go to project directory open pod file and add code in that
  pod 'Applozic', '~>3.8'
 ```
 
+iii) Run ```pod install``` or ```pod update``` to refresh your cocoapods dependencies.
+
 For reference download our sample project here [**ApplozicCocoaPodDemo**](https://github.com/AppLozic/Applozic-iOS-Chat-Samples)
 
 ### Add Framework Manually 

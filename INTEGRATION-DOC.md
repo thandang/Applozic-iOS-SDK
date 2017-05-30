@@ -546,6 +546,7 @@ return true
 ##### f) APNs Certification Type Setup :
 
 Upload your push notification certificate to Applozic Dashboard page under 'Edit Application' section in order to enable real time notification.
+Applozic Dashboard -> Application -> Actions -> Edit -> Push Notification -> Upload APNS Certificate and password
 
 In ALChatManager change setting according to your certificate and profile used:
 

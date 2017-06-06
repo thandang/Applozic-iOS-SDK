@@ -141,7 +141,8 @@ ii) Set access token generated as password.
 Upload your push notification certificate to Applozic Dashboard page under 'Edit Application' section in order to enable real time notification.
 
 ```
-	Go to Applozic Dashboard -> Edit Application -> Push Notification -> Upload APNS Certificate for Development and Distribution environments
+	Go to Applozic Dashboard -> Edit Application -> Push Notification -> 
+	Upload APNS Certificate for Development and Distribution environments
 ```
 
 ##### a) Send device token to Applozic server :

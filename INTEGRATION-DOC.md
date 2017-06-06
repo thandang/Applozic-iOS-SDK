@@ -138,6 +138,12 @@ ii) Set access token generated as password.
 
 #### Step 4: Push Notification Setup
 
+Upload your push notification certificate to Applozic Dashboard page under 'Edit Application' section in order to enable real time notification.
+
+```
+	Go to Applozic Dashboard -> Edit Application -> Push Notification -> Upload APNS Certificate for Development and Distribution environments
+```
+
 ##### a) Send device token to Applozic server :
 
 In your AppDelegate’s **didRegisterForRemoteNotificationsWithDeviceToken **method send device registration to Applozic server after you get deviceToken from APNS. Sample code is as below:             
@@ -266,8 +272,6 @@ e) Save Context when app terminates
 ```
 
 ##### f) APNs Certification Type Setup :
-
-Upload your push notification certificate to Applozic Dashboard page under 'Edit Application' section in order to enable real time notification.
 
 In ALChatManager change setting according to your certificate and profile used:
 

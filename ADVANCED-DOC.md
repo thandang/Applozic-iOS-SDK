@@ -18,6 +18,14 @@ short mode = 2  // DISABLE NOTIFICATION : NO NOTIFICATION WILL COME FROM SERVER
 
 ```
 
+You can clear the remote notifications from the notification banner once the app is launched. In your AppDelegate.m file under didFinishLaunchingWithOptions add:
+```
+application.applicationIconBadgeNumber = 1;
+application.applicationIconBadgeNumber = 0;
+[application cancelAllLocalNotifications];
+
+```
+
 
 ### Unread Count
 

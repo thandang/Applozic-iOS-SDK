@@ -21,7 +21,7 @@
 		29CBF2031C0303A700BE6A20 /* ALColorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CBF2011C0303A700BE6A20 /* ALColorUtility.m */; };
 		29D6F86B1D193D9D00A75369 /* PSPDFTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 29D6F8691D193D9D00A75369 /* PSPDFTextView.h */; };
 		29D6F86C1D193D9D00A75369 /* PSPDFTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29D6F86A1D193D9D00A75369 /* PSPDFTextView.m */; };
-		322B304A1EF9537600DB01FC /* AlApplicationInfoFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 322B30481EF9537600DB01FC /* AlApplicationInfoFeed.h */; };
+		322B304A1EF9537600DB01FC /* AlApplicationInfoFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 322B30481EF9537600DB01FC /* AlApplicationInfoFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		322B304B1EF9537600DB01FC /* AlApplicationInfoFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 322B30491EF9537600DB01FC /* AlApplicationInfoFeed.m */; };
 		4612E8F31E13882D0022DB23 /* Doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 4612E8CB1E13882D0022DB23 /* Doxyfile */; };
 		4612E8F41E13882D0022DB23 /* MQTTCFSocketDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4612E8CC1E13882D0022DB23 /* MQTTCFSocketDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1417,7 +1417,6 @@
 				293446151D4F426F007BD1B4 /* ALShowImageViewController.h in Headers */,
 				6D77568D1D5B7FBE0025560B /* ALConversationService.h in Headers */,
 				6D7756B91D5B80DF0025560B /* ALChannelUserX.h in Headers */,
-				322B304A1EF9537600DB01FC /* AlApplicationInfoFeed.h in Headers */,
 				6D7756F11D5B82A70025560B /* ALDataNetworkConnection.h in Headers */,
 				6D7756B51D5B80DF0025560B /* ALChannelService.h in Headers */,
 				293446131D4F426F007BD1B4 /* ALImageActivity.h in Headers */,
@@ -1505,6 +1504,7 @@
 				465EBAF11E9624C100E7B79B /* ALSubViewController.h in Headers */,
 				464F7D191E1D345300B68DCC /* ALChannelUser.h in Headers */,
 				46B258A01E5B03300078BBA5 /* ALChannelMsgCell.h in Headers */,
+				322B304A1EF9537600DB01FC /* AlApplicationInfoFeed.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
 				6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */,
 				6D46B6C51BD025060014A5D3 /* ALMapViewController.h in Headers */,
@@ -1927,7 +1927,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1956,7 +1956,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

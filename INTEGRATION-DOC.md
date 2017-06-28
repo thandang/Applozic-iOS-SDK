@@ -410,9 +410,9 @@ Convenient methods are present in ALChatManager.swift to register user with appl
 
 ```
     func registerUserAndLaunchChat(alUser:ALUser?, fromController:UIViewController,forUser:String?)
-    
+
    //Example: 
-   
+
         let chatManager : ALChatManager = ALChatManager(applicationKey: "applozic-sample-app")
         chatManager.registerUserAndLaunchChat(getUserDetail(), fromController: self, forUser:nil)
 ```
@@ -438,33 +438,26 @@ Convenient methods are present in ALChatManager.swift to register user with appl
 In your AppDelegate’s **didRegisterForRemoteNotificationsWithDeviceToken** method send device registration to Applozic server after you get deviceToken from APNS. Sample code is as below:             
 
 ```
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
+    {
+        print("DEVICE_TOKEN_DATA :: \(deviceToken.description)")  // (SWIFT = 3) : TOKEN PARSING
 
-        print("DEVICE_TOKEN_DATA :: \(deviceToken.description)") // (SWIFT = 3):TOKEN PARSING
-        
         var deviceTokenString: String = ""
         for i in 0..<deviceToken.count
         {
             deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
-        
-//        let characterSet: CharacterSet = CharacterSet(charactersIn: "<>") // (SWIFT < 3):TOKEN PARSING
-//        
-//        let deviceTokenString: String = (deviceToken.description as NSString)
-//            .trimmingCharacters( in: characterSet )
-//            .replacingOccurrences(of: " ", with: "") as String
-//        
+
         print("DEVICE_TOKEN_STRING :: \(deviceTokenString)")
 
-    if (ALUserDefaultsHandler.getApnDeviceToken() != deviceTokenString) {
-
-        let alRegisterUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
-        alRegisterUserClientService.updateApnDeviceTokenWithCompletion(deviceTokenString, withCompletion: { (response, error) in
-            print (response)
-        })
+        if (ALUserDefaultsHandler.getApnDeviceToken() != deviceTokenString)
+        {
+            let alRegisterUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
+            alRegisterUserClientService.updateApnDeviceToken(withCompletion: deviceTokenString, withCompletion: { (response, error) in
+                print ("REGISTRATION_RESPONSE :: \(response)")
+            })
+        }
     }
-}
-
 ```
 
 
@@ -480,7 +473,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 }
     
 func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    
+
     print("Received notification With Completion :: \(userInfo.description)")
     let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
 
@@ -499,20 +492,23 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 let alApplocalNotificationHnadler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
 alApplocalNotificationHnadler.dataConnectionNotificationHandler();
 
-    if (launchOptions != nil) {
-    let dictionary = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary
+    if (launchOptions != nil)
+        {
+            let dictionary = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
 
-        if (dictionary != nil) {
-            print("launched from push notification")
-            let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
-
-            let appState: NSNumber = NSNumber(int: 0)
-            let applozicProcessed = alPushNotificationService.processPushNotification(launchOptions,updateUI:appState)
-            if (!applozicProcessed) {
+            if (dictionary != nil)
+            {
+                print("launched from push notification")
+                let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
                 
+                let appState: NSNumber = NSNumber(value: 0 as Int32)
+                let applozicProcessed = alPushNotificationService.processPushNotification(launchOptions,updateUI:appState)
+                if (!applozicProcessed)
+                {
+                    //Note: notification for app
+                }
             }
         }
-    }
 
 return true
 }                            
@@ -521,23 +517,19 @@ return true
 ##### d)  AppDelegate changes to observe background/foreground notification.
 
 ```
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
+
         print("APP_ENTER_IN_BACKGROUND")
-        let registerUserClientService = ALRegisterUserClientService()
-        registerUserClientService.disconnect()
-        NSNotificationCenter.defaultCenter().postNotificationName("APP_ENTER_IN_BACKGROUND", object: nil)
-    }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "APP_ENTER_IN_BACKGROUND"), object: nil)
+    } ```
  ```
-    
- ```
-    func applicationWillEnterForeground(application: UIApplication) {
-        let registerUserClientService = ALRegisterUserClientService()
-        registerUserClientService.connect()
+    func applicationWillEnterForeground(_ application: UIApplication) {
+
         ALPushNotificationService.applicationEntersForeground()
         print("APP_ENTER_IN_FOREGROUND")
         
-        NSNotificationCenter.defaultCenter().postNotificationName("APP_ENTER_IN_FOREGROUND", object: nil)
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 ```
 ##### e) Save Context when app terminates

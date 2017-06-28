@@ -203,7 +203,7 @@
         }
         else
         {
-            [super scrollTableViewToBottomWithAnimation:NO];
+            [self scrollTableViewToBottomWithAnimation:NO];
         }
         self.sendMessageTextView.text = @"";
     }
@@ -1111,7 +1111,7 @@
             {
                 [self.alMessageWrapper addALMessageToMessageArray:locationMessage];
                 [self.mTableView reloadData];
-                [super scrollTableViewToBottomWithAnimation:YES];
+                [self scrollTableViewToBottomWithAnimation:YES];
                 completion(message,error);
             }
         }];
@@ -1286,7 +1286,7 @@
     [self.mTableView reloadData];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [super scrollTableViewToBottomWithAnimation:YES];
+        [self scrollTableViewToBottomWithAnimation:YES];
     });
     // save message to db
     [self showNoConversationLabel];
@@ -1898,7 +1898,7 @@
          [self.mTableView setContentOffset:CGPointMake(0, theFrame.origin.y)];
          }*/
         dispatch_async(dispatch_get_main_queue(), ^{
-            [super scrollTableViewToBottomWithAnimation:YES];
+            [self scrollTableViewToBottomWithAnimation:YES];
         });
     }
     
@@ -2662,7 +2662,7 @@
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [super scrollTableViewToBottomWithAnimation:YES];
+                [self scrollTableViewToBottomWithAnimation:YES];
                 [self setTitle];
             });
             NSLog(@"FETCH AND REFRESH METHOD");
@@ -3004,7 +3004,7 @@
             if(isScrollToBottom)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [super scrollTableViewToBottomWithAnimation:NO];
+                    [self scrollTableViewToBottomWithAnimation:NO];
                 });
             }
             else
@@ -3565,7 +3565,7 @@
 //    {
         [self.alMessageWrapper addLatestObjectToArray:[NSMutableArray arrayWithArray:sortedArray]];
         [self.mTableView reloadData];
-        [super scrollTableViewToBottomWithAnimation:YES];
+        [self scrollTableViewToBottomWithAnimation:YES];
     
     if (self.comingFromBackground) {
         [self markConversationRead];

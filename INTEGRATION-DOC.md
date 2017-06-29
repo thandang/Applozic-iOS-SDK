@@ -486,7 +486,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 ##### c) Handling app launch on notification click :          
 
 ```
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
 // Override point for customization after application launch.
 let alApplocalNotificationHnadler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();

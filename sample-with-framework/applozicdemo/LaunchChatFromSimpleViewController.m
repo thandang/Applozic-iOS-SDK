@@ -97,7 +97,7 @@
     [user setUserId:[ALUserDefaultsHandler getUserId]];
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
     
-    ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
+    ALChatManager * chatManager = [[ALChatManager alloc] init];
     [chatManager registerUserAndLaunchChat:user andFromController:self forUser:nil withGroupId:nil];
 
     //Adding sample contacts...
@@ -119,7 +119,7 @@
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
 
     
-    ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
+    ALChatManager * chatManager = [[ALChatManager alloc] init];
 
     [self checkUserContact:@"don222" displayName:@"" withCompletion:^(ALContact * contact) {
 
@@ -198,7 +198,7 @@
         ALConversationProxy * newProxy = [[ALConversationProxy alloc] init];
         newProxy = [self makeupConversationDetails];
         
-        ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
+        ALChatManager * chatManager = [[ALChatManager alloc] init];
         [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
     }
     else
@@ -214,7 +214,8 @@
 -(void)sendMessageWithMetaData      // EXAMPLE FOR META DATA
 {
     NSMutableDictionary * dictionary = [self getNewMetaDataDictionary];                                    // ADD RECEIVER ID HERE
-    ALMessage * messageWithMetaData = [ALMessageService createMessageWithMetaData:dictionary andReceiverId:@"receiverId" andMessageText:@"MESG WITH META DATA"];
+
+    ALMessage * messageWithMetaData = [ALMessageService createMessageWithMetaData:dictionary andContentType: ALMESSAGE_CONTENT_DEFAULT andReceiverId:@"receiverId" andMessageText:@"MESG WITH META DATA"];
     
     [ALMessageService sendMessages:messageWithMetaData withCompletion:^(NSString *message, NSError *error) {
         

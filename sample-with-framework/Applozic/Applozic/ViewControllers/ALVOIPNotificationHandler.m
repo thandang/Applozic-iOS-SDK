@@ -94,6 +94,7 @@
 
 -(void)handleAVMsg:(ALMessage *)alMessage andViewController:(UIViewController *)viewSelf
 {
+
     self.presenterVC = viewSelf;
     self.backgroundTask = UIBackgroundTaskInvalid;
     appObject = [UIApplication sharedApplication];
@@ -101,6 +102,12 @@
     
     if (alMessage.contentType == AV_CALL_CONTENT_TWO)
     {
+        if(![ALApplozicSettings isAudioVideoEnabled] )
+        {
+            NSLog(@" video/audio call not enables  ");
+            return;
+        }
+        
         NSString *msgType = (NSString *)[alMessage.metadata objectForKey:@"MSG_TYPE"];
         BOOL isAudio = [[alMessage.metadata objectForKey:@"CALL_AUDIO_ONLY"] boolValue];
         NSString *roomId = (NSString *)[alMessage.metadata objectForKey:@"CALL_ID"];

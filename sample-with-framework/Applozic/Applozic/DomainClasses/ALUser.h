@@ -25,11 +25,11 @@ typedef enum
 
 } deviceApnsType;
 
-typedef enum
-{
-    AUDIO_FEATURE = 101,
-    VIDEO_FEATURE = 102
-} voipfetaure;
+
+#define AV_FEATURE_ARRAY  [NSArray arrayWithObjects: @"101",@"102",nil]
+
+
+
 
 @interface ALUser : ALJson
 

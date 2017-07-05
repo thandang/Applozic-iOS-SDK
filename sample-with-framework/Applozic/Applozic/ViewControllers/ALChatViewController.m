@@ -3610,7 +3610,7 @@
     {  //self.channelKey not Nil
         NSPredicate *groupPredicate=[NSPredicate predicateWithFormat:@"groupId == %d or groupId == nil",0];
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"contactIds == %@",self.contactIds];
-        compoundPredicate=[NSCompoundPredicate andPredicateWithSubpredicates:@[groupPredicate,predicate]];
+        compoundPredicate=[NSCompoundPredicate andPredicateWithSubpredicates:@[groupPredicate,predicate,contentPredicate]];
     }
     
     NSArray * theFilteredArray = [messageList filteredArrayUsingPredicate:compoundPredicate];

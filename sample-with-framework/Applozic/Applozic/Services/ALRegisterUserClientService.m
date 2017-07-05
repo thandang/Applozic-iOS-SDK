@@ -47,8 +47,13 @@
     [user setDeviceApnsType:[ALUserDefaultsHandler getDeviceApnsType]];
     [user setEnableEncryption:[ALUserDefaultsHandler getEnableEncryption]];
     
-    if([ALUserDefaultsHandler getAppModuleName] != NULL){
+    if([ALUserDefaultsHandler getAppModuleName] != NULL)
+    {
         [user setAppModuleName:[ALUserDefaultsHandler getAppModuleName]];
+    }
+    if([ALApplozicSettings isAudioVideoEnabled])
+    {
+        [user setFeatures:[NSMutableArray arrayWithArray:AV_FEATURE_ARRAY]];
     }
     [user setUserTypeId:[ALUserDefaultsHandler getUserTypeId]];
     

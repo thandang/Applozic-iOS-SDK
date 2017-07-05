@@ -151,7 +151,10 @@
         [user setApplicationId: [ALUserDefaultsHandler getApplicationKey]];
         [user setUserId:[ALUserDefaultsHandler getUserId]];
         [user setPassword:[ALUserDefaultsHandler getPassword]];
+        [user setDisplayName:[ALUserDefaultsHandler getDisplayName]];
+        [user setEmail:[ALUserDefaultsHandler getEmailId]];
         [self initWithCompletion:user withCompletion: completion];
+        
     }
 }
 
@@ -184,6 +187,7 @@
     
     [user setUserTypeId:[ALUserDefaultsHandler getUserTypeId]];
     
+    [user setUnreadCountType:[ALUserDefaultsHandler getUnreadCountType]];
     
     NSError * error;
     NSData * postdata = [NSJSONSerialization dataWithJSONObject:user.dictionary options:0 error:&error];

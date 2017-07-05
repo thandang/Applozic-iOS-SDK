@@ -29,6 +29,7 @@
 #import "ALRegisterUserClientService.h"
 #import "UIImageView+WebCache.h"
 #import "ALContactService.h"
+#import "ALVOIPNotificationHandler.h"
 
 @interface ALGroupCreationViewController ()
 
@@ -86,7 +87,6 @@
     self.descriptionTextView.userInteractionEnabled = NO;
     [self.tabBarController.tabBar setHidden:YES];
     // self.alNewContactViewController.delegateGroupCreation = self;
-    
 }
 
 -(void)setProfileImage
@@ -100,6 +100,11 @@
     {
         [self.groupIconView setImage:DEFAULT_GROUP_ICON_IMAGE];
     }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 //=========================================================================================================================================

@@ -338,6 +338,12 @@
 		C75576EF1E27A5B300358D9B /* ALMuteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C75576ED1E27A5B300358D9B /* ALMuteRequest.m */; };
 		C76366081DF82B500087221C /* ALNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C76366061DF82B500087221C /* ALNavigationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C76366091DF82B500087221C /* ALNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C76366071DF82B500087221C /* ALNavigationController.m */; };
+		C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C76D31431F0AAFB30087291F /* ALVOIPCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C76D31461F0AAFB40087291F /* ALVOIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D31441F0AAFB30087291F /* ALVOIPCell.m */; };
+		C76D314B1F0AAFCE0087291F /* ALAudioVideoBaseVC.h in Headers */ = {isa = PBXBuildFile; fileRef = C76D31471F0AAFCE0087291F /* ALAudioVideoBaseVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C76D314C1F0AAFCF0087291F /* ALVOIPNotificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = C76D31481F0AAFCE0087291F /* ALVOIPNotificationHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C76D314D1F0AAFCF0087291F /* ALAudioVideoBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D31491F0AAFCE0087291F /* ALAudioVideoBaseVC.m */; };
+		C76D314E1F0AAFCF0087291F /* ALVOIPNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D314A1F0AAFCE0087291F /* ALVOIPNotificationHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -676,6 +682,12 @@
 		C75576ED1E27A5B300358D9B /* ALMuteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALMuteRequest.m; path = Applozic/ALMuteRequest.m; sourceTree = "<group>"; };
 		C76366061DF82B500087221C /* ALNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALNavigationController.h; sourceTree = "<group>"; };
 		C76366071DF82B500087221C /* ALNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALNavigationController.m; sourceTree = "<group>"; };
+		C76D31431F0AAFB30087291F /* ALVOIPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALVOIPCell.h; path = Applozic/ALVOIPCell.h; sourceTree = "<group>"; };
+		C76D31441F0AAFB30087291F /* ALVOIPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALVOIPCell.m; path = Applozic/ALVOIPCell.m; sourceTree = "<group>"; };
+		C76D31471F0AAFCE0087291F /* ALAudioVideoBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAudioVideoBaseVC.h; sourceTree = "<group>"; };
+		C76D31481F0AAFCE0087291F /* ALVOIPNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALVOIPNotificationHandler.h; sourceTree = "<group>"; };
+		C76D31491F0AAFCE0087291F /* ALAudioVideoBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAudioVideoBaseVC.m; sourceTree = "<group>"; };
+		C76D314A1F0AAFCE0087291F /* ALVOIPNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALVOIPNotificationHandler.m; sourceTree = "<group>"; };
 		C7C173AC1E3EE4CF00AF2031 /* AppLozic 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 4.xcdatamodel"; sourceTree = "<group>"; };
 		C7EF19C71DF2FDB600529704 /* AppLozic 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -815,6 +827,8 @@
 		6D6DF0731BC535C800EBA00F = {
 			isa = PBXGroup;
 			children = (
+				C76D31431F0AAFB30087291F /* ALVOIPCell.h */,
+				C76D31441F0AAFB30087291F /* ALVOIPCell.m */,
 				6D7757291D5B845C0025560B /* Applozic_Prefix.pch */,
 				6DDB07491CB9162A00B99F33 /* AddressBook.framework */,
 				6DDB07411CB9069B00B99F33 /* AddressBookUI.framework */,
@@ -876,6 +890,10 @@
 		6D6DF0A71BC5364C00EBA00F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C76D31471F0AAFCE0087291F /* ALAudioVideoBaseVC.h */,
+				C76D31481F0AAFCE0087291F /* ALVOIPNotificationHandler.h */,
+				C76D31491F0AAFCE0087291F /* ALAudioVideoBaseVC.m */,
+				C76D314A1F0AAFCE0087291F /* ALVOIPNotificationHandler.m */,
 				465EBAEE1E96246B00E7B79B /* Container Parent View */,
 				2934460E1D4F4229007BD1B4 /* Share Image */,
 				6D73B2FA1D4F0F9C007D3D72 /* ReceiverUserProfile */,
@@ -1505,6 +1523,9 @@
 				464F7D191E1D345300B68DCC /* ALChannelUser.h in Headers */,
 				46B258A01E5B03300078BBA5 /* ALChannelMsgCell.h in Headers */,
 				322B304A1EF9537600DB01FC /* AlApplicationInfoFeed.h in Headers */,
+				C76D314C1F0AAFCF0087291F /* ALVOIPNotificationHandler.h in Headers */,
+				C76D314B1F0AAFCE0087291F /* ALAudioVideoBaseVC.h in Headers */,
+				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
 				6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */,
 				6D46B6C51BD025060014A5D3 /* ALMapViewController.h in Headers */,
@@ -1607,7 +1628,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		6DAA09DB1BE4AD8800CBF133 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1615,10 +1636,9 @@
 			name = "Run Script";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "";
-			showEnvVarsInLog = 0;
+			shellScript = "set -e\nset +u\n\n# Avoid recursively calling this script.\n\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\n# Constants\n\nSF_TARGET_NAME=${PROJECT_NAME}\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Take build target\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n#if [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\n#then\n#echo \"Please choose iPhone simulator as the build target.\"\n#exit 1\n#fi\n\nIPHONE_DEVICE_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos\n\n#simulator\n\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Build the other (non-simulator) platform\n\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" CONFIGURATION_BUILD_DIR=\"${IPHONE_DEVICE_BUILD_DIR}/arm64\" SYMROOT=\"${SYMROOT}\" ARCHS='arm64' VALID_ARCHS='arm64' $ACTION\n\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\"  CONFIGURATION_BUILD_DIR=\"${IPHONE_DEVICE_BUILD_DIR}/armv7\" SYMROOT=\"${SYMROOT}\" ARCHS='armv7 armv7s' VALID_ARCHS='armv7 armv7s' $ACTION\n\n# Copy the framework structure to the universal folder (clean it first)\n\nrm -rf \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\"\n\n# Smash them together to combine all architectures\n\nlipo -create  \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/arm64/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/armv7/${PROJECT_NAME}.framework/${PROJECT_NAME}\" -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1669,6 +1689,7 @@
 				6D81979B1CC55B5700E53EC3 /* ALCollectionReusableView.m in Sources */,
 				6D6DF1D21BC5364C00EBA00F /* UIView+WebCacheOperation.m in Sources */,
 				6D6DF15F1BC5364C00EBA00F /* ALChatCell.m in Sources */,
+				C76D31461F0AAFB40087291F /* ALVOIPCell.m in Sources */,
 				6D6DF1611BC5364C00EBA00F /* ALImageCell.m in Sources */,
 				6D7756E61D5B821F0025560B /* ALSyncCallService.m in Sources */,
 				6D7756B61D5B80DF0025560B /* ALChannelService.m in Sources */,
@@ -1678,6 +1699,7 @@
 				6D6DF1511BC5364C00EBA00F /* ALRegisterUserClientService.m in Sources */,
 				29C849A31CC932050042643C /* NSString+Encode.m in Sources */,
 				6D7756EE1D5B82560025560B /* ALReachability.m in Sources */,
+				C76D314E1F0AAFCF0087291F /* ALVOIPNotificationHandler.m in Sources */,
 				6D7756AC1D5B80DF0025560B /* ALChannelClientService.m in Sources */,
 				6D6DF1751BC5364C00EBA00F /* ALJson.m in Sources */,
 				6D7756DA1D5B82000025560B /* ALUserBlocked.m in Sources */,
@@ -1752,6 +1774,7 @@
 				6D6DF1791BC5364C00EBA00F /* ALMessageList.m in Sources */,
 				6D6DF1D01BC5364C00EBA00F /* UIImageView+WebCache.m in Sources */,
 				6D1385791CA9B83C009E6F50 /* AlMultipleAttachmentCell.m in Sources */,
+				C76D314D1F0AAFCF0087291F /* ALAudioVideoBaseVC.m in Sources */,
 				6D7756D81D5B82000025560B /* ALMessageInfoResponse.m in Sources */,
 				6D7757361D5B84BE0025560B /* ALUIConstant.m in Sources */,
 				6D6DF13F1BC5364C00EBA00F /* ALConnection.m in Sources */,
@@ -1905,8 +1928,8 @@
 		6D6DF0861BC535C800EBA00F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C25JNDCBM4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1927,15 +1950,15 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
 		6D6DF0871BC535C800EBA00F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C25JNDCBM4;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1956,7 +1979,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};

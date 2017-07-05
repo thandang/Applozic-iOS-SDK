@@ -311,6 +311,11 @@
     {
         case 0:
         {
+            if(indexPath.row == 0){
+                
+                [self updateGroupView];
+
+            }
             if(indexPath.row == 1){
                 
                 if([self.alChannel isNotificationMuted])

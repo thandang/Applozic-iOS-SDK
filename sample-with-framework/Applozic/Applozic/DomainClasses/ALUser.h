@@ -25,6 +25,12 @@ typedef enum
 
 } deviceApnsType;
 
+typedef enum
+{
+    AUDIO_FEATURE = 101,
+    VIDEO_FEATURE = 102
+} voipfetaure;
+
 @interface ALUser : ALJson
 
 @property NSString *userId;
@@ -50,6 +56,7 @@ typedef enum
 @property short deviceApnsType;
 @property BOOL enableEncryption;
 @property NSNumber* contactType;
+@property NSMutableArray * features;
 @property NSString* notificationSoundFileName;
 
 -(instancetype)initWithUserId:(NSString *)userId

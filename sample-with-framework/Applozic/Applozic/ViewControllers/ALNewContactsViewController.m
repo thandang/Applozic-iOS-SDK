@@ -32,8 +32,7 @@
 #define DEFAULT_TOP_LANDSCAPE_CONSTANT -34
 #define DEFAULT_TOP_PORTRAIT_CONSTANT -64
 
-#define SHOW_CONTACTS 101
-#define SHOW_GROUP 102
+
 
 @interface ALNewContactsViewController ()
 

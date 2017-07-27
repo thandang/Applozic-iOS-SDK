@@ -94,7 +94,7 @@
     NSURL *imageURL = [NSURL URLWithString:self.groupImageURL];
     if(imageURL.path.length)
     {
-        [self.groupIconView sd_setImageWithURL:imageURL];
+        [self.groupIconView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRefreshCached];
     }
     else
     {

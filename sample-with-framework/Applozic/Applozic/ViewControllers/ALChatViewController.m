@@ -1556,7 +1556,7 @@
     // Image View ....
     UIImageView *imageView = [[UIImageView alloc] init];
     NSURL * url = [NSURL URLWithString:topicDetail.link];
-    [imageView sd_setImageWithURL:url];
+    [imageView sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRefreshCached];
     
     imageView.frame = CGRectMake(5, 27, 50, 50);
     imageView.backgroundColor = [UIColor blackColor];

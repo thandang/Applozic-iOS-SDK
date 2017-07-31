@@ -2668,10 +2668,6 @@
 
 -(void)sendMessage:(ALMessage *)theMessage
 {
-    //TODO: Add metadata... identify if receiver has black listed sender and set this no lert flag
-    NSMutableDictionary *metaDict = [[NSMutableDictionary alloc] init];
-    [metaDict setObject:@"true" forKey:@"NO_ALERT"];
-    theMessage.metadata =metaDict;
     
     [ALMessageService sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
         

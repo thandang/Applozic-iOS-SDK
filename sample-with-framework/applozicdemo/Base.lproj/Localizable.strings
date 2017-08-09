@@ -8,7 +8,7 @@
 
 // ChatView
 
-"placeHolderText" ="Write a message";
+"placeHolderText" ="Write a Message...";
 
 "forwardOptionTitle" ="Forward";
 "replyOptionTitle" ="Reply";

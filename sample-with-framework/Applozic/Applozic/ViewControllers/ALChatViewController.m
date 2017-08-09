@@ -147,7 +147,7 @@
     [self initialSetUp];
     [self fetchMessageFromDB];
     [self loadChatView];
-    self.placeHolderTxt = NSLocalizedStringWithDefaultValue(@"placeHolderText", nil, [NSBundle mainBundle], @"Write a message !", @"");
+    self.placeHolderTxt = NSLocalizedStringWithDefaultValue(@"placeHolderText", nil, [NSBundle mainBundle], @"Write a Message...", @"");
     self.sendMessageTextView.text = self.placeHolderTxt;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVOIPMsg)

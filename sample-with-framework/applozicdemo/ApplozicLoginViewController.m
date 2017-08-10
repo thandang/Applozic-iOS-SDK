@@ -181,9 +181,10 @@
     [user setUserId:[self.userIdField text]];
     [user setEmail:[self.emailField text]];
     [user setPassword:[self.passwordField text]];
+    [user setAuthenticationTypeId:(short)APPLOZIC];
     
     [self.mActivityIndicator startAnimating];
-    
+    [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
     [ALUserDefaultsHandler setUserId:user.userId];
     [ALUserDefaultsHandler setEmailId:user.email];
     [ALUserDefaultsHandler setPassword:user.password];

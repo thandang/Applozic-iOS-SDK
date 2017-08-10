@@ -43,9 +43,6 @@
 {
     self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:[self getApplicationKey]];
     
-    //////////////////////////   SET AUTHENTICATION-TYPE-ID FOR INTERNAL USAGE ONLY ////////////////////////
-    [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
-    ////////////////////////// ////////////////////////// ////////////////////////// ///////////////////////
     
     [self ALDefaultChatViewSettings];
     [alUser setApplicationId:[self getApplicationKey]];
@@ -99,9 +96,6 @@
 {
     self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:[self getApplicationKey]];
     
-    //////////////////////////   SET AUTHENTICATION-TYPE-ID FOR INTERNAL USAGE ONLY ////////////////////////
-    [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
-    ////////////////////////// ////////////////////////// ////////////////////////// ///////////////////////
     
     [self ALDefaultChatViewSettings];
     [alUser setApplicationId:[self getApplicationKey]];

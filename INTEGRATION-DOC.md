@@ -20,8 +20,9 @@ i) Open terminal and navigate to your project root directory and run command ```
 ii) Go to project directory open pod file and add code in that
 
 ```
- pod 'Applozic', '~>3.8'
-```
+ pod 'Applozic', '~>4.0.1'
+ 
+ ```
 
 iii) Run ```pod install``` or ```pod update``` to refresh your cocoapods dependencies.
 

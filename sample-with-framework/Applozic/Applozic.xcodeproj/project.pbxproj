@@ -165,7 +165,6 @@
 		6D6DF1861BC5364C00EBA00F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DF0DD1BC5364C00EBA00F /* Images.xcassets */; };
 		6D6DF1871BC5364C00EBA00F /* ALChatCostomization.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DF0E01BC5364C00EBA00F /* ALChatCostomization.plist */; };
 		6D6DF1881BC5364C00EBA00F /* ALConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF0E11BC5364C00EBA00F /* ALConstant.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D6DF1891BC5364C00EBA00F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DF0E21BC5364C00EBA00F /* Localizable.strings */; };
 		6D6DF1B21BC5364C00EBA00F /* MKAnnotationView+WebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF10F1BC5364C00EBA00F /* MKAnnotationView+WebCache.h */; };
 		6D6DF1B31BC5364C00EBA00F /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF1101BC5364C00EBA00F /* MKAnnotationView+WebCache.m */; };
 		6D6DF1B41BC5364C00EBA00F /* NSData+ImageContentType.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF1111BC5364C00EBA00F /* NSData+ImageContentType.h */; };
@@ -508,7 +507,6 @@
 		6D6DF0DD1BC5364C00EBA00F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		6D6DF0E01BC5364C00EBA00F /* ALChatCostomization.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ALChatCostomization.plist; sourceTree = "<group>"; };
 		6D6DF0E11BC5364C00EBA00F /* ALConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALConstant.h; sourceTree = "<group>"; };
-		6D6DF0E31BC5364C00EBA00F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6D6DF10F1BC5364C00EBA00F /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		6D6DF1101BC5364C00EBA00F /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		6D6DF1111BC5364C00EBA00F /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -949,7 +947,6 @@
 			children = (
 				6D6DF0E01BC5364C00EBA00F /* ALChatCostomization.plist */,
 				6D6DF0E11BC5364C00EBA00F /* ALConstant.h */,
-				6D6DF0E21BC5364C00EBA00F /* Localizable.strings */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -1616,7 +1613,6 @@
 				4612E8F31E13882D0022DB23 /* Doxyfile in Resources */,
 				6D7757161D5B83660025560B /* TSMessagesDefaultDesign.json in Resources */,
 				4612E9191E13882D0022DB23 /* MQTTWebsocketTransport in Resources */,
-				6D6DF1891BC5364C00EBA00F /* Localizable.strings in Resources */,
 				6D6DF1861BC5364C00EBA00F /* Images.xcassets in Resources */,
 				6D6DF16F1BC5364C00EBA00F /* Applozic.storyboard in Resources */,
 				6D6DF1871BC5364C00EBA00F /* ALChatCostomization.plist in Resources */,
@@ -1821,14 +1817,6 @@
 			path = Applozic/Base.lproj;
 			sourceTree = "<group>";
 		};
-		6D6DF0E21BC5364C00EBA00F /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6D6DF0E31BC5364C00EBA00F /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1875,7 +1863,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "4375e45c-3077-480b-b2d6-b7f7c5f4cd54";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1918,7 +1906,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "4375e45c-3077-480b-b2d6-b7f7c5f4cd54";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1951,7 +1939,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1980,7 +1968,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

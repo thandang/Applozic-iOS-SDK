@@ -713,6 +713,88 @@ STEP3: Add below in button selector -(void)buttonSelector.
     [ controller customNavigationItemClicked:nil withTag:@"button_tag"];
 }
 ```
+### Contacts group 
+
+Contacts group is for showing particular users/contacts in contact screen 
+
+
+ ##### Settings for contacts group
+
+**Objective - C**
+
+In AlChatManager.m in method -(void)ALDefaultChatViewSettings method update
+
+```
+   [ALApplozicSettings setFilterContactsStatus:NO]; //make this to NO
+   [ALApplozicSettings enableOrDisableContactsGroup:TRUE]; //paste this in inside of -(void)ALDefaultChatViewSettings method
+   
+```
+
+#####  Add member into contacts group 
+
+
+```
+
+   NSMutableArray * memberArray = [NSMutableArray new];
+    [memberArray addObject:@"user1"];//pass the UserId of user whom you want to add into the contacts group
+    [memberArray addObject:@"user2"];
+    NSString * contactsGroupId = @"organization1";//contactsGroupId can be an unique id, it can be be an organization id, event id or any
+    
+    [ALChannelService addMemberToContactGroupOfType:contactsGroupId withMembers:memberArray withGroupType:CONTACT_GROUP withCompletion:^(ALAPIResponse *response, NSError *error) {
+        
+        if(error ){
+            NSLog(@"Error while adding user %@",error);
+            return ;
+        }
+        
+        if (response && [@"success" isEqualToString:response.status]) {
+          NSLog(@"User added to contacts group");
+        }else{
+            NSLog(@"User not able to add to contacts group");
+        }
+    }];
+    
+ ```
+ 
+ ##### Settings to add while chat Launching 
+ 
+ ```
+   [ALApplozicSettings setContactsGroupId:contactsGroupId]; //contactsGroupId can be any unique id, it can be be an organization id, event id or any
+ ```
+ 
+ 
+#####  Remove Member from contacts group
+
+Note : only admin can remove user from contacts group 
+
+    NSString * contactsGroupId = @"organization1";//contactsGroupId can be any unique id, it can be be an organization id, event id or any
+    NSString *removeMemeberUserId = @"user2";
+    
+    [ALChannelService removeMemberFromContactGroupOfType:(NSString *)contactsGroupId withGroupType:CONTACT_GROUP withUserId:(NSString *) removeMemeberUserId withCompletion:^(ALAPIResponse *response, NSError *error){
+        if(error ){
+            NSLog(@"Error while  remove Member user %@",error);
+            return ;
+        }
+        
+        if (response && [@"success" isEqualToString:response.status]) {
+            NSLog(@"User removed from contacts group");
+        }else{
+            NSLog(@"Not able to remove user");
+        }
+    }];
+
+
+
+ 
+ 
+
+    
+    
+
+
+
+
+
 
 
 

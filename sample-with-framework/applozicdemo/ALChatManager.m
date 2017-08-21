@@ -134,6 +134,42 @@
     }];
 }
 
+-(void)launchGroupOfTwoWithClientId:(NSString*)clientGroupId
+                       withMetaData:(NSMutableDictionary*)metadata
+                        andWithUser:(NSString *)userId
+              andFromViewController:(UIViewController *)viewController
+{
+    ALChannelService * channelService = [[ALChannelService alloc] init];
+    
+    ALChannel *alChannel = [channelService fetchChannelWithClientChannelKey:clientGroupId];
+    if (alChannel){
+        
+        [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
+                            andwithDisplayName:nil andFromViewController:viewController];
+    }
+    else
+    {
+        [channelService getChannelInformation:nil orClientChannelKey:clientGroupId withCompletion:^(ALChannel *alChannel) {
+            
+            if(alChannel.key){
+                [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
+                                    andwithDisplayName:nil andFromViewController:viewController];
+            }else{
+                
+                //Create new one channel and launch:;;
+                [channelService createChannel:clientGroupId orClientChannelKey:clientGroupId andMembersList:@[userId]
+                                 andImageLink:nil channelType:GROUP_OF_TWO
+                                  andMetaData:metadata withCompletion:^(ALChannel *alChannelInRespose, NSError *error) {
+                                      NSLog(@" group of two id %@", alChannelInRespose.key);
+                                      [self launchChatForUserWithDisplayName:nil withGroupId:alChannelInRespose.key
+                                                          andwithDisplayName:nil andFromViewController:viewController];
+                                  }];
+            }
+        }];
+    }
+    
+}
+
 //==============================================================================================================================================
 // convenient method to launch chat-list, after user registration is done on applozic server.
 // This will automatically handle unregistered users provided getLoggedinUserInformation is implemented properly.

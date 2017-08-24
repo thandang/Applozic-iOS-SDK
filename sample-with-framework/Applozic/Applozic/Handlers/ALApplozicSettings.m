@@ -715,6 +715,7 @@ NOTIFICATION_DISABLE = 2
 +(void) setContactTypeToFilter:(NSMutableArray*)arrayWithIds
 {
     [[NSUserDefaults standardUserDefaults] setObject:arrayWithIds forKey:FILTER_ONLY_CONTACT_TYPE_ID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 +(NSMutableArray*) getContactTypeToFilter
@@ -961,5 +962,55 @@ NOTIFICATION_DISABLE = 2
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:SWIFT_FRAMEWORK];
 }
+
++(void) setHideAttachmentsOption:(NSMutableArray*)array{
+    
+    [[NSUserDefaults standardUserDefaults] setObject:array forKey:HIDE_ATTACHMENT_OPTION];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray*) getHideAttachmentsOption{
+    
+
+    return [[NSUserDefaults standardUserDefaults] objectForKey:HIDE_ATTACHMENT_OPTION];
+
+}
+
+
++(BOOL) isCameraOptionHidden{
+    
+    return ([[self getHideAttachmentsOption] containsObject:@":camera"]);
+}
+
++(BOOL) isPhotoGalleryOptionHidden{
+    
+    return ([[self getHideAttachmentsOption] containsObject:@":gallery"]);
+}
+
++(BOOL) isSendAudioOptionHidden{
+    return ([[self getHideAttachmentsOption] containsObject:@":audio"]);
+}
+
++(BOOL) isSendVideoOptionHidden{
+    return ([[self getHideAttachmentsOption] containsObject:@":video"]);
+}
+
++(BOOL) isLocationOptionHidden{
+    return ([[self getHideAttachmentsOption] containsObject:@":location"]);
+
+}
+
++(BOOL) isBlockUserOptionHidden{
+    return ([[self getHideAttachmentsOption] containsObject:@":blockUser"]);
+}
+
++(BOOL) isShareContactOptionHidden{
+    return ([[self getHideAttachmentsOption] containsObject:@":shareContact"]);
+}
+
++(BOOL) isAttcahmentButtonHidden{
+    return ([[self getHideAttachmentsOption] containsObject:@":attachmentbutton"]);
+}
+
 
 @end

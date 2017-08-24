@@ -82,6 +82,8 @@
 #define CONTACTS_GROUP_ID @"com.applozic.userdefault.CONTACTS_GROUP_ID"
 #define FORWARD_OPTION @"com.applozic.userdefault.FORWARD_OPTION"
 #define SWIFT_FRAMEWORK @"com.applozic.userfefault.SWIFT_FRAMEWORK"
+#define HIDE_ATTACHMENT_OPTION @"com.applozic.HIDE_ATTACHMENT_OPTIONS"
+
 
 
 #import <Foundation/Foundation.h>
@@ -342,4 +344,21 @@
 
 +(BOOL)isSwiftFramework;
 +(void)setSwiftFramework:(BOOL)flag;
+
++(void) setHideAttachmentsOption:(NSArray*)array;
+
++(NSArray*) getHideAttachmentsOption;
+
++(BOOL) isCameraOptionHidden;
++(BOOL) isPhotoGalleryOptionHidden;
++(BOOL) isSendAudioOptionHidden;
++(BOOL) isSendVideoOptionHidden;
++(BOOL) isLocationOptionHidden;
++(BOOL) isBlockUserOptionHidden;
++(BOOL) isShareContactOptionHidden;
++(BOOL) isAttchmentButtonHidden;
+
+
+
+
 @end

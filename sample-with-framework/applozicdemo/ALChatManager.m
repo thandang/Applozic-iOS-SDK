@@ -563,6 +563,11 @@
     
     [ALApplozicSettings setChatListTabTitle:@""];
     [ALApplozicSettings setProfileTabTitle:@""];
+    
+    NSArray * attachmentOptionToHide = @[@":audio", @":video", @":location",@":shareContact"];
+    
+    [ALApplozicSettings setHideAttachmentsOption:attachmentOptionToHide];
+    
 }
 
 -(void)getApplicationBaseURL

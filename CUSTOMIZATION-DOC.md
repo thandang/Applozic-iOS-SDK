@@ -236,7 +236,7 @@ Add and change the string values in your app Localizable.strings(arabic)
 
 __Swift__
 ```
-Add this in viewDidLoad to add Applozic as subview:
+// Add this in viewDidLoad to add Applozic as subview:
 
 let containerView = UIView()
 containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -248,7 +248,7 @@ NSLayoutConstraint.activate([
     containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
     ])
 
-// add child view controller view to container
+// Add child view controller view to container
 let story = UIStoryboard(name: "Applozic", bundle: Bundle(for: ALMessagesViewController.self))
 let controller = story.instantiateViewController(withIdentifier: "ALViewController")
 addChildViewController(controller)

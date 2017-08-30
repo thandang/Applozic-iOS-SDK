@@ -219,7 +219,19 @@ ALApplozicSettings.setFontFace("Helvetica")
 
 1)You can get the localisation file from this link [Localizable.strings](https://github.com/AppLozic/Applozic-iOS-SDK/blob/master/sample-with-framework/applozicdemo/Base.lproj/Localizable.strings)
 
-2)Then you need to add above Localizable.strings  keys in your file with translations for your language.
+2)Then you need to copy text entries  from above Localizable.strings  in your file with translations for your language.
+
+
+Example : 
+
+"placeHolderText" ="Write a Message...";
+
+Add and change the string values in your app Localizable.strings(arabic)
+
+"placeHolderText" ="اكتب رسالة...;
+
+
+
 
 
 

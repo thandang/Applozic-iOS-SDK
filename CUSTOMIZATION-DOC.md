@@ -242,10 +242,10 @@ let containerView = UIView()
 containerView.translatesAutoresizingMaskIntoConstraints = false
 view.addSubview(containerView)
 NSLayoutConstraint.activate([
-    containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-    containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-    containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-    containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+    containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+    containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+    containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+    containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
     ])
 
 // Add child view controller view to container

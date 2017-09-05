@@ -307,7 +307,10 @@ In your podfile you need to write it in this way:
 pod 'Applozic', :path => '<url_of_your_repo>'
 ```
 then `pod install`
-Later when you want to update our SDK then just fetch the changes from our repo, and merge the changes to your forked repo. It will be updated.
+
+Later, when you want to update our SDK then just fetch the changes from our repo, and merge the changes to your forked repo. It will be updated.
+
+If you just want to keep your changes locally, then clone the [repo](https://github.com/AppLozic/Applozic-Chat-iOS-Framework) and do the changes. In your podfile, pass the path of your local repo.
 
 #### UI source code
 

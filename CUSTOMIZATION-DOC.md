@@ -296,6 +296,19 @@ NSLayoutConstraint.activate([
 controller.didMove(toParentViewController: self)
 ```
 
+#### Customise Pod
+
+If you have added our SDK using CocoaPods then you should not directly modify our pod. If you modify our pod and later you want to update the pod then all the local changes will be removed.
+
+The right way to do is to fork our [repo](https://github.com/AppLozic/Applozic-Chat-iOS-Framework) then clone the repo and do the changes. Once you are done with the changes then push it. Now what you need to do is to use this forked repo in the pod. You need to pass the url of this forked repo.
+
+In your podfile you need to write it in this way:
+```
+pod 'Applozic', :path => '<url_of_your_repo>'
+```
+then `pod install`
+Later when you want to update our SDK then just fetch the changes from our repo, and merge the changes to your forked repo. It will be updated.
+
 #### UI source code
 
 For complete control over UI, you can also download open source chat UI toolkit and change it as per your designs :

@@ -234,6 +234,37 @@ Add and change the string values in your app Localizable.strings(arabic)
 
 #### Container View
 
+__Objective-C__
+
+```
+// Add this in viewDidLoad to add Applozic as subview:
+
+UIView * containerView = [[UIView alloc] init];
+containerView.translatesAutoresizingMaskIntoConstraints = false;
+[self.view addSubview:containerView];
+
+[containerView.leadingAnchor constraintEqualToAnchor: self.view.leadingAnchor].active = true;
+[containerView.trailingAnchor constraintEqualToAnchor: self.view.trailingAnchor].active = true;
+[containerView.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = true;
+[containerView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = true;
+
+// Add child view controller view to container
+NSBundle * bundle = [NSBundle bundleForClass:ALMessagesViewController.class];
+UIStoryboard * storyboard = [UIStoryboard storyboardWithName: @"Applozic" bundle:bundle];
+UIViewController * controller = [storyboard instantiateViewControllerWithIdentifier:@"ALViewController"];
+[self addChildViewController: controller];
+controller.view.translatesAutoresizingMaskIntoConstraints = true;
+[containerView addSubview:controller.view];
+
+[controller.view.leadingAnchor constraintEqualToAnchor: containerView.leadingAnchor].active = true;
+[controller.view.trailingAnchor constraintEqualToAnchor: containerView.trailingAnchor].active = true;
+[controller.view.topAnchor constraintEqualToAnchor:containerView.topAnchor].active = true;
+[controller.view.bottomAnchor constraintEqualToAnchor:containerView.bottomAnchor].active = true;
+
+[controller didMoveToParentViewController:self];
+```
+
+
 __Swift__
 ```
 // Add this in viewDidLoad to add Applozic as subview:
@@ -264,7 +295,6 @@ NSLayoutConstraint.activate([
 
 controller.didMove(toParentViewController: self)
 ```
-
 
 #### UI source code
 

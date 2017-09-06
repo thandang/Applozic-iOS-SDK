@@ -961,5 +961,13 @@ NOTIFICATION_DISABLE = 2
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:SWIFT_FRAMEWORK];
 }
-
++(BOOL)isStorageServiceEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:DEDICATED_SERVER];
+}
++(void)enableStorageService:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:DEDICATED_SERVER];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 @end

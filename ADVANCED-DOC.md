@@ -786,9 +786,11 @@ Note : only admin can remove user from contacts group
 
 ### Audio/Video Call Setup
 
-#### Installation 
+**Installation** 
 
-#### Using cocoapods
+**1) Framework:**
+
+**Using cocoapods**
 
 Add below pod dependency:
 ```
@@ -797,9 +799,9 @@ Add below pod dependency:
 ```
 NOTE: Continue follwing integration steps and skip using framework step.
  
-#### Using Framework 
+**Using Framework**
 
-#### Installing lfs
+**Installing lfs**
 
 i)  To fetch framowrk files(larger-file), you need to install lfs. You can install it by running below command:
 
@@ -819,9 +821,9 @@ git lfs pull
 ```
 
 
-##### 2) Navigate to your Xcode project's General settings page and add Applozic.framework,Twillio.framework from [sample project root folder](https://github.com/AppLozic/applozic-ios-video-call-sample/tree/master/ALAudioVideo) as Embeded binaries.
+**2) Navigate to your Xcode project's General settings page and add Applozic.framework,Twillio.framework from [sample project root folder](https://github.com/AppLozic/applozic-ios-video-call-sample/tree/master/ALAudioVideo) as Embeded binaries.**
 
-#### 3) Add below libraries in Linked Frameworks and Libraries.
+**3) Add below libraries in Linked Frameworks and Libraries.**
 
 - AudioToolbox.framework
 - VideoToolbox.framework
@@ -833,22 +835,22 @@ git lfs pull
 - libc++.tbd
 
 
-#### Integration Steps: 
+**Integration Steps:**
 
-#### 1) Add Audio/Video code to your project.
+**1) Add Audio/Video code to your project.**
  - Copy paste [AudioVideo](https://github.com/AppLozic/applozic-ios-video-call-sample/tree/master/ALAudioVideo/ALAudioVideo/AudioVideo) folder from sample project and paste it into your root directory of your project. Go to Add Files to project, select all files present in Folder and add it to your project.
 
-#### 2) Follow basic integration steps:
+**2) Follow basic integration steps:**
 - After above steps, follow our documentaion page from steps 2) onward for integration:
 
 https://www.applozic.com/docs/ios-chat-sdk.html#step-2-login-register-user
 
 
-#### 3) Notification setup:
+**3) Notification setup:** 
 
   Apart from basic notification setup done in [step 4](https://www.applozic.com/docs/ios-chat-sdk.html#step-4-push-notification-setup). Add below Pushkit delegates.
 
-#### Objective-C
+**Objective-C**
   
  ``` 
   //=====================================
@@ -945,7 +947,7 @@ https://www.applozic.com/docs/ios-chat-sdk.html#step-2-login-register-user
 }
  ```
 
-#### Swift
+**Swift**
 
 ```
 extension AppDelegate: PKPushRegistryDelegate {
@@ -1031,7 +1033,7 @@ extension AppDelegate: PKPushRegistryDelegate {
 
 **NOTE: You need to upload VoIP Services Certificate in both development and distribution section on Applozic Dashboard**
 
-#### 4) Add below setting in ALChatManger.m's in ALDefaultChatViewSettings.
+**4) Add below setting in ALChatManger.m's in ALDefaultChatViewSettings.**
 
     [ALApplozicSettings setAudioVideoClassName:@"ALAudioVideoCallVC"];
     [ALApplozicSettings setAudioVideoEnabled:YES];

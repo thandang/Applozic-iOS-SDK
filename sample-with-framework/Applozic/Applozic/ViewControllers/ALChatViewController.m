@@ -183,6 +183,9 @@
      addObserver:self selector:@selector(newMessageHandler:) name:NEW_MESSAGE_NOTIFICATION  object:nil];
     
     [self.tabBarController.tabBar setHidden: YES];
+
+    // In iOS 11, TableView by default starts estimating the row height. This setting will disable that.
+    self.mTableView.estimatedRowHeight = 0;
     
     [self.label setHidden:NO];
     self.label.alpha = 1;

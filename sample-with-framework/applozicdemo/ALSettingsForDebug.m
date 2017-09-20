@@ -43,7 +43,7 @@
     self.environmentPickerView.hidden = YES;
     toggle = self.environmentPickerView.hidden;
     
-    environmentNamesArray = [[NSArray alloc] initWithObjects:@"apps",@"test",@"staging",@"chat", nil];
+    environmentNamesArray = [[NSArray alloc] initWithObjects:@"apps",@"apps-test",@"staging",@"chat", nil];
     environmentURLArray = [[NSArray alloc] initWithObjects:@"https://apps.applozic.com",
                            @"https://apps-test.applozic.com",
                            @"https://staging.applozic.com",

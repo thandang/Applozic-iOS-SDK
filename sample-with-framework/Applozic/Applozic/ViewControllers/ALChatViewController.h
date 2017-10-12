@@ -63,6 +63,7 @@
 //-(void) syncCall:(NSString *) contactId updateUI:(NSNumber *) updateUI alertValue: (NSString *) alertValue;
 -(void) syncCall:(ALMessage *) alMessage andMessageList:(NSMutableArray*)messageArray;
 -(void)showTypingLabel:(BOOL)flag userId:(NSString *)userId;
+-(void)subProcessTextViewDidChange:(UITextView *)textView;
 
 -(void) updateLastSeenAtStatus: (ALUserDetail *) alUserDetail;
 -(void) reloadViewfor3rdParty;

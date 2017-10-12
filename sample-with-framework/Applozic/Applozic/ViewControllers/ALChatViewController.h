@@ -46,6 +46,7 @@
 @property (strong, nonatomic) NSString * displayName;
 
 @property (strong, nonatomic) NSString * text;
+@property (nonatomic) double defaultMessageViewHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomToAttachment;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTop2Constraint;
 

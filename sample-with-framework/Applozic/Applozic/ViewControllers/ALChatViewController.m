@@ -149,6 +149,7 @@
     [self loadChatView];
     self.placeHolderTxt = NSLocalizedStringWithDefaultValue(@"placeHolderText", nil, [NSBundle mainBundle], @"Write a Message...", @"");
     self.sendMessageTextView.text = self.placeHolderTxt;
+    self.defaultMessageViewHeight = 56.0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVOIPMsg)
                                                  name:@"UPDATE_VOIP_MSG" object:nil];
@@ -3459,7 +3460,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if([textView.text isEqualToString:@""]|| [textView.text isEqualToString:self.placeHolderTxt])
         {
             [super setHeightOfTextViewDynamically:NO];
-            self.textMessageViewHeightConstaint.constant = 56.0;
+            self.textMessageViewHeightConstaint.constant = self.defaultMessageViewHeight;
         }
         //return;
     }

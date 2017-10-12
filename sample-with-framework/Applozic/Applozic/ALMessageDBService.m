@@ -374,7 +374,7 @@
    // [contactservice insertInitialContacts];
 }
 
--(NSArray*)getMessageListGroupByContact:(int)messageCount
+-(NSArray*)getMessageList:(int)messageCount
                 messageTypeOnlyReceived:(BOOL)received
 {
 

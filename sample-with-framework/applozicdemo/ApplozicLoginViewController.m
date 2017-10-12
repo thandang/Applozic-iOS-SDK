@@ -47,6 +47,16 @@
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
+    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+        self.userIdField.textAlignment = NSTextAlignmentRight;
+        self.emailField.textAlignment = NSTextAlignmentRight;
+        self.passwordField.textAlignment = NSTextAlignmentRight;
+    }
+    
+    [self.getStarted setTitle: NSLocalizedStringWithDefaultValue(@"getStarted", nil, [NSBundle mainBundle], @"Get Started", @"") forState:UIControlStateNormal]; // To set the title
+    self.userIdField.placeholder = NSLocalizedStringWithDefaultValue(@"userId", nil, [NSBundle mainBundle], @"UserId", @"");
+    self.emailField.placeholder = NSLocalizedStringWithDefaultValue(@"email", nil, [NSBundle mainBundle], @"Email", @"");
+    self.passwordField.placeholder = NSLocalizedStringWithDefaultValue(@"password", nil, [NSBundle mainBundle], @"Password", @"");
     
 }
 
@@ -61,7 +71,7 @@
     
     [ALDataNetworkConnection checkDataNetworkAvailable];
     [self.mActivityIndicator stopAnimating];
-    [self setTitle:@"Log Out"];
+    [self setTitle:NSLocalizedStringWithDefaultValue(@"logoutLabelText", nil, [NSBundle mainBundle], @"Logout", @"")];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -155,13 +165,14 @@
     
     if (self.userIdField.text.length == 0)
     {
-        [ALUtilityClass showAlertMessage:@"UserId can't be blank" andTitle:@"Error"];
+        [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"userIdEmpty", nil, [NSBundle mainBundle], @"UserId can't be blank frnce", @"")andTitle: NSLocalizedStringWithDefaultValue(@"error", nil, [NSBundle mainBundle], @"Error", @"")];
         return;
     }
     
     if (self.passwordField.text.length == 0)
     {
-        [ALUtilityClass showAlertMessage:@"Password can't be blank" andTitle:@"Error"];
+        [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"passwordEmpty", nil, [NSBundle mainBundle], @"Password can't be blank ", @"")
+                                andTitle:NSLocalizedStringWithDefaultValue(@"error", nil, [NSBundle mainBundle], @"Error", @"")];
         return;
     }
     

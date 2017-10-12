@@ -105,12 +105,19 @@
         [self.contentView addSubview:self.contactPerson];
         
         self.addContactButton = [[UIButton alloc] init];
-        [self.addContactButton setTitle:@"ADD CONTACT" forState:UIControlStateNormal];
+     [self.addContactButton setTitle: NSLocalizedStringWithDefaultValue(@"addContactButtonText", nil,[NSBundle mainBundle], @"ADD CONTACT", @"") forState:UIControlStateNormal];
         [self.addContactButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.addContactButton.titleLabel setFont:[UIFont fontWithName:[ALApplozicSettings getFontFace] size:14]];
         [self.addContactButton addTarget:self action:@selector(addButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [self.addContactButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [self.contentView addSubview:self.addContactButton];
+        if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+            self.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            self.userContact.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            self.emailId.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            self.addContactButton.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            self.contactPerson.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+        }
 
     }
     return self;
@@ -336,6 +343,12 @@
     self.mBubleImageView.layer.shadowRadius = 1;
     self.mBubleImageView.layer.masksToBounds = NO;
     
+    UIMenuItem * messageForward = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"forwardOptionTitle", nil,[NSBundle mainBundle], @"Forward", @"") action:@selector(messageForward:)];
+   
+    
+    [[UIMenuController sharedMenuController] setMenuItems: @[messageForward]];
+    [[UIMenuController sharedMenuController] update];
+    
     return self;
 }
 
@@ -395,15 +408,18 @@
 //==================================================================================================
 //==================================================================================================
 
+
 -(BOOL) canPerformAction:(SEL)action withSender:(id)sender
 {
     if([self.mMessage.type isEqualToString:@MT_OUTBOX_CONSTANT] && self.mMessage.groupId)
     {
-        return (action == @selector(delete:)|| action == @selector(msgInfo:));
+        return (self.mMessage.isDownloadRequired? (action == @selector(delete:) || action == @selector(msgInfo:)):(action == @selector(delete:)|| action == @selector(msgInfo:)|| action == @selector(messageForward:)));
     }
     
-    return (action == @selector(delete:));
+    return (self.mMessage.isDownloadRequired? (action == @selector(delete:)):
+            (action == @selector(delete:) || action == @selector(messageForward:)));
 }
+
 
 -(void) delete:(id)sender
 {
@@ -418,6 +434,14 @@
 {
     [self.delegate processUserChatView:self.mMessage];
 }
+
+-(void) messageForward:(id)sender
+{
+    NSLog(@"Message forward option is pressed");
+    [self.delegate processForwardMessage:self.mMessage];
+    
+}
+
 
 - (void)msgInfo:(id)sender
 {

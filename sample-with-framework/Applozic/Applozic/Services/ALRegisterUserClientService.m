@@ -87,8 +87,11 @@
             [ALUserDefaultsHandler setDeviceKeyString:response.deviceKey];
             [ALUserDefaultsHandler setUserKeyString:response.userKey];
             [ALUserDefaultsHandler setUserPricingPackage:response.pricingPackage];
-            [ALUserDefaultsHandler setNotificationSoundFileName:response.notificationSoundFileName];
             
+            if( response.notificationSoundFileName )
+            {
+                [ALUserDefaultsHandler setNotificationSoundFileName:response.notificationSoundFileName];
+            }
             if(response.imageLink)
             {
                 [ALUserDefaultsHandler setProfileImageLinkFromServer:response.imageLink];

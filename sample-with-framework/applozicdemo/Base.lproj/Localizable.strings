@@ -1,0 +1,285 @@
+/*
+ Localizable.strings
+ applozicdemo
+ 
+ Created by Nitin on 07/08/17.
+ Copyright © 2017 applozic Inc. All rights reserved.
+ */
+
+// ChatView
+
+"placeHolderText" ="Write a Message...";
+
+"forwardOptionTitle" ="Forward";
+"replyOptionTitle" ="Reply";
+"infoOptionTitle" ="Info";
+
+"noConversationTitle"  = "You have no conversations yet";
+
+"restrictionWorldInfo"  = "AVOID USE OF ABUSE WORDS";
+
+"groupDeletedInfo"  = "This Group has been Deleted";
+
+"userDeletedInfo"  = "User has been deleted";
+
+"chatTitle"  = "Chats";
+
+"profileTitle"  = "Profile";
+
+"sendTitle"  = "Send";
+
+"userBlockedInfo" = "THIS USER IS BLOCKED BY YOU";
+
+"oppsText"  = "OOPS !!!";
+"unBlock"  = "UNBLOCK";
+
+"userUnBlock" = "USER UNBLOCK";
+
+"blockedSusccessFullyInfo" = "is unblocked successfully";
+
+
+"lastSeenLabelText" = "Last seen ";
+
+"onlineLabelText" = "Online";
+
+"lastSeenJustNowLabelText" = "Last seen Just Now ";
+
+"hrsAgo" = "hrs ago";
+"mins" = "mins ago";
+
+"permissionPopMessageForCamera" = "Enable Camera Permission";
+
+"permissionNotAvailableMessageForCamera" = "Camera is not Available !!!";
+
+
+"permissionPopMessageForMicroPhone" = "Enable MicroPhone Permission";
+"permissionPopMessageForContacts" = "Enable Contacts Permission";
+
+"forgetToTypeMessageInfo" = "Did you forget to type the message?";
+
+"emptyText"  ="Empty";
+
+"warningText" = "WARNING";
+
+"photosOrVideoOption" = "Photos/Videos";
+"currentLocationText" = "current location";
+"sendAudioOption" = "Send Audio";
+"sendVideoOption" = "Send Video";
+"blockUserOption"= "Block User";
+"blockedSuccessfullyText" = "is blocked successfully";
+"userBlock" ="USER BLOCK";
+"shareContact"= "Share Contact";
+"currentLocationOption" = "Current location";
+
+"syncMessagesInfo" = "Syncing messages with the server,\n it might take few mins!";
+
+"today"="Today";
+"yesterday" = "Yesterday";
+//MessageViewControler
+
+
+"noMoreConversations" = "No more conversations";
+"back"="BACK";
+"createGroupOptionTitle" = "Create Group";
+"broadcastGroupOptionTitle" = "New Broadcast";
+
+
+//MessageInfo
+
+"read" = "Read";
+"delivered" ="Delivered";
+"messageProccessText" = "Message is in processing";
+
+//User profile
+
+
+"emptyLabelProfileText" = "Profile Status";
+"alertText" = "Alert";
+"unableToUpdateText" ="Unable to update !!!";
+"notificationStatusUpdateText" = "Notification setting updated!!!";
+
+"imageUpdatedText" = "Image Updated Successfully!!!";
+"profileTitleInfo" = "Profile";
+"profileStatusTitle" = "Profile Status";
+"notificationsTitle"= "Notifications";
+"mobileNotificationsTitle" = "Mobile Notifications";
+
+//AlAudoAttachmentViewControler
+
+"recordingStoppedInfo" = "Recording stopped";
+
+"playerStoppedInfo" = "Player stopped";
+
+"pauseRecordInfo" = "PAUSE RECORD";
+
+"recordInfo" = "RECORD";
+
+"doneText" = "DONE";
+
+"finishPlayingInfo" = "FINISH PLAYING !!!";
+
+"messageText" = "Message";
+
+"okText"  = "OK";
+
+
+"image" = "Image";
+
+"video" = "Video";
+"audio" ="Audio";
+
+"location" = "Location";
+"attachment" = "Attachment";
+
+
+"cancelOptionText" = "Cancel";
+"cancelFailed"="Cancel failed !";
+
+"cancelText" = "cancel";
+
+"photoLibraryText" = "Photo Library";
+
+"takePhotoText" = "Take Photo";
+
+//CONTCATSCREEN
+
+"searchInfo" = "Email, userid, number";
+"contactsTitle" = "Contacts";
+"groupsTitle" = "Groups";
+"noContactFoundText" = "No contact found";
+
+"noGroupFoundText" = "No group found";
+
+"unableToFetachContacts" ="Unable to fetch contacts";
+
+"unableToAddMemberText" = "Unable to add new member";
+
+"groupMembersTitle" ="Group Members";
+"selectMembersText" ="Please select minimum two members";
+
+
+"unableToCreateGroupText" ="Unable to create group. Please try again";
+
+//Group details
+
+"groupDetailsTitle" = "Group Details";
+
+"youText" ="You";
+
+"confirmText" = "Confirm";
+"areYouSureText" ="Are you sure?";
+"yes" = "Yes";
+"deleteFailed" = "Delete failed !";
+"unMuteGroup" = "Unmute Group";
+"addNewMember" = "Add New Member";
+"muteGroup" = "Mute Group";
+"exitGroupText" = "Exit Group";
+"deleteGroupText"= "Delete Group";
+"hrs"="Hrs";
+"week" = "week";
+"year" ="Year";
+
+"removeText" = "Remove";
+"makeAdminText" = "Make admin";
+"groupSuccessFullyUpdateInfo" = "Group information successfully updated";
+"responeText" = "Response";
+
+
+//Create group
+
+"error" = "Error";
+"unableToLocateFile" = "Unable to locate file on device";
+"upload" ="upload";
+"confirmationText" = "Confirmation";
+"areYouSureForUploadText" = "Are you sure to upload?";
+
+"removePhoto" = "Remove Photo";
+"groupNameInfo" = "Group Name";
+"nextUiButtonText" = " Next";
+"updateUiButtonText" = "Update";
+"groupNameEmptyAlertTitle" ="Group Name";
+"groupNameEmptyAlertMessage" ="Please give the group name.";
+
+"youHaveNotUpdatedAnything" = "You haven't update anything";
+"wait" = "Wait!!!";
+"yourNotAparticipantOfGroupInfo" = "You are not a participant of this group";
+"unableToProcess"="Unable process !!!";
+
+//Map
+
+"settings" = "Settings";
+
+//Image preivew view
+
+"imagePreview" = "Image Preview";
+"alertProfileStatusMessage"= "Write status here...";
+
+"yorStatusAlertTitle" = "Your Status";
+
+"maxCharForStatus" = "(Max 256 characters)";
+
+"noInternetMessage" = "No Internet Connectivity";
+
+"youHaveLeftGroupMesasge" = "You have left this group";
+
+"groupNameTextField" = "Type your group name";
+"descriptionTextForGroup" = "Please provide group name";
+
+"groupTitle" = "Create Group";
+"sendLocationButtonText" = "Send Location";
+"sendLocationViewTitle" = "Send Location";
+"exitGroup"= "Exit Group";
+"deleteGroup" = "Delete Group";
+
+"selectAtleastAttachment" = "Select at least one attachment";
+
+"attachmentLimitReachedText" = "Maximum attachment limit reached";
+
+"shareadLocationText" = "Shared a Location";
+"shareadContactText" = "Shared a Contact";
+
+"shareadVideoText" = "Shared a Video";
+
+"shareadAudioText" = "Shared an Audio";
+
+"shareadAttachmentText" = "Shared an Attachment";
+
+"send" = "Send";
+"cancel" = "Cancel";
+"stop" = "Stop";
+"record" = "Record";
+"play" = "Play";
+"pause" = "Pause";
+
+"recordAudioViewtitle" = "Record Audio";
+"imageUpdateText" ="Image Updated Successfully!!!";
+"uploadOption" = "Upload";
+"adminText" = "Admin";
+"contact" = "Contact";
+"justNow" = "Just Now";
+"applicationSettings" = " Application Settings";
+"todayMsgViewText" = "today";
+"yesterdayMsgViewText" = "yesterday";
+"addContactButtonText" = "ADD CONTACT";
+"loadEarlierMessagesText" ="Load Earlier Messages";
+"groupUpdateViewText" = "Group update";
+"responseText" ="Response";
+"shareadLocation" = "Shared Location";
+
+"tabbarChatsTitle" = "Chats";
+"tabbarProfileTitle" = "Profile";
+"logoutLabelText" = "Logout";
+"audioCall"="Audio Call";
+"videoCall" = "Video Call";
+
+
+"userId" = "UserId";
+"email" = "Email";
+"password" ="Password";
+"userIdEmpty" = "UserId can't be blank";
+"passwordEmpty" = "Password can't be blank";
+
+"getStarted" = "Get Started";
+"writeSomeTextHere" = "Write Some Text...";
+"attachmentViewTitle" = "Attachment";
+

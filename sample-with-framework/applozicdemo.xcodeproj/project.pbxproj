@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		29B643C91CE9F24800FE8A73 /* ALSettingsForDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B643C81CE9F24800FE8A73 /* ALSettingsForDebug.m */; };
+		32A5E88E1F3B870500E99655 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 32A5E8901F3B870500E99655 /* Localizable.strings */; };
 		462D5B441DA40C7000F5CD73 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462D5B431DA40C7000F5CD73 /* UserNotifications.framework */; };
 		4694ECDF1D99575B006050AB /* restrictWords.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4694ECDE1D99575B006050AB /* restrictWords.txt */; };
 		6D44D95B1BF60C990039B1A7 /* LaunchChatFromSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D44D95A1BF60C990039B1A7 /* LaunchChatFromSimpleViewController.m */; };
@@ -63,6 +64,7 @@
 /* Begin PBXFileReference section */
 		29B643C71CE9F24800FE8A73 /* ALSettingsForDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSettingsForDebug.h; sourceTree = "<group>"; };
 		29B643C81CE9F24800FE8A73 /* ALSettingsForDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSettingsForDebug.m; sourceTree = "<group>"; };
+		32A5E88F1F3B870500E99655 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		462D5B431DA40C7000F5CD73 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4694ECDE1D99575B006050AB /* restrictWords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = restrictWords.txt; sourceTree = "<group>"; };
 		46A457931D99867700649E45 /* applozicdemo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = applozicdemo.entitlements; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				6D6DF1F51BC551FA00EBA00F /* main.m */,
+				32A5E8901F3B870500E99655 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				6D6D0BAB1C297A20002E8B3D /* Roboto-Regular.ttf in Resources */,
 				6D54E5F41BE4B28E001BD278 /* Default-568h@2x.png in Resources */,
 				6D6DF2041BC551FA00EBA00F /* Assets.xcassets in Resources */,
+				32A5E88E1F3B870500E99655 /* Localizable.strings in Resources */,
 				6D54E6011BE4B73D001BD278 /* Info.plist in Resources */,
 				6D4F28CB1BC58F6C007E7B35 /* Main.storyboard in Resources */,
 			);
@@ -343,6 +347,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		32A5E8901F3B870500E99655 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				32A5E88F1F3B870500E99655 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		6D6DF2051BC551FA00EBA00F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

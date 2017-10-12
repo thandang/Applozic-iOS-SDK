@@ -91,6 +91,10 @@ UIViewController * modalCon;
         [self.contentView addSubview:self.mImageView];
         
         [self.mDowloadRetryButton addTarget:self action:@selector(dowloadRetryButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+            self.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            self.mImageView.transform = CGAffineTransformMakeScale(-1.0, 1.0);
+        }
     }
     
     return self;
@@ -389,6 +393,13 @@ UIViewController * modalCon;
     }
     
     [self.mImageView sd_setImageWithURL:theUrl];
+    
+  UIMenuItem * messageForward = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"forwardOptionTitle", nil,[NSBundle mainBundle], @"Forward", @"") action:@selector(messageForward:)];
+    
+    [[UIMenuController sharedMenuController] setMenuItems: @[messageForward]];
+    [[UIMenuController sharedMenuController] update];
+   
+    
     return self;
     
 }
@@ -486,13 +497,16 @@ UIViewController * modalCon;
 
 -(BOOL) canPerformAction:(SEL)action withSender:(id)sender
 {
+    NSLog(@"Action: %@", NSStringFromSelector(action));
+    
     if([self.mMessage.type isEqualToString:@MT_OUTBOX_CONSTANT] && self.mMessage.groupId)
     {
-        return (action == @selector(delete:)|| action == @selector(msgInfo:));
+        return (self.mMessage.isDownloadRequired? (action == @selector(delete:) || action == @selector(msgInfo:)):(action == @selector(delete:)|| action == @selector(msgInfo:)|| action == @selector(messageForward:)  ));
     }
     
-    return (action == @selector(delete:));
+    return (self.mMessage.isDownloadRequired? (action == @selector(delete:)):(action == @selector(delete:)|| action == @selector(messageForward:)));
 }
+
 
 -(void) delete:(id)sender
 {
@@ -505,6 +519,13 @@ UIViewController * modalCon;
         
         NSLog(@"DELETE MESSAGE ERROR :: %@", error.description);
     }];
+}
+
+-(void) messageForward:(id)sender
+{
+    NSLog(@"Message forward option is pressed");
+    [self.delegate processForwardMessage:self.mMessage];
+    
 }
 
 -(void)openUserChatVC

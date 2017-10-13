@@ -183,9 +183,11 @@
          {
              if(!error)
              {
-                 [[UIApplication sharedApplication] registerForRemoteNotifications];  // required to get the app to do anything at all about push notifications
-                 NSLog(@"Push registration success." );
-             }
+                 dispatch_async(dispatch_get_main_queue(), ^ {
+                     [[UIApplication sharedApplication] registerForRemoteNotifications];  // required to get the app to do anything at all about push notifications
+                     NSLog(@"Push registration success." );
+                 });
+            }
              else
              {
                  NSLog(@"Push registration FAILED" );

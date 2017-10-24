@@ -152,6 +152,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    // Due to changes in top layout guide in iOS 11, top constraint was behaving differently and tableview would not be visible properly.
+    if (@available(iOS 11.0, *)) {
+        self.tableViewTopSegmentConstraint.constant = 0;
+    }
     self.groupOrContacts = [NSNumber numberWithInt:SHOW_CONTACTS]; //default
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.title = NSLocalizedStringWithDefaultValue(@"contactsTitle", nil, [NSBundle mainBundle], @"Contacts" , @"");

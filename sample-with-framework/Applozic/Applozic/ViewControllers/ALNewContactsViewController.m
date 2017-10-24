@@ -154,7 +154,7 @@
     [super viewWillAppear:animated];
 
     // Due to changes in top layout guide in iOS 11, top constraint was behaving differently and tableview would not be visible properly.
-    if (@available(iOS 11.0, *)) {
+    if(!TS_SYSTEM_VERSION_LESS_THAN(@"11.0")) {
         self.tableViewTopSegmentConstraint.constant = 0;
     }
     self.groupOrContacts = [NSNumber numberWithInt:SHOW_CONTACTS]; //default

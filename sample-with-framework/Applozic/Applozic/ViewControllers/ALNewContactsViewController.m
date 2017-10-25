@@ -149,6 +149,12 @@
     [self.searchBar resignFirstResponder];
 }
 
+-(void)viewWillLayoutSubviews
+{
+    float y = self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height;
+    self.searchBar.frame = CGRectMake(0,y, self.view.frame.size.width, 40);
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

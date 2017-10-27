@@ -307,7 +307,8 @@ In your info.plist add these permission for diffrent type of attachments.
 	<string>Allow MicroPhone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Photos</string>
- 
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Allow write access</string>
 ```
 
 #### Step 6: Logout User

@@ -564,7 +564,13 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
             [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[NSString stringWithFormat:@"%@\r\n", [parameters objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
         }
-        NSString *FileParamConstant = @"files[]";
+
+        NSString* FileParamConstant;
+        if(ALApplozicSettings.isCustomStorageServiceEnabled){
+            FileParamConstant = @"file";
+        }else{
+            FileParamConstant = @"files[]";
+        }
         NSData *imageData = [[NSData alloc]initWithContentsOfFile:filePath];
         NSLog(@"%f",imageData.length/1024.0);
         //Assuming data is not nil we add this to the multipart form
@@ -607,6 +613,8 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     NSString *urlString;
     if(ALApplozicSettings.isStorageServiceEnabled) {
         urlString = [NSString stringWithFormat:@"%@%@%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT, message.fileMeta.blobKey];
+    } else if(ALApplozicSettings.isCustomStorageServiceEnabled) {
+        urlString = message.fileMeta.url;
     } else {
         urlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/%@",KBASE_FILE_URL,message.fileMeta.blobKey];
     }
@@ -745,8 +753,14 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         ALMessage * message = [dbService createMessageEntity:dbMessage];
         NSError * theJsonError = nil;
         NSDictionary *theJson = [NSJSONSerialization JSONObjectWithData:connection.mData options:NSJSONReadingMutableLeaves error:&theJsonError];
-        NSDictionary *fileInfo = [theJson objectForKey:@"fileMeta"];
-        [message.fileMeta populate:fileInfo];
+
+        if(ALApplozicSettings.isCustomStorageServiceEnabled){
+            [message.fileMeta populate:theJson];
+        }else{
+            NSDictionary *fileInfo = [theJson objectForKey:@"fileMeta"];
+            [message.fileMeta populate:fileInfo];
+        }
+
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
         [ALMessageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
             

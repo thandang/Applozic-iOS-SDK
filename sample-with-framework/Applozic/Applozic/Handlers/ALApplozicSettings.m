@@ -1022,4 +1022,16 @@ NOTIFICATION_DISABLE = 2
     return ([[self getHideAttachmentsOption] containsObject:@":attachmentbutton"]);
 }
 
++(BOOL)isCustomStorageServiceEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:CUSTOM_STORAGE];
+}
+
++(void)enableCustomStorageService:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CUSTOM_STORAGE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 @end

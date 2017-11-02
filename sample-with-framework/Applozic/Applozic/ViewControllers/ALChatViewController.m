@@ -2144,8 +2144,13 @@
         }
         NSError * theJsonError = nil;
         NSDictionary *theJson = [NSJSONSerialization JSONObjectWithData:connection.mData options:NSJSONReadingMutableLeaves error:&theJsonError];
-        NSDictionary *fileInfo = [theJson objectForKey:@"fileMeta"];
-        [message.fileMeta populate:fileInfo ];
+        
+        if(ALApplozicSettings.isCustomStorageServiceEnabled){
+            [message.fileMeta populate:theJson];
+        }else{
+            NSDictionary *fileInfo = [theJson objectForKey:@"fileMeta"];
+            [message.fileMeta populate:fileInfo];
+        }
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
         [self sendMessage:almessage ];
     }

@@ -25,50 +25,41 @@
     return filePath;
 }
 
-+(NSString *) saveVideoToDocDirectory:(NSURL *)videoURL
++(void) saveVideoToDocDirectory:(NSURL *)videoURL handler:(void (^)(NSString *))handler
 {
     NSString * videoPath1 = @"";
     NSString * tempPath =@"";
     NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     videoPath1 =[docDir stringByAppendingString:[NSString stringWithFormat:@"/VID-%f.mov",[[NSDate date] timeIntervalSince1970] * 1000]];
-    NSError* error = nil;
-    NSData* videoData = [NSData dataWithContentsOfURL:videoURL options:NSDataReadingUncached error:&error];
-    if (error) {
-        NSLog(@"Error in video data loading: %@", [error localizedDescription]);
-    } else {
-        NSLog(@"Video data loading successful.");
-    }
-    BOOL save = [videoData writeToFile:videoPath1 atomically:NO];
-    NSLog(@"Video saved in mov format successful: %d",save);
+    NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
+    [videoData writeToFile:videoPath1 atomically:NO];
 
     AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:videoPath1] options:nil];
     NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
-    
     if ([compatiblePresets containsObject:AVAssetExportPresetLowQuality])
     {
         AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset presetName:AVAssetExportPresetPassthrough];
-        tempPath = [docDir stringByAppendingString:[NSString stringWithFormat:@"/VID-%f.mp4",[[NSDate date] timeIntervalSince1970] * 1000]];
+        tempPath  = [docDir stringByAppendingString:[NSString stringWithFormat:@"/VID-%f.mp4",[[NSDate date] timeIntervalSince1970] * 1000]];
         exportSession.outputURL = [NSURL fileURLWithPath:tempPath];
         NSLog(@"Final file = %@",tempPath);
         exportSession.outputFileType = AVFileTypeMPEG4;
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                switch ([exportSession status]) {
-                    case AVAssetExportSessionStatusFailed:
-                        NSLog(@"Export failed: %@", [[exportSession error] localizedDescription]);
-                        break;
-                    case AVAssetExportSessionStatusCancelled:
-                        NSLog(@"Export canceled");
-                        break;
-                    default:
-                        break;
-                }
-                UISaveVideoAtPathToSavedPhotosAlbum(tempPath, self, nil, nil);
-            });
+            switch ([exportSession status]) {
+                case AVAssetExportSessionStatusFailed:
+                    NSLog(@"Export failed: %@", [[exportSession error] localizedDescription]);
+                    break;
+                case AVAssetExportSessionStatusCancelled:
+                    NSLog(@"Export canceled");
+                    break;
+                case AVAssetExportSessionStatusCompleted:
+                    NSLog(@"completed");
+                default:
+                    break;
+            }
+            UISaveVideoAtPathToSavedPhotosAlbum(tempPath, self, nil, nil);
+            handler(tempPath);
         }];
-        
     }
-    return tempPath;
 }
 
 @end

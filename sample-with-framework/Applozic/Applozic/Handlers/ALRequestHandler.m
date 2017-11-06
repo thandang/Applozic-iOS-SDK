@@ -73,6 +73,24 @@
     
 }
 
++(NSMutableURLRequest *) createGETRequestWithUrlStringWithoutHeader:(NSString *) urlString paramString:(NSString *) paramString
+{
+    NSMutableURLRequest * theRequest = [[NSMutableURLRequest alloc] init];
+    NSURL * theUrl = nil;
+    if (paramString != nil) {
+        theUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",urlString,paramString]];
+    }
+    else
+    {
+        theUrl = [NSURL URLWithString:urlString];
+    }
+    NSLog(@"GET_URL :: %@", theUrl);
+    [theRequest setURL:theUrl];
+    [theRequest setTimeoutInterval:600];
+    [theRequest setHTTPMethod:@"GET"];
+    return theRequest;
+}
+
 +(void) addGlobalHeader: (NSMutableURLRequest*) request
 {
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

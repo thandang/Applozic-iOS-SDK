@@ -610,16 +610,18 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 
 +(void) processImageDownloadforMessage:(ALMessage *) message withdelegate:(id)delegate
 {
-    NSString *urlString;
-    if(ALApplozicSettings.isStorageServiceEnabled) {
-        urlString = [NSString stringWithFormat:@"%@%@%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT, message.fileMeta.blobKey];
-    } else if(ALApplozicSettings.isCustomStorageServiceEnabled) {
-        urlString = message.fileMeta.url;
+    NSMutableURLRequest * theRequest;
+    if(message.fileMeta.url) {
+        NSString *urlString = message.fileMeta.url;
+        theRequest = [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:urlString paramString:nil];
+    } else if(ALApplozicSettings.isStorageServiceEnabled) {
+        NSString *urlString = [NSString stringWithFormat:@"%@%@%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT, message.fileMeta.blobKey];
+        theRequest = [ALRequestHandler createGETRequestWithUrlString:urlString paramString:nil];
     } else {
-        urlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/%@",KBASE_FILE_URL,message.fileMeta.blobKey];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/%@",KBASE_FILE_URL,message.fileMeta.blobKey];
+      theRequest = [ALRequestHandler createGETRequestWithUrlString:urlString paramString:nil];
     }
 
-    NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:urlString paramString:nil];
     ALConnection * connection = [[ALConnection alloc] initWithRequest:theRequest delegate:delegate startImmediately:YES];
     connection.keystring = message.key;
     connection.connectionType = @"Image Downloading";

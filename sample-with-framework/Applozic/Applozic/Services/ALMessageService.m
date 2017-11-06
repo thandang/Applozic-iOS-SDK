@@ -572,7 +572,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
             FileParamConstant = @"files[]";
         }
         NSData *imageData = [[NSData alloc]initWithContentsOfFile:filePath];
-        NSLog(@"%f",imageData.length/1024.0);
+        NSLog(@"Attachment data length: %f",imageData.length/1024.0);
         //Assuming data is not nil we add this to the multipart form
         if (imageData)
         {

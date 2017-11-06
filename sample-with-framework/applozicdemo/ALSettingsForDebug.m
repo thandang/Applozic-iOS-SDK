@@ -149,7 +149,7 @@
 
      NSString * alMQTT_URL = [NSString stringWithFormat:@"%@.applozic.com",envrn];
     
-    NSString * alFILE_URL = [NSString stringWithFormat:@"https://%@.appspot.com",([envrn isEqualToString:@"apps"]||[envrn isEqualToString:@"chat"])?@"applozic":@"mobi-com-alpha"];
+    NSString * alFILE_URL = [NSString stringWithFormat:@"https://%@.com",([envrn isEqualToString:@"apps"]||[envrn isEqualToString:@"chat"])?@"applozic":@"apps-test.applozic"];
 
     [ALUserDefaultsHandler setBASEURL:alKBASE_URL];
     [ALUserDefaultsHandler setMQTTURL:alMQTT_URL];

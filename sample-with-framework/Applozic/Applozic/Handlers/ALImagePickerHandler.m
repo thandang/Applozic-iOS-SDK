@@ -31,8 +31,15 @@
     NSString * tempPath =@"";
     NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     videoPath1 =[docDir stringByAppendingString:[NSString stringWithFormat:@"/VID-%f.mov",[[NSDate date] timeIntervalSince1970] * 1000]];
-    NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
-    [videoData writeToFile:videoPath1 atomically:NO];
+    NSError* error = nil;
+    NSData* videoData = [NSData dataWithContentsOfURL:videoURL options:NSDataReadingUncached error:&error];
+    if (error) {
+        NSLog(@"Error in video data loading: %@", [error localizedDescription]);
+    } else {
+        NSLog(@"Video data loading successful.");
+    }
+    BOOL save = [videoData writeToFile:videoPath1 atomically:NO];
+    NSLog(@"Video saved in mov format successful: %d",save);
 
     AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:videoPath1] options:nil];
     NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];

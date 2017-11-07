@@ -85,6 +85,7 @@
 #define DEDICATED_SERVER @"com.applozic.userfefault.DEDICATED_SERVER"
 #define HIDE_ATTACHMENT_OPTION @"com.applozic.HIDE_ATTACHMENT_OPTIONS"
 #define CUSTOM_STORAGE @"com.applozic.userdefault.CUSTOM_STORAGE"
+#define DEFAULT_GROUP_TYPE @"com.applozic.DEFAULT_GROUP_TYPE"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -363,5 +364,6 @@
 
 +(BOOL)isCustomStorageServiceEnabled;
 +(void)enableCustomStorageService:(BOOL)flag;
-
++(void) setDefaultGroupType:(NSInteger)type;
++(NSInteger) getDefaultGroupType;
 @end

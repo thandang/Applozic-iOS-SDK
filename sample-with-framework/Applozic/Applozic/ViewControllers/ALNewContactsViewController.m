@@ -28,6 +28,7 @@
 #import "ALContactService.h"
 #import "ALPushAssist.h"
 #import "ALSubViewController.h"
+#import "ALApplozicSettings.h"
 
 #define DEFAULT_TOP_LANDSCAPE_CONSTANT -34
 #define DEFAULT_TOP_PORTRAIT_CONSTANT -64
@@ -1126,9 +1127,12 @@
     }
     else
     {
-        [self.creatingChannel createChannel:self.groupName orClientChannelKey:nil andMembersList:memberList andImageLink:self.groupImageURL
-                             withCompletion:^(ALChannel *alChannel, NSError *error) {
-                                 
+        NSInteger channelType = PUBLIC;
+        if([ALApplozicSettings getDefaultGroupType]) {
+            channelType = [ALApplozicSettings getDefaultGroupType];
+        }
+        [self.creatingChannel createChannel:self.groupName orClientChannelKey:nil andMembersList:memberList andImageLink:self.groupImageURL channelType:channelType
+                andMetaData:nil withCompletion:^(ALChannel *alChannel, NSError *error) {
                                  if(alChannel)
                                  {
                                      //Updating view, popping to MessageList View

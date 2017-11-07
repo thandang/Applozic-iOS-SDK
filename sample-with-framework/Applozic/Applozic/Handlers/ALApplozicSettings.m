@@ -1033,5 +1033,14 @@ NOTIFICATION_DISABLE = 2
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+// This will set the default group type (to be used when "Create Group" button is pressed).
++(void) setDefaultGroupType:(NSInteger)type {
+    [[NSUserDefaults standardUserDefaults] setInteger:type forKey:DEFAULT_GROUP_TYPE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSInteger) getDefaultGroupType {
+    return([[NSUserDefaults standardUserDefaults] integerForKey:DEFAULT_GROUP_TYPE ]);
+}
 
 @end

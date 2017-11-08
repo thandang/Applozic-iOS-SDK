@@ -86,6 +86,8 @@
 #define HIDE_ATTACHMENT_OPTION @"com.applozic.HIDE_ATTACHMENT_OPTIONS"
 #define CUSTOM_STORAGE @"com.applozic.userdefault.CUSTOM_STORAGE"
 #define DEFAULT_GROUP_TYPE @"com.applozic.DEFAULT_GROUP_TYPE"
+#define CONTACTS_GROUP_ID_LIST @"com.applozic.userdefault.CONTACTS_GROUP_ID_LIST"
+
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -338,6 +340,10 @@
 +(void)setContactsGroupId:(NSString *)contactsGroupId;
 
 +(NSString *)getContactsGroupId;
+
++(void)setContactGroupIdList:(NSArray *)contactIdList;
+
++(NSArray*)getContactGroupIdList;
 
 +(void)forwardOptionEnableOrDisable:(BOOL)flag;
 

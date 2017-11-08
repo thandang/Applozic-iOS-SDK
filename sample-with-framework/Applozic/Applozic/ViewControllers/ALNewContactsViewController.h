@@ -65,5 +65,6 @@ LAUNCH FOR SUB GROUP
 @property (nonatomic, strong) NSMutableArray * childChannels;
 
 -(void)launchProcessForSubgroups;
+-(void)proccessContactsGroupList;
 
 @end

@@ -941,6 +941,19 @@ NOTIFICATION_DISABLE = 2
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:CONTACTS_GROUP_ID];
 }
+
++(void)setContactGroupIdList:(NSArray *)contactsGroupIdList
+{
+    [[NSUserDefaults standardUserDefaults] setObject:contactsGroupIdList forKey:CONTACTS_GROUP_ID_LIST];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray*)getContactGroupIdList
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:CONTACTS_GROUP_ID_LIST];
+}
+
+
 +(void)forwardOptionEnableOrDisable:(BOOL)flag
 {
     [[NSUserDefaults standardUserDefaults] setBool:flag forKey:FORWARD_OPTION];

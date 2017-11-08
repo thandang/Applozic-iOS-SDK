@@ -112,7 +112,14 @@
         [self.searchBar setUserInteractionEnabled:YES];
     }else if( [ALApplozicSettings isContactsGroupEnabled] && [ALApplozicSettings getContactsGroupId] && ![ALApplozicSettings getFilterContactsStatus]){
         [self proccessContactsGroupCall];
+    }else if( [ALApplozicSettings isContactsGroupEnabled] && [ALApplozicSettings getContactGroupIdList] && ![ALApplozicSettings getFilterContactsStatus]){
+        [self proccessContactsGroupList];
     }else{
+        NSLog(@"isContactsGroupEnabled:%d", [ALApplozicSettings isContactsGroupEnabled] );
+        NSLog(@"isContactsGroupEnabled:%@", [ALApplozicSettings getContactGroupIdList] );
+        NSLog(@"isContactsGroupEnabled:%d", [ALApplozicSettings getFilterContactsStatus] );
+
+        
         [self subProcessContactFetch];
         [self.searchBar setUserInteractionEnabled:YES];
     }
@@ -1473,6 +1480,56 @@
             }
         }
         [self onlyGroupFetch];
+    }];
+}
+
+-(void)proccessContactsGroupList{
+    
+    [ALChannelService getMembersIdsForContactGroups:[ALApplozicSettings getContactGroupIdList] withCompletion:^(NSError *error, NSArray *membersArray) {
+      [self.searchBar setUserInteractionEnabled:YES];
+        
+        NSMutableArray * contactList = [NSMutableArray new];
+        ALContactService *contactService = [ALContactService new];
+        
+        if(!error && membersArray != nil){
+            for(NSString * userId in membersArray)
+            {
+                if(![userId isEqualToString:[ALUserDefaultsHandler getUserId]])
+                {
+                    ALContact *contact = [contactService loadContactByKey:@"userId" value:userId];
+                    [contactList addObject:contact];
+                }
+            }
+            [self.contactList removeAllObjects];
+            self.contactList = [NSMutableArray arrayWithArray:contactList];
+            self.filteredContactList = [NSMutableArray arrayWithArray:self.contactList];
+            
+            [[self activityIndicator] stopAnimating];
+            [self.contactsTableView reloadData];
+            
+        }else{
+            ALChannelService *channelService = [ALChannelService new];
+            NSMutableArray * membersArray = [NSMutableArray new];
+            
+            membersArray = [channelService getListOfAllUsersInChannelByNameForContactsGroup:[ALApplozicSettings getContactsGroupId]];
+            
+            if(membersArray && membersArray.count >0){
+                for(NSString * userId in membersArray)
+                {
+                    ALContact *contact = [contactService loadContactByKey:@"userId" value:userId];
+                    [contactList addObject:contact];
+                }
+                
+                [self.contactList removeAllObjects];
+                self.contactList = [NSMutableArray arrayWithArray:contactList];
+                self.filteredContactList = [NSMutableArray arrayWithArray:self.contactList];
+                
+                [[self activityIndicator] stopAnimating];
+                [self.contactsTableView reloadData];
+            }
+        }
+        [self onlyGroupFetch];
+        
     }];
 }
 

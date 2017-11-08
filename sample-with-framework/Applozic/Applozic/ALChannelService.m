@@ -832,6 +832,35 @@
     }];
     
 }
+
++(void)getMembersIdsForContactGroups:(NSArray*)contactGroupIds withCompletion:(void(^)(NSError *error, NSArray *membersArray)) completion
+{
+    NSMutableArray * memberUserIds = [NSMutableArray new];
+    
+    if(contactGroupIds )
+    {
+        ALChannelClientService* channelService = [ALChannelClientService new];
+        
+        [channelService getMultipleContactGroup:contactGroupIds withCompletion:^(NSError *error, NSArray *channels) {
+            
+            if(channels)
+            {
+                for (ALChannel * channel in channels)
+                {
+                    [memberUserIds addObjectsFromArray:channel.membersId];
+                }
+                completion(nil,memberUserIds);
+            }
+            else
+            {
+                completion(error,nil);
+            }
+        }];
+        
+    }
+    
+}
+
 @end
 
 

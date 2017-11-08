@@ -847,8 +847,12 @@
             {
                 for (ALChannel * channel in channels)
                 {
+                    ALChannelDBService * dbService = [ALChannelDBService new];
+                    [dbService createChannel:channel];
                     [memberUserIds addObjectsFromArray:channel.membersId];
                 }
+
+
                 completion(nil,memberUserIds);
             }
             else

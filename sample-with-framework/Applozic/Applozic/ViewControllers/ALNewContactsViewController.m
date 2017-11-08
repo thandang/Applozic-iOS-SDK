@@ -1492,6 +1492,7 @@
         ALContactService *contactService = [ALContactService new];
         
         if(!error && membersArray != nil){
+            membersArray = [membersArray valueForKeyPath:@"@distinctUnionOfObjects.self"];
             for(NSString * userId in membersArray)
             {
                 if(![userId isEqualToString:[ALUserDefaultsHandler getUserId]])
@@ -1510,23 +1511,29 @@
         }else{
             ALChannelService *channelService = [ALChannelService new];
             NSMutableArray * membersArray = [NSMutableArray new];
-            
-            membersArray = [channelService getListOfAllUsersInChannelByNameForContactsGroup:[ALApplozicSettings getContactsGroupId]];
-            
+
+            for(NSString* channelId in [ALApplozicSettings getContactGroupIdList]) {
+                NSMutableArray* members = [channelService getListOfAllUsersInChannelByNameForContactsGroup:channelId];
+                [membersArray addObjectsFromArray: members];
+
+            }
             if(membersArray && membersArray.count >0){
+                membersArray = [membersArray valueForKeyPath:@"@distinctUnionOfObjects.self"];
                 for(NSString * userId in membersArray)
                 {
-                    ALContact *contact = [contactService loadContactByKey:@"userId" value:userId];
-                    [contactList addObject:contact];
+                    if(![userId isEqualToString:[ALUserDefaultsHandler getUserId] ]) {
+                        ALContact *contact = [contactService loadContactByKey:@"userId" value:userId];
+                        [contactList addObject:contact];
+                    }
                 }
-                
+
                 [self.contactList removeAllObjects];
                 self.contactList = [NSMutableArray arrayWithArray:contactList];
                 self.filteredContactList = [NSMutableArray arrayWithArray:self.contactList];
-                
-                [[self activityIndicator] stopAnimating];
-                [self.contactsTableView reloadData];
+
             }
+            [[self activityIndicator] stopAnimating];
+            [self.contactsTableView reloadData];
         }
         [self onlyGroupFetch];
         

@@ -29,7 +29,7 @@
     else
     {
         theUrl = [NSURL URLWithString:urlString];
-    
+        
     }
     NSLog(@"GET_URL :: %@", theUrl);
     
@@ -55,11 +55,11 @@
     {
         NSData * thePostData = [paramString dataUsingEncoding:NSUTF8StringEncoding];
         
-        if([ALUserDefaultsHandler getEncryptionKey] && ![urlString hasSuffix:REGISTER_USER_STRING]) // ENCRYPTING DATA WITH KEY
+        if([ALUserDefaultsHandler getEncryptionKey] && ![urlString hasSuffix:REGISTER_USER_STRING] && ![urlString hasSuffix:@"rest/ws/register/update"]) // ENCRYPTING DATA WITH KEY
         {
-           NSData *postData = [thePostData AES128EncryptedDataWithKey:[ALUserDefaultsHandler getEncryptionKey]];
-           NSData *base64Encoded = [postData base64EncodedDataWithOptions:0];
-           thePostData = base64Encoded;
+            NSData *postData = [thePostData AES128EncryptedDataWithKey:[ALUserDefaultsHandler getEncryptionKey]];
+            NSData *base64Encoded = [postData base64EncodedDataWithOptions:0];
+            thePostData = base64Encoded;
         }
         
         [theRequest setHTTPBody:thePostData];
@@ -91,6 +91,7 @@
     return theRequest;
 }
 
+
 +(void) addGlobalHeader: (NSMutableURLRequest*) request
 {
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -105,7 +106,7 @@
     [request addValue:[ALUserDefaultsHandler getDeviceKeyString] forHTTPHeaderField:@"Device-Key"];
     [request addValue:@"1" forHTTPHeaderField:@"Source"];
     [request addValue:[ALUserDefaultsHandler getAppModuleName]
-        forHTTPHeaderField:@"App-Module-Name"];
+   forHTTPHeaderField:@"App-Module-Name"];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@",[ALUserDefaultsHandler getUserId], [ALUserDefaultsHandler getDeviceKeyString]];
     NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
@@ -116,3 +117,4 @@
     NSLog(@"Basic string...%@",authString);
 }
 @end
+

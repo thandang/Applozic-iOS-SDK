@@ -116,8 +116,7 @@
     NSLog(@"MQTT_NOTIFICATION_TYPE :: %@",type);
     NSString *notificationId = (NSString* )[theMessageDict valueForKey:@"id"];
     
-    ALPushAssist *top = [[ALPushAssist alloc] init];
-    if([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground || !top.isOurViewOnTop)
+    if([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
     {
         NSLog(@"Returing coz Application State is Background OR Our View is NOT on Top");
         if ([topic hasPrefix:@"typing"])
@@ -342,7 +341,10 @@
 {
     NSLog(@"MQTT : CONNECTION CLOSED (MQTT DELEGATE)");
     [self.mqttConversationDelegate mqttConnectionClosed];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"mqttConnectionClosed"
+                                                        object:nil
+                                                      userInfo:nil];
+
     //Todo: inform controller about connection closed.
 }
 

@@ -19,6 +19,11 @@
 #import "ALUserService.h"
 #import "ALMQTTConversationService.h"
 #import "ALGroupDetailViewController.h"
+#import "ALDataNetworkConnection.h"
+
+#define MQTT_MAX_RETRY 3
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 
 @implementation ALAppLocalNotifications
 
@@ -32,7 +37,6 @@
         
         localNotificationHandler = [[self alloc] init];
     });
-    
     return localNotificationHandler;
 }
 
@@ -54,6 +58,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(transferVOIPMessage:)
                                                  name:@"newMessageNotification"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mqttConnectionClosedHandler)
+                                                 name:@"mqttConnectionClosed" object:nil];
+
     
     if([ALUserDefaultsHandler isLoggedIn]){
         
@@ -188,12 +195,10 @@
 
 -(void)proactivelyConnectMQTT
 {
-    ALPushAssist * assitant = [[ALPushAssist alloc] init];
-//    if(assitant.isOurViewOnTop)
-//    {
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")) {
         ALMQTTConversationService *alMqttConversationService = [ALMQTTConversationService sharedInstance];
         [alMqttConversationService  subscribeToConversation];
-//    }
+    }
 }
 
 -(void)proactivelyDisconnectMQTT
@@ -251,7 +256,8 @@
         return;
     }
     
-    if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_ACTIVE]])
+//    if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_ACTIVE]])
+    if([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
     {
         if( alertValue || alertValue.length >0)
         {
@@ -310,6 +316,25 @@
     for (ALMessage *msg in array)
     {
         [voipHandler handleAVMsg:msg andViewController:assist.topViewController];
+    }
+}
+
+-(void)mqttConnectionClosedHandler
+{
+    if (self.mqttRetryCount > MQTT_MAX_RETRY)
+    {
+        return;
+    }
+
+    UIApplication *app = [UIApplication sharedApplication];
+    BOOL isBackgroundState = (app.applicationState == UIApplicationStateBackground);
+
+    if([ALDataNetworkConnection checkDataNetworkAvailable] && !isBackgroundState)
+    {
+        NSLog(@"MQTT connection closed, subscribing again: %lu", (long)_mqttRetryCount);
+        NSLog(@"ALMessageVC subscribing channel again....");
+        [self proactivelyConnectMQTT];
+        self.mqttRetryCount++;
     }
 }
 

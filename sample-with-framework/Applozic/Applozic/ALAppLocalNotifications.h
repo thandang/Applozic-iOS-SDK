@@ -27,6 +27,7 @@
 @property(strong,nonatomic) NSDictionary *dict ;
 @property(strong,nonatomic) NSString * contactId;
 @property(strong,nonatomic) NSMutableDictionary* dict2;
+@property (nonatomic) NSInteger mqttRetryCount;
 
 -(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber*) groupID;
 

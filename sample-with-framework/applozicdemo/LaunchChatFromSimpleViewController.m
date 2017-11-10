@@ -19,7 +19,11 @@
 #import  <Applozic/ALContactService.h>
 #import  <Applozic/ALUserService.h>
 #import <Applozic/ALImagePickerHandler.h>
-@interface LaunchChatFromSimpleViewController ()
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
+
+@interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
 
 - (IBAction)mLaunchChatList:(id)sender;
 - (IBAction)mChatLaunchButton:(id)sender;
@@ -44,6 +48,12 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] init];
+    if([userDefaults boolForKey:@"sendLogs"] == YES) {
+        self.sendLogsButton.hidden = NO;
+    } else {
+        self.sendLogsButton.hidden = YES;
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"userUpdate" object:nil];
     
     //////////////////////////   SET AUTHENTICATION-TYPE-ID FOR INTERNAL USAGE ONLY ////////////////////////
@@ -102,6 +112,39 @@
 
     //Adding sample contacts...
     [self insertInitialContacts];
+}
+- (IBAction)sendLogsAction:(id)sender {
+    if ([MFMailComposeViewController canSendMail])
+    {
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+
+        mailer.mailComposeDelegate = self;
+
+        [mailer setSubject:@"Applozic Logs File"];
+
+        NSArray *toRecipients = [NSArray arrayWithObjects:@"support@applozic.com", nil];
+        [mailer setToRecipients:toRecipients];
+
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *txtFilePath = [documentsDirectory stringByAppendingPathComponent:@"AllTheLogs.txt"];
+        NSData *noteData = [NSData dataWithContentsOfFile:txtFilePath];
+        [mailer setMessageBody:@"Hey there sending you the logs."
+                                  isHTML:YES];
+        [mailer setMailComposeDelegate:self];
+        [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"AllTheLogs.txt"];
+
+        [self presentViewController:mailer animated:YES completion:nil];
+        }
+        else
+          {
+              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure"
+                                                              message:@"Your device doesn't support the composer sheet"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+              [alert show];
+          }
 }
 
 //===============================================================================
@@ -459,6 +502,11 @@
     //    [ss removeClientChildKeyList:childList andParentKey:@"1170818" withCompletion:^(id json, NSError *error) {
     //        
     //    }];
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 -(void)dealloc

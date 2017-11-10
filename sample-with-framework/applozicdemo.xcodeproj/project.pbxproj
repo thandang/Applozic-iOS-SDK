@@ -31,6 +31,7 @@
 		6DAA09DA1BE39FCB00CBF133 /* Applozic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA09D61BE39F6B00CBF133 /* Applozic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79E9593767F7DFCB4CC72D74 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1ED364E65158421A4DCED3 /* AssetsLibrary.framework */; };
 		842F66858A6423DE9E523B39 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1266FFF6FF481F4CFF88E7 /* CoreTelephony.framework */; };
+		8B344D621FB5DF2B00BAFD49 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */; };
 		8FFB428979FD738E5C4A3BD5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71166F2B6E73BE1C8CE86E /* SystemConfiguration.framework */; };
 		A18CF189D70FDE1E604A7538 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC495FFC34D1F473FCFB224 /* AVFoundation.framework */; };
 		C7ACBBC91DB650DD0087EE35 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ACBBC71DB650DD0087EE35 /* Fabric.framework */; };
@@ -74,7 +75,7 @@
 		0A1266FFF6FF481F4CFF88E7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		0DC495FFC34D1F473FCFB224 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0E71166F2B6E73BE1C8CE86E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		162EC4668DEC45215321962B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BuddyBuildSDK.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
+		162EC4668DEC45215321962B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		254D88CF49A190C80498EFA6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		29B643C71CE9F24800FE8A73 /* ALSettingsForDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSettingsForDebug.h; sourceTree = "<group>"; };
 		29B643C81CE9F24800FE8A73 /* ALSettingsForDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSettingsForDebug.m; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		6D7F4C6E1C314EBD00AE04CF /* ALChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALChatManager.h; sourceTree = "<group>"; };
 		6D7F4C6F1C314EBD00AE04CF /* ALChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALChatManager.m; sourceTree = "<group>"; };
 		6DAA09D11BE39F6A00CBF133 /* Applozic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Applozic.xcodeproj; path = Applozic/Applozic.xcodeproj; sourceTree = "<group>"; };
+		8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C7ACBBC71DB650DD0087EE35 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		C7ACBBC81DB650DD0087EE35 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		CB1ED364E65158421A4DCED3 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -116,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B344D621FB5DF2B00BAFD49 /* MessageUI.framework in Frameworks */,
 				462D5B441DA40C7000F5CD73 /* UserNotifications.framework in Frameworks */,
 				6DAA09D91BE39FB800CBF133 /* Applozic.framework in Frameworks */,
 				C7ACBBCA1DB650DD0087EE35 /* Crashlytics.framework in Frameworks */,
@@ -138,6 +141,7 @@
 		462D5B421DA40C7000F5CD73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */,
 				462D5B431DA40C7000F5CD73 /* UserNotifications.framework */,
 				162EC4668DEC45215321962B /* BuddyBuildSDK.framework */,
 				CB1ED364E65158421A4DCED3 /* AssetsLibrary.framework */,

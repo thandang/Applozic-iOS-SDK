@@ -35,9 +35,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [BuddyBuildSDK setup];
-    
-    // Override point for customization after application launch.
-    
+
     [self registerForNotification];
     // checks wheather app version is updated/changed then makes server call setting VERSION_CODE
     [ALRegisterUserClientService isAppUpdated];
@@ -75,6 +73,10 @@
                 //Note: notification for app
             }
         }
+    }
+    NSUserDefaults * userDefaults = [[NSUserDefaults alloc] init];
+    if([userDefaults boolForKey:@"sendLogs"] == YES) {
+        [self redirectLogToDocuments];
     }
     
     [Fabric with:@[[Crashlytics class]]];
@@ -197,5 +199,15 @@
          }];
     }
 }
+
+- (void)redirectLogToDocuments
+{
+    NSArray *allPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [allPaths objectAtIndex:0];
+    NSString *pathForLog = [documentsDirectory stringByAppendingPathComponent:@"AllTheLogs.txt"];
+
+    freopen([pathForLog cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+}
+
 
 @end

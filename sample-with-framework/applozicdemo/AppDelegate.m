@@ -44,7 +44,10 @@
     
     ALAppLocalNotifications *localNotification = [ALAppLocalNotifications appLocalNotificationHandler];
     [localNotification dataConnectionNotificationHandler];
-    [localNotification proactivelyConnectMQTT];
+
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")) {
+        [localNotification proactivelyConnectMQTT];
+    }
     
     if ([ALUserDefaultsHandler isLoggedIn])
     {

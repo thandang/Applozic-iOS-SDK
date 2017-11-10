@@ -203,11 +203,8 @@
 
 -(void)proactivelyDisconnectMQTT
 {
-    ALPushAssist * assitant = [[ALPushAssist alloc] init];
-//    if(assitant.isOurViewOnTop){
-        ALMQTTConversationService *alMqttConversationService = [ALMQTTConversationService sharedInstance];
-        [alMqttConversationService  unsubscribeToConversation];
-//    }
+    ALMQTTConversationService *alMqttConversationService = [ALMQTTConversationService sharedInstance];
+    [alMqttConversationService  unsubscribeToConversation];
 }
 
 //receiver
@@ -256,7 +253,6 @@
         return;
     }
     
-//    if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_ACTIVE]])
     if([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
     {
         if( alertValue || alertValue.length >0)

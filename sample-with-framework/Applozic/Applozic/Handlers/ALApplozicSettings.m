@@ -1056,4 +1056,15 @@ NOTIFICATION_DISABLE = 2
     return([[NSUserDefaults standardUserDefaults] integerForKey:DEFAULT_GROUP_TYPE ]);
 }
 
+/// If enabled, all the videos (recieved or sent) will be saved in the gallery.
++(void) enableSaveVideosToGallery:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey: SAVE_VIDEOS_TO_GALLERY];
+}
+
++(BOOL) isSaveVideoToGalleryEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:SAVE_VIDEOS_TO_GALLERY];
+}
+
 @end

@@ -2163,6 +2163,11 @@
         NSString *fileExtension = [componentsArray lastObject];
         NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
         [connection.mData writeToFile:filePath atomically:YES];
+
+        // If 'save video to gallery' is enabled then save to gallery
+        if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
+            [self saveVideoToGallery:filePath];
+        }
         // UPDATE DB
         messageEntity.inProgress = [NSNumber numberWithBool:NO];
         messageEntity.isUploadFailed=[NSNumber numberWithBool:NO];
@@ -3984,5 +3989,8 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [self handleMessageForwardForChatView:alMessage];
 }
 
+-(void)saveVideoToGallery:(NSString *)filePath; {
+    UISaveVideoAtPathToSavedPhotosAlbum(filePath, self, nil, nil);
+}
 
 @end

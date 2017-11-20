@@ -67,6 +67,7 @@
 @import AddressBookUI;
 #import "ALAudioVideoBaseVC.h"
 #import "ALVOIPNotificationHandler.h"
+#import <Applozic/Applozic-Swift.h>
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -145,6 +146,8 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+//    ALKSoundRecorderBtn * btn = [[ALKSoundRecorderBtn alloc] init];
+    Hello * hello = [[Hello alloc]init];
     [self initialSetUp];
     [self fetchMessageFromDB];
     [self loadChatView];

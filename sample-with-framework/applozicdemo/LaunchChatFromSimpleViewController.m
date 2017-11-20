@@ -21,6 +21,7 @@
 #import <Applozic/ALImagePickerHandler.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import <Applozic/Applozic-Swift.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -41,6 +42,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //    [self mLaunchChatList:self];
+    Hello * hello = [[Hello alloc] init];
     self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityView.center = self.view.center;
     

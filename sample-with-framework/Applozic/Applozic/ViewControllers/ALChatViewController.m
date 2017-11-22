@@ -76,7 +76,7 @@
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
-                                    ABPeoplePickerNavigationControllerDelegate>
+                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol>
 
 @property (nonatomic, assign) NSInteger startIndex;
 @property (nonatomic, assign) int rp;
@@ -117,6 +117,8 @@
     CGRect defaultTableRect;
     UIView * maskView;
     BOOL isPickerOpen;
+    ALSoundRecorderButton * soundRecording;
+
     
     UIDocumentInteractionController * interaction;
     
@@ -146,8 +148,17 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-//    ALKSoundRecorderBtn * btn = [[ALKSoundRecorderBtn alloc] init];
-    Hello * hello = [[Hello alloc]init];
+
+    soundRecording = [[ALSoundRecorderButton alloc] initWithFrame:CGRectZero];
+    [soundRecording setSoundRecDelegateWithRecorderDelegate:self];
+    [self.view addSubview:soundRecording];
+    [soundRecording setHidden:YES];
+    soundRecording.translatesAutoresizingMaskIntoConstraints = false;
+    [soundRecording.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
+    [soundRecording.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
+    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
+    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
+
     [self initialSetUp];
     [self fetchMessageFromDB];
     [self loadChatView];
@@ -1341,45 +1352,54 @@
 
 -(void)postMessage
 {
-    if(self.isUserBlocked)
-    {
-        [self showBlockedAlert];
-        return;
-    }
-    
-    if (!self.sendMessageTextView.text.length || [self.sendMessageTextView.text isEqualToString:self.placeHolderTxt])
-    {
-        [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"forgetToTypeMessageInfo", nil, [NSBundle mainBundle], @"Did you forget to type the message", @"")  andTitle:NSLocalizedStringWithDefaultValue(@"emptyText", nil, [NSBundle mainBundle], @"Empty", @"")];
-        return;
-    }
-    
-    if([ALApplozicSettings getMessageAbuseMode] && [self checkRestrictWords:self.sendMessageTextView.text])
-    {
-        [ALUtilityClass showAlertMessage:[ALApplozicSettings getAbuseWarningText] andTitle:NSLocalizedStringWithDefaultValue(@"warningText", nil, [NSBundle mainBundle], @"WARNING", @"")];
-        return;
-    }
-    
-    
-    ALMessage * theMessage = [self getMessageToPost];
-    [self.alMessageWrapper addALMessageToMessageArray:theMessage];
-    [self.mTableView reloadData];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self scrollTableViewToBottomWithAnimation:YES];
-    });
-    // save message to db
-    [self showNoConversationLabel];
-    [self.sendMessageTextView setText:nil];
-    self.mTotalCount = self.mTotalCount + 1;
-    self.startIndex = self.startIndex + 1;
-    [self sendMessage:theMessage];
-    
-    if(typingStat == YES)
-    {
-        typingStat = NO;
-        [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds
-                            andChannelKey:self.channelKey typing:typingStat];
-    }
+
+    [soundRecording setHidden:NO];
+
+
+//    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor].active = true;
+//    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor].active = true;
+
+//    [self.sendMessageTextView bringSubviewToFront:soundRecording];
+
+//    if(self.isUserBlocked)
+//    {
+//        [self showBlockedAlert];
+//        return;
+//    }
+//
+//    if (!self.sendMessageTextView.text.length || [self.sendMessageTextView.text isEqualToString:self.placeHolderTxt])
+//    {
+//        [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"forgetToTypeMessageInfo", nil, [NSBundle mainBundle], @"Did you forget to type the message", @"")  andTitle:NSLocalizedStringWithDefaultValue(@"emptyText", nil, [NSBundle mainBundle], @"Empty", @"")];
+//        return;
+//    }
+//
+//    if([ALApplozicSettings getMessageAbuseMode] && [self checkRestrictWords:self.sendMessageTextView.text])
+//    {
+//        [ALUtilityClass showAlertMessage:[ALApplozicSettings getAbuseWarningText] andTitle:NSLocalizedStringWithDefaultValue(@"warningText", nil, [NSBundle mainBundle], @"WARNING", @"")];
+//        return;
+//    }
+//
+//
+//    ALMessage * theMessage = [self getMessageToPost];
+//    [self.alMessageWrapper addALMessageToMessageArray:theMessage];
+//    [self.mTableView reloadData];
+//
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self scrollTableViewToBottomWithAnimation:YES];
+//    });
+//    // save message to db
+//    [self showNoConversationLabel];
+//    [self.sendMessageTextView setText:nil];
+//    self.mTotalCount = self.mTotalCount + 1;
+//    self.startIndex = self.startIndex + 1;
+//    [self sendMessage:theMessage];
+//
+//    if(typingStat == YES)
+//    {
+//        typingStat = NO;
+//        [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds
+//                            andChannelKey:self.channelKey typing:typingStat];
+//    }
 }
 
 //==============================================================================================================================================
@@ -2326,7 +2346,7 @@
     if (theMessage.fileMeta && [theMessage.type isEqualToString:@"5"])
     {
         NSDictionary * userInfo = [theMessage dictionary];
-        [self.sendMessageTextView setText:nil];
+//        [self.sendMessageTextView setText:nil];
         self.mTotalCount = self.mTotalCount+1;
         self.startIndex = self.startIndex + 1;
         
@@ -3996,4 +4016,22 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     UISaveVideoAtPathToSavedPhotosAlbum(filePath, self, nil, nil);
 }
 
+#pragma mark - ALSoundRecorderProtocol
+
+-(void) finishRecordingAudioWithFileUrl:(NSString *)fileURL {
+    [self processAttachment:fileURL andMessageText:@"" andContentType:ALMESSAGE_CONTENT_AUDIO];
+    [soundRecording setHidden:YES];
+}
+
+-(void) startRecordingAudio {
+    [soundRecording setHidden:NO];
+}
+
+-(void) cancelRecordingAudio {
+    [soundRecording setHidden:YES];
+}
+
+-(void) permissionNotGrant {
+    [soundRecording setHidden:YES];
+}
 @end

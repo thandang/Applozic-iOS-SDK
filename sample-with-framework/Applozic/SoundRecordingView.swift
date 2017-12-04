@@ -81,14 +81,15 @@ import Foundation
     private func displayDefaultText() {
         isTimerStart = false
         backgroundColor = UIColor.gray
-        let holdToTalkMessage = NSLocalizedString("HoldToTalkMessage", value: "Hold to Talk / Tap to Type", comment: "")
+        let holdToTalkMessage = NSLocalizedString("holdToTalkMessage", value: "Hold to Talk / Tap to Type", comment: "")
         setTitle(holdToTalkMessage, for: .normal)
         setTitle(holdToTalkMessage, for: .highlighted)
     }
 
     private func displayDefaultRecordingText() {
         backgroundColor = UIColor.red
-        let recordingMessage = NSLocalizedString("RecordingMessage", value: "Recording...00:00:00", comment: "")
+        let swipeUpToCancelMessage = NSLocalizedString("swipeUpToCancel", value: "Swipe up to cancel",comment: "")
+        let recordingMessage = NSLocalizedString("initialRecordingMessage", value: "00:00:00   \(swipeUpToCancelMessage)", comment: "")
         setTitle(recordingMessage, for: .normal)
         setTitle(recordingMessage, for: .highlighted)
     }
@@ -282,9 +283,10 @@ import Foundation
         var secStr = String(sec)
         if sec < 10 {secStr = "0\(secStr)"}
         if min < 10 {minStr = "0\(minStr)"}
-        let recordingMessage = NSLocalizedString("RecordingMessage", value: "Recording...00:", comment: "")
-        setTitle("\(recordingMessage)\(minStr):\(secStr)", for: .normal)
-        setTitle("\(recordingMessage)\(minStr):\(secStr)", for: .highlighted)
+        let recordingMessage = NSLocalizedString("recordingMessage", value: "00:", comment: "")
+        let swipeUpToCancelMessage = NSLocalizedString("swipeUpToCancel", value: "Swipe up to cancel",comment: "")
+        setTitle("\(recordingMessage)\(minStr):\(secStr)   \(swipeUpToCancelMessage)", for: .normal)
+        setTitle("\(recordingMessage)\(minStr):\(secStr)   \(swipeUpToCancelMessage)", for: .highlighted)
     }
 }
 

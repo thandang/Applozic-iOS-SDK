@@ -118,6 +118,7 @@
     UIView * maskView;
     BOOL isPickerOpen;
     ALSoundRecorderButton * soundRecording;
+    BOOL isMicButtonVisible;
 
     
     UIDocumentInteractionController * interaction;
@@ -149,15 +150,9 @@
 {
     [super viewDidLoad];
 
-    soundRecording = [[ALSoundRecorderButton alloc] initWithFrame:CGRectZero];
-    [soundRecording setSoundRecDelegateWithRecorderDelegate:self];
-    [self.view addSubview:soundRecording];
-    [soundRecording setHidden:YES];
-    soundRecording.translatesAutoresizingMaskIntoConstraints = false;
-    [soundRecording.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
-    [soundRecording.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
-    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
-    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
+    // check settings flag
+    [self setUpSoundRecordingView];
+    [self showMicButton];
 
     [self initialSetUp];
     [self fetchMessageFromDB];
@@ -1353,53 +1348,88 @@
 -(void)postMessage
 {
 
-    [soundRecording setHidden:NO];
+    if(isMicButtonVisible) {
+        return;
+    }
+
+    if(self.isUserBlocked)
+    {
+        [self showBlockedAlert];
+        return;
+    }
+
+    if (!self.sendMessageTextView.text.length || [self.sendMessageTextView.text isEqualToString:self.placeHolderTxt])
+    {
+        [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"forgetToTypeMessageInfo", nil, [NSBundle mainBundle], @"Did you forget to type the message", @"")  andTitle:NSLocalizedStringWithDefaultValue(@"emptyText", nil, [NSBundle mainBundle], @"Empty", @"")];
+        return;
+    }
+
+    if([ALApplozicSettings getMessageAbuseMode] && [self checkRestrictWords:self.sendMessageTextView.text])
+    {
+        [ALUtilityClass showAlertMessage:[ALApplozicSettings getAbuseWarningText] andTitle:NSLocalizedStringWithDefaultValue(@"warningText", nil, [NSBundle mainBundle], @"WARNING", @"")];
+        return;
+    }
 
 
-//    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor].active = true;
-//    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor].active = true;
+    ALMessage * theMessage = [self getMessageToPost];
+    [self.alMessageWrapper addALMessageToMessageArray:theMessage];
+    [self.mTableView reloadData];
 
-//    [self.sendMessageTextView bringSubviewToFront:soundRecording];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self scrollTableViewToBottomWithAnimation:YES];
+    });
+    // save message to db
+    [self showNoConversationLabel];
+    [self.sendMessageTextView setText:nil];
+    self.mTotalCount = self.mTotalCount + 1;
+    self.startIndex = self.startIndex + 1;
+    [self sendMessage:theMessage];
 
-//    if(self.isUserBlocked)
-//    {
-//        [self showBlockedAlert];
-//        return;
-//    }
-//
-//    if (!self.sendMessageTextView.text.length || [self.sendMessageTextView.text isEqualToString:self.placeHolderTxt])
-//    {
-//        [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"forgetToTypeMessageInfo", nil, [NSBundle mainBundle], @"Did you forget to type the message", @"")  andTitle:NSLocalizedStringWithDefaultValue(@"emptyText", nil, [NSBundle mainBundle], @"Empty", @"")];
-//        return;
-//    }
-//
-//    if([ALApplozicSettings getMessageAbuseMode] && [self checkRestrictWords:self.sendMessageTextView.text])
-//    {
-//        [ALUtilityClass showAlertMessage:[ALApplozicSettings getAbuseWarningText] andTitle:NSLocalizedStringWithDefaultValue(@"warningText", nil, [NSBundle mainBundle], @"WARNING", @"")];
-//        return;
-//    }
-//
-//
-//    ALMessage * theMessage = [self getMessageToPost];
-//    [self.alMessageWrapper addALMessageToMessageArray:theMessage];
-//    [self.mTableView reloadData];
-//
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self scrollTableViewToBottomWithAnimation:YES];
-//    });
-//    // save message to db
-//    [self showNoConversationLabel];
-//    [self.sendMessageTextView setText:nil];
-//    self.mTotalCount = self.mTotalCount + 1;
-//    self.startIndex = self.startIndex + 1;
-//    [self sendMessage:theMessage];
-//
-//    if(typingStat == YES)
-//    {
-//        typingStat = NO;
-//        [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds
-//                            andChannelKey:self.channelKey typing:typingStat];
-//    }
+    if(soundRecording) {
+        [self showMicButton];
+    }
+
+    if(typingStat == YES)
+    {
+        typingStat = NO;
+        [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds
+                            andChannelKey:self.channelKey typing:typingStat];
+    }
+}
+
+- (IBAction)sendAction:(id)sender
+{
+    if(isMicButtonVisible) {
+        [soundRecording show];
+    }
+    [super sendAction:sender];
+}
+
+-(void)setUpSoundRecordingView
+{
+    soundRecording = [[ALSoundRecorderButton alloc] initWithFrame:CGRectZero];
+    [soundRecording setSoundRecDelegateWithRecorderDelegate:self];
+    [self.view addSubview:soundRecording];
+    [soundRecording setHidden:YES];
+    soundRecording.translatesAutoresizingMaskIntoConstraints = false;
+    [soundRecording.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
+    [soundRecording.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
+    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
+    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
+}
+
+-(void)showMicButton
+{
+    UIImage* micImage = [ALUtilityClass getImageFromFramworkBundle:@"mic_icon.png"];
+    [self.sendButton setImage:micImage forState:UIControlStateNormal];
+    isMicButtonVisible = YES;
+}
+
+-(void)showSendButton
+{
+    UIImage* sendImage = [ALUtilityClass getImageFromFramworkBundle:@"SendButton20.png"];
+    [self.sendButton setImage:sendImage forState:UIControlStateNormal];
+    isMicButtonVisible = NO;
 }
 
 //==============================================================================================================================================
@@ -3501,6 +3531,11 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         typingStat = YES;
         [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds andChannelKey:self.channelKey typing:typingStat];
     }
+    if ([textView.text isEqualToString:@""] && soundRecording) {
+        [self showMicButton];
+    } else if(soundRecording) {
+        [self showSendButton];
+    }
     
     [self subProcessTextViewDidChange:textView];
 }
@@ -4020,18 +4055,18 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void) finishRecordingAudioWithFileUrl:(NSString *)fileURL {
     [self processAttachment:fileURL andMessageText:@"" andContentType:ALMESSAGE_CONTENT_AUDIO];
-    [soundRecording setHidden:YES];
+    [soundRecording hide];
 }
 
 -(void) startRecordingAudio {
-    [soundRecording setHidden:NO];
+    [soundRecording show];
 }
 
 -(void) cancelRecordingAudio {
-    [soundRecording setHidden:YES];
+    [soundRecording hide];
 }
 
 -(void) permissionNotGrant {
-    [soundRecording setHidden:YES];
+    [soundRecording hide];
 }
 @end

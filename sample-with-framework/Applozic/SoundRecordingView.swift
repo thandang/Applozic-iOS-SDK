@@ -15,7 +15,6 @@ import Foundation
     func permissionNotGrant()
 }
 
-// TODO: Add a method to start and remove and then hide the button from here only. Start the session when button is clicked first time otherwise permissions popup will come when initialized.
 @objc public class ALSoundRecorderButton: UIButton {
 
     private var isTimerStart:Bool = false
@@ -36,12 +35,29 @@ import Foundation
     public init(frame: CGRect,recorderDelegate:ALSoundRecorderProtocol) {
         super.init(frame: frame)
         delegate = recorderDelegate
-        setupRecordingSession()
     }
+
+    public func show() {
+        if recordingSession == nil {
+            setupRecordingSession()
+            self.isHidden = false
+        } else {
+            self.isHidden = false
+        }
+    }
+
+    public func hide() {
+        if recordingSession == nil {
+            setupRecordingSession()
+            self.isHidden = true
+        } else {
+            self.isHidden = true
+        }
+    }
+
 
     public func setSoundRecDelegate(recorderDelegate:ALSoundRecorderProtocol) {
         delegate = recorderDelegate
-        setupRecordingSession()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -65,8 +81,6 @@ import Foundation
     private func displayDefaultText() {
         isTimerStart = false
         backgroundColor = UIColor.gray
-//        setTextColor(color:.main, forState: .normal)
-//        setFont(font:Font.normal(size: 14))
         let holdToTalkMessage = NSLocalizedString("HoldToTalkMessage", value: "Hold to Talk / Tap to Type", comment: "")
         setTitle(holdToTalkMessage, for: .normal)
         setTitle(holdToTalkMessage, for: .highlighted)
@@ -74,9 +88,6 @@ import Foundation
 
     private func displayDefaultRecordingText() {
         backgroundColor = UIColor.red
-//        setFont(font:Font.normal(size: 14))
-//        setTextColor(color:.white, forState: .normal)
-//        setTextColor(color:.white, forState: .highlighted)
         let recordingMessage = NSLocalizedString("RecordingMessage", value: "Recording...00:00:00", comment: "")
         setTitle(recordingMessage, for: .normal)
         setTitle(recordingMessage, for: .highlighted)
@@ -239,7 +250,6 @@ import Foundation
 
             if audioFilename.isFileURL
             {
-//                guard let soundData = NSData(contentsOf: audioFilename) else {return}
                 guard audioFilename != nil   else {return}
                 delegate.finishRecordingAudio(fileUrl: audioFilename.path as NSString)
             }
@@ -258,6 +268,7 @@ import Foundation
             player.volume = 1.0
             player.play()
         } catch let error {
+            NSLog("Error playing audio: \(error.localizedDescription)")
         }
     }
 

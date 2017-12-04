@@ -251,7 +251,11 @@ import Foundation
 
             if audioFilename.isFileURL
             {
-                guard audioFilename != nil   else {return}
+                // Cancel audio if fileName is not present or, if the duration is zero secs
+                guard audioFilename != nil, counter != 0, counter % 60 > 0  else {
+                    delegate.cancelRecordingAudio()
+                    return
+                }
                 delegate.finishRecordingAudio(fileUrl: audioFilename.path as NSString)
             }
         }

@@ -150,9 +150,11 @@
 {
     [super viewDidLoad];
 
-    // check settings flag
-    [self setUpSoundRecordingView];
-    [self showMicButton];
+    // Setup quick recording if it's enabled in the settings
+    if([ALApplozicSettings isQuickAudioRecordingEnabled]) {
+        [self setUpSoundRecordingView];
+        [self showMicButton];
+    }
 
     [self initialSetUp];
     [self fetchMessageFromDB];

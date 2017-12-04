@@ -88,6 +88,7 @@
 #define DEFAULT_GROUP_TYPE @"com.applozic.DEFAULT_GROUP_TYPE"
 #define CONTACTS_GROUP_ID_LIST @"com.applozic.userdefault.CONTACTS_GROUP_ID_LIST"
 #define SAVE_VIDEOS_TO_GALLERY @"com.applozic.userdefault.SAVE_VIDEOS_TO_GALLERY"
+#define ENABLE_QUICK_AUDIO_RECORDING @"com.applozic.userdefault.ENABLE_QUICK_AUDIO_RECORDING"
 
 
 #import <Foundation/Foundation.h>
@@ -375,4 +376,6 @@
 +(NSInteger) getDefaultGroupType;
 +(void) enableSaveVideosToGallery:(BOOL)flag;
 +(BOOL) isSaveVideoToGalleryEnabled;
++(void) enableQuickAudioRecording:(BOOL)flag;
++(BOOL) isQuickAudioRecordingEnabled;
 @end

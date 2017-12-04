@@ -567,7 +567,6 @@
 //    NSArray * attachmentOptionToHide = @[@":audio", @":video", @":location",@":shareContact"];
 //
 //    [ALApplozicSettings setHideAttachmentsOption:attachmentOptionToHide];
-    [ALApplozicSettings enableQuickAudioRecording:YES];
 }
 
 -(void)getApplicationBaseURL

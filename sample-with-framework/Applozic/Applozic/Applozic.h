@@ -102,6 +102,3 @@ FOUNDATION_EXPORT const unsigned char ApplozicVersionString[];
 #import <Applozic/ALNavigationController.h>
 #import <Applozic/ALMessageServiceWrapper.h>
 #import <Applozic/ALSubViewController.h>
-
-
-

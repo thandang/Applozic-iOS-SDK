@@ -284,3 +284,7 @@
 "attachmentViewTitle" = "Attachment";
 "chatViewBack" = "Back";
 
+"holdToTalkMessage" = "Hold to Talk / Tap to Type";
+"initialRecordingMessage" = "00:00:00";
+"recordingMessage" = "00:";
+"swipeUpToCancel" = "Swipe up to cancel";

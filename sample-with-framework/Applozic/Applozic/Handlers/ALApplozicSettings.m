@@ -1067,4 +1067,14 @@ NOTIFICATION_DISABLE = 2
     return [[NSUserDefaults standardUserDefaults] boolForKey:SAVE_VIDEOS_TO_GALLERY];
 }
 
++(void) enableQuickAudioRecording:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:ENABLE_QUICK_AUDIO_RECORDING];
+}
+
++(BOOL) isQuickAudioRecordingEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_QUICK_AUDIO_RECORDING];
+}
+
 @end

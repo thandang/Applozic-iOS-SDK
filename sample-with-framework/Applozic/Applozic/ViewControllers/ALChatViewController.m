@@ -67,6 +67,7 @@
 @import AddressBookUI;
 #import "ALAudioVideoBaseVC.h"
 #import "ALVOIPNotificationHandler.h"
+#import <Applozic/Applozic-Swift.h>
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -75,7 +76,7 @@
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
-                                    ABPeoplePickerNavigationControllerDelegate>
+                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol>
 
 @property (nonatomic, assign) NSInteger startIndex;
 @property (nonatomic, assign) int rp;
@@ -116,6 +117,9 @@
     CGRect defaultTableRect;
     UIView * maskView;
     BOOL isPickerOpen;
+    ALSoundRecorderButton * soundRecording;
+    BOOL isMicButtonVisible;
+
     
     UIDocumentInteractionController * interaction;
     
@@ -145,6 +149,13 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // Setup quick recording if it's enabled in the settings
+    if([ALApplozicSettings isQuickAudioRecordingEnabled]) {
+        [self setUpSoundRecordingView];
+        [self showMicButton];
+    }
+
     [self initialSetUp];
     [self fetchMessageFromDB];
     [self loadChatView];
@@ -1338,29 +1349,34 @@
 
 -(void)postMessage
 {
+
+    if(isMicButtonVisible) {
+        return;
+    }
+
     if(self.isUserBlocked)
     {
         [self showBlockedAlert];
         return;
     }
-    
+
     if (!self.sendMessageTextView.text.length || [self.sendMessageTextView.text isEqualToString:self.placeHolderTxt])
     {
         [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"forgetToTypeMessageInfo", nil, [NSBundle mainBundle], @"Did you forget to type the message", @"")  andTitle:NSLocalizedStringWithDefaultValue(@"emptyText", nil, [NSBundle mainBundle], @"Empty", @"")];
         return;
     }
-    
+
     if([ALApplozicSettings getMessageAbuseMode] && [self checkRestrictWords:self.sendMessageTextView.text])
     {
         [ALUtilityClass showAlertMessage:[ALApplozicSettings getAbuseWarningText] andTitle:NSLocalizedStringWithDefaultValue(@"warningText", nil, [NSBundle mainBundle], @"WARNING", @"")];
         return;
     }
-    
-    
+
+
     ALMessage * theMessage = [self getMessageToPost];
     [self.alMessageWrapper addALMessageToMessageArray:theMessage];
     [self.mTableView reloadData];
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [self scrollTableViewToBottomWithAnimation:YES];
     });
@@ -1370,13 +1386,52 @@
     self.mTotalCount = self.mTotalCount + 1;
     self.startIndex = self.startIndex + 1;
     [self sendMessage:theMessage];
-    
+
+    if(soundRecording) {
+        [self showMicButton];
+    }
+
     if(typingStat == YES)
     {
         typingStat = NO;
         [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds
                             andChannelKey:self.channelKey typing:typingStat];
     }
+}
+
+- (IBAction)sendAction:(id)sender
+{
+    if(isMicButtonVisible) {
+        [soundRecording show];
+    }
+    [super sendAction:sender];
+}
+
+-(void)setUpSoundRecordingView
+{
+    soundRecording = [[ALSoundRecorderButton alloc] initWithFrame:CGRectZero];
+    [soundRecording setSoundRecDelegateWithRecorderDelegate:self];
+    [self.view addSubview:soundRecording];
+    [soundRecording setHidden:YES];
+    soundRecording.translatesAutoresizingMaskIntoConstraints = false;
+    [soundRecording.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
+    [soundRecording.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
+    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
+    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
+}
+
+-(void)showMicButton
+{
+    UIImage* micImage = [ALUtilityClass getImageFromFramworkBundle:@"mic_icon.png"];
+    [self.sendButton setImage:micImage forState:UIControlStateNormal];
+    isMicButtonVisible = YES;
+}
+
+-(void)showSendButton
+{
+    UIImage* sendImage = [ALUtilityClass getImageFromFramworkBundle:@"SendButton20.png"];
+    [self.sendButton setImage:sendImage forState:UIControlStateNormal];
+    isMicButtonVisible = NO;
 }
 
 //==============================================================================================================================================
@@ -2323,7 +2378,7 @@
     if (theMessage.fileMeta && [theMessage.type isEqualToString:@"5"])
     {
         NSDictionary * userInfo = [theMessage dictionary];
-        [self.sendMessageTextView setText:nil];
+//        [self.sendMessageTextView setText:nil];
         self.mTotalCount = self.mTotalCount+1;
         self.startIndex = self.startIndex + 1;
         
@@ -3478,6 +3533,13 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         typingStat = YES;
         [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds andChannelKey:self.channelKey typing:typingStat];
     }
+
+    if ([[textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0 && soundRecording) {
+        [self showMicButton];
+    } else if(soundRecording) {
+        [self showSendButton];
+        [soundRecording hide];
+    }
     
     [self subProcessTextViewDidChange:textView];
 }
@@ -3993,4 +4055,22 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     UISaveVideoAtPathToSavedPhotosAlbum(filePath, self, nil, nil);
 }
 
+#pragma mark - ALSoundRecorderProtocol
+
+-(void) finishRecordingAudioWithFileUrl:(NSString *)fileURL {
+    [self processAttachment:fileURL andMessageText:@"" andContentType:ALMESSAGE_CONTENT_AUDIO];
+    [soundRecording hide];
+}
+
+-(void) startRecordingAudio {
+    [soundRecording show];
+}
+
+-(void) cancelRecordingAudio {
+    [soundRecording hide];
+}
+
+-(void) permissionNotGrant {
+    [soundRecording hide];
+}
 @end

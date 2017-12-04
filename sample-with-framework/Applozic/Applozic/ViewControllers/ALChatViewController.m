@@ -3533,7 +3533,8 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         typingStat = YES;
         [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds andChannelKey:self.channelKey typing:typingStat];
     }
-    if ([textView.text isEqualToString:@""] && soundRecording) {
+
+    if ([[textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0 && soundRecording) {
         [self showMicButton];
     } else if(soundRecording) {
         [self showSendButton];

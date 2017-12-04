@@ -3537,6 +3537,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showMicButton];
     } else if(soundRecording) {
         [self showSendButton];
+        [soundRecording hide];
     }
     
     [self subProcessTextViewDidChange:textView];

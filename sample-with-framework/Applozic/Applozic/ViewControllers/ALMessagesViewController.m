@@ -643,7 +643,7 @@
             [newBroadCast setTitle:NSLocalizedStringWithDefaultValue(@"broadcastGroupOptionTitle", nil, [NSBundle mainBundle], @"New Broadcast", @"")
                           forState:UIControlStateNormal];
             
-            newBroadCast.userInteractionEnabled = ![ALApplozicSettings isBroadcastGroupEnable];
+            newBroadCast.userInteractionEnabled = [ALApplozicSettings isBroadcastGroupEnable];
             [newBroadCast setHidden:![ALApplozicSettings isBroadcastGroupEnable]];
             
         }break;

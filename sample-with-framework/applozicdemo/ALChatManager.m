@@ -528,6 +528,8 @@
     [ALApplozicSettings setUserProfileHidden:NO];
     [ALApplozicSettings setFontFace:@"Helvetica"];
     [ALApplozicSettings setChatWallpaperImageName:@"<WALLPAPER NAME>"];
+    [ALApplozicSettings replyOptionEnabled:YES];
+
     /****************************************************************************************************************/
     
     

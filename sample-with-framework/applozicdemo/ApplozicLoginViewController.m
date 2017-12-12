@@ -182,15 +182,7 @@
     [user setEmail:[self.emailField text]];
     [user setPassword:[self.passwordField text]];
     [user setAuthenticationTypeId:(short)APPLOZIC];
-    
-    NSMutableDictionary * metaData = [[ NSMutableDictionary alloc] init];
-    [metaData setObject:@"META DATA VALUE 1 " forKey:@"value1"];
-    [metaData setObject:@"META DATA VALUE 2 " forKey:@"value2"];
-    [metaData setObject:@"META DATA VALUE 3 " forKey:@"value3"];
-    [user setMetadata:metaData];
-
     [self.mActivityIndicator startAnimating];
-    [ALApplozicSettings setUserRoleName:@"BOT"];
     [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
     [ALUserDefaultsHandler setUserId:user.userId];
     [ALUserDefaultsHandler setEmailId:user.email];

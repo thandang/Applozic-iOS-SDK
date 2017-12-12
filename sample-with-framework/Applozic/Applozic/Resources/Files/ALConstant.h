@@ -63,6 +63,18 @@ typedef enum {
 } MessageStatus;
 
 typedef enum {
+    BOT  = 1,
+    APPLICATION_ADMIN =   2,
+    USER_ROLE  =  3,
+    ADMIN_ROLE  = 4,
+    BUSINESS =  5,
+    APPLICATION_BROADCASTER =  6,
+    SUPPORT  = 7,
+    AGENT =8
+} USER_ROLE_TYPE;
+
+
+typedef enum {
     APP_STATE_BACKGROUND = -1,
     APP_STATE_INACTIVE   = 0,
     APP_STATE_ACTIVE     = 1

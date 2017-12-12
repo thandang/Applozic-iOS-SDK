@@ -58,6 +58,8 @@ typedef enum
 @property NSNumber* contactType;
 @property NSMutableArray * features;
 @property NSString* notificationSoundFileName;
+@property NSMutableDictionary * metadata;
+@property short roleType;
 
 -(instancetype)initWithUserId:(NSString *)userId
                      password:(NSString *)password

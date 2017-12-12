@@ -59,8 +59,7 @@
 #define AL_CONTACT_SCROLLING_DONE @"com.applozic.userdefault.AL_CONTACT_SCROLLING_DONE"
 #define KEY_PREFIX @"com.applozic.userdefault"
 #define GROUP_FILTER_LAST_SYNC_TIME @"com.applozic.GROUP_FILTER_LAST_SYNC_TIME"
-#define AL_USER_ROLE_TYPE@"com.applozic.userdefault.AL_USER_ROLE_TYPE"
-
+#define AL_USER_ROLE_TYPE @"com.applozic.userdefault.AL_USER_ROLE_TYPE"
 
 #import <Foundation/Foundation.h>
 
@@ -248,6 +247,5 @@
 
 +(void)setUserRoleType:(short)type;
 +(short)getUserRoleType;
-
 
 @end

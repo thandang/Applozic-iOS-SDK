@@ -43,7 +43,7 @@
     [user setUnreadCountType:[ALUserDefaultsHandler getUnreadCountType]];
     [user setDeviceApnsType:[ALUserDefaultsHandler getDeviceApnsType]];
     [user setEnableEncryption:[ALUserDefaultsHandler getEnableEncryption]];
-    [user setRoleType:[ALUserDefaultsHandler getUserRoleType]];
+    [user setRoleName:[ALApplozicSettings getUserRoleName]];
     
     if([ALUserDefaultsHandler getAppModuleName] != NULL)
     {
@@ -197,7 +197,7 @@
     [user setDeviceApnsType:[ALUserDefaultsHandler getDeviceApnsType]];
     [user setAppVersionCode: VERSION_CODE];
     [user setAuthenticationTypeId:[ALUserDefaultsHandler getUserAuthenticationTypeId]];
-    [user setRoleType:[ALUserDefaultsHandler getUserRoleType]];
+    [user setRoleName:[ALApplozicSettings getUserRoleName]];
     
     if([ALUserDefaultsHandler getAppModuleName] != NULL){
         [user setAppModuleName:[ALUserDefaultsHandler getAppModuleName]];

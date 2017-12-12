@@ -183,6 +183,13 @@
     [user setPassword:[self.passwordField text]];
     [user setAuthenticationTypeId:(short)APPLOZIC];
     
+    NSMutableDictionary * metaData = [[ NSMutableDictionary alloc] init];
+    [metaData setObject:@"META DATA VALUE 1 " forKey:@"value1"];
+    [metaData setObject:@"META DATA VALUE 2 " forKey:@"value2"];
+    [metaData setObject:@"META DATA VALUE 3 " forKey:@"value3"];
+    [user setMetadata:metaData];
+    [ALUserDefaultsHandler setUserRoleType:ADMIN_ROLE];
+    
     [self.mActivityIndicator startAnimating];
     [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
     [ALUserDefaultsHandler setUserId:user.userId];

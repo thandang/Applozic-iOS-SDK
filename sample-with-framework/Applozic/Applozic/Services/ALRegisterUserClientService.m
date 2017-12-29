@@ -251,7 +251,7 @@
     NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:urlString paramString:nil];
     
     [ALResponseHandler processRequest:request andTag:@"USER_LOGOUT" WithCompletionHandler:^(id theJson, NSError *error) {
-        
+
         NSLog(@"RESPONSE_USER_LOGOUT :: %@", (NSString *)theJson);
         ALAPIResponse *response = [[ALAPIResponse alloc] initWithJSONString:theJson];
         if(!error && [response.status isEqualToString:@"success"])
@@ -263,6 +263,11 @@
             [messageDBService deleteAllObjectsInCoreData];
             
             [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
+        } else {
+            [ALUserDefaultsHandler clearAll];
+            ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
+            [messageDBService deleteAllObjectsInCoreData];
+            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
         }
         
         completion(response,error);

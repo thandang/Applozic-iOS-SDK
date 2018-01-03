@@ -1877,6 +1877,7 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
                         <outlet property="mTableView" destination="3bd-KT-wrK" id="3Dl-dt-9Iy"/>
                         <outlet property="messageReplyView" destination="2ki-he-soP" id="Q9O-Ta-cVT"/>
                         <outlet property="noConLabel" destination="sTD-T1-vIc" id="DE5-Yy-V9K"/>
+                        <outlet property="nsLayoutconstraintAttachmentWidth" destination="oOD-ac-EA7" id="NiE-mW-NQS"/>
                         <outlet property="pickerView" destination="IKJ-fO-atY" id="bDp-y9-YDt"/>
                         <outlet property="replyAttachmentPreview" destination="3sa-6d-hOq" id="Isd-x0-cZ9"/>
                         <outlet property="replyIcon" destination="6v4-kw-zfP" id="JFq-KE-srm"/>

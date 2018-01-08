@@ -912,7 +912,7 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
         NSLog(@"%@, %@", Error, Error.localizedDescription);
     }
 }
--(void) updateMessageSentDeatils:(NSString*)messageKeyString withCreatedAtTime : (NSNumber *) createdAtTime withDbMessage:(DB_Message *) dbMessage {
+-(void) updateMessageSentDetails:(NSString*)messageKeyString withCreatedAtTime : (NSNumber *) createdAtTime withDbMessage:(DB_Message *) dbMessage {
     
     if(!dbMessage){
         return;

@@ -88,7 +88,7 @@
 +(void)addBroadcastMessageToDB:(ALMessage *)alMessage;
 -(void) updateMessageReplyType:(NSString*)messageKeyString replyType : (NSNumber *) type ;
 
--(void) updateMessageSentDeatils:(NSString*)messageKeyString withCreatedAtTime : (NSNumber *) createdAtTime withDbMessage:(DB_Message *) dbMessage ;
+-(void) updateMessageSentDetails:(NSString*)messageKeyString withCreatedAtTime : (NSNumber *) createdAtTime withDbMessage:(DB_Message *) dbMessage ;
 
 
 @end

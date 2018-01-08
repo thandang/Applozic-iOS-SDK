@@ -52,6 +52,6 @@
 
 -(void)subscribeToOpenChannel:(NSNumber *)channelKey;
 -(void)unSubscribeToOpenChannel:(NSNumber *)channelKey;
--(void) syncRecivedMessage :(ALMessage *)alMessage withNSMutableDictionary:(NSMutableDictionary*)nsMutableDictionary;
+-(void) syncReceivedMessage :(ALMessage *)alMessage withNSMutableDictionary:(NSMutableDictionary*)nsMutableDictionary;
 
 @end

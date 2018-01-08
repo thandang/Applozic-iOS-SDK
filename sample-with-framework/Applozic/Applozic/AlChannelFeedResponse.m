@@ -22,7 +22,7 @@
     {
         NSDictionary *JSONDictionary = [JSONString valueForKey:@"response"];
         self.alChannel = [[ALChannel alloc] initWithDictonary:JSONDictionary];
-        [self pasreUserDetails:[[NSMutableArray alloc] initWithArray:[JSONDictionary objectForKey:@"users"]]];
+        [self parseUserDetails:[[NSMutableArray alloc] initWithArray:[JSONDictionary objectForKey:@"users"]]];
         
         return self;
     }
@@ -33,7 +33,7 @@
     
 }
 
--(void) pasreUserDetails:(NSMutableArray * ) userDetailJsonArray {
+-(void) parseUserDetails:(NSMutableArray * ) userDetailJsonArray {
     
     for(NSDictionary *JSONDictionaryObject in userDetailJsonArray)
     {

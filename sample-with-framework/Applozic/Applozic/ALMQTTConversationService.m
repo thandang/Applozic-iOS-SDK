@@ -180,12 +180,12 @@
                             }
                         }else{
                             
-                            [self syncRecivedMessage: alMessage withNSMutableDictionary:dict];
+                            [self syncReceivedMessage: alMessage withNSMutableDictionary:dict];
                             
                         }
                     }];
                 } else{
-                            [self syncRecivedMessage: alMessage withNSMutableDictionary:dict];
+                            [self syncReceivedMessage: alMessage withNSMutableDictionary:dict];
                             
                         }
                     }

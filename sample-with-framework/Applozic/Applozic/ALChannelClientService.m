@@ -945,7 +945,7 @@
             AlChannelFeedResponse *response = [[AlChannelFeedResponse alloc] initWithJSONString:theJson];
             
             if([response.status isEqualToString: RESPONSE_SUCCESS] ){
-                NSMutableArray * members = response.alChannel.removeMembers;
+                NSMutableArray * members = response.alChannel.membersId;
                 ALContactService * contactService = [ALContactService new];
                 NSMutableArray* userNotPresentIds = [NSMutableArray new];
                 for(NSString * userId in members)

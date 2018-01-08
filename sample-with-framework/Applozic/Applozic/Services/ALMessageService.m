@@ -280,12 +280,12 @@ static ALMessageClientService *alMsgClientService;
                 if(channel){
                     if(channel.type != OPEN){
                         alMessage.msgDBObjectId = dbMessage.objectID;
-                        [dbService updateMessageSentDeatils:response.messageKey withCreatedAtTime:response.createdAt withDbMessage:dbMessage];
+                        [dbService updateMessageSentDetails:response.messageKey withCreatedAtTime:response.createdAt withDbMessage:dbMessage];
 
                     }
                 }else{
                     alMessage.msgDBObjectId = dbMessage.objectID;
-                    [dbService updateMessageSentDeatils:response.messageKey withCreatedAtTime:response.createdAt withDbMessage:dbMessage];
+                    [dbService updateMessageSentDetails:response.messageKey withCreatedAtTime:response.createdAt withDbMessage:dbMessage];
                 }
                 
                 

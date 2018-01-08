@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		105F30C51FFBAEEC00D60431 /* AlChannelFeedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30BF1FFBAEEA00D60431 /* AlChannelFeedResponse.m */; };
+		105F30C61FFBAEEC00D60431 /* AlChannelInfoModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30C01FFBAEEB00D60431 /* AlChannelInfoModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		105F30C81FFBAEEC00D60431 /* AlChannelInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */; };
+		105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
 		2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -349,6 +355,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelFeedResponse.h; path = Applozic/AlChannelFeedResponse.h; sourceTree = "<group>"; };
+		105F30BF1FFBAEEA00D60431 /* AlChannelFeedResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelFeedResponse.m; path = Applozic/AlChannelFeedResponse.m; sourceTree = "<group>"; };
+		105F30C01FFBAEEB00D60431 /* AlChannelInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelInfoModel.h; path = Applozic/AlChannelInfoModel.h; sourceTree = "<group>"; };
+		105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelResponse.h; path = Applozic/AlChannelResponse.h; sourceTree = "<group>"; };
+		105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelInfoModel.m; path = Applozic/AlChannelInfoModel.m; sourceTree = "<group>"; };
+		105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelResponse.m; path = Applozic/AlChannelResponse.m; sourceTree = "<group>"; };
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
@@ -1262,6 +1274,12 @@
 		6DCC30061C315A3D00F17D0E /* ALChannel */ = {
 			isa = PBXGroup;
 			children = (
+				105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */,
+				105F30BF1FFBAEEA00D60431 /* AlChannelFeedResponse.m */,
+				105F30C01FFBAEEB00D60431 /* AlChannelInfoModel.h */,
+				105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */,
+				105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */,
+				105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */,
 				464F7D171E1D345300B68DCC /* ALChannelUser.h */,
 				464F7D181E1D345300B68DCC /* ALChannelUser.m */,
 				6D7756971D5B80DF0025560B /* ALChannel.h */,
@@ -1533,6 +1551,9 @@
 				322B304A1EF9537600DB01FC /* AlApplicationInfoFeed.h in Headers */,
 				C76D314C1F0AAFCF0087291F /* ALVOIPNotificationHandler.h in Headers */,
 				C76D314B1F0AAFCE0087291F /* ALAudioVideoBaseVC.h in Headers */,
+				105F30C61FFBAEEC00D60431 /* AlChannelInfoModel.h in Headers */,
+				105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */,
+				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
 				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
 				6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */,
@@ -1737,12 +1758,14 @@
 				6D7757021D5B82ED0025560B /* DB_CHANNEL.m in Sources */,
 				4612E9051E13882D0022DB23 /* MQTTMessage.m in Sources */,
 				6D6DF1CC1BC5364C00EBA00F /* UIImage+WebP.m in Sources */,
+				105F30C51FFBAEEC00D60431 /* AlChannelFeedResponse.m in Sources */,
 				6D6DF1C11BC5364C00EBA00F /* SDWebImageManager.m in Sources */,
 				6D7756E21D5B82000025560B /* ALUserService.m in Sources */,
 				6D7756D61D5B82000025560B /* ALMessageInfo.m in Sources */,
 				4612E90A1E13882D0022DB23 /* MQTTSessionLegacy.m in Sources */,
 				6D7757111D5B83660025560B /* HexColors.m in Sources */,
 				6D7756AA1D5B80DF0025560B /* ALChannel.m in Sources */,
+				105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */,
 				4612E8FE1E13882D0022DB23 /* MQTTCoreDataPersistence.m in Sources */,
 				293446141D4F426F007BD1B4 /* ALImageActivity.m in Sources */,
 				6D7756921D5B7FBE0025560B /* DB_ConversationProxy.m in Sources */,
@@ -1796,6 +1819,7 @@
 				6D6DF14F1BC5364C00EBA00F /* ALMessageService.m in Sources */,
 				6D7756D41D5B82000025560B /* ALLastSeenSyncFeed.m in Sources */,
 				6D77572E1D5B84940025560B /* ALCustomCell.m in Sources */,
+				105F30C81FFBAEEC00D60431 /* AlChannelInfoModel.m in Sources */,
 				6D7756E01D5B82000025560B /* ALUserDetail.m in Sources */,
 				6D77571E1D5B838A0025560B /* ALSendMessageResponse.m in Sources */,
 				6D6DF1551BC5364C00EBA00F /* UIImage+Utility.m in Sources */,

@@ -22,6 +22,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Applozic/Applozic-Swift.h>
+#import <Applozic/ALChannelService.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -162,16 +163,22 @@
     ALUser * user = [[ALUser alloc] init];
     [user setUserId:[ALUserDefaultsHandler getUserId]];
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
-
     
-    ALChatManager * chatManager = [[ALChatManager alloc] init];
+    
+    
+    ALChannelService *channelService = [[ALChannelService alloc] init];
+    [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
+        if(alChannel){
+            ALChatManager * chatManager = [[ALChatManager alloc] init];
 
-    [self checkUserContact:@"don222" displayName:@"" withCompletion:^(ALContact * contact) {
-
-         [chatManager launchChatForUserWithDisplayName:contact.userId withGroupId:nil
-                                        andwithDisplayName:contact.displayName andFromViewController:self];
+            [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
+                                       andwithDisplayName:nil andFromViewController:self];
+            
+            
+        }
 
     }];
+    
 }
 
 -(void)checkUserContact:(NSString *)userId displayName:(NSString *)displayName withCompletion:(void(^)(ALContact * contact))completion

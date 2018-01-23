@@ -3799,11 +3799,13 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString * typingText = @"";
         if(self.channelKey)
         {
-            typingText = [NSString stringWithFormat:@"%@%@ is typing...", space, [contact getDisplayName]];
+            //typingText = [NSString stringWithFormat:@"%@%@ is typing...", space, [contact getDisplayName]];
+            typingText = [NSString stringWithFormat:NSLocalizedString(@"userTyping", @"%@%@ is typing..."), space, [contact getDisplayName]];
         }
         else
         {
-            typingText = [NSString stringWithFormat:@"%@%@ is typing...", space, msg];
+            //typingText = [NSString stringWithFormat:@"%@%@ is typing...", space, msg];
+            typingText = [NSString stringWithFormat:NSLocalizedString(@"userTyping", @"%@%@ is typing..."), space, msg];
         }
         [self.typingLabel setText:typingText];
         [self.typingLabel setHidden:NO];

@@ -667,4 +667,8 @@
     return contact.deletedAtTime ? YES : NO;
 }
 
+-(NSMutableDictionary *)getMetaDataDictionary:(NSString *)string{
+    return nil;
+}
+
 @end

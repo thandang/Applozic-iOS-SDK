@@ -105,7 +105,9 @@ FOUNDATION_EXPORT const unsigned char ApplozicVersionString[];
 #import <Applozic/AlChannelInfoModel.h>
 #import <Applozic/AlChannelResponse.h>
 #import <Applozic/AlChannelFeedResponse.h>
+<<<<<<< HEAD
 #import <Applozic/ALGroupUser.h>
+=======
 
 #import <Applozic/ALChannelMsgCell.h>
 #import <Applozic/ALChannelUser.h>
@@ -116,3 +118,5 @@ FOUNDATION_EXPORT const unsigned char ApplozicVersionString[];
 #import <Applozic/MQTTSSLSecurityPolicyDecoder.h>
 #import <Applozic/MQTTSessionManager.h>
 #import <Applozic/MQTTSSLSecurityPolicyEncoder.h>
+
+>>>>>>> 382365b2... reduced compile time warnings AL-2503

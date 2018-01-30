@@ -377,10 +377,10 @@
         DB_CONTACT * dbContact = [result objectAtIndex:0];
         dbContact.lastSeenAt = userDetail.lastSeenAtTime;
         dbContact.connected = userDetail.connected;
-        if(![userDetail.unreadCount isEqualToNumber:[NSNumber numberWithInt:0]])
-        {
+        if(userDetail.unreadCount != nil && [userDetail.unreadCount  compare:[NSNumber numberWithInt:0]] != NSOrderedSame){
             dbContact.unreadCount = userDetail.unreadCount;
-        }        
+        }
+        
         if(userDetail.displayName)
         {
             dbContact.displayName = userDetail.displayName;

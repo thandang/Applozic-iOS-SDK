@@ -3794,18 +3794,14 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     
     if(flag)
     {
-        NSString * space = @"    ";
-        NSString * msg = [self.alContact getDisplayName];
         NSString * typingText = @"";
         if(self.channelKey)
         {
-            //typingText = [NSString stringWithFormat:@"%@%@ is typing...", space, [contact getDisplayName]];
-            typingText = [NSString stringWithFormat:NSLocalizedString(@"userTyping", @"%@%@ is typing..."), space, [contact getDisplayName]];
+            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", nil, [NSBundle mainBundle],@"%@%@ is typing...", @"")];
         }
         else
         {
-            //typingText = [NSString stringWithFormat:@"%@%@ is typing...", space, msg];
-            typingText = [NSString stringWithFormat:NSLocalizedString(@"userTyping", @"%@%@ is typing..."), space, msg];
+            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", nil, [NSBundle mainBundle],@"%@%@ is typing...", @"")];
         }
         [self.typingLabel setText:typingText];
         [self.typingLabel setHidden:NO];

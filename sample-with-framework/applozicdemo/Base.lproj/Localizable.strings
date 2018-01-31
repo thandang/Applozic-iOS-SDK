@@ -289,5 +289,5 @@
 "recordingMessage" = "00:";
 "swipeUpToCancel" = "Swipe up to cancel";
 
-"moreMember" = "+%d more";
-"userTyping" = "%@%@ is typing ...";
+"moreMember" = "more";
+"userTyping" = "is typing ...";

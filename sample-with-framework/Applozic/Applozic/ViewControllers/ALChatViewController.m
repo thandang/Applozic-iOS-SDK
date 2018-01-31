@@ -3338,6 +3338,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if(alUserDetail)
         {
             [ALUserDefaultsHandler setServerCallDoneForUserInfo:YES ForContact:alUserDetail.userId];
+            alUserDetail.unreadCount = 0;
             [[[ALContactDBService alloc] init] updateUserDetail:alUserDetail];
             [self setTitle];
             [self updateLastSeenAtStatus:alUserDetail];

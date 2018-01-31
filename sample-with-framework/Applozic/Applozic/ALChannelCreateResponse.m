@@ -38,6 +38,7 @@
     {
         ALUserDetail *userDetail = [[ALUserDetail alloc] initWithDictonary:JSONDictionaryObject];
         ALContactDBService * contactDB = [ALContactDBService new];
+        userDetail.unreadCount = 0;
         [contactDB updateUserDetail: userDetail];
     }
 }

@@ -288,3 +288,6 @@
 "initialRecordingMessage" = "00:00:00";
 "recordingMessage" = "00:";
 "swipeUpToCancel" = "Swipe up to cancel";
+
+"moreMember" = "more";
+"userTyping" = "is typing ...";

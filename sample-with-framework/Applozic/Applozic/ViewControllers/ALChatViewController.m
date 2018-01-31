@@ -3797,11 +3797,11 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString * typingText = @"";
         if(self.channelKey)
         {
-            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", nil, [NSBundle mainBundle],@"%@%@ is typing...", @"")];
+            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", nil, [NSBundle mainBundle],@"is typing...", @"")];
         }
         else
         {
-            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", nil, [NSBundle mainBundle],@"%@%@ is typing...", @"")];
+            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", nil, [NSBundle mainBundle],@"is typing...", @"")];
         }
         [self.typingLabel setText:typingText];
         [self.typingLabel setHidden:NO];

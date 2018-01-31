@@ -529,7 +529,7 @@
     else if(listArray.count > 2)
     {
         int counter = (int)listArray.count - 2;
-        str = [NSString stringWithFormat:@"+%d %@",counter, NSLocalizedStringWithDefaultValue(@"moreMember", nil, [NSBundle mainBundle], @"+%d more", @"")];
+        str = [NSString stringWithFormat:@"+%d %@",counter, NSLocalizedStringWithDefaultValue(@"moreMember", nil, [NSBundle mainBundle], @"more", @"")];
         listString = [NSString stringWithFormat:@"%@, %@, %@", listArray[0], listArray[1], str];
     }
     

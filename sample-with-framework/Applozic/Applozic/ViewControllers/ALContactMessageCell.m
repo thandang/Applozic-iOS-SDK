@@ -409,7 +409,7 @@
   
     
      UIMenuItem * msgInfo = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"infoOptionTitle", nil,[NSBundle mainBundle], @"Info", @"") action:@selector(msgInfo:)];
-    [[UIMenuController sharedMenuController] setMenuItems: @[messageReply,messageForward]];
+    [[UIMenuController sharedMenuController] setMenuItems: @[msgInfo,messageReply,messageForward]];
     [[UIMenuController sharedMenuController] update];
     
     return self;

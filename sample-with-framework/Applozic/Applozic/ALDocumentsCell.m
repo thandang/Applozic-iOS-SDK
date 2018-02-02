@@ -409,10 +409,14 @@
     }
     
     UIMenuItem * messageForward = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"forwardOptionTitle", nil,[NSBundle mainBundle], @"Forward", @"") action:@selector(messageForward:)];
+    
+      UIMenuItem * msgInfo = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"infoOptionTitle", nil,[NSBundle mainBundle], @"Info", @"") action:@selector(msgInfo:)];
+    
+    
     UIMenuItem * messageReply = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"replyOptionTitle", nil,[NSBundle mainBundle], @"Reply", @"") action:@selector(messageReply:)];
     
     
-    [[UIMenuController sharedMenuController] setMenuItems: @[messageForward,messageReply]];
+    [[UIMenuController sharedMenuController] setMenuItems: @[msgInfo,messageForward,messageReply]];
     [[UIMenuController sharedMenuController] update];
 
     

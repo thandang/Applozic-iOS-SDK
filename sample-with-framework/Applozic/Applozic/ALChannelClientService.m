@@ -112,13 +112,12 @@
           withCompletion:(void(^)(NSError *error, ALChannelCreateResponse *response))completion
     {
         
-        [self createChannel:channelName andParentChannelKey:parentChannelKey orClientChannelKey:clientChannelKey
-                               andMembersList:memberArray andImageLink:imageLink channelType:(short)type
-                                  andMetaData:metaData adminUser:adminUserId withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
-                                      
-                                       completion(error, response);
+        [self createChannel:channelName andParentChannelKey:parentChannelKey orClientChannelKey:clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:type andMetaData:metaData adminUser:adminUserId withGroupUsers:nil withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
+            
+            completion(error, response);
 
-                                  }];
+            
+        }];
         
         
     
@@ -162,7 +161,7 @@
     if(groupRoleUsers.count){
         [channelDictionary setObject:groupRoleUsers forKey:@"users"];
     }
-    
+
     NSError *error;
     NSData *postdata = [NSJSONSerialization dataWithJSONObject:channelDictionary options:0 error:&error];
     NSString *theParamString = [[NSString alloc] initWithData:postdata encoding: NSUTF8StringEncoding];

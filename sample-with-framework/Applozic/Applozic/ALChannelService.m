@@ -307,6 +307,8 @@
     [self createChannel:channelName orClientChannelKey:clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:type andMetaData:metaData adminUser:nil withCompletion:^(ALChannel *alChannel, NSError *error) {
         completion(alChannel, error);
     }];
+
+
 }
 
 
@@ -316,22 +318,9 @@
 {
     if(channelName != nil)
     {
-        [ALChannelClientService createChannel:channelName andParentChannelKey:nil orClientChannelKey:(NSString *)clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:(short)type
-                                  andMetaData:metaData adminUser:adminUserId withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
-                                      
-                                      if(!error)
-                                      {
-                                          response.alChannel.adminKey = [ALUserDefaultsHandler getUserId];
-                                          ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
-                                          [channelDBService createChannel:response.alChannel];
-                                          completion(response.alChannel, error);
-                                      }
-                                      else
-                                      {
-                                          NSLog(@"ERROR_IN_CHANNEL_CREATING :: %@",error);
-                                          completion(nil, error);
-                                      }
-                                  }];
+        [self createChannel:channelName orClientChannelKey:clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:type andMetaData:metaData adminUser:adminUserId withGroupUsers:nil   withCompletion:^(ALChannel *alChannel, NSError *error) {
+            completion(alChannel, error);
+        }];
     }
     else
     {
@@ -340,6 +329,36 @@
     }
 }
 
+    
+-(void)createChannel:(NSString *)channelName orClientChannelKey:(NSString *)clientChannelKey
+          andMembersList:(NSMutableArray *)memberArray andImageLink:(NSString *)imageLink channelType:(short)type
+             andMetaData:(NSMutableDictionary *)metaData adminUser:(NSString *)adminUserId withGroupUsers : (NSMutableArray*) groupRoleUsers withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion
+    {
+        if(channelName != nil)
+        {
+            [ALChannelClientService createChannel:channelName andParentChannelKey:nil orClientChannelKey:(NSString *)clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:(short)type
+                                      andMetaData:metaData adminUser:adminUserId withGroupUsers:groupRoleUsers withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
+                                          
+                                          if(!error)
+                                          {
+                                              response.alChannel.adminKey = [ALUserDefaultsHandler getUserId];
+                                              ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+                                              [channelDBService createChannel:response.alChannel];
+                                              completion(response.alChannel, error);
+                                          }
+                                          else
+                                          {
+                                              NSLog(@"ERROR_IN_CHANNEL_CREATING :: %@",error);
+                                              completion(nil, error);
+                                          }
+                                      }];
+        }
+        else
+        {
+            NSLog(@"ERROR : CHANNEL NAME MISSING");
+            return;
+        }
+    }
 
 
 -(void)createBroadcastChannelWithMembersList:(NSMutableArray *)memberArray

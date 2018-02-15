@@ -104,10 +104,29 @@
         }
     }];
 }
+    
+    
++(void)createChannel:(NSString *)channelName andParentChannelKey:(NSNumber *)parentChannelKey
+      orClientChannelKey:(NSString *)clientChannelKey andMembersList:(NSMutableArray *)memberArray
+            andImageLink:(NSString *)imageLink channelType:(short)type andMetaData:(NSMutableDictionary *)metaData adminUser :(NSString *)adminUserId
+          withCompletion:(void(^)(NSError *error, ALChannelCreateResponse *response))completion
+    {
+        
+        [self createChannel:channelName andParentChannelKey:parentChannelKey orClientChannelKey:clientChannelKey
+                               andMembersList:memberArray andImageLink:imageLink channelType:(short)type
+                                  andMetaData:metaData adminUser:adminUserId withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
+                                      
+                                       completion(error, response);
+
+                                  }];
+        
+        
+    
+}
 
 +(void)createChannel:(NSString *)channelName andParentChannelKey:(NSNumber *)parentChannelKey
   orClientChannelKey:(NSString *)clientChannelKey andMembersList:(NSMutableArray *)memberArray
-        andImageLink:(NSString *)imageLink channelType:(short)type andMetaData:(NSMutableDictionary *)metaData adminUser :(NSString *)adminUserId
+        andImageLink:(NSString *)imageLink channelType:(short)type andMetaData:(NSMutableDictionary *)metaData adminUser :(NSString *)adminUserId withGroupUsers :(NSMutableArray *) groupRoleUsers
       withCompletion:(void(^)(NSError *error, ALChannelCreateResponse *response))completion
 {
     
@@ -138,6 +157,10 @@
     }
     if(adminUserId){
         [channelDictionary setObject:adminUserId forKey:@"admin"];
+    }
+    
+    if(groupRoleUsers.count){
+        [channelDictionary setObject:groupRoleUsers forKey:@"users"];
     }
     
     NSError *error;

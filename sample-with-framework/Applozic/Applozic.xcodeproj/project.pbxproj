@@ -13,6 +13,8 @@
 		105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		105F30C81FFBAEEC00D60431 /* AlChannelInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */; };
 		105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */; };
+		10BFA7D520349F6600D74881 /* ALGroupUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 10BFA7D320349F6600D74881 /* ALGroupUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10BFA7D620349F6600D74881 /* ALGroupUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10BFA7D420349F6600D74881 /* ALGroupUser.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
 		2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -361,6 +363,8 @@
 		105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelResponse.h; path = Applozic/AlChannelResponse.h; sourceTree = "<group>"; };
 		105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelInfoModel.m; path = Applozic/AlChannelInfoModel.m; sourceTree = "<group>"; };
 		105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelResponse.m; path = Applozic/AlChannelResponse.m; sourceTree = "<group>"; };
+		10BFA7D320349F6600D74881 /* ALGroupUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALGroupUser.h; path = Applozic/ALGroupUser.h; sourceTree = "<group>"; };
+		10BFA7D420349F6600D74881 /* ALGroupUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALGroupUser.m; path = Applozic/ALGroupUser.m; sourceTree = "<group>"; };
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
@@ -1302,6 +1306,8 @@
 				6D7756A81D5B80DF0025560B /* ALChannelUserX.m */,
 				C75576EC1E27A5B300358D9B /* ALMuteRequest.h */,
 				C75576ED1E27A5B300358D9B /* ALMuteRequest.m */,
+				10BFA7D320349F6600D74881 /* ALGroupUser.h */,
+				10BFA7D420349F6600D74881 /* ALGroupUser.m */,
 			);
 			name = ALChannel;
 			sourceTree = "<group>";
@@ -1556,6 +1562,7 @@
 				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
 				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
+				10BFA7D520349F6600D74881 /* ALGroupUser.h in Headers */,
 				6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */,
 				6D46B6C51BD025060014A5D3 /* ALMapViewController.h in Headers */,
 				6D36F2081BFF3EE3003D46D3 /* ALApplozicSettings.h in Headers */,
@@ -1777,6 +1784,7 @@
 				6D6DF1C41BC5364C00EBA00F /* SDWebImagePrefetcher.m in Sources */,
 				6D7757481D5B85100025560B /* ALLocationCell.m in Sources */,
 				6D7756B01D5B80DF0025560B /* ALChannelDBService.m in Sources */,
+				10BFA7D620349F6600D74881 /* ALGroupUser.m in Sources */,
 				2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */,
 				4612E8F91E13882D0022DB23 /* MQTTCFSocketTransport.m in Sources */,
 				6D6DF14B1BC5364C00EBA00F /* ALResponseHandler.m in Sources */,
@@ -1954,7 +1962,7 @@
 		6D6DF0861BC535C800EBA00F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1974,11 +1982,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.remedoapp.patient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1987,7 +1995,7 @@
 		6D6DF0871BC535C800EBA00F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2007,11 +2015,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.remedoapp.patient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

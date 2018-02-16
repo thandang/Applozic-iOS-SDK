@@ -13,6 +13,12 @@
 		105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		105F30C81FFBAEEC00D60431 /* AlChannelInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */; };
 		105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */; };
+		1093FDCE2037336800927ED7 /* KMConversation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1093FDCC2037336800927ED7 /* KMConversation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1093FDCF2037336800927ED7 /* KMConversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1093FDCD2037336800927ED7 /* KMConversation.m */; };
+		1093FDD22037358400927ED7 /* KMConversationClientService.h in Headers */ = {isa = PBXBuildFile; fileRef = 1093FDD02037358400927ED7 /* KMConversationClientService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1093FDD32037358400927ED7 /* KMConversationClientService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1093FDD12037358400927ED7 /* KMConversationClientService.m */; };
+		1093FDD620373BFC00927ED7 /* KMResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1093FDD420373BFC00927ED7 /* KMResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1093FDD720373BFC00927ED7 /* KMResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1093FDD520373BFC00927ED7 /* KMResponse.m */; };
 		10BFA7D520349F6600D74881 /* ALGroupUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 10BFA7D320349F6600D74881 /* ALGroupUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10BFA7D620349F6600D74881 /* ALGroupUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10BFA7D420349F6600D74881 /* ALGroupUser.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -363,6 +369,12 @@
 		105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelResponse.h; path = Applozic/AlChannelResponse.h; sourceTree = "<group>"; };
 		105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelInfoModel.m; path = Applozic/AlChannelInfoModel.m; sourceTree = "<group>"; };
 		105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelResponse.m; path = Applozic/AlChannelResponse.m; sourceTree = "<group>"; };
+		1093FDCC2037336800927ED7 /* KMConversation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KMConversation.h; path = Applozic/KMConversation.h; sourceTree = "<group>"; };
+		1093FDCD2037336800927ED7 /* KMConversation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KMConversation.m; path = Applozic/KMConversation.m; sourceTree = "<group>"; };
+		1093FDD02037358400927ED7 /* KMConversationClientService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KMConversationClientService.h; path = Applozic/KMConversationClientService.h; sourceTree = "<group>"; };
+		1093FDD12037358400927ED7 /* KMConversationClientService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KMConversationClientService.m; path = Applozic/KMConversationClientService.m; sourceTree = "<group>"; };
+		1093FDD420373BFC00927ED7 /* KMResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KMResponse.h; path = Applozic/KMResponse.h; sourceTree = "<group>"; };
+		1093FDD520373BFC00927ED7 /* KMResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KMResponse.m; path = Applozic/KMResponse.m; sourceTree = "<group>"; };
 		10BFA7D320349F6600D74881 /* ALGroupUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALGroupUser.h; path = Applozic/ALGroupUser.h; sourceTree = "<group>"; };
 		10BFA7D420349F6600D74881 /* ALGroupUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALGroupUser.m; path = Applozic/ALGroupUser.m; sourceTree = "<group>"; };
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
@@ -1308,6 +1320,12 @@
 				C75576ED1E27A5B300358D9B /* ALMuteRequest.m */,
 				10BFA7D320349F6600D74881 /* ALGroupUser.h */,
 				10BFA7D420349F6600D74881 /* ALGroupUser.m */,
+				1093FDCC2037336800927ED7 /* KMConversation.h */,
+				1093FDCD2037336800927ED7 /* KMConversation.m */,
+				1093FDD02037358400927ED7 /* KMConversationClientService.h */,
+				1093FDD12037358400927ED7 /* KMConversationClientService.m */,
+				1093FDD420373BFC00927ED7 /* KMResponse.h */,
+				1093FDD520373BFC00927ED7 /* KMResponse.m */,
 			);
 			name = ALChannel;
 			sourceTree = "<group>";
@@ -1561,9 +1579,12 @@
 				105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */,
 				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
 				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
+				1093FDD620373BFC00927ED7 /* KMResponse.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
 				10BFA7D520349F6600D74881 /* ALGroupUser.h in Headers */,
+				1093FDD22037358400927ED7 /* KMConversationClientService.h in Headers */,
 				6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */,
+				1093FDCE2037336800927ED7 /* KMConversation.h in Headers */,
 				6D46B6C51BD025060014A5D3 /* ALMapViewController.h in Headers */,
 				6D36F2081BFF3EE3003D46D3 /* ALApplozicSettings.h in Headers */,
 				6D9547691BE38DFF00776652 /* ALContactDBService.h in Headers */,
@@ -1712,6 +1733,7 @@
 				4612E9101E13882D0022DB23 /* MQTTSSLSecurityPolicy.m in Sources */,
 				6D6DF1BF1BC5364C00EBA00F /* SDWebImageDownloaderOperation.m in Sources */,
 				6D6DF1711BC5364C00EBA00F /* ALContact.m in Sources */,
+				1093FDD720373BFC00927ED7 /* KMResponse.m in Sources */,
 				6D6DF1631BC5364C00EBA00F /* ALContactCell.m in Sources */,
 				C76366091DF82B500087221C /* ALNavigationController.m in Sources */,
 				6D6DF15D1BC5364C00EBA00F /* ALNewContactsViewController.m in Sources */,
@@ -1765,6 +1787,7 @@
 				6D7757021D5B82ED0025560B /* DB_CHANNEL.m in Sources */,
 				4612E9051E13882D0022DB23 /* MQTTMessage.m in Sources */,
 				6D6DF1CC1BC5364C00EBA00F /* UIImage+WebP.m in Sources */,
+				1093FDCF2037336800927ED7 /* KMConversation.m in Sources */,
 				105F30C51FFBAEEC00D60431 /* AlChannelFeedResponse.m in Sources */,
 				6D6DF1C11BC5364C00EBA00F /* SDWebImageManager.m in Sources */,
 				6D7756E21D5B82000025560B /* ALUserService.m in Sources */,
@@ -1775,6 +1798,7 @@
 				105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */,
 				4612E8FE1E13882D0022DB23 /* MQTTCoreDataPersistence.m in Sources */,
 				293446141D4F426F007BD1B4 /* ALImageActivity.m in Sources */,
+				1093FDD32037358400927ED7 /* KMConversationClientService.m in Sources */,
 				6D7756921D5B7FBE0025560B /* DB_ConversationProxy.m in Sources */,
 				463E49211DB7B45D00CDFFE6 /* ALVCardClass.m in Sources */,
 				6D6DF1D91BC5364C00EBA00F /* AppLozic.xcdatamodeld in Sources */,
@@ -1962,7 +1986,7 @@
 		6D6DF0861BC535C800EBA00F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1982,7 +2006,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.remedoapp.patient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1995,7 +2019,7 @@
 		6D6DF0871BC535C800EBA00F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2015,7 +2039,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.remedoapp.patient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

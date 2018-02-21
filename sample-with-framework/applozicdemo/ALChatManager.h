@@ -11,6 +11,7 @@
 #import <Applozic/ALUser.h>
 #import <Applozic/ALConversationService.h>
 #import <Applozic/ALRegisterUserClientService.h>
+#import <Applozic/ALChannel.h>
 
 #define APPLICATION_ID @"applozic-sample-app"
 
@@ -55,5 +56,7 @@
                        withMetaData:(NSMutableDictionary*)metadata
                         andWithUser:(NSString *)userId
               andFromViewController:(UIViewController *)viewController;
+
+-(void)startNewConversation:(NSString*) groupName withAgentId :(NSString *) agentId withBotId :(NSString *) botId  withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion ;
 
 @end

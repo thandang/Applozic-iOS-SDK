@@ -13,6 +13,11 @@
 #import <Applozic/ALChatViewController.h>
 #import <Applozic/ALMessage.h>
 #import <Applozic/ALNewContactsViewController.h>
+#import <Applozic/ALChannelService.h>
+#import <Applozic/KMConversationClientService.h>
+#import  <Applozic/ALGroupUser.h>
+#import  <Applozic/ALUserDefaultsHandler.h>
+
 
 
 @implementation ALChatManager
@@ -661,6 +666,97 @@
        }
     }];
 }
+
+
+-(void)startNewConversation:(NSString*) groupName withAgentId :(NSString *) agentId withBotId :(NSString *) botId  withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion {
+    
+    if(!groupName){
+        NSLog(@"Group  name is nil !!!!");
+        return;
+    }
+    
+    ALChannelService *alChannelService = [[ALChannelService alloc] init];
+    
+    NSMutableArray * nsMutableArray = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *groupUsers = [[NSMutableArray alloc] init];
+    
+    ALGroupUser * agentGroupUser =  [ALGroupUser new];
+    agentGroupUser.groupRole = [NSNumber numberWithInt:1];
+    agentGroupUser.userId = agentId;
+    
+    ALGroupUser * botGroupUser =  [ALGroupUser new];
+    botGroupUser.groupRole = [NSNumber numberWithInt:2];
+    botGroupUser.userId = botId == nil? @"bot":botId;
+    
+    ALGroupUser * loginGroupUser =  [ALGroupUser new];
+    loginGroupUser.groupRole = [NSNumber numberWithInt:3];
+    loginGroupUser.userId = [ALUserDefaultsHandler getUserId];
+    
+    [groupUsers addObject:agentGroupUser.dictionary];
+    
+    [groupUsers addObject:botGroupUser.dictionary];
+    
+    [groupUsers addObject:loginGroupUser.dictionary];
+    
+    NSMutableDictionary *grpMetaData = [NSMutableDictionary new];
+    
+    [grpMetaData setObject:@"" forKey:AL_CREATE_GROUP_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_REMOVE_MEMBER_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_ADD_MEMBER_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_JOIN_MEMBER_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_GROUP_NAME_CHANGE_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_GROUP_ICON_CHANGE_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_GROUP_LEFT_MESSAGE];
+    [grpMetaData setObject:@"" forKey:AL_DELETED_GROUP_MESSAGE];
+    [grpMetaData setObject:agentId forKey:@"CONVERSATION_ASSIGNEE"];
+    [grpMetaData setObject:@"" forKey:@"GROUP_META_DATA_UPDATED_MESSAGE"];
+    [grpMetaData setObject:@"" forKey:@"GROUP_USER_ROLE_UPDATED_MESSAGE"];
+    [grpMetaData setObject:@"true" forKey:@"HIDE"];
+    [grpMetaData setObject:@"false" forKey:@"ALERT"];
+    
+    [alChannelService createChannel:groupName orClientChannelKey:nil andMembersList:nsMutableArray andImageLink:nil channelType: 10
+                        andMetaData:grpMetaData adminUser:agentId withGroupUsers : groupUsers  withCompletion:^(ALChannel *alChannel, NSError *error) {
+                            
+                            if(alChannel){
+                                
+                                KMConversationClientService *kmConversationClientService = [KMConversationClientService new];
+                                KMConversation *kmConversation = [KMConversation new];
+                                
+                                kmConversation.applicationId = [ALUserDefaultsHandler getApplicationKey];
+                                kmConversation.defaultAgentId = agentId;
+                                kmConversation.createdBy = [ALUserDefaultsHandler getUserId];
+                                kmConversation.participentUserId = [ALUserDefaultsHandler getUserId];
+                                kmConversation.groupId = alChannel.key;
+                                
+                                [kmConversationClientService createConversation: kmConversation withCompletion:^(NSError *error, KMResponse *response) {
+                                    
+                                    if(error){
+                                        completion(nil,error);
+                                        return ;
+                                    }else if([@"SUCCESS" isEqualToString:response.code]){
+                                        completion(alChannel,error);
+                                        return ;
+                                    }else{
+                                        completion(nil,error);
+                                        return ;
+                                        
+                                    }
+                                    
+                                }];
+                                
+                                
+                            }else{
+                                completion(nil,error);
+                            }
+                            
+                        } ];
+    
+    
+}
+
+
+
 
 //==============================================================================================================================================
 // DELEGATE FOR THIRD PARTY ACTION ON TAP GESTURE

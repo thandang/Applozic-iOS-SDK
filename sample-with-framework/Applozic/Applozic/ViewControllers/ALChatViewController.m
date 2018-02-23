@@ -2815,7 +2815,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)openLocationView
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:[self class]]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:ALChatViewController.class]];
     ALMapViewController *mapView = (ALMapViewController *)[storyboard instantiateViewControllerWithIdentifier:@"shareLoactionViewTag"];
     mapView.controllerDelegate = self;
     [self.navigationController pushViewController:mapView animated:YES];

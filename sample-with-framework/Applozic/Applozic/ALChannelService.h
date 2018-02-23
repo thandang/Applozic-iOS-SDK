@@ -91,6 +91,8 @@
 
 +(BOOL)isChannelMuted:(NSNumber *)groupId;
 
++(void)closeGroupConverstion :(NSNumber *) groupId  withCompletion:(void(^)(NSError *error))completion ;
+
 +(void)setUnreadCountZeroForGroupID:(NSNumber*)channelKey;
 
 -(NSNumber *)getOverallUnreadCountForChannel;

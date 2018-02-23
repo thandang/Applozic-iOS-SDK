@@ -57,6 +57,7 @@
     //callForChannelProxy inserting in DB...
     ALConversationService *alConversationService = [[ALConversationService alloc] init];
     [alConversationService addConversations:alChannelFeed.conversationProxyList];
+
     
 }
 
@@ -178,6 +179,25 @@
 {
     ALChannelDBService * channelDB = [[ALChannelDBService alloc] init];
     return [channelDB getAllChannelKeyAndName];
+}
+
++(void)closeGroupConverstion :(NSNumber *) groupId  withCompletion:(void(^)(NSError *error))completion {
+    
+
+    NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
+    [metadata setObject:@"CLOSE" forKey:CHANNEL_CONVERSATION_STATUS];
+
+    ALChannelService *channelService = [ALChannelService new];
+    [channelService updateChannel:groupId andNewName:nil
+                      andImageURL:nil orClientChannelKey:nil isUpdatingMetaData:YES
+                         metadata:metadata orChildKeys:nil orChannelUsers:nil  withCompletion:^(NSError *error) {
+                             completion(error);
+                         }];
+
+    
+    
+    
+    
 }
 
 //==========================================================================================================================================

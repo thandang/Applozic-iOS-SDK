@@ -942,28 +942,16 @@
     
     if(self.channelKey && !self.contactIds){
         
-        ALChannelService *channelService = [ALChannelService new];
-        NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
-    
-        [metadata setObject:@"CLOSE" forKey:@"CONVERSATION_STATUS"];
+        [ALChannelService closeGroupConverstion : self.channelKey withCompletion:^(NSError *error){
+            
+            if(!error){
+                
+                [self.navRightBarButtonItems removeObject:self.closeButton];
+                self.navigationItem.rightBarButtonItems = [self.navRightBarButtonItems mutableCopy];
+                [self freezeView:YES];
+            }
+        }];
         
-        [channelService updateChannel:self.channelKey andNewName:nil
-                          andImageURL:nil orClientChannelKey:nil isUpdatingMetaData:YES
-                             metadata:metadata orChildKeys:nil orChannelUsers:nil  withCompletion:^(NSError *error) {
-                                 
-                                 if(!error)
-                                 {
-                                     
-                                     [self.navRightBarButtonItems removeObject:self.closeButton];
-
-                                     self.navigationItem.rightBarButtonItems = [self.navRightBarButtonItems mutableCopy];
-                                     
-                                     [self freezeView:YES];
-                                    
-                                 }
-                             }];
-        
-
     }
     
 }

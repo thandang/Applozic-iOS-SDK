@@ -863,7 +863,7 @@
 -(void)updateGroupView
 {
     
-    if([ALApplozicSettings isGroupInfoEditDisabled]){
+    if([ALApplozicSettings isGroupInfoEditDisabled] || [ALChannelService isConversationClosed: alchannel.key] ){
         NSLog(@"group edit is disabled");
         return;
     }

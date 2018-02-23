@@ -57,6 +57,7 @@
     //callForChannelProxy inserting in DB...
     ALConversationService *alConversationService = [[ALConversationService alloc] init];
     [alConversationService addConversations:alChannelFeed.conversationProxyList];
+
     
 }
 
@@ -112,6 +113,15 @@
     BOOL flag = [dbSerivce isChannelDeleted:groupId];
     return flag;
 }
+
+
+
++(BOOL)isConversationClosed:(NSNumber *)groupId
+{
+    ALChannelDBService *dbSerivce = [[ALChannelDBService alloc] init];
+    return [dbSerivce isConversaionClosed:groupId];
+}
+
 
 +(BOOL)isChannelMuted:(NSNumber *)groupId
 {
@@ -169,6 +179,25 @@
 {
     ALChannelDBService * channelDB = [[ALChannelDBService alloc] init];
     return [channelDB getAllChannelKeyAndName];
+}
+
++(void)closeGroupConverstion :(NSNumber *) groupId  withCompletion:(void(^)(NSError *error))completion {
+    
+
+    NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
+    [metadata setObject:@"CLOSE" forKey:CHANNEL_CONVERSATION_STATUS];
+
+    ALChannelService *channelService = [ALChannelService new];
+    [channelService updateChannel:groupId andNewName:nil
+                      andImageURL:nil orClientChannelKey:nil isUpdatingMetaData:YES
+                         metadata:metadata orChildKeys:nil orChannelUsers:nil  withCompletion:^(NSError *error) {
+                             completion(error);
+                         }];
+
+    
+    
+    
+    
 }
 
 //==========================================================================================================================================
@@ -641,6 +670,7 @@
             [channelDBService processArrayAfterSyncCall:response.alChannelArray];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GroupDetailTableReload" object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATE_CHANNEL_NAME" object:nil];
+
         }
     }];
 }

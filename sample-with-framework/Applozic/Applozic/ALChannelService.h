@@ -87,6 +87,8 @@
 
 +(BOOL)isChannelDeleted:(NSNumber *)groupId;
 
++(BOOL)isConversationClosed:(NSNumber *)groupId;
+
 +(BOOL)isChannelMuted:(NSNumber *)groupId;
 
 +(void)setUnreadCountZeroForGroupID:(NSNumber*)channelKey;

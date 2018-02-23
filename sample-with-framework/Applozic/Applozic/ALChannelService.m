@@ -113,6 +113,15 @@
     return flag;
 }
 
+
+
++(BOOL)isConversationClosed:(NSNumber *)groupId
+{
+    ALChannelDBService *dbSerivce = [[ALChannelDBService alloc] init];
+    return [dbSerivce isConversaionClosed:groupId];
+}
+
+
 +(BOOL)isChannelMuted:(NSNumber *)groupId
 {
     ALChannelService * channelService = [[ALChannelService alloc] init];
@@ -641,6 +650,7 @@
             [channelDBService processArrayAfterSyncCall:response.alChannelArray];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GroupDetailTableReload" object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATE_CHANNEL_NAME" object:nil];
+
         }
     }];
 }

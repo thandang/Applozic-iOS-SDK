@@ -352,8 +352,8 @@
         [self.pickerView reloadAllComponents];
     }
     
+     [self checkIfChannelLeft];
     [self setCallButtonInNavigationBar];
-    [self checkIfChannelLeft];
     [self checkUserBlockStatus];
     if(self.contactIds ){
       [self checkUserDeleted];
@@ -907,18 +907,17 @@
         [self freezeView:YES];
         [ALNotificationView showLocalNotification:[ALApplozicSettings getGroupDeletedTitle]];
     }else if([ALChannelService isConversationClosed:self.channelKey]){
-        
-
         [self freezeView:YES];
     }
     else
     {
         if(!self.contactIds && self.channelKey && [ALApplozicSettings isConversationCloseButtonEnabled]){
-            
             [self.navRightBarButtonItems addObject:self.closeButton];
         }
+
         [self freezeView:NO];
     }
+
 }
 
 //==============================================================================================================================================
@@ -956,6 +955,9 @@
                                  {
                                      
                                      [self.navRightBarButtonItems removeObject:self.closeButton];
+
+                                     self.navigationItem.rightBarButtonItems = [self.navRightBarButtonItems mutableCopy];
+                                     
                                      [self freezeView:YES];
                                     
                                  }

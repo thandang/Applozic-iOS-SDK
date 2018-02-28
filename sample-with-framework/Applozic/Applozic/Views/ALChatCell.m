@@ -325,10 +325,6 @@
             [self.mNameLabel setHidden:NO];
             self.mUserProfileImageView.backgroundColor = [ALColorUtility getColorForAlphabet:receiverName];
         }
-   
-
-
-        
     }
     else    //Sent Message
     {
@@ -758,9 +754,6 @@
     
 }
 
-
-
-
 -(void)tapGestureForReplyView:(id)sender{
     
     [self.delegate scrollToReplyMessage:self.mMessage];
@@ -774,7 +767,6 @@
     return ([ALApplozicSettings isReplyOptionEnabled] && action == @selector(messageReply:));
     
 }
-
 
 -(BOOL)isForwardMenuEnabled:(SEL) action;
 {

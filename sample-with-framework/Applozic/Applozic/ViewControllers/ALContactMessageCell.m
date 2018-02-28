@@ -410,7 +410,6 @@
     return self;
 }
 
-
 #pragma mark - Menu option tap Method -
 
 -(void) proccessTapForMenu:(id)tap{
@@ -432,9 +431,6 @@
     [[UIMenuController sharedMenuController] update];
     
 }
-
-
-
 
 -(void)addButtonAction
 {

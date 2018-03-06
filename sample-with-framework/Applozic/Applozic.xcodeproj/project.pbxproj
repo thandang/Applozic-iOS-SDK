@@ -13,6 +13,8 @@
 		105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		105F30C81FFBAEEC00D60431 /* AlChannelInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */; };
 		105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */; };
+		10B6DABC204E980400B6E024 /* ALGroupUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 10B6DABA204E980300B6E024 /* ALGroupUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B6DABB204E980300B6E024 /* ALGroupUser.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
 		2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -361,6 +363,8 @@
 		105F30C11FFBAEEB00D60431 /* AlChannelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelResponse.h; path = Applozic/AlChannelResponse.h; sourceTree = "<group>"; };
 		105F30C21FFBAEEB00D60431 /* AlChannelInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelInfoModel.m; path = Applozic/AlChannelInfoModel.m; sourceTree = "<group>"; };
 		105F30C31FFBAEEB00D60431 /* AlChannelResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlChannelResponse.m; path = Applozic/AlChannelResponse.m; sourceTree = "<group>"; };
+		10B6DABA204E980300B6E024 /* ALGroupUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALGroupUser.h; path = Applozic/ALGroupUser.h; sourceTree = "<group>"; };
+		10B6DABB204E980300B6E024 /* ALGroupUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALGroupUser.m; path = Applozic/ALGroupUser.m; sourceTree = "<group>"; };
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
@@ -1274,6 +1278,8 @@
 		6DCC30061C315A3D00F17D0E /* ALChannel */ = {
 			isa = PBXGroup;
 			children = (
+				10B6DABA204E980300B6E024 /* ALGroupUser.h */,
+				10B6DABB204E980300B6E024 /* ALGroupUser.m */,
 				105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */,
 				105F30BF1FFBAEEA00D60431 /* AlChannelFeedResponse.m */,
 				105F30C01FFBAEEB00D60431 /* AlChannelInfoModel.h */,
@@ -1555,6 +1561,7 @@
 				105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */,
 				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
 				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
+				10B6DABC204E980400B6E024 /* ALGroupUser.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
 				6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */,
 				6D46B6C51BD025060014A5D3 /* ALMapViewController.h in Headers */,
@@ -1778,6 +1785,7 @@
 				6D6DF1C41BC5364C00EBA00F /* SDWebImagePrefetcher.m in Sources */,
 				6D7757481D5B85100025560B /* ALLocationCell.m in Sources */,
 				6D7756B01D5B80DF0025560B /* ALChannelDBService.m in Sources */,
+				10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */,
 				2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */,
 				4612E8F91E13882D0022DB23 /* MQTTCFSocketTransport.m in Sources */,
 				6D6DF14B1BC5364C00EBA00F /* ALResponseHandler.m in Sources */,

@@ -1821,10 +1821,10 @@
     view.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
     view.layer.shadowRadius = 3.0f;
     view.layer.shadowOpacity = 1.0f;
-    
+
     for (UILabel * label in labelArray)
     {
-        label.textColor = [UIColor whiteColor];
+        label.textColor = [ALApplozicSettings getColorForNavigationItem];
         label.font = [UIFont fontWithName:@"Helvetica" size:11.0];
         [self resizeLabels:label];
         [view addSubview:label];

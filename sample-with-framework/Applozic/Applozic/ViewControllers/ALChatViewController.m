@@ -2639,7 +2639,7 @@
         }]];
     }
     
-    if((!self.channelKey && !self.conversationId) || (self.alChannel.type == GROUP_OF_TWO))
+    if((!self.channelKey && !self.conversationId) || (self.alChannel.type == GROUP_OF_TWO) && && ![ALApplozicSettings isBlockUserOptionHidden])
     {
         [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"blockUserOption", nil, [NSBundle mainBundle], @"BLOCK USER", @"")  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             

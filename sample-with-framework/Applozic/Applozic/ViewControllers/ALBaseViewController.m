@@ -195,10 +195,13 @@ static CGFloat const sendTextViewCornerRadius = 15.0f;
 
 -(void)dropShadowInNavigationBar
 {
-    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
-    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
-    self.navigationController.navigationBar.layer.shadowRadius = 10;
-    self.navigationController.navigationBar.layer.masksToBounds = NO;
+    if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
+    {
+        self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
+        self.navigationController.navigationBar.layer.shadowRadius = 10;
+        self.navigationController.navigationBar.layer.masksToBounds = NO;
+    }
 }
 
 -(void)loadChatView {

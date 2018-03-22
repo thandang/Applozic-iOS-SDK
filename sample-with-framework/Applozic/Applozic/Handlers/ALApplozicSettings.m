@@ -1101,6 +1101,17 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:AL_GROUP_CONVEERSATION_CLOSE];
 }
 
++(void)setDropShadowInNavigationBar:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:DROP_IN_SHADOW_IN_NAVIGATION_BAR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)isDropShadowInNavigationBarEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:DROP_IN_SHADOW_IN_NAVIGATION_BAR];
+}
+
 +(void)setLocalizableName:(NSString *)localizableName
 {
     [[NSUserDefaults standardUserDefaults] setValue:localizableName forKey:APPLOZIC_LOCALIZABLE];
@@ -1112,5 +1123,4 @@
    return [[NSUserDefaults standardUserDefaults] valueForKey:APPLOZIC_LOCALIZABLE];
 
 }
-
 @end

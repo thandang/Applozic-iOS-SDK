@@ -91,6 +91,7 @@
 #define ENABLE_QUICK_AUDIO_RECORDING @"com.applozic.userdefault.ENABLE_QUICK_AUDIO_RECORDING"
 #define AL_USER_ROLE_NAME @"com.applozic.userdefault.AL_USER_ROLE_NAME"
 #define AL_GROUP_CONVEERSATION_CLOSE @"com.applozic.userdefault.AL_GROUP_CONVEERSATION_CLOSE"
+#define DROP_IN_SHADOW_IN_NAVIGATION_BAR @"com.applozic.userdefault.DROP_IN_SHADOW_IN_NAVIGATION_BAR"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -387,5 +388,8 @@
 
 +(void)setUserRoleName:(NSString*)roleName;
 +(NSString*)getUserRoleName;
+
++(void)setDropShadowInNavigationBar:(BOOL)flag;
++(BOOL)isDropShadowInNavigationBarEnabled;
 
 @end

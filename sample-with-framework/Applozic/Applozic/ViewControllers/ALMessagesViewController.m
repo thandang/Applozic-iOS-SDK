@@ -171,7 +171,10 @@
 {
     [super viewWillAppear:animated];
     
-    [self dropShadowInNavigationBar];
+    if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
+    {
+        [self dropShadowInNavigationBar];
+    }
 
     [self.navigationController.navigationBar addSubview:[ALUtilityClass setStatusBarStyle]];
     [self.navigationItem setLeftBarButtonItem:self.barButtonItem];
@@ -295,13 +298,10 @@
 
 -(void)dropShadowInNavigationBar
 {
-    if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
-    {
-        self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
-        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
-        self.navigationController.navigationBar.layer.shadowRadius = 10;
-        self.navigationController.navigationBar.layer.masksToBounds = NO;
-    }
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
+    self.navigationController.navigationBar.layer.shadowRadius = 10;
+    self.navigationController.navigationBar.layer.masksToBounds = NO;
 }
 
 //==============================================================================================================================================

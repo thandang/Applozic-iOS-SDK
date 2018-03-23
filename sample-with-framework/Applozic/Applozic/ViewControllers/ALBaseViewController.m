@@ -189,19 +189,19 @@ static CGFloat const sendTextViewCornerRadius = 15.0f;
     
 //    [self.view insertSubview:self.noConversationLabel belowSubview:self.typingMessageView];
     
-    [self dropShadowInNavigationBar];
+    if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
+    {
+        [self dropShadowInNavigationBar];
+    }
     
 }
 
 -(void)dropShadowInNavigationBar
 {
-    if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
-    {
-        self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
-        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
-        self.navigationController.navigationBar.layer.shadowRadius = 10;
-        self.navigationController.navigationBar.layer.masksToBounds = NO;
-    }
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
+    self.navigationController.navigationBar.layer.shadowRadius = 10;
+    self.navigationController.navigationBar.layer.masksToBounds = NO;
 }
 
 -(void)loadChatView {

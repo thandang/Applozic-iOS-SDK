@@ -171,7 +171,10 @@
 {
     [super viewWillAppear:animated];
     
-    [self dropShadowInNavigationBar];
+    if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
+    {
+        [self dropShadowInNavigationBar];
+    }
 
     [self.navigationController.navigationBar addSubview:[ALUtilityClass setStatusBarStyle]];
     [self.navigationItem setLeftBarButtonItem:self.barButtonItem];

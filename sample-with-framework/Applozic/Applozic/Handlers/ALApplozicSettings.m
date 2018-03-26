@@ -1101,4 +1101,14 @@ NOTIFICATION_DISABLE = 2
     return [[NSUserDefaults standardUserDefaults] boolForKey:AL_GROUP_CONVEERSATION_CLOSE];
 }
 
++(void)setDropShadowInNavigationBar:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:DROP_IN_SHADOW_IN_NAVIGATION_BAR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)isDropShadowInNavigationBarEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:DROP_IN_SHADOW_IN_NAVIGATION_BAR];
+}
 @end

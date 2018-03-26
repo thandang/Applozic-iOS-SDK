@@ -872,6 +872,12 @@
         return;
     }
     
+    if([channelService isChannelLeft:self.channelKeyID] || [ALChannelService isChannelDeleted:self.channelKeyID])
+    {
+        [ALUtilityClass showAlertMessage: NSLocalizedStringWithDefaultValue(@"yourNotAparticipantOfGroup", nil, [NSBundle mainBundle], @"You are not a participant of this group", @"")   andTitle:NSLocalizedStringWithDefaultValue(@"unableToProcess", nil, [NSBundle mainBundle], @"Unable process !!!", @"")];
+        return;
+    }
+    
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:[self class]]];
     ALGroupCreationViewController * grpUpdate = [storyBoard instantiateViewControllerWithIdentifier:@"ALGroupCreationViewController"];
     grpUpdate.isViewForUpdatingGroup = YES;

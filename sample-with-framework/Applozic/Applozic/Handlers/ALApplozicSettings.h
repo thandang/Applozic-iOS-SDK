@@ -91,13 +91,7 @@
 #define ENABLE_QUICK_AUDIO_RECORDING @"com.applozic.userdefault.ENABLE_QUICK_AUDIO_RECORDING"
 #define AL_USER_ROLE_NAME @"com.applozic.userdefault.AL_USER_ROLE_NAME"
 #define AL_GROUP_CONVEERSATION_CLOSE @"com.applozic.userdefault.AL_GROUP_CONVEERSATION_CLOSE"
-<<<<<<< HEAD
-=======
-#define DROP_IN_SHADOW_IN_NAVIGATION_BAR @"com.applozic.userdefault.DROP_IN_SHADOW_IN_NAVIGATION_BAR"
 #define APPLOZIC_LOCALIZABLE @"com.applozic.userdefault.APPLOZIC_LOCALIZABLE"
-
-
->>>>>>> 0e3786a4... Add a new setting to pass localization file name
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

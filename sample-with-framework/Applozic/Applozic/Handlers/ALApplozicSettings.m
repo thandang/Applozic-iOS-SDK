@@ -1109,8 +1109,8 @@
 
 +(NSString *)getLocalizableName
 {
-    NSString *stringtext = [[NSUserDefaults standardUserDefaults] valueForKey:APPLOZIC_LOCALIZABLE];
-    return (stringtext && stringtext.length) ? stringtext :@"Applozic-Localizable";
+   return [[NSUserDefaults standardUserDefaults] valueForKey:APPLOZIC_LOCALIZABLE];
+
 }
 
 @end

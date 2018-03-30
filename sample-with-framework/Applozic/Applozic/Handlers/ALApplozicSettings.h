@@ -91,6 +91,7 @@
 #define ENABLE_QUICK_AUDIO_RECORDING @"com.applozic.userdefault.ENABLE_QUICK_AUDIO_RECORDING"
 #define AL_USER_ROLE_NAME @"com.applozic.userdefault.AL_USER_ROLE_NAME"
 #define AL_GROUP_CONVEERSATION_CLOSE @"com.applozic.userdefault.AL_GROUP_CONVEERSATION_CLOSE"
+#define APPLOZIC_LOCALIZABLE @"com.applozic.userdefault.APPLOZIC_LOCALIZABLE"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -250,7 +251,7 @@
 +(UIColor *)getStatusBarBGColor;
 +(void)setStatusBarBGColor:(UIColor *)color;
 
-+(UIStatusBarStyle)getStatusBarStyle;            
++(UIStatusBarStyle)getStatusBarStyle;
 +(void)setStatusBarStyle:(UIStatusBarStyle)style;
 
 +(void)setMaxTextViewLines:(int)numberOfLines;
@@ -271,7 +272,7 @@
 +(BOOL)getReceiverUserProfileOption;
 +(void)setReceiverUserProfileOption:(BOOL)flag;
 
-+(float)getCustomMessageFontSize; 
++(float)getCustomMessageFontSize;
 +(void)setCustomMessageFontSize:(float)fontSize;
 
 +(NSString *)getCustomMessageFont;
@@ -292,7 +293,7 @@
 +(void) setContactTypeToFilter:(NSMutableArray*)arrayWithIds;
 +(NSMutableArray*) getContactTypeToFilter;
 
-+(NSString *)getCustomNavigationControllerClassName; 
++(NSString *)getCustomNavigationControllerClassName;
 +(void)setNavigationControllerClassName:(NSString *)className;
 
 +(BOOL)getSubGroupLaunchFlag;
@@ -387,5 +388,8 @@
 
 +(void)setUserRoleName:(NSString*)roleName;
 +(NSString*)getUserRoleName;
+
++(NSString *)getLocalizableName;
++(void)setLocalizableName:(NSString *)localizableName;
 
 @end

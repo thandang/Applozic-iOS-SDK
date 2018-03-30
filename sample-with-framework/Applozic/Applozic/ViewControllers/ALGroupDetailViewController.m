@@ -737,7 +737,8 @@
     else if(alContact.contactImageUrl)
     {
         NSURL * theUrl = [NSURL URLWithString:alContact.contactImageUrl];
-        [self.memberIconImageView sd_setImageWithURL:theUrl placeholderImage:nil options:SDWebImageRefreshCached];
+          [self.memberIconImageView sd_setImageWithURL:theUrl placeholderImage:[ALUtilityClass getImageFromFramworkBundle:@"ic_contact_picture_holo_light.png"] options:SDWebImageRefreshCached];
+        
     }
     else
     {
@@ -869,6 +870,13 @@
     
     if([ALApplozicSettings isGroupInfoEditDisabled] || [ALChannelService isConversationClosed: alchannel.key] ){
         NSLog(@"group edit is disabled");
+        return;
+    }
+    
+    ALChannelService *channelService = [ALChannelService new];
+    if([channelService isChannelLeft:self.channelKeyID] || [ALChannelService isChannelDeleted:self.channelKeyID])
+    {
+        [ALUtilityClass showAlertMessage: NSLocalizedStringWithDefaultValue(@"yourNotAparticipantOfGroup", nil, [NSBundle mainBundle], @"You are not a participant of this group", @"")   andTitle:NSLocalizedStringWithDefaultValue(@"unableToProcess", nil, [NSBundle mainBundle], @"Unable process !!!", @"")];
         return;
     }
     

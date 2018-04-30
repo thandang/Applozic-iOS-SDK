@@ -260,19 +260,9 @@
     
     NSString* userIdOfReceiver = @"userDevice";
     NSString* itemId= @"itemId_01";
-    NSString* clientGroupId = [self buildUniqueClientId:itemId withUserId:userIdOfReceiver];
     ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
     
-    [chatManager launchGroupOfTwoWithClientId:clientGroupId withMetaData:[self getSellerGroupMetadata]
-                                  andWithUser:userIdOfReceiver andFromViewController:self];
-}
-
--(NSString*) buildUniqueClientId:(NSString*)ItemId withUserId:(NSString*)userId
-{
-    NSString * loggedInId =  [ALUserDefaultsHandler getUserId];
-    NSArray * sortedArray = [ @[loggedInId,userId] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    return [NSString stringWithFormat:@"%@_%@_%@", ItemId,sortedArray[0],sortedArray[1]];
-    
+    [chatManager launchGroupOfTwoWithClientId:userIdOfReceiver withItemId:itemId withMetaData:[self getSellerGroupMetadata] andWithUser:userIdOfReceiver andFromViewController:self];
 }
 
 -(NSMutableDictionary*)getSellerGroupMetadata{

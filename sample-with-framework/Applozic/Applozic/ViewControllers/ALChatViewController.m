@@ -1743,7 +1743,6 @@ ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol>
     } else {
         return 0;
     }
-    //    return self.getHeaderViewNew.frame.size.height;
 }
 
 //==============================================================================================================================================

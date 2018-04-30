@@ -134,12 +134,14 @@
     }];
 }
 
--(void)launchGroupOfTwoWithClientId:(NSString*)clientGroupId
-                       withMetaData:(NSMutableDictionary*)metadata
+-(void)launchGroupOfTwoWithClientId:(NSString *)userIdOfReceiver
+                         withItemId:(NSString *)itemId
+                       withMetaData:(NSMutableDictionary *)metadata
                         andWithUser:(NSString *)userId
               andFromViewController:(UIViewController *)viewController
 {
     ALChannelService * channelService = [[ALChannelService alloc] init];
+    NSString* clientGroupId = [self buildUniqueClientId:itemId withUserId:userIdOfReceiver];
     
     ALChannel *alChannel = [channelService fetchChannelWithClientChannelKey:clientGroupId];
     if (alChannel){
@@ -167,6 +169,14 @@
             }
         }];
     }
+    
+}
+
+-(NSString*) buildUniqueClientId:(NSString*)ItemId withUserId:(NSString*)userId
+{
+    NSString * loggedInId =  [ALUserDefaultsHandler getUserId];
+    NSArray * sortedArray = [ @[loggedInId,userId] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    return [NSString stringWithFormat:@"%@_%@_%@", ItemId,sortedArray[0],sortedArray[1]];
     
 }
 

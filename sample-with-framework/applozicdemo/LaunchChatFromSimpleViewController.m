@@ -244,19 +244,48 @@
 
 - (IBAction)launchSeller:(id)sender
 {    
-    if(![ALDataNetworkConnection noInternetConnectionNotification])
-    {
-        [self.activityView startAnimating];
-        ALConversationProxy * newProxy = [[ALConversationProxy alloc] init];
-        newProxy = [self makeupConversationDetails];
-        
-        ALChatManager * chatManager = [[ALChatManager alloc] init];
-        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
-    }
-    else
-    {
-        [ALDataNetworkConnection checkDataNetworkAvailable];
-    }
+//    if(![ALDataNetworkConnection noInternetConnectionNotification])
+//    {
+//        [self.activityView startAnimating];
+//        ALConversationProxy * newProxy = [[ALConversationProxy alloc] init];
+//        newProxy = [self makeupConversationDetails];
+//
+//        ALChatManager * chatManager = [[ALChatManager alloc] init];
+//        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
+//    }
+//    else
+//    {
+//        [ALDataNetworkConnection checkDataNetworkAvailable];
+//    }
+    
+    NSString* userIdOfReceiver = @"userDevice";
+    NSString* itemId= @"itemId_01";
+    NSString* clientGroupId = [self buildUniqueClientId:itemId withUserId:userIdOfReceiver];
+    ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
+    
+    [chatManager launchGroupOfTwoWithClientId:clientGroupId withMetaData:[self getSellerGroupMetadata]
+                                  andWithUser:userIdOfReceiver andFromViewController:self];
+}
+
+-(NSString*) buildUniqueClientId:(NSString*)ItemId withUserId:(NSString*)userId
+{
+    NSString * loggedInId =  [ALUserDefaultsHandler getUserId];
+    NSArray * sortedArray = [ @[loggedInId,userId] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    return [NSString stringWithFormat:@"%@_%@_%@", ItemId,sortedArray[0],sortedArray[1]];
+    
+}
+
+-(NSMutableDictionary*)getSellerGroupMetadata{
+    
+    NSMutableDictionary *metaData = [NSMutableDictionary new];
+    
+    
+    [metaData setObject:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2014)" forKey:@"title"];
+    [metaData setObject:@"3,50,000" forKey:@"price"];
+    
+    [metaData setObject:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg" forKey:@"link"];
+    
+    return metaData;
 }
 
 //===============================================================================

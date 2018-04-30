@@ -34,6 +34,12 @@ typedef enum
     BROADCAST_ONE_BY_ONE = 106
 } CHANNEL_TYPE;
 
+typedef enum
+{
+    TITLE = 0,
+    PRICE = 1,
+    LINK = 2
+} ChannelMetaDataType;
 
 @interface ALChannel : ALJson
 

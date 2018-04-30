@@ -666,6 +666,36 @@
     }
 }
 
+-(void)updateChannelMetaData:(NSNumber *)channelKey
+          orClientChannelKey:(NSString *)clientChannelKey
+                    metadata:(NSMutableDictionary *)metaData
+              withCompletion:(void(^)(NSError *error))completion{
+    
+    if(channelKey != nil || clientChannelKey != nil)
+    {
+        [ALChannelClientService updateChannelMetaData:channelKey orClientChannelKey:clientChannelKey metadata:metaData andCompletion:^(NSError *error, ALAPIResponse *response){
+            
+            if([response.status isEqualToString:@"success"])
+            {
+                ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+                if(clientChannelKey != nil)
+                {
+                    ALChannel *alChannel = [channelDBService loadChannelByClientChannelKey:clientChannelKey];
+                    [channelDBService updateChannelMetaData:alChannel.key metaData:metaData];
+//                    [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
+                }
+                else
+                {
+//                    ALChannel *alChannel = [channelDBService loadChannelByKey:channelKey];
+//                    [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
+                }
+                
+            }
+            completion(error);
+        }];
+    }
+}
+
 //===========================================================================================================================
 #pragma mark CHANNEL SYNCHRONIZATION
 //===========================================================================================================================

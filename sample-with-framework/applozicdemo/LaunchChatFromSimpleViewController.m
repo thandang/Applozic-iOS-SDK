@@ -259,7 +259,7 @@
 //    }
     
     NSString* userIdOfReceiver = @"userDevice";
-    NSString* itemId= @"itemId_01";
+    NSString* itemId= @"itemId_001";
     ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
     
     [chatManager launchGroupOfTwoWithClientId:userIdOfReceiver withItemId:itemId withMetaData:[self getSellerGroupMetadata] andWithUser:userIdOfReceiver andFromViewController:self];
@@ -271,7 +271,7 @@
     
     
     [metaData setObject:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2014)" forKey:@"title"];
-    [metaData setObject:@"3,50,000" forKey:@"price"];
+    [metaData setObject:@"5,50,000" forKey:@"price"];
     
     [metaData setObject:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg" forKey:@"link"];
     

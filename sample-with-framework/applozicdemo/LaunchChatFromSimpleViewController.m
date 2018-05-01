@@ -165,20 +165,24 @@
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
     
     
-    
     ALChannelService *channelService = [[ALChannelService alloc] init];
-    [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
-        if(alChannel){
-            ALChatManager * chatManager = [[ALChatManager alloc] init];
+//    [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
+//        if(alChannel){
+//            ALChatManager * chatManager = [[ALChatManager alloc] init];
+//
+//            [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
+//                                       andwithDisplayName:nil andFromViewController:self];
+//
+//
+//        }
+//
+//    }];
 
-            [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
-                                       andwithDisplayName:nil andFromViewController:self];
-            
-            
+    [channelService updateChannelMetaData:@8733319 orClientChannelKey:@"itemId_001_userDevice_userEmulator" metadata:[self getSellerGroupMetadata] withCompletion:^(NSError *error){
+        if(error){
+            NSLog(@"Update Channel Error: %@", error);
         }
-
     }];
-    
 }
 
 -(void)checkUserContact:(NSString *)userId displayName:(NSString *)displayName withCompletion:(void(^)(ALContact * contact))completion
@@ -243,21 +247,7 @@
 //===============================================================================
 
 - (IBAction)launchSeller:(id)sender
-{    
-//    if(![ALDataNetworkConnection noInternetConnectionNotification])
-//    {
-//        [self.activityView startAnimating];
-//        ALConversationProxy * newProxy = [[ALConversationProxy alloc] init];
-//        newProxy = [self makeupConversationDetails];
-//
-//        ALChatManager * chatManager = [[ALChatManager alloc] init];
-//        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
-//    }
-//    else
-//    {
-//        [ALDataNetworkConnection checkDataNetworkAvailable];
-//    }
-    
+{
     NSString* userIdOfReceiver = @"userDevice";
     NSString* itemId= @"itemId_001";
     ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
@@ -271,7 +261,7 @@
     
     
     [metaData setObject:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2014)" forKey:@"title"];
-    [metaData setObject:@"5,50,000" forKey:@"price"];
+    [metaData setObject:@"9,99,999" forKey:@"price"];
     
     [metaData setObject:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg" forKey:@"link"];
     

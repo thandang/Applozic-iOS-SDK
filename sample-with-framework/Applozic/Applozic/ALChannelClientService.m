@@ -404,6 +404,14 @@
     
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     
+    if(clientChannelKey.length)
+    {
+        [dictionary setObject:clientChannelKey forKey:@"clientGroupId"];
+    }
+    else
+    {
+        [dictionary setObject:channelKey forKey:@"groupId"];
+    }
     if (metaData)
     {
         [dictionary setObject:metaData forKey:@"metadata"];

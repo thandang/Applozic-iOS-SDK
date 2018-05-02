@@ -134,15 +134,12 @@
     }];
 }
 
--(void)launchGroupOfTwoWithClientId:(NSString *)userIdOfReceiver
-                         withItemId:(NSString *)itemId
-                       withMetaData:(NSMutableDictionary *)metadata
+-(void)launchGroupOfTwoWithClientId:(NSString*)clientGroupId
+                       withMetaData:(NSMutableDictionary*)metadata
                         andWithUser:(NSString *)userId
-              andFromViewController:(UIViewController *)viewController
-{
-    ALChannelService * channelService = [[ALChannelService alloc] init];
-    NSString* clientGroupId = [self buildUniqueClientId:itemId withUserId:userIdOfReceiver];
+              andFromViewController:(UIViewController *)viewController{
     
+    ALChannelService * channelService = [[ALChannelService alloc] init];
     ALChannel *alChannel = [channelService fetchChannelWithClientChannelKey:clientGroupId];
     if (alChannel){
         
@@ -157,7 +154,6 @@
                 [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
                                     andwithDisplayName:nil andFromViewController:viewController];
             }else{
-                
                 //Create new one channel and launch:;;
                 [channelService createChannel:clientGroupId orClientChannelKey:clientGroupId andMembersList:@[userId]
                                  andImageLink:nil channelType:GROUP_OF_TWO
@@ -169,7 +165,15 @@
             }
         }];
     }
-    
+}
+
+-(void)launchGroupOfTwoWithClientId:(NSString *)userIdOfReceiver
+                         withItemId:(NSString *)itemId
+                       withMetaData:(NSMutableDictionary *)metadata
+                        andWithUser:(NSString *)userId
+              andFromViewController:(UIViewController *)viewController{
+    NSString* clientGroupId = [self buildUniqueClientId:itemId withUserId:userIdOfReceiver];
+    [self launchGroupOfTwoWithClientId:clientGroupId withMetaData:metadata andWithUser:userId andFromViewController:viewController];
 }
 
 -(NSString*) buildUniqueClientId:(NSString*)ItemId withUserId:(NSString*)userId

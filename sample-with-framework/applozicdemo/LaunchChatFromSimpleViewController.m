@@ -249,7 +249,7 @@
 - (IBAction)launchSeller:(id)sender
 {
     NSString* userIdOfReceiver = @"userDevice";
-    NSString* itemId= @"itemId_001";
+    NSString* itemId= @"itemId_0001";
     ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
     
     [chatManager launchGroupOfTwoWithClientId:userIdOfReceiver withItemId:itemId withMetaData:[self getSellerGroupMetadata] andWithUser:userIdOfReceiver andFromViewController:self];

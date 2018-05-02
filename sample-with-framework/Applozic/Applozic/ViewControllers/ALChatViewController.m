@@ -1739,7 +1739,7 @@
     if(self.conversationId && [ALApplozicSettings getContextualChatOption]){
         return self.getHeaderView.frame.size.height;
     }else if(alChannel.metadata!=nil && [alChannel.metadata objectForKey:@"title"]){
-        return self.getHeaderViewContextGroupOfTwo.frame.size.height;
+        return self.getContextGroupOfTwoView.frame.size.height;
     } else {
         return 0;
     }
@@ -1751,10 +1751,10 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return self.getHeaderViewContextGroupOfTwo;
+    return self.getContextGroupOfTwoView;
 }
 
--(UIView *)getHeaderViewContextGroupOfTwo
+-(UIView *)getContextGroupOfTwoView
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 84)];
     

@@ -178,8 +178,8 @@
 
 -(NSString*) buildUniqueClientId:(NSString*)ItemId withUserId:(NSString*)userId
 {
-    NSString * loggedInId =  [ALUserDefaultsHandler getUserId];
-    NSArray * sortedArray = [ @[loggedInId,userId] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSString * loggedInUserId =  [ALUserDefaultsHandler getUserId];
+    NSArray * sortedArray = [ @[loggedInUserId,userId] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     return [NSString stringWithFormat:@"%@_%@_%@", ItemId,sortedArray[0],sortedArray[1]];
     
 }

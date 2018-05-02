@@ -23,6 +23,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Applozic/Applozic-Swift.h>
 #import <Applozic/ALChannelService.h>
+#import <Applozic/ALChannelOfTwoMetaData.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -166,22 +167,16 @@
     
     
     ALChannelService *channelService = [[ALChannelService alloc] init];
-//    [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
-//        if(alChannel){
-//            ALChatManager * chatManager = [[ALChatManager alloc] init];
-//
-//            [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
-//                                       andwithDisplayName:nil andFromViewController:self];
-//
-//
-//        }
-//
-//    }];
+    [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
+        if(alChannel){
+            ALChatManager * chatManager = [[ALChatManager alloc] init];
 
-    [channelService updateChannelMetaData:@8733319 orClientChannelKey:@"itemId_001_userDevice_userEmulator" metadata:[self getSellerGroupMetadata] withCompletion:^(NSError *error){
-        if(error){
-            NSLog(@"Update Channel Error: %@", error);
+            [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
+                                       andwithDisplayName:nil andFromViewController:self];
+
+
         }
+
     }];
 }
 
@@ -249,23 +244,18 @@
 - (IBAction)launchSeller:(id)sender
 {
     NSString* userIdOfReceiver = @"userDevice";
-    NSString* itemId= @"itemId_0001";
+    NSString* itemId= @"itemId_00011";
     ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
     
     [chatManager launchGroupOfTwoWithClientId:userIdOfReceiver withItemId:itemId withMetaData:[self getSellerGroupMetadata] andWithUser:userIdOfReceiver andFromViewController:self];
 }
 
 -(NSMutableDictionary*)getSellerGroupMetadata{
-    
-    NSMutableDictionary *metaData = [NSMutableDictionary new];
-    
-    
-    [metaData setObject:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2014)" forKey:@"title"];
-    [metaData setObject:@"9,99,999" forKey:@"price"];
-    
-    [metaData setObject:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg" forKey:@"link"];
-    
-    return metaData;
+    ALChannelOfTwoMetaData *channelOfTwoMetaData = [ALChannelOfTwoMetaData new];
+    [channelOfTwoMetaData setTitle:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2018)"];
+    [channelOfTwoMetaData setPrice:@"99,999"];
+    [channelOfTwoMetaData setLink:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg"];
+    return [channelOfTwoMetaData getChannelOfTwoMetaData:channelOfTwoMetaData];
 }
 
 //===============================================================================

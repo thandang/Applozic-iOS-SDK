@@ -23,7 +23,6 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Applozic/Applozic-Swift.h>
 #import <Applozic/ALChannelService.h>
-#import <Applozic/ALChannelOfTwoMetaData.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -166,6 +165,7 @@
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
     
     
+    
     ALChannelService *channelService = [[ALChannelService alloc] init];
     [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
         if(alChannel){
@@ -173,11 +173,12 @@
 
             [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
                                        andwithDisplayName:nil andFromViewController:self];
-
-
+            
+            
         }
 
     }];
+    
 }
 
 -(void)checkUserContact:(NSString *)userId displayName:(NSString *)displayName withCompletion:(void(^)(ALContact * contact))completion
@@ -242,20 +243,20 @@
 //===============================================================================
 
 - (IBAction)launchSeller:(id)sender
-{
-    NSString* userIdOfReceiver = @"userDevice";
-    NSString* itemId= @"itemId_00011";
-    ALChatManager * chatManager = [[ALChatManager alloc] initWithApplicationKey:@"applozic-sample-app"];
-    
-    [chatManager launchGroupOfTwoWithClientId:userIdOfReceiver withItemId:itemId withMetaData:[self getSellerGroupMetadata] andWithUser:userIdOfReceiver andFromViewController:self];
-}
-
--(NSMutableDictionary*)getSellerGroupMetadata{
-    ALChannelOfTwoMetaData *channelOfTwoMetaData = [ALChannelOfTwoMetaData new];
-    [channelOfTwoMetaData setTitle:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2018)"];
-    [channelOfTwoMetaData setPrice:@"99,999"];
-    [channelOfTwoMetaData setLink:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg"];
-    return [channelOfTwoMetaData getChannelOfTwoMetaData:channelOfTwoMetaData];
+{    
+    if(![ALDataNetworkConnection noInternetConnectionNotification])
+    {
+        [self.activityView startAnimating];
+        ALConversationProxy * newProxy = [[ALConversationProxy alloc] init];
+        newProxy = [self makeupConversationDetails];
+        
+        ALChatManager * chatManager = [[ALChatManager alloc] init];
+        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
+    }
+    else
+    {
+        [ALDataNetworkConnection checkDataNetworkAvailable];
+    }
 }
 
 //===============================================================================

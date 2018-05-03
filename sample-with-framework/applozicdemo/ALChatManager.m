@@ -536,7 +536,7 @@
     [ALUserDefaultsHandler setLoginUserConatactVisibility:NO];
     [ALApplozicSettings setUserProfileHidden:NO];
     [ALApplozicSettings setFontFace:@"Helvetica"];
-    [ALApplozicSettings setChatWallpaperImageName:@"<WALLPAPER NAME>"];
+    [ALApplozicSettings setChatWallpaperImageName:@"wallpaper"];
     [ALApplozicSettings replyOptionEnabled:YES];
     [ALApplozicSettings forwardOptionEnableOrDisable:YES];
 

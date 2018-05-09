@@ -710,5 +710,16 @@
     
 }
 
++(void)setUserEncryption:(NSString*)encryptionKey{
+    
+    [[NSUserDefaults standardUserDefaults] setValue:encryptionKey forKey:USER_MQTT_ENCRYPTION_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString*)getUserEncryptionKey{
+    
+    return [[NSUserDefaults standardUserDefaults] valueForKey:USER_MQTT_ENCRYPTION_KEY];
+}
+
 
 @end

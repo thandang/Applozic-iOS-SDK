@@ -322,6 +322,13 @@
             return;
         }
         
+        NSString *json = (NSString *)theJson;
+        
+        if([AL_EMPTY_JSON_STRING isEqualToString:json]){
+            completionMark(nil, theError);
+            return;
+        }
+            
         NSLog(@"SEVER_RESPONSE_FOR_ONLINE_CONTACT_LIMIT_JSON : %@", (NSString *)theJson);
         NSArray * jsonArray = [NSArray arrayWithArray:(NSArray *)theJson];
         if(jsonArray.count)

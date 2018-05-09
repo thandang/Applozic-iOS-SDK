@@ -147,7 +147,9 @@
         
         userContact.userId = contact.userId;
         userContact.email = contact.email;
-        userContact.fullName = contact.fullName;
+        if(contact.fullName){
+            userContact.fullName = contact.fullName;
+        }
         userContact.contactNumber = contact.contactNumber;
         userContact.contactImageUrl = contact.contactImageUrl;
         userContact.unreadCount = contact.unreadCount ? contact.unreadCount : [NSNumber numberWithInt:0];
@@ -290,6 +292,7 @@
 
     DB_CONTACT* existingContact = [self getContactByKey:@"userId" value:[userContact userId]];
     if (existingContact) {
+       [self updateContact:userContact];
         return NO;
     }
     

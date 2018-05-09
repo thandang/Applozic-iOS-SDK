@@ -44,8 +44,6 @@
     [user setDeviceApnsType:!isDevelopmentBuild()];
     [user setEnableEncryption:[ALUserDefaultsHandler getEnableEncryption]];
     [user setRoleName:[ALApplozicSettings getUserRoleName]];
-    [user setPushNotificationFormat:user.pushNotificationFormat];
-
     if([ALUserDefaultsHandler getAppModuleName] != NULL)
     {
         [user setAppModuleName:[ALUserDefaultsHandler getAppModuleName]];

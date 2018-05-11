@@ -2219,7 +2219,6 @@
 {
     NSLog(@"  deleteMessageFromView in controller...:: ");
     [self.alMessageWrapper removeALMessageFromMessageArray:message];
-    
     [UIView animateWithDuration:1.5 animations:^{
         [self.mTableView reloadData];
     }];
@@ -2715,6 +2714,16 @@
             [self.navigationController pushViewController:launchChat animated:YES];
         }]];
     }
+    
+    
+    if((self.channelKey ||  self.contactIds) && [ALApplozicSettings isDeleteConversationOptionEnabled]){
+        
+            [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"deleteConversation", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Conversation" , @"")
+                                                              style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                                  [self deleteConversation];
+                                                              }]];
+        
+    }
    
     if(!self.channelKey && !self.conversationId && [ALApplozicSettings isAudioVideoEnabled])
     {
@@ -2811,6 +2820,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"permissionNotAvailableMessageForCamera", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Camera is not Available !!!", @"") andTitle:NSLocalizedStringWithDefaultValue(@"oppsText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OOPS !!!", @"")];
     }
 }
+
 
 
 

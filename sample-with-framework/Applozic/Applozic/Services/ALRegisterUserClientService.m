@@ -89,6 +89,10 @@
             [ALUserDefaultsHandler setUserKeyString:response.userKey];
             [ALUserDefaultsHandler setUserPricingPackage:response.pricingPackage];
             
+            if(user.pushNotificationFormat){
+                [ALUserDefaultsHandler setPushNotificationFormat:user.pushNotificationFormat];
+            }
+        
             if(response.roleType){
                 [ALUserDefaultsHandler setUserRoleType:response.roleType];
             }

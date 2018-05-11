@@ -206,6 +206,10 @@
         [user setAppModuleName:[ALUserDefaultsHandler getAppModuleName]];
     }
     
+    if([ALUserDefaultsHandler getPushNotificationFormat] != nil){
+        [user setPushNotificationFormat:[ALUserDefaultsHandler getPushNotificationFormat]];
+    }
+    
     if([ALUserDefaultsHandler getNotificationSoundFileName] != nil){
         [user setNotificationSoundFileName:[ALUserDefaultsHandler getNotificationSoundFileName]];
     }

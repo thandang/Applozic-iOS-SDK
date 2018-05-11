@@ -324,7 +324,7 @@
         
         NSString *json = (NSString *)theJson;
         
-        if([AL_EMPTY_JSON_STRING isEqualToString:json]){
+        if(json && [json isEqualToString:AL_EMPTY_JSON_STRING]){
             completionMark(nil, theError);
             return;
         }

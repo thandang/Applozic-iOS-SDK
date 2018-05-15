@@ -752,7 +752,6 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     }
 }
 
-
 +(ALMessage*)getMessagefromKeyValuePair:(NSString*)key andValue:(NSString*)value
 {    
     ALMessageDBService * dbService = [[ALMessageDBService alloc]init];

@@ -204,7 +204,6 @@
 {
     [self proactivelyConnectMQTT];
     [ALMessageService syncMessages];
-
 }
 
 // To DISPLAY THE NOTIFICATION ONLY ...from 3rd Party View.

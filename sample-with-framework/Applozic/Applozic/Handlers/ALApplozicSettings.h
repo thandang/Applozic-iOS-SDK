@@ -93,6 +93,9 @@
 #define AL_GROUP_CONVEERSATION_CLOSE @"com.applozic.userdefault.AL_GROUP_CONVEERSATION_CLOSE"
 #define DROP_IN_SHADOW_IN_NAVIGATION_BAR @"com.applozic.userdefault.DROP_IN_SHADOW_IN_NAVIGATION_BAR"
 #define APPLOZIC_LOCALIZABLE @"com.applozic.userdefault.APPLOZIC_LOCALIZABLE"
+#define TEMPLATE_MESSAGES @"com.applozic.TEMPLATE_MESSAGES"
+#define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
+
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -394,5 +397,10 @@
 +(BOOL)isDropShadowInNavigationBarEnabled;
 +(NSString *)getLocalizableName;
 +(void)setLocalizableName:(NSString *)localizableName;
++(void) setTemplateMessages:(NSMutableDictionary*)dictionary;
++(NSMutableDictionary*) getTemplateMessages;
+
++(BOOL)isTeamplateMessageEnabled;
++(void)enableTeamplateMessage:(BOOL)flag;
 
 @end

@@ -170,6 +170,11 @@
         [self setUpSoundRecordingView];
         [self showMicButton];
     }
+    
+    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+        [self setUpTeamplateView];
+    }
+
 
     [self initialSetUp];
     [self fetchMessageFromDB];
@@ -180,7 +185,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVOIPMsg)
                                                  name:@"UPDATE_VOIP_MSG" object:nil];
+    
 }
+   
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -296,7 +303,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallForUser:)
                                                  name:@"USER_DETAILS_UPDATE_CALL" object:nil];
-    
+
     self.mqttObject = [ALMQTTConversationService sharedInstance];
     
     if(self.individualLaunch)
@@ -442,6 +449,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"appCameInForeground" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"APP_ENTER_IN_BACKGROUND" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UPDATE_USER_FREEZE_CHANNEL_ADD_REMOVING" object:nil];
+
     
     [self.sendMessageTextView resignFirstResponder];
     [self.label setHidden:YES];
@@ -470,7 +478,10 @@
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:YES];
     self.label.alpha = 0;
     [self unSubscrbingChannel];
+    
 }
+
+
 
 -(void)dealloc
 {
@@ -483,6 +494,32 @@
     [self.mTableView reloadData];
     [self setRefreshMainView:YES];
     [self setRefresh:YES];
+}
+
+-(void)processSendTemplateMessage:(NSString *)messageText{
+    
+    if(!messageText){
+        return;
+    }
+    // create message object
+    ALMessage * theMessage = [self getMessageToPost];
+    theMessage.
+    message = messageText;
+// save msg to db
+    [self.alMessageWrapper addALMessageToMessageArray:theMessage];
+    
+    ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];
+    ALMessageDBService* messageDBService = [[ALMessageDBService alloc] init];
+    DB_Message * theMessageEntity = [messageDBService createMessageEntityForDBInsertionWithMessage:theMessage];
+    [theDBHandler.managedObjectContext save:nil];
+    theMessage.msgDBObjectId = [theMessageEntity objectID];
+    
+    [self sendMessage:theMessage ];
+    [self.mTableView reloadData];
+    [self setRefreshMainView:TRUE];
+    [self scrollTableViewToBottomWithAnimation:YES];
+
+    
 }
 
 //==============================================================================================================================================
@@ -1512,6 +1549,40 @@
     [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
     [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
 }
+
+-(void)setUpTeamplateView
+{
+    NSMutableDictionary *daata =  [ALApplozicSettings getTemplateMessages];
+    NSMutableArray<ALKTemplateMessageModel *> * messageTemplate = [[NSMutableArray alloc] init];
+    
+    for (NSString* key in daata) {
+        NSString *value = [daata objectForKey:key];
+        ALKTemplateMessageModel* messageMode6 = [ALKTemplateMessageModel alloc] ;
+        messageMode6.text = key;
+        messageMode6.identifier = value;
+        [messageTemplate addObject:messageMode6];
+    }
+    
+    NSArray<ALKTemplateMessageModel *> *array = [[NSArray alloc]initWithArray:messageTemplate];
+    
+    ALKTemplateMessagesViewModel *model = [[ALKTemplateMessagesViewModel alloc] initWithMessageTemplates:(array)];
+    
+    ALKTemplateMessagesView *temp = [[ALKTemplateMessagesView alloc]initWithFrame:CGRectZero viewModel:model];
+    [self.view addSubview:temp];
+    temp.messageSelected = ^(NSString * vlaue) {
+        [self processSendTemplateMessage:vlaue];
+    };
+    [temp setHidden:NO];
+    [temp setUserInteractionEnabled:YES];
+    temp.translatesAutoresizingMaskIntoConstraints = false;
+    [temp.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
+    [temp.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
+    [temp.widthAnchor constraintEqualToAnchor:self.view.widthAnchor constant: -10.0].active = true;
+    [temp.heightAnchor constraintEqualToConstant:40].active = YES;
+    [temp.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
+    
+}
+
 
 -(void)showMicButton
 {

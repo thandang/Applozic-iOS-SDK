@@ -187,7 +187,6 @@
                                                  name:@"UPDATE_VOIP_MSG" object:nil];
     
 }
-   
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -449,7 +448,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"appCameInForeground" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"APP_ENTER_IN_BACKGROUND" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UPDATE_USER_FREEZE_CHANNEL_ADD_REMOVING" object:nil];
-
     
     [self.sendMessageTextView resignFirstResponder];
     [self.label setHidden:YES];
@@ -478,10 +476,7 @@
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:YES];
     self.label.alpha = 0;
     [self unSubscrbingChannel];
-    
 }
-
-
 
 -(void)dealloc
 {
@@ -505,7 +500,7 @@
     ALMessage * theMessage = [self getMessageToPost];
     theMessage.
     message = messageText;
-// save msg to db
+    // save msg to db
     [self.alMessageWrapper addALMessageToMessageArray:theMessage];
     
     ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];
@@ -518,8 +513,6 @@
     [self.mTableView reloadData];
     [self setRefreshMainView:TRUE];
     [self scrollTableViewToBottomWithAnimation:YES];
-
-    
 }
 
 //==============================================================================================================================================
@@ -1582,7 +1575,6 @@
     [temp.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
     
 }
-
 
 -(void)showMicButton
 {

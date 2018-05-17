@@ -432,7 +432,11 @@
                                  onTopic:MQTT_TOPIC_STATUS
                                   retain:NO
                                      qos:MQTTQosLevelAtMostOnce];
-        [self.session unsubscribeTopic:[ALUserDefaultsHandler getUserKeyString]];
+        if([ALUserDefaultsHandler getEnableEncryption] && [ALUserDefaultsHandler getUserEncryptionKey] ){
+            [self.session unsubscribeTopic:[NSString stringWithFormat:@"%@%@",MQTT_ENCRYPTION_SUB_KEY,[ALUserDefaultsHandler getUserKeyString]]];
+        }else{
+            [self.session unsubscribeTopic:[ALUserDefaultsHandler getUserKeyString]];
+        }
         [self.session unsubscribeTopic:[NSString stringWithFormat:@"typing-%@-%@", [ALUserDefaultsHandler getApplicationKey], [ALUserDefaultsHandler getUserId]]];
         [self.session close];
         NSLog(@"MQTT : DISCONNECTED FROM MQTT");

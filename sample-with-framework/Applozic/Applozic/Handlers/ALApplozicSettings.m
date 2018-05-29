@@ -1123,4 +1123,14 @@
    return [[NSUserDefaults standardUserDefaults] valueForKey:APPLOZIC_LOCALIZABLE];
 
 }
+
++(void)setCategoryName:(NSString*)categoryName{
+    [[NSUserDefaults standardUserDefaults] setValue:categoryName forKey:AL_CATEGORY_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
++(NSString*)getCategoryName{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:AL_CATEGORY_NAME];
+}
 @end

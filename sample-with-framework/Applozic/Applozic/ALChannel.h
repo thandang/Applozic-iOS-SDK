@@ -67,6 +67,6 @@ typedef enum
 -(NSString*)getReceiverIdInGroupOfTwo;
 
 -(NSMutableDictionary *)getMetaDataDictionary:(NSString *)string;
--(BOOL)isBelongsToCategory:(NSString*)NSstring;
+-(BOOL)isPartOfCategory:(NSString*)category;
 
 @end

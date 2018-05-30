@@ -423,7 +423,7 @@
         }
         if([ALApplozicSettings getCategoryName]){
             ALChannel* channel=  [[ALChannelService new] getChannelByKey:[NSNumber numberWithInt:[theDictionary[@"groupId"] intValue]]];
-            if(![channel isBelongsToCategory:[ALApplozicSettings getCategoryName]])
+            if(![channel isPartOfCategory:[ALApplozicSettings getCategoryName]])
             {
                 continue;
             }

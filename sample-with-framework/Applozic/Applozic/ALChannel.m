@@ -155,7 +155,7 @@
     return NO;
 }
 
--(BOOL)isBelongsToCategory:(NSString*)category{
+-(BOOL)isPartOfCategory:(NSString*)category{
     
     if( _metadata && [_metadata  valueForKey:CATEGORY] ){
         return ([ [_metadata  valueForKey:CATEGORY] isEqualToString:category]);

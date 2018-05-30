@@ -519,7 +519,7 @@
                         [channelService getChannelInformation:msg.groupId orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
                             
                             BOOL channelFlag = ([ALApplozicSettings getSubGroupLaunchFlag] && [alChannel.parentKey isEqualToNumber:self.parentGroupKey]);
-                            BOOL categoryFlag =  [ALApplozicSettings getCategoryName] && [alChannel isBelongsToCategory:[ALApplozicSettings getCategoryName]];
+                            BOOL categoryFlag =  [ALApplozicSettings getCategoryName] && [alChannel isPartOfCategory:[ALApplozicSettings getCategoryName]];
                             
                              if ((channelFlag || categoryFlag) ||
                                  !([ALApplozicSettings getSubGroupLaunchFlag] || [ALApplozicSettings getCategoryName]))

@@ -256,6 +256,7 @@
 
     DB_CONTACT* existingContact = [self getContactByKey:@"userId" value:[contact userId]];
     if (existingContact) {
+        [self updateContact:contact];
         response(NO);
     }
 

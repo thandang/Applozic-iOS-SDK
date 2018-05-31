@@ -23,6 +23,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Applozic/Applozic-Swift.h>
 #import <Applozic/ALChannelService.h>
+#import <Applozic/ALChannelOfTwoMetaData.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -110,8 +111,12 @@
     [user setUserId:[ALUserDefaultsHandler getUserId]];
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
     
+    [ALApplozicSettings setCategoryName:@"your_product_01"];
+    
     ALChatManager * chatManager = [[ALChatManager alloc] init];
     [chatManager registerUserAndLaunchChat:user andFromController:self forUser:nil withGroupId:nil];
+    
+
 
     //Adding sample contacts...
     [self insertInitialContacts];
@@ -221,6 +226,16 @@
     }];
 }
 
+-(NSMutableDictionary*)getProductGroupMetadata{
+    ALChannelOfTwoMetaData *channelOfTwoMetaData = [ALChannelOfTwoMetaData new];
+    [channelOfTwoMetaData setTitle:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2018)"];
+    [channelOfTwoMetaData setPrice:@"$9,99,999"];
+    [channelOfTwoMetaData setLink:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg"];
+    
+    NSMutableDictionary* productMetaData =  [channelOfTwoMetaData toDict:channelOfTwoMetaData];
+    [productMetaData setObject:[ALApplozicSettings getCategoryName] forKey:@"category"];
+    return productMetaData;
+}
 //===============================================================================
 // Custom Message Sending API
 //===============================================================================
@@ -249,9 +264,14 @@
         [self.activityView startAnimating];
         ALConversationProxy * newProxy = [[ALConversationProxy alloc] init];
         newProxy = [self makeupConversationDetails];
-        
+        [ALApplozicSettings setCategoryName:@"your_product_01"];
+
         ALChatManager * chatManager = [[ALChatManager alloc] init];
-        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
+//        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
+        
+        [chatManager launchGroupOfTwoWithClientId:@"sq_dev" withItemId:@"product_id_01"
+                                     withMetaData:[self getProductGroupMetadata]
+                                      andWithUser:@"sq_dev" andFromViewController:self];
     }
     else
     {

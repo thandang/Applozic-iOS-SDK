@@ -229,11 +229,11 @@
 -(NSMutableDictionary*)getProductGroupMetadata{
     ALChannelOfTwoMetaData *channelOfTwoMetaData = [ALChannelOfTwoMetaData new];
     [channelOfTwoMetaData setTitle:@"FORD FIGO DURATEC PETROL ZXI 1.2 (2018)"];
-    [channelOfTwoMetaData setPrice:@"$9,99,999"];
+    [channelOfTwoMetaData setPrice:@"$10,99,000"];
     [channelOfTwoMetaData setLink:@"https://imguct1.aeplcdn.com/img/300x225/lis/201709/1188774_6855_1_1506405541170.jpeg"];
     
     NSMutableDictionary* productMetaData =  [channelOfTwoMetaData toDict:channelOfTwoMetaData];
-    [productMetaData setObject:[ALApplozicSettings getCategoryName] forKey:@"category"];
+    [productMetaData setObject:[ALApplozicSettings getCategoryName] forKey:@"AL_CATEGORY"];
     return productMetaData;
 }
 //===============================================================================
@@ -267,8 +267,6 @@
         [ALApplozicSettings setCategoryName:@"your_product_01"];
 
         ALChatManager * chatManager = [[ALChatManager alloc] init];
-//        [chatManager createAndLaunchChatWithSellerWithConversationProxy:newProxy fromViewController:self];
-        
         [chatManager launchGroupOfTwoWithClientId:@"sq_dev" withItemId:@"product_id_01"
                                      withMetaData:[self getProductGroupMetadata]
                                       andWithUser:@"sq_dev" andFromViewController:self];

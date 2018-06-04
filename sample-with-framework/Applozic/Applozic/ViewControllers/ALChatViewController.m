@@ -2226,7 +2226,23 @@
     [self showNoConversationLabel];
 }
 
-//==============================================================================================================================================
+
+//=================================================================================================================
+
+#pragma mark - Clear messages from chat view
+
+//=================================================================================================================
+
+-(void)clearMessagesFromChatView
+{
+    [[self.alMessageWrapper getUpdatedMessageArray] removeAllObjects];
+    [UIView animateWithDuration:1.5 animations:^{
+        [self.mTableView reloadData];
+    }];
+    
+    [self showNoConversationLabel];
+}
+
 #pragma mark - MEDIA DELEGATE : DOWNLOAD RETRY DELEGATES
 //==============================================================================================================================================
 
@@ -2715,13 +2731,12 @@
         }]];
     }
     
-    
     if((self.channelKey ||  self.contactIds) && [ALApplozicSettings isDeleteConversationOptionEnabled]){
         
-            [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"deleteConversation", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Conversation" , @"")
-                                                              style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                                                  [self deleteConversation];
-                                                              }]];
+        [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"deleteConversation", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Conversation" , @"")
+                                                          style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                              [self deleteConversation];
+                                                          }]];
         
     }
    
@@ -2765,7 +2780,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 //==============================================================================================================================================
 #pragma mark - ATTACHMENT HANDLERS FOR IMAGE/CONTACT/AUDIO/VIDEO && A/V CALL
 //==============================================================================================================================================
-
 
 -(void)openCamera
 {
@@ -2820,11 +2834,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"permissionNotAvailableMessageForCamera", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Camera is not Available !!!", @"") andTitle:NSLocalizedStringWithDefaultValue(@"oppsText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OOPS !!!", @"")];
     }
 }
-
-
-
-
-
 
 -(void)openAudioMic
 {
@@ -2924,6 +2933,32 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                                orRoomId:roomID
                            andCallAudio:callForAudio
                       andViewController:self];
+}
+
+-(void)deleteConversation{
+    
+    NSString *userId;
+    NSNumber *groupId;
+    
+    if(self.channelKey){
+        groupId = self.channelKey;
+    }else{
+        userId = self.contactIds;
+    }
+    
+    [ALMessageService deleteMessageThread:userId orChannelKey:groupId
+                           withCompletion:^(NSString *string, NSError *error) {
+                               
+                               if(error)
+                               {
+                                   [ALUtilityClass displayToastWithMessage:@"Delete failed"];
+                                   return;
+                               }
+                               
+                               [self clearMessagesFromChatView];
+                               
+                               
+                           }];
 }
 
 //==============================================================================================================================================

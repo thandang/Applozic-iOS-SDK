@@ -95,7 +95,6 @@
 #define APPLOZIC_LOCALIZABLE @"com.applozic.userdefault.APPLOZIC_LOCALIZABLE"
 #define DELETE_CONVERSATION_OPTION @"com.applozic.userdefault.DELETE_CONVERSATION_OPTION"
 
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 

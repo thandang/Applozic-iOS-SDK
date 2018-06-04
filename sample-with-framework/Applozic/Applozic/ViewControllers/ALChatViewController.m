@@ -93,6 +93,7 @@
 @property (nonatomic, strong) NSMutableArray * pickerConvIdsArray;
 @property (nonatomic, strong) NSMutableArray * conversationTitleList;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewSendMsgTextViewConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *typingLabelBottomConstraint;
 @property (nonatomic, assign) BOOL comingFromBackground;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nsLayoutconstraintAttachmentWidth;
@@ -107,7 +108,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *replyIcon;
 @property (weak, nonatomic) IBOutlet UILabel *replyUserName;
 //============Message Reply outlets END====================================//
-
 
 - (IBAction)loadEarlierButtonAction:(id)sender;
 -(void)processLoadEarlierMessages:(BOOL)flag;
@@ -133,9 +133,9 @@
     UIView * maskView;
     BOOL isPickerOpen;
     ALSoundRecorderButton * soundRecording;
+    ALKTemplateMessagesView *templateMessageView;
     BOOL isMicButtonVisible;
 
-    
     UIDocumentInteractionController * interaction;
     
     CGFloat TEXT_CELL_HEIGHT;
@@ -228,6 +228,7 @@
     if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         self.typingLabel.textAlignment = NSTextAlignmentRight;
     }
+    
     self.comingFromBackground = YES;
     [self.messageReplyView setHidden:YES];
     
@@ -1545,6 +1546,7 @@
 
 -(void)setUpTeamplateView
 {
+    __weak typeof(self) weakSelf = self;
     NSMutableDictionary *daata =  [ALApplozicSettings getTemplateMessages];
     NSMutableArray<ALKTemplateMessageModel *> * messageTemplate = [[NSMutableArray alloc] init];
     
@@ -1560,19 +1562,21 @@
     
     ALKTemplateMessagesViewModel *model = [[ALKTemplateMessagesViewModel alloc] initWithMessageTemplates:(array)];
     
-    ALKTemplateMessagesView *temp = [[ALKTemplateMessagesView alloc]initWithFrame:CGRectZero viewModel:model];
-    [self.view addSubview:temp];
-    temp.messageSelected = ^(NSString * vlaue) {
-        [self processSendTemplateMessage:vlaue];
+    templateMessageView = [[ALKTemplateMessagesView alloc]initWithFrame:CGRectZero viewModel:model];
+    [self.view addSubview:templateMessageView ];
+    templateMessageView.messageSelected = ^(NSString * vlaue) {
+        [weakSelf processSendTemplateMessage:vlaue];
     };
-    [temp setHidden:NO];
-    [temp setUserInteractionEnabled:YES];
-    temp.translatesAutoresizingMaskIntoConstraints = false;
-    [temp.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
-    [temp.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
-    [temp.widthAnchor constraintEqualToAnchor:self.view.widthAnchor constant: -10.0].active = true;
-    [temp.heightAnchor constraintEqualToConstant:40].active = YES;
-    [temp.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
+    [templateMessageView setHidden:NO];
+    [templateMessageView setUserInteractionEnabled:YES];
+    templateMessageView.translatesAutoresizingMaskIntoConstraints = false;
+    [templateMessageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
+    [templateMessageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
+    [templateMessageView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor constant: -10.0].active = true;
+    [templateMessageView.heightAnchor constraintEqualToConstant:40].active = YES;
+    [templateMessageView .bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
+    self.typingLabelBottomConstraint.constant = -50;
+
     
 }
 
@@ -4196,7 +4200,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 }
 
 
-
 //================================================================================================================================
 #pragma mark - REPLY MESSAGE CALL
 //================================================================================================================================
@@ -4204,8 +4207,13 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void) processMessageReply:(ALMessage *) message
 {
+    
+    self.typingLabelBottomConstraint.constant = -50;
     self.viewHeightConstraints.constant=50;
     self.messageReplyView.hidden =0;
+    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+        [templateMessageView setHidden:YES];
+    }
     
     if(message.groupId != 0){
         if([[ALUserDefaultsHandler getUserId] isEqualToString:message.to] || message.to == nil){
@@ -4456,5 +4464,10 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     self.viewHeightConstraints.constant=0;
     self.messageReplyView.hidden =1;
     self.messageReplyId=nil;
+    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+        [templateMessageView setHidden:NO];
+    }else{
+       self.typingLabelBottomConstraint.constant = 0;
+    }
 }
 @end

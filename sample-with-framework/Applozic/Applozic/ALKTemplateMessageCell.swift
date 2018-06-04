@@ -19,7 +19,7 @@ import UIKit
     }()
 
     public let leftPadding: CGFloat = 5.0
-    public let rightPadding: CGFloat = 3.0
+    public let rightPadding: CGFloat = 5.0
 
 
     override public init(frame: CGRect) {
@@ -44,10 +44,11 @@ import UIKit
             view.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(view)
         }
-        
+
         if #available(iOS 9.0, *) {
             textLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             textLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leftPadding).isActive = true
+            textLabel.widthAnchor.constraint(equalTo:self.widthAnchor , constant: leftPadding).isActive = true
             textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: rightPadding).isActive = true
             textLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         } else {
@@ -55,6 +56,7 @@ import UIKit
                 NSLayoutConstraint(item: textLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 2),
                 NSLayoutConstraint(item: textLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: -1),
                 NSLayoutConstraint(item: textLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
+                NSLayoutConstraint(item: textLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: leftPadding),
                 NSLayoutConstraint(item: textLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
                 ])
         }

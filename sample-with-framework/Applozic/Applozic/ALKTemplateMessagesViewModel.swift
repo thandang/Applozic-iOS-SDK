@@ -11,7 +11,7 @@ import Foundation
     
     @objc  open var messageTemplates: [ALKTemplateMessageModel]
     
-    public var leftRightPadding: CGFloat = 50.0
+    public var leftRightPadding: CGFloat = 46.0
     public var height: CGFloat = 40.0
     
     public var textFont = UIFont.init(name: "Helvetica", size: CGFloat(14))
@@ -37,7 +37,7 @@ import Foundation
         }
         
         let size = (messageTemplates[row].text as NSString).size(withAttributes: [NSAttributedStringKey.font: textFont!])
-        let newSize = CGSize(width: size.width+leftRightPadding, height: height)
+        let newSize = CGSize(width: +size.width+leftRightPadding, height: height)
         return newSize
     }
     

@@ -171,10 +171,7 @@
         [self showMicButton];
     }
     
-    if([ALApplozicSettings isTeamplateMessageEnabled]) {
-        [self setUpTeamplateView];
-    }
-
+ 
 
     [self initialSetUp];
     [self fetchMessageFromDB];
@@ -216,6 +213,10 @@
      addObserver:self selector:@selector(newMessageHandler:) name:NEW_MESSAGE_NOTIFICATION  object:nil];
     
     [self.tabBarController.tabBar setHidden: YES];
+    
+    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+        [self setUpTeamplateView];
+    }
 
     // In iOS 11, TableView by default starts estimating the row height. This setting will disable that.
     self.mTableView.estimatedRowHeight = 0;
@@ -225,9 +226,6 @@
     [self.loadEarlierAction setHidden:YES];
     self.showloadEarlierAction = TRUE;
     self.typingLabel.hidden = YES;
-    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-        self.typingLabel.textAlignment = NSTextAlignmentRight;
-    }
     
     self.comingFromBackground = YES;
     [self.messageReplyView setHidden:YES];
@@ -437,6 +435,10 @@
     
     [self.tabBarController.tabBar setHidden:YES];
     [self resetMessageReplyView];
+    
+    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+        [templateMessageView setHidden:YES];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"notificationIndividualChat" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"report_DELIVERED" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"report_DELIVERED_READ" object:nil];
@@ -452,7 +454,6 @@
     
     [self.sendMessageTextView resignFirstResponder];
     [self.label setHidden:YES];
-    [self.typingLabel setHidden:YES];
     [[ALMediaPlayer sharedInstance] stopPlaying];
     
     if(self.individualLaunch)
@@ -849,7 +850,6 @@
     if((contact.blockBy || contact.block) && (self.alChannel.type == GROUP_OF_TWO || !self.channelKey))
     {
         [self.label setHidden:YES];
-        [self.typingLabel setHidden:YES];
     }
 }
 
@@ -1575,8 +1575,6 @@
     [templateMessageView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor constant: -10.0].active = true;
     [templateMessageView.heightAnchor constraintEqualToConstant:40].active = YES;
     [templateMessageView .bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
-    self.typingLabelBottomConstraint.constant = -50;
-
     
 }
 
@@ -2765,7 +2763,6 @@
                 {
                     self.isUserBlocked = YES;
                     [self.label setHidden:self.isUserBlocked];
-                    [self.typingLabel setHidden:self.isUserBlocked];
                     NSString * alertText = [NSString stringWithFormat:[@"%@ " stringByAppendingString:NSLocalizedStringWithDefaultValue(@"blockedSuccessfullyText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"is blocked successfully", @"")], [self.alContact getDisplayName]];
                     [ALUtilityClass showAlertMessage:alertText andTitle:NSLocalizedStringWithDefaultValue(@"userBlock", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"USER BLOCK", @"")  ];
                 }
@@ -3501,7 +3498,18 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [self setRefreshMainView:TRUE];
     
     double value = [alUserDetail.lastSeenAtTime doubleValue];
-    
+    ALContactService *cnService = [[ALContactService alloc] init];
+    ALContact * contact = [cnService loadContactByKey:@"userId" value:alUserDetail.userId];
+    if(self.channelKey != nil){
+        if(contact.block || contact.blockBy){
+            return;
+        }
+    }else{
+        if(contact.block || contact.blockBy){
+            [self.label setText:@""];
+            return;
+        }
+    }
     if(self.channelKey != nil)
     {
         ALChannelService * channelService = [[ALChannelService alloc] init];
@@ -3934,7 +3942,10 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 {
     ALContactService *cntService = [ALContactService new];
     ALContact *contact = [cntService loadContactByKey:@"userId" value:userId];
-    
+    if(contact.block || contact.blockBy){
+        return;
+    }
+
     if(flag)
     {
         NSString * typingText = @"";
@@ -3944,14 +3955,20 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }
         else
         {
-            typingText = [NSString stringWithFormat:@"%@ %@", [contact getDisplayName], NSLocalizedStringWithDefaultValue(@"userTyping", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],@"is typing...", @"")];
+            typingText = [NSString stringWithFormat:@"%@", NSLocalizedStringWithDefaultValue(@"userTyping", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],@"is typing...", @"")];
         }
-        [self.typingLabel setText:typingText];
-        [self.typingLabel setHidden:NO];
+        [self.label setHidden:NO];
+        [self.label setText:typingText];
     }
     else
     {
-        [self.typingLabel setHidden:YES];
+        ALUserDetail *userDetail = [[ALUserDetail alloc] init];
+        userDetail.connected = contact.connected;
+        userDetail.userId = contact.userId;
+        userDetail.lastSeenAtTime = contact.lastSeenAt;
+        userDetail.contactNumber = contact.contactNumber;
+        [self updateLastSeenAtStatus:userDetail];
+    
     }
 }
 
@@ -4208,7 +4225,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 -(void) processMessageReply:(ALMessage *) message
 {
     
-    self.typingLabelBottomConstraint.constant = -50;
     self.viewHeightConstraints.constant=50;
     self.messageReplyView.hidden =0;
     if([ALApplozicSettings isTeamplateMessageEnabled]) {
@@ -4466,8 +4482,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     self.messageReplyId=nil;
     if([ALApplozicSettings isTeamplateMessageEnabled]) {
         [templateMessageView setHidden:NO];
-    }else{
-       self.typingLabelBottomConstraint.constant = 0;
     }
 }
 @end

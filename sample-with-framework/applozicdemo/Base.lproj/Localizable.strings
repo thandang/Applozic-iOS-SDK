@@ -45,7 +45,7 @@
 "lastSeenJustNowLabelText" = "Last seen Just Now ";
 
 "hrsAgo" = "hrs ago";
-"mins" = "mins ago";
+"mins" = " mins ago";
 
 "permissionPopMessageForCamera" = "Enable Camera Permission";
 

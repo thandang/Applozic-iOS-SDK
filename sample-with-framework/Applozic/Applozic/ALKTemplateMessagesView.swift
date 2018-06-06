@@ -20,7 +20,7 @@ import Foundation
     
    @objc  open var viewModel: ALKTemplateMessagesViewModel!
 
-    open let collectionView: UICollectionView = {
+    @objc   open let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -59,7 +59,6 @@ import Foundation
         // Register cells
 
         collectionView.register(ALKTemplateMessageCell.self, forCellWithReuseIdentifier:"ALKTemplateMessageCell")
-
         // Set constaints
         for view in [collectionView] {
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +71,7 @@ import Foundation
             collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         }
+        
     }
 
 }

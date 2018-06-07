@@ -341,7 +341,7 @@
 		6DDB074A1CB9162A00B99F33 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DDB07491CB9162A00B99F33 /* AddressBook.framework */; };
 		6DEAEE8C1D4CDBC700360060 /* ALUserProfileVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DEAEE8A1D4CDBC700360060 /* ALUserProfileVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6DEAEE8D1D4CDBC700360060 /* ALUserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */; };
-		8B00F0E020C65A9A00ADBFC9 /* ALApplicationInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B00F0DE20C65A9A00ADBFC9 /* ALApplicationInfo.h */; };
+		8B00F0E020C65A9A00ADBFC9 /* ALApplicationInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B00F0DE20C65A9A00ADBFC9 /* ALApplicationInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B00F0E120C65A9A00ADBFC9 /* ALApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B00F0DF20C65A9A00ADBFC9 /* ALApplicationInfo.m */; };
 		8B6C119F1FC2D9AF007CFB54 /* SoundRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */; };
 		C70273CB1DED445E00BA2C8A /* ALUserDetailListFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = C70273C91DED445E00BA2C8A /* ALUserDetailListFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };

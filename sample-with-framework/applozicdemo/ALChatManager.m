@@ -145,7 +145,7 @@
             
             if(alChannel.key){
                 
-                if( !(alChannel.metadata && [alChannel.metadata isEqualToDictionary:metadata]) ){
+                if( (alChannel.metadata && ![alChannel.metadata isEqualToDictionary:metadata]) ){
                     [channelService updateChannelMetaData:alChannel.key orClientChannelKey:nil metadata:metadata withCompletion:^(NSError *error) {
                         [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
                                             andwithDisplayName:nil andFromViewController:viewController];

@@ -24,7 +24,7 @@
     }
     if([ALUserDefaultsHandler getUserPricingPackage] == CLOSED
        || [ALUserDefaultsHandler getUserPricingPackage] == BETA
-       || ALUserDefaultsHandler getUserPricingPackage == SUSPENDED)
+       || [ALUserDefaultsHandler getUserPricingPackage] == SUSPENDED)
     {
         return YES;
     }

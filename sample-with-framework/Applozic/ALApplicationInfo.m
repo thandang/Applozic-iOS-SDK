@@ -17,17 +17,15 @@
 -(BOOL)isChatSuspended
 {
     BOOL debugflag = [ALUtilityClass isThisDebugBuild];
-    BOOL pricingFlag = ([ALUserDefaultsHandler getUserPricingPackage] == BETA);
 
     if(debugflag)
     {
         return NO;
     }
-    if([ALUserDefaultsHandler getUserPricingPackage] == CLOSED)
+    if([ALUserDefaultsHandler getUserPricingPackage] == CLOSED
+       || [ALUserDefaultsHandler getUserPricingPackage] == BETA
+       || ALUserDefaultsHandler getUserPricingPackage == SUSPENDED)
     {
-        return YES;
-    }
-    if(pricingFlag) {
         return YES;
     }
     return NO;

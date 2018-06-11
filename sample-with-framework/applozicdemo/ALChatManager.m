@@ -140,20 +140,25 @@
               andFromViewController:(UIViewController *)viewController{
     
     ALChannelService * channelService = [[ALChannelService alloc] init];
-    ALChannel *alChannel = [channelService fetchChannelWithClientChannelKey:clientGroupId];
-    if (alChannel){
-        
-        [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
-                            andwithDisplayName:nil andFromViewController:viewController];
-    }
-    else
-    {
-        [channelService getChannelInformation:nil orClientChannelKey:clientGroupId withCompletion:^(ALChannel *alChannel) {
+   
+    [channelService getChannelInformation:nil orClientChannelKey:clientGroupId withCompletion:^(ALChannel *alChannel) {
             
             if(alChannel.key){
-                [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
-                                    andwithDisplayName:nil andFromViewController:viewController];
-            }else{
+                
+                if( (alChannel.metadata && ![alChannel.metadata isEqualToDictionary:metadata]) ){
+                    [channelService updateChannelMetaData:alChannel.key orClientChannelKey:nil metadata:metadata withCompletion:^(NSError *error) {
+                        [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
+                                            andwithDisplayName:nil andFromViewController:viewController];
+                    }];
+                }
+                else
+                {
+                    [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
+                                        andwithDisplayName:nil andFromViewController:viewController];
+                }
+            }
+            else
+            {
                 //Create new one channel and launch:;;
                 [channelService createChannel:clientGroupId orClientChannelKey:clientGroupId andMembersList:@[userId]
                                  andImageLink:nil channelType:GROUP_OF_TWO
@@ -164,7 +169,7 @@
                                   }];
             }
         }];
-    }
+    
 }
 
 -(void)launchGroupOfTwoWithClientId:(NSString *)userIdOfReceiver

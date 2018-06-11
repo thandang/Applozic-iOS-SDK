@@ -1124,6 +1124,16 @@
 
 }
 
++(void)setCategoryName:(NSString*)categoryName{
+    [[NSUserDefaults standardUserDefaults] setValue:categoryName forKey:AL_CATEGORY_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
++(NSString*)getCategoryName{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:AL_CATEGORY_NAME];
+}
+
 +(BOOL)isDeleteConversationOptionEnabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:DELETE_CONVERSATION_OPTION];

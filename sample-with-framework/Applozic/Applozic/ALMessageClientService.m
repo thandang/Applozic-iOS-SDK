@@ -62,8 +62,8 @@
 
 -(void) downloadImageUrl: (NSString *) blobKey withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion {
     
-    NSString * theUrlString = [NSString stringWithFormat:@"%@/files/url",KBASE_FILE_URL];
-    NSString * blobParamString = [@"" stringByAppendingFormat:@"&key=%@",blobKey];
+    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/file/url",KBASE_FILE_URL];
+    NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
     NSMutableURLRequest * urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
     
     [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {
@@ -262,7 +262,7 @@
         NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
     }else if(ALApplozicSettings.isCustomStorageServiceEnabled) {
-        NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, CUSTOM_STORAGE_IMAGE_UPLOAD_ENDPOINT];
+        NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_URL, CUSTOM_STORAGE_IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
     } else {
         NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/url",KBASE_FILE_URL];

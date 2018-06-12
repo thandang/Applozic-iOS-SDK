@@ -61,6 +61,7 @@
 #define AL_USER_ROLE_TYPE @"com.applozic.userdefault.AL_USER_ROLE_TYPE"
 
 #import <Foundation/Foundation.h>
+#import "ALApplozicSettings.h"
 
 @interface ALUserDefaultsHandler : NSObject
 

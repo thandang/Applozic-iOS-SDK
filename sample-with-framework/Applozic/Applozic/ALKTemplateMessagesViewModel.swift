@@ -45,7 +45,7 @@ import Foundation
         guard row >= 0 && row < messageTemplates.count else {
             return nil
         }
-        return messageTemplates[row].text
+        return messageTemplates[row].identifier
     }
     
     @objc  open func updateLast(message: ALMessage) {

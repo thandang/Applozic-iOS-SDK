@@ -99,6 +99,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nsLayoutconstraintAttachmentWidth;
 
 //============Message Reply outlets====================================//
+
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewViewBottomConstraint;
+
 @property (weak, nonatomic) IBOutlet UIImageView *replyAttachmentPreview;
 @property (weak, nonatomic) IBOutlet UIView *messageReplyView;
 - (IBAction)cancelMessageReply:(id)sender;
@@ -108,6 +111,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *replyIcon;
 @property (weak, nonatomic) IBOutlet UILabel *replyUserName;
 //============Message Reply outlets END====================================//
+
 
 - (IBAction)loadEarlierButtonAction:(id)sender;
 -(void)processLoadEarlierMessages:(BOOL)flag;
@@ -1546,16 +1550,18 @@
 
 -(void)setUpTeamplateView
 {
+
     __weak typeof(self) weakSelf = self;
-    NSMutableDictionary *daata =  [ALApplozicSettings getTemplateMessages];
+    NSMutableDictionary *data =  [ALApplozicSettings getTemplateMessages];
     NSMutableArray<ALKTemplateMessageModel *> * messageTemplate = [[NSMutableArray alloc] init];
-    
-    for (NSString* key in daata) {
-        NSString *value = [daata objectForKey:key];
-        ALKTemplateMessageModel* messageMode6 = [ALKTemplateMessageModel alloc] ;
-        messageMode6.text = key;
-        messageMode6.identifier = value;
-        [messageTemplate addObject:messageMode6];
+    NSArray *keys = [data allKeys];
+
+    for (NSString* key in keys) {
+        NSString *value = [data objectForKey:key];
+        ALKTemplateMessageModel* messageModel = [ALKTemplateMessageModel alloc] ;
+        messageModel.text = key;
+        messageModel.identifier = value;
+        [messageTemplate addObject:messageModel];
     }
     
     NSArray<ALKTemplateMessageModel *> *array = [[NSArray alloc]initWithArray:messageTemplate];
@@ -1575,6 +1581,7 @@
     [templateMessageView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor constant: -10.0].active = true;
     [templateMessageView.heightAnchor constraintEqualToConstant:40].active = YES;
     [templateMessageView .bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
+    self.tableViewViewBottomConstraint.constant = 20;
     
 }
 

@@ -1893,6 +1893,7 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
                         <outlet property="sendButton" destination="6XL-ms-PBf" id="4Zh-B7-4HO"/>
                         <outlet property="sendMessageTextView" destination="4Au-pr-u6p" id="bPK-xn-o8B"/>
                         <outlet property="tableViewTop2Constraint" destination="bVW-y4-4Ob" id="mGg-yg-jmY"/>
+                        <outlet property="tableViewViewBottomConstraint" destination="vKK-qV-zkZ" id="rUa-SS-Un2"/>
                         <outlet property="textMessageViewHeightConstaint" destination="0E1-3f-wRQ" id="19k-Io-OLm"/>
                         <outlet property="textViewHeightConstraint" destination="ZEF-sY-zaa" id="oSE-bH-yuE"/>
                         <outlet property="typeMsgBG" destination="JFb-Gb-Lfr" id="i2a-Kn-w4d"/>

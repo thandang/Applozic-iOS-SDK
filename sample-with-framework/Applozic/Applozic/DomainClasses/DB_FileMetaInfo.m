@@ -13,6 +13,7 @@
 
 @dynamic blobKeyString;
 @dynamic thumbnailBlobKeyString;
+@dynamic thumbnailFilePath;
 @dynamic contentType;
 @dynamic createdAtTime;
 @dynamic key;

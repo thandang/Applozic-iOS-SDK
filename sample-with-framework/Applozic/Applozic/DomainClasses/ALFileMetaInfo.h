@@ -17,6 +17,7 @@
 @property (nonatomic,copy) NSString * userKey;
 @property (nonatomic, copy) NSString * blobKey;
 @property (nonatomic,copy) NSString * thumbnailBlobKey;
+@property (nonatomic,copy) NSString * thumbnailFilePath;
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy)NSString *url;
 @property (nonatomic,copy) NSString * size;

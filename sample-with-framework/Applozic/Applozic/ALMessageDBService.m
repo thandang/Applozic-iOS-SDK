@@ -586,6 +586,7 @@
         theFileMeta.size = theEntity.fileMetaInfo.size;
         theFileMeta.userKey = theEntity.fileMetaInfo.suUserKeyString;
         theFileMeta.thumbnailUrl = theEntity.fileMetaInfo.thumbnailUrl;
+        theFileMeta.thumbnailFilePath = theEntity.fileMetaInfo.thumbnailFilePath;
         theMessage.fileMeta = theFileMeta;
     }
     return theMessage;
@@ -608,6 +609,8 @@
     [[ALDBHandler sharedInstance].managedObjectContext save:nil];
     
 }
+
+
 
 -(NSMutableArray *)getMessageListForContactWithCreatedAt:(NSString *)contactId
                                            withCreatedAt:(NSNumber*)createdAt

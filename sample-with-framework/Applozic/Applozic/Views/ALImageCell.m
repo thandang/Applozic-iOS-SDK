@@ -25,6 +25,8 @@
 #import "UIImage+MultiFormat.h"
 #import "ALShowImageViewController.h"
 #import "ALMessageClientService.h"
+#import "ALConnection.h"
+#import "ALConnectionQueueHandler.h"
 
 // Constants
 #define MT_INBOX_CONSTANT "4"
@@ -428,23 +430,27 @@ UIViewController * modalCon;
     {
         NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
-//        theUrl = [NSURL fileURLWithPath:filePath];
         [self setInImageView:[NSURL fileURLWithPath:filePath]];
     }
     else
     {
-        ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
-        [messageClientService downloadImageUrl:alMessage.fileMeta.thumbnailBlobKey withCompletion:^(NSString *fileURL, NSError *error) {
-            if(error)
-            {
-                NSLog(@"ERROR GETTING DOWNLOAD URL : %@", error);
-                return;
-            }
-            NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
-            [self setInImageView:[NSURL URLWithString:fileURL]];
-        }];
+        if(alMessage.fileMeta.thumbnailFilePath == nil){
+            ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
+            [messageClientService downloadImageUrl:alMessage.fileMeta.thumbnailBlobKey withCompletion:^(NSString *fileURL, NSError *error) {
+             
+                NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
+                if(error == nil){
+                    [self.delegate thumbnailDownload:alMessage.key withThumbnailUrl:fileURL];
+                }
+            
+            }];
+        }else{
+            
+            NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.fileMeta.thumbnailFilePath];
+            [self setInImageView:[NSURL fileURLWithPath:filePath]];
+        }
         
-        theUrl = [NSURL URLWithString:alMessage.fileMeta.thumbnailUrl];
     }
     
     return self;
@@ -452,7 +458,8 @@ UIViewController * modalCon;
 }
 
 -(void) setInImageView:(NSURL*)url{
-    [self.mImageView sd_setImageWithURL:url];
+    [self.mImageView sd_setImageWithPreviousCachedImageWithURL:url andPlaceholderImage:nil options:0 progress:nil completed:nil];
+
 }
 
 #pragma mark - Menu option tap Method -

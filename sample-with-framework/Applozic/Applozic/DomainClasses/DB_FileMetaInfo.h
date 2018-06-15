@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString * blobKeyString;
 @property (nonatomic, retain) NSString * thumbnailBlobKeyString;
+@property (nonatomic, retain) NSString * thumbnailFilePath;
 @property (nonatomic, retain) NSString * contentType;
 @property (nonatomic, retain) NSNumber * createdAtTime;
 @property (nonatomic, retain) NSString * key;

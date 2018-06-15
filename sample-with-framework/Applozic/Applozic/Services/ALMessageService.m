@@ -656,7 +656,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
         
         NSMutableURLRequest * theRequest;
-        if(message.fileMeta.url) {
+        if(ALApplozicSettings.isCustomStorageServiceEnabled) {
             theRequest = [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:fileURL paramString:nil];
         } else if(ALApplozicSettings.isStorageServiceEnabled) {
             NSString *urlString = [NSString stringWithFormat:@"%@%@%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT, message.fileMeta.blobKey];

@@ -24,6 +24,8 @@
 #import "NSString+Encode.h"
 #import "ALApplozicSettings.h"
 #import "UIImageView+WebCache.h"
+#import "ALConnection.h"
+#import "ALConnectionQueueHandler.h"
 
 @implementation ALMessageClientService
 
@@ -60,14 +62,14 @@
 
 }
 
--(void) downloadImageUrl: (NSString *) blobKey withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion {
-    
+-(void) downloadImageUrl: (NSString *) blobKey withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
+
     NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/file/url",KBASE_FILE_URL];
     NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
     NSMutableURLRequest * urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
-    
+
     [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {
-        
+
         if (theError)
         {
             completion(nil,theError);
@@ -76,7 +78,7 @@
         NSString * imageDownloadURL = (NSString *)theJson;
         NSLog(@"RESPONSE_IMG_URL :: %@",imageDownloadURL);
         completion(imageDownloadURL, nil);
-        
+
     }];
 }
 
@@ -262,7 +264,7 @@
         NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
     }else if(ALApplozicSettings.isCustomStorageServiceEnabled) {
-        NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_URL, CUSTOM_STORAGE_IMAGE_UPLOAD_ENDPOINT];
+        NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, CUSTOM_STORAGE_IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
     } else {
         NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/url",KBASE_FILE_URL];

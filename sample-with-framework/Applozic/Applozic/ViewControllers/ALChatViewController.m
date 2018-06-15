@@ -2308,7 +2308,7 @@
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
         [self sendMessage:almessage ];
     }
-    else
+    else if ([connection.connectionType isEqualToString:@"Thumbnail Downloading"])
     {
         DB_Message * messageEntity = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
         
@@ -2318,6 +2318,27 @@
         NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
         [connection.mData writeToFile:filePath atomically:YES];
 
+        // UPDATE DB
+        messageEntity.fileMetaInfo.thumbnailFilePath = [NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension];
+        
+        [[ALDBHandler sharedInstance].managedObjectContext save:nil];
+        
+        ALMessage * message = [self getMessageFromViewList:@"key" withValue:connection.keystring];
+        if(message)
+        {
+            message.fileMeta.thumbnailFilePath = messageEntity.fileMetaInfo.thumbnailFilePath;
+            [self.mTableView reloadData];
+        }
+    }else{
+        
+        DB_Message * messageEntity = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
+
+        NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSArray *componentsArray = [messageEntity.fileMetaInfo.name componentsSeparatedByString:@"."];
+        NSString *fileExtension = [componentsArray lastObject];
+        NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
+        [connection.mData writeToFile:filePath atomically:YES];
+        
         // If 'save video to gallery' is enabled then save to gallery
         if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
             [self saveVideoToGallery:filePath];
@@ -2339,6 +2360,16 @@
     }
 }
 
+-(void) thumbnailDownload:(NSString *) key withThumbnailUrl:(NSString *) thumbnailUrl{
+
+    NSString * theUrlString = [NSString stringWithFormat:@"%@",thumbnailUrl];
+    NSMutableURLRequest * urlRequest =  [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:theUrlString paramString:nil];
+    ALConnection * connection = [[ALConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
+    connection.keystring = key;
+    connection.connectionType = @"Thumbnail Downloading";
+    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:connection];
+}
+    
 //Error
 -(void)connection:(ALConnection *)connection didFailWithError:(NSError *)error
 {

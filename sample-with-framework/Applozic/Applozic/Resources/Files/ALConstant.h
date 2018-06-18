@@ -45,6 +45,7 @@
 #define IMAGE_UPLOAD_URL @"/rest/ws/upload/file"
 #define IMAGE_UPLOAD_ENDPOINT @"/files/upload/"
 #define CUSTOM_STORAGE_IMAGE_UPLOAD_ENDPOINT @"/rest/ws/upload/image?aclsPrivate=true"
+#define GOOGLE_CLOUD_STORAGE_IMAGE_UPLOAD_ENDPOINT @"/rest/ws/upload/image"
 #define IMAGE_THUMBNAIL_ENDPOIT @"/files/"
 #define IMAGE_DOWNLOAD_ENDPOINT @"/files/get/"
 

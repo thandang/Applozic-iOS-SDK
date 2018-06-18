@@ -436,7 +436,7 @@ UIViewController * modalCon;
     {
         if(alMessage.fileMeta.thumbnailFilePath == nil){
             ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
-            [messageClientService downloadImageUrl:alMessage.fileMeta.thumbnailBlobKey withCompletion:^(NSString *fileURL, NSError *error) {
+            [messageClientService downloadImageThumbnailUrl:alMessage withCompletion:^(NSString *fileURL, NSError *error) {
              
                 NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
                 if(error == nil){

@@ -602,7 +602,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         }
 
         NSString* FileParamConstant;
-        if(ALApplozicSettings.isCustomStorageServiceEnabled){
+        if(ALApplozicSettings.isS3StorageServiceEnabled){
             FileParamConstant = @"file";
         }else{
             FileParamConstant = @"files[]";
@@ -656,16 +656,12 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
         
         NSMutableURLRequest * theRequest;
-        if(ALApplozicSettings.isCustomStorageServiceEnabled) {
+        if(ALApplozicSettings.isS3StorageServiceEnabled) {
             theRequest = [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:fileURL paramString:nil];
-        } else if(ALApplozicSettings.isStorageServiceEnabled) {
-            NSString *urlString = [NSString stringWithFormat:@"%@%@%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT, message.fileMeta.blobKey];
-            theRequest = [ALRequestHandler createGETRequestWithUrlString:urlString paramString:nil];
-        } else {
-            NSString *urlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/%@",KBASE_FILE_URL,message.fileMeta.blobKey];
-            theRequest = [ALRequestHandler createGETRequestWithUrlString:urlString paramString:nil];
+        }else{
+            theRequest = [ALRequestHandler createGETRequestWithUrlString: fileURL paramString:nil];
         }
-        
+    
         ALConnection * connection = [[ALConnection alloc] initWithRequest:theRequest delegate:delegate startImmediately:YES];
         connection.keystring = message.key;
         connection.connectionType = @"Image Downloading";
@@ -802,7 +798,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         NSError * theJsonError = nil;
         NSDictionary *theJson = [NSJSONSerialization JSONObjectWithData:connection.mData options:NSJSONReadingMutableLeaves error:&theJsonError];
 
-        if(ALApplozicSettings.isCustomStorageServiceEnabled){
+        if(ALApplozicSettings.isS3StorageServiceEnabled){
             [message.fileMeta populate:theJson];
         }else{
             NSDictionary *fileInfo = [theJson objectForKey:@"fileMeta"];

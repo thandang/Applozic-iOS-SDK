@@ -436,7 +436,7 @@
 
 +(NSString *)getFILEURL
 {
-    if([ALApplozicSettings isCustomStorageServiceEnabled]){
+    if([ALApplozicSettings isS3StorageServiceEnabled]){
         return [self getBASEURL];
     }
     

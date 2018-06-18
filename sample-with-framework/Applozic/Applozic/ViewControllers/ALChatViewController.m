@@ -1581,7 +1581,7 @@
     [templateMessageView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor constant: -10.0].active = true;
     [templateMessageView.heightAnchor constraintEqualToConstant:40].active = YES;
     [templateMessageView .bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-10].active = true;
-    self.tableViewViewBottomConstraint.constant = 20;
+    self.tableViewViewBottomConstraint.constant = 40;
     
 }
 

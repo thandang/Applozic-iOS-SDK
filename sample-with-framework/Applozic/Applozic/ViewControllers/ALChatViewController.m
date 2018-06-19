@@ -1734,12 +1734,13 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(self.conversationId && [ALApplozicSettings getContextualChatOption])
-    {
+    ALChannelService * alChannelService = [ALChannelService new];
+    ALChannel * alChannel = [alChannelService getChannelByKey:self.channelKey];
+    if(self.conversationId && [ALApplozicSettings getContextualChatOption]){
         return self.getHeaderView.frame.size.height;
-    }
-    else
-    {
+    }else if(alChannel.metadata!=nil && [alChannel.metadata objectForKey:@"title"]){
+        return self.getContextGroupOfTwoView.frame.size.height;
+    } else {
         return 0;
     }
 }
@@ -1750,7 +1751,49 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return self.getHeaderView;
+    ALChannelService * alChannelService = [ALChannelService new];
+    ALChannel * alChannel = [alChannelService getChannelByKey:self.channelKey];
+    if(alChannel.metadata!=nil && [alChannel.metadata objectForKey:@"title"]){
+        return self.getContextGroupOfTwoView;
+    }else{
+        return self.getHeaderView;
+    }
+}
+
+-(UIView *)getContextGroupOfTwoView
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 84)];
+    
+    ALChannelService * alChannelService = [ALChannelService new];
+    
+    ALChannel * alChannel = [alChannelService getChannelByKey:self.channelKey];
+    
+    // Image View ....
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSURL * url = [NSURL URLWithString: [alChannel.metadata valueForKey:@"link"]];
+    [imageView sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRefreshCached];
+    
+    imageView.frame = CGRectMake(5, 5, 70, 70);
+    imageView.backgroundColor = [UIColor blackColor];
+    [view addSubview:imageView];
+    
+    
+    UILabel * priceUILabel = [[UILabel alloc] init];
+    priceUILabel.text = [alChannel.metadata valueForKey:@"price"];
+    
+    priceUILabel.frame = CGRectMake( imageView.frame.size.width+ 10, imageView.frame.origin.y,
+                                    (view.frame.size.width-imageView.frame.size.width)/2, 50);
+    
+    UILabel * titleUILabel = [[UILabel alloc] init];
+    titleUILabel.text = [alChannel.metadata valueForKey:@"title"];
+    
+    
+    titleUILabel.frame = CGRectMake(imageView.frame.size.width + 10, 58,
+                                    (view.frame.size.width-imageView.frame.size.width)-20, 50);
+    titleUILabel.numberOfLines = 1;
+    [self setLabelViews:@[titleUILabel,priceUILabel] onView:view];
+    
+    return view;
 }
 
 -(UIView *)getHeaderView
@@ -2183,7 +2226,6 @@
 {
     NSLog(@"  deleteMessageFromView in controller...:: ");
     [self.alMessageWrapper removeALMessageFromMessageArray:message];
-    
     [UIView animateWithDuration:1.5 animations:^{
         [self.mTableView reloadData];
     }];
@@ -2191,7 +2233,23 @@
     [self showNoConversationLabel];
 }
 
-//==============================================================================================================================================
+
+//=================================================================================================================
+
+#pragma mark - Clear messages from chat view
+
+//=================================================================================================================
+
+-(void)clearMessagesFromChatView
+{
+    [[self.alMessageWrapper getUpdatedMessageArray] removeAllObjects];
+    [UIView animateWithDuration:1.5 animations:^{
+        [self.mTableView reloadData];
+    }];
+    
+    [self showNoConversationLabel];
+}
+
 #pragma mark - MEDIA DELEGATE : DOWNLOAD RETRY DELEGATES
 //==============================================================================================================================================
 
@@ -2710,6 +2768,15 @@
             [self.navigationController pushViewController:launchChat animated:YES];
         }]];
     }
+    
+    if((self.channelKey ||  self.contactIds) && [ALApplozicSettings isDeleteConversationOptionEnabled]){
+        
+        [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"deleteConversation", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Conversation" , @"")
+                                                          style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                              [self deleteConversation];
+                                                          }]];
+        
+    }
    
     if(!self.channelKey && !self.conversationId && [ALApplozicSettings isAudioVideoEnabled])
     {
@@ -2751,7 +2818,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 //==============================================================================================================================================
 #pragma mark - ATTACHMENT HANDLERS FOR IMAGE/CONTACT/AUDIO/VIDEO && A/V CALL
 //==============================================================================================================================================
-
 
 -(void)openCamera
 {
@@ -2806,10 +2872,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"permissionNotAvailableMessageForCamera", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Camera is not Available !!!", @"") andTitle:NSLocalizedStringWithDefaultValue(@"oppsText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OOPS !!!", @"")];
     }
 }
-
-
-
-
 
 -(void)openAudioMic
 {
@@ -2909,6 +2971,32 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                                orRoomId:roomID
                            andCallAudio:callForAudio
                       andViewController:self];
+}
+
+-(void)deleteConversation{
+    
+    NSString *userId;
+    NSNumber *groupId;
+    
+    if(self.channelKey){
+        groupId = self.channelKey;
+    }else{
+        userId = self.contactIds;
+    }
+    
+    [ALMessageService deleteMessageThread:userId orChannelKey:groupId
+                           withCompletion:^(NSString *string, NSError *error) {
+                               
+                               if(error)
+                               {
+                                   [ALUtilityClass displayToastWithMessage:@"Delete failed"];
+                                   return;
+                               }
+                               
+                               [self clearMessagesFromChatView];
+                               
+                               
+                           }];
 }
 
 //==============================================================================================================================================

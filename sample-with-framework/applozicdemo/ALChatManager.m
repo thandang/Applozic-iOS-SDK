@@ -137,25 +137,28 @@
 -(void)launchGroupOfTwoWithClientId:(NSString*)clientGroupId
                        withMetaData:(NSMutableDictionary*)metadata
                         andWithUser:(NSString *)userId
-              andFromViewController:(UIViewController *)viewController
-{
-    ALChannelService * channelService = [[ALChannelService alloc] init];
+              andFromViewController:(UIViewController *)viewController{
     
-    ALChannel *alChannel = [channelService fetchChannelWithClientChannelKey:clientGroupId];
-    if (alChannel){
-        
-        [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
-                            andwithDisplayName:nil andFromViewController:viewController];
-    }
-    else
-    {
-        [channelService getChannelInformation:nil orClientChannelKey:clientGroupId withCompletion:^(ALChannel *alChannel) {
+    ALChannelService * channelService = [[ALChannelService alloc] init];
+   
+    [channelService getChannelInformation:nil orClientChannelKey:clientGroupId withCompletion:^(ALChannel *alChannel) {
             
             if(alChannel.key){
-                [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
-                                    andwithDisplayName:nil andFromViewController:viewController];
-            }else{
                 
+                if( (alChannel.metadata && ![alChannel.metadata isEqualToDictionary:metadata]) ){
+                    [channelService updateChannelMetaData:alChannel.key orClientChannelKey:nil metadata:metadata withCompletion:^(NSError *error) {
+                        [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
+                                            andwithDisplayName:nil andFromViewController:viewController];
+                    }];
+                }
+                else
+                {
+                    [self launchChatForUserWithDisplayName:nil withGroupId:alChannel.key
+                                        andwithDisplayName:nil andFromViewController:viewController];
+                }
+            }
+            else
+            {
                 //Create new one channel and launch:;;
                 [channelService createChannel:clientGroupId orClientChannelKey:clientGroupId andMembersList:@[userId]
                                  andImageLink:nil channelType:GROUP_OF_TWO
@@ -166,7 +169,23 @@
                                   }];
             }
         }];
-    }
+    
+}
+
+-(void)launchGroupOfTwoWithClientId:(NSString *)userIdOfReceiver
+                         withItemId:(NSString *)itemId
+                       withMetaData:(NSMutableDictionary *)metadata
+                        andWithUser:(NSString *)userId
+              andFromViewController:(UIViewController *)viewController{
+    NSString* clientGroupId = [self buildUniqueClientId:itemId withUserId:userIdOfReceiver];
+    [self launchGroupOfTwoWithClientId:clientGroupId withMetaData:metadata andWithUser:userId andFromViewController:viewController];
+}
+
+-(NSString*) buildUniqueClientId:(NSString*)ItemId withUserId:(NSString*)userId
+{
+    NSString * loggedInUserId =  [ALUserDefaultsHandler getUserId];
+    NSArray * sortedArray = [ @[loggedInUserId,userId] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    return [NSString stringWithFormat:@"%@_%@_%@", ItemId,sortedArray[0],sortedArray[1]];
     
 }
 

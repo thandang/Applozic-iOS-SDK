@@ -27,6 +27,7 @@
 #import "ALContactService.h"
 #import "ALUserDefaultsHandler.h"
 #import "ALApplozicSettings.h"
+#import "NSString+Encode.h"
 
 @implementation ALUserService
 {
@@ -55,9 +56,8 @@
         return;
     }
     
-    
-    for(NSString* strr in contactIdsArr){
-        [repString appendString:strr];
+    for(NSString *strr in contactIdsArr){
+        [repString appendString:[NSString stringWithFormat:@"%@",[strr urlEncodeUsingNSUTF8StringEncoding]]];
     }
     
     NSLog(@"USER_ID_STRING :: %@",repString);
@@ -65,7 +65,7 @@
     ALUserClientService * client = [ALUserClientService new];
     [client subProcessUserDetailServerCall:repString withCompletion:^(NSMutableArray * userDetailArray, NSError * error) {
         
-        if(error)
+        if(error || !userDetailArray)
         {
             completionMark();
             return;

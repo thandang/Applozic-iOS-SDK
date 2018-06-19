@@ -93,9 +93,10 @@
 #define AL_GROUP_CONVEERSATION_CLOSE @"com.applozic.userdefault.AL_GROUP_CONVEERSATION_CLOSE"
 #define DROP_IN_SHADOW_IN_NAVIGATION_BAR @"com.applozic.userdefault.DROP_IN_SHADOW_IN_NAVIGATION_BAR"
 #define APPLOZIC_LOCALIZABLE @"com.applozic.userdefault.APPLOZIC_LOCALIZABLE"
+#define AL_CATEGORY_NAME @"com.applozic.userdefault.AL_CATEGORY_NAME"
+#define DELETE_CONVERSATION_OPTION @"com.applozic.userdefault.DELETE_CONVERSATION_OPTION"
 #define TEMPLATE_MESSAGES @"com.applozic.TEMPLATE_MESSAGES"
 #define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
-
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -395,6 +396,10 @@
 
 +(void)setDropShadowInNavigationBar:(BOOL)flag;
 +(BOOL)isDropShadowInNavigationBarEnabled;
+
++(void)setDeleteConversationOption:(BOOL)flag;
++(BOOL)isDeleteConversationOptionEnabled;
+
 +(NSString *)getLocalizableName;
 +(void)setLocalizableName:(NSString *)localizableName;
 +(void) setTemplateMessages:(NSMutableDictionary*)dictionary;
@@ -402,5 +407,8 @@
 
 +(BOOL)isTeamplateMessageEnabled;
 +(void)enableTeamplateMessage:(BOOL)flag;
+
++(void)setCategoryName:(NSString*)categoryName;
++(NSString*)getCategoryName;
 
 @end

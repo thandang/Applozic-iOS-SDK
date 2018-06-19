@@ -43,7 +43,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //    [self mLaunchChatList:self];
-
+    
     self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityView.center = self.view.center;
     
@@ -60,7 +60,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdate:) name:@"userUpdate" object:nil];
     
     //////////////////////////   SET AUTHENTICATION-TYPE-ID FOR INTERNAL USAGE ONLY ////////////////////////
-//    [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
+    //    [ALUserDefaultsHandler setUserAuthenticationTypeId:(short)APPLOZIC];
     ////////////////////////// ////////////////////////// ////////////////////////// ///////////////////////
     
     [self.unreadCountLabel setBackgroundColor:[UIColor grayColor]];
@@ -112,7 +112,7 @@
     
     ALChatManager * chatManager = [[ALChatManager alloc] init];
     [chatManager registerUserAndLaunchChat:user andFromController:self forUser:nil withGroupId:nil];
-
+    
     //Adding sample contacts...
     [self insertInitialContacts];
 }
@@ -120,34 +120,34 @@
     if ([MFMailComposeViewController canSendMail])
     {
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-
+        
         mailer.mailComposeDelegate = self;
-
+        
         [mailer setSubject:@"Applozic Logs File"];
-
+        
         NSArray *toRecipients = [NSArray arrayWithObjects:@"support@applozic.com", nil];
         [mailer setToRecipients:toRecipients];
-
+        
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         NSString *txtFilePath = [documentsDirectory stringByAppendingPathComponent:@"AllTheLogs.txt"];
         NSData *noteData = [NSData dataWithContentsOfFile:txtFilePath];
         [mailer setMessageBody:@"Hey there sending you the logs."
-                                  isHTML:YES];
+                        isHTML:YES];
         [mailer setMailComposeDelegate:self];
         [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"AllTheLogs.txt"];
-
+        
         [self presentViewController:mailer animated:YES completion:nil];
-        }
-        else
-          {
-              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure"
-                                                              message:@"Your device doesn't support the composer sheet"
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                                    otherButtonTitles:nil];
-              [alert show];
-          }
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure"
+                                                        message:@"Your device doesn't support the composer sheet"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 //===============================================================================
@@ -170,13 +170,13 @@
     [channelService  getChannelInformation:@6731287 orClientChannelKey:nil withCompletion:^(ALChannel *alChannel) {
         if(alChannel){
             ALChatManager * chatManager = [[ALChatManager alloc] init];
-
+            
             [chatManager launchChatForUserWithDisplayName:nil withGroupId:@6731287
                                        andwithDisplayName:nil andFromViewController:self];
             
             
         }
-
+        
     }];
     
 }
@@ -232,7 +232,7 @@
     [ALMessageService sendMessages:customMessage withCompletion:^(NSString *message, NSError *error) {
         if(error)
         {
-             NSLog(@"Custom Message Send Error: %@", error);
+            NSLog(@"Custom Message Send Error: %@", error);
         }
     }];
 }
@@ -243,7 +243,7 @@
 //===============================================================================
 
 - (IBAction)launchSeller:(id)sender
-{    
+{
     if(![ALDataNetworkConnection noInternetConnectionNotification])
     {
         [self.activityView startAnimating];
@@ -266,7 +266,7 @@
 -(void)sendMessageWithMetaData      // EXAMPLE FOR META DATA
 {
     NSMutableDictionary * dictionary = [self getNewMetaDataDictionary];                                    // ADD RECEIVER ID HERE
-
+    
     ALMessage * messageWithMetaData = [ALMessageService createMessageWithMetaData:dictionary andContentType: ALMESSAGE_CONTENT_DEFAULT andReceiverId:@"receiverId" andMessageText:@"MESG WITH META DATA"];
     
     [ALMessageService sendMessages:messageWithMetaData withCompletion:^(NSString *message, NSError *error) {
@@ -299,10 +299,10 @@
     alConversationProxy.userId = @"adarshk";
     
     // Note : Uncomment following two lines to set SMS fallback's format.
-/*
-    [alConversationProxy setSenderSMSFormat:@"SENDER SMS FORMAT"];
-    [alConversationProxy setReceiverSMSFormat:@"RECEIVER SMS FORMAT"];
-*/
+    /*
+     [alConversationProxy setSenderSMSFormat:@"SENDER SMS FORMAT"];
+     [alConversationProxy setReceiverSMSFormat:@"RECEIVER SMS FORMAT"];
+     */
     ALTopicDetail * alTopicDetail = [[ALTopicDetail alloc] init];
     alTopicDetail.title     = @"Mac Book Pro";
     alTopicDetail.subtitle  = @"13' Retina";
@@ -316,9 +316,9 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:alTopicDetail.dictionary options:NSJSONWritingPrettyPrinted error:&error];
     NSString *resultTopicDetails = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     alConversationProxy.topicDetailJson = resultTopicDetails;
-
+    
     return alConversationProxy;
-
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -347,7 +347,7 @@
     
     ALContactService * contactService = [ALContactService new];
     NSMutableArray * conactArray = [NSMutableArray new];
-
+    
     //contact 1
     ALContact *contact1 = [[ALContact alloc] init];
     contact1.userId = @"adarshk";
@@ -357,7 +357,7 @@
     contact1.contactImageUrl = @"https://avatars0.githubusercontent.com/u/5002214?v=3&s=400";
     contact1.contactType= [NSNumber numberWithInt:1];
     [conactArray addObject:contact1];
-
+    
     
     // contact 2
     ALContact *contact2 = [[ALContact alloc] init];
@@ -370,19 +370,19 @@
     contact2.contactImageUrl = nil;
     contact2.contactType= [NSNumber numberWithInt:2];
     [conactArray addObject:contact2];
-
     
-//    Contact -------- Example with json
-
+    
+    //    Contact -------- Example with json
+    
     
     NSString *jsonString =@"{\"userId\": \"applozic\",\"fullName\": \"Applozic\",\"contactNumber\": \"9535008745\",\"displayName\": \"Applozic Support\",\"contactImageUrl\": \"https://cdn-images-1.medium.com/max/800/1*RVmHoMkhO3yoRtocCRHSdw.png\",\"email\": \"devashish@applozic.com\",\"localImageResourceName\":\"sample.jpg\"}";
     ALContact *contact3 = [[ALContact alloc] initWithJSONString:jsonString];
     [conactArray addObject:contact3];
-
     
     
-//     Contact ------- Example with dictonary
-
+    
+    //     Contact ------- Example with dictonary
+    
     
     NSMutableDictionary *demodictionary = [[NSMutableDictionary alloc] init];
     [demodictionary setValue:@"rachel" forKey:@"userId"];
@@ -395,7 +395,7 @@
     [demodictionary setValue:[ALUserDefaultsHandler getApplicationKey] forKey:@"applicationId"];
     ALContact *contact4 = [[ALContact alloc] initWithDict:demodictionary];
     [conactArray addObject:contact4];
-
+    
     [contactService updateOrInsertListOfContacts:conactArray];
     
 }
@@ -405,7 +405,7 @@
         //NSLog(@"USER_ONLINE:\nName%@\nID:%@",user.displayName,user.userId);
     }
     else{
-//        NSLog(@"USER_OFFLINE:\nName%@\nID:%@",user.displayName,user.userId);
+        //        NSLog(@"USER_OFFLINE:\nName%@\nID:%@",user.displayName,user.userId);
     }
 }
 
@@ -505,11 +505,11 @@
     //    NSMutableArray *childList = [@[@"1315217",@"1321170"] mutableCopy];
     
     //    [ss addClientChildKeyList:childList andParentKey:@"1170818" withCompletion:^(id json, NSError *error) {
-    //        
+    //
     //    }];
     
     //    [ss removeClientChildKeyList:childList andParentKey:@"1170818" withCompletion:^(id json, NSError *error) {
-    //        
+    //
     //    }];
 }
 

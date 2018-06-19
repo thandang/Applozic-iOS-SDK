@@ -35,9 +35,7 @@ static ALMessageClientService *alMsgClientService;
 +(void) processLatestMessagesGroupByContact
 {
     ALMessageClientService * almessageClientService = [[ALMessageClientService alloc] init];
-    
-    [almessageClientService getLatestMessageGroupByContact:[ALUserDefaultsHandler getFetchConversationPageSize]
-         startTime:[ALUserDefaultsHandler getLastMessageListTime]  withCompletion:^( ALMessageList *alMessageList, NSError *error) {
+    [almessageClientService getLatestMessageGroupByContact:[ALUserDefaultsHandler getFetchConversationPageSize] startTime:[ALUserDefaultsHandler getLastMessageListTime]  withCompletion:^( ALMessageList *alMessageList,NSError *error) {
         
         if(alMessageList)
         {
@@ -47,11 +45,37 @@ static ALMessageClientService *alMsgClientService;
             [alContactDBService addUserDetails:alMessageList.userDetailsList];
             [ALUserDefaultsHandler setBoolForKey_isConversationDbSynced:YES];
             
-            [self getMessageListForUserIfLastIsHiddenMessageinMessageList:alMessageList
-                   withCompletion:^(NSMutableArray * messages, NSError *error, NSMutableArray *userDetailArray) {
-                       
+            [self getMessageListForUserIfLastIsHiddenMessageinMessageList:alMessageList withCompletion:^(NSMutableArray * messages, NSError *error, NSMutableArray *userDetailArray) {
             }];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:CONVERSATION_CALL_COMPLETED object:nil userInfo:nil];
+            
+            if(alMessageList.messageList.count){
+                
+                for(ALMessage *message in [alMessageList.messageList subarrayWithRange:NSMakeRange(0, 6)] ){
+                    
+                    if(message.groupId != nil && message.groupId != 0){
+                        
+                        MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
+                        messageListRequest.userId = nil;
+                        messageListRequest.channelKey = message.groupId;
+                        
+                        [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+                            
+                        }];
+                    }else{
+                        
+                        MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
+                        messageListRequest.userId = message.contactIds;
+                        messageListRequest.channelKey = nil;
+                        
+                        [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+                            
+                        }];
+                        
+                    }
+                }
+            }
         }
         else{
             NSLog(@"Message List Response Nil");

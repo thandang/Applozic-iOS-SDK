@@ -218,7 +218,7 @@
     
     [self.tabBarController.tabBar setHidden: YES];
     
-    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+    if([ALApplozicSettings isTemplateMessageEnabled]) {
         [self setUpTeamplateView];
     }
 
@@ -440,7 +440,7 @@
     [self.tabBarController.tabBar setHidden:YES];
     [self resetMessageReplyView];
     
-    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+    if([ALApplozicSettings isTemplateMessageEnabled]) {
         [templateMessageView setHidden:YES];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"notificationIndividualChat" object:nil];
@@ -4279,7 +4279,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     
     self.viewHeightConstraints.constant=50;
     self.messageReplyView.hidden =0;
-    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+    if([ALApplozicSettings isTemplateMessageEnabled]) {
         [templateMessageView setHidden:YES];
     }
     
@@ -4532,7 +4532,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     self.viewHeightConstraints.constant=0;
     self.messageReplyView.hidden =1;
     self.messageReplyId=nil;
-    if([ALApplozicSettings isTeamplateMessageEnabled]) {
+    if([ALApplozicSettings isTemplateMessageEnabled]) {
         [templateMessageView setHidden:NO];
     }
 }

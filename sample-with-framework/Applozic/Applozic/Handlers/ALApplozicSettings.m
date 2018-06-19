@@ -1009,7 +1009,7 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:TEMPLATE_MESSAGES];
 }
 
-+(BOOL)isTeamplateMessageEnabled
++(BOOL)isTemplateMessageEnabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:TEMPLATE_MESSAGE_VIEW];
 }

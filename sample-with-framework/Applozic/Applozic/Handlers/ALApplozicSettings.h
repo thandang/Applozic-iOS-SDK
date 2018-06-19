@@ -405,7 +405,7 @@
 +(void) setTemplateMessages:(NSMutableDictionary*)dictionary;
 +(NSMutableDictionary*) getTemplateMessages;
 
-+(BOOL)isTeamplateMessageEnabled;
++(BOOL)isTemplateMessageEnabled;
 +(void)enableTeamplateMessage:(BOOL)flag;
 
 +(void)setCategoryName:(NSString*)categoryName;

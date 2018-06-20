@@ -64,7 +64,7 @@
 }
 
 -(void) downloadImageUrl: (NSString *) blobKey withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
-     [self getUrlNSMutableURLRequestForImage:blobKey withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
+     [self getNSMutableURLRequestForImage:blobKey withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
          NSMutableURLRequest * nsMutableURLRequest = urlRequest;
 
          if(nsMutableURLRequest){
@@ -87,7 +87,7 @@
     
 }
 
--(void)getUrlNSMutableURLRequestForImage:(NSString *) blobKey  withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
+-(void)getNSMutableURLRequestForImage:(NSString *) blobKey  withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
     
     NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
     if([ALApplozicSettings isGoogleCloudServiceEnabled]){
@@ -113,7 +113,7 @@
     }
 }
 
--(void)getUrlNSMutableURLRequestForThumbnail: (ALMessage *) message withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
+-(void)getNSMutableURLRequestForThumbnail: (ALMessage *) message withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
     
     NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
     if([ALApplozicSettings isGoogleCloudServiceEnabled]){
@@ -136,7 +136,7 @@
 }
 
 -(void) downloadImageThumbnailUrl: (ALMessage *) message withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
-    [self getUrlNSMutableURLRequestForThumbnail:message withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
+    [self getNSMutableURLRequestForThumbnail:message withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
         NSMutableURLRequest * nsMutableURLRequest = urlRequest;
         if(nsMutableURLRequest){
             [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {

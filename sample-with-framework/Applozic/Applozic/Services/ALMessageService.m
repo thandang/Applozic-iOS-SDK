@@ -59,6 +59,7 @@ static ALMessageClientService *alMsgClientService;
                         MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
                         messageListRequest.userId = nil;
                         messageListRequest.channelKey = message.groupId;
+                        messageListRequest.skipRead = YES;
                         
                         [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
                             
@@ -68,6 +69,7 @@ static ALMessageClientService *alMsgClientService;
                         MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
                         messageListRequest.userId = message.contactIds;
                         messageListRequest.channelKey = nil;
+                        messageListRequest.skipRead = YES;
                         
                         [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
                             

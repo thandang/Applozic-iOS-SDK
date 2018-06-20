@@ -30,6 +30,7 @@
 		6DAA09DA1BE39FCB00CBF133 /* Applozic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA09D61BE39F6B00CBF133 /* Applozic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79E9593767F7DFCB4CC72D74 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1ED364E65158421A4DCED3 /* AssetsLibrary.framework */; };
 		842F66858A6423DE9E523B39 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1266FFF6FF481F4CFF88E7 /* CoreTelephony.framework */; };
+		8B1461A520DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */; };
 		8B344D621FB5DF2B00BAFD49 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */; };
 		8FFB428979FD738E5C4A3BD5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71166F2B6E73BE1C8CE86E /* SystemConfiguration.framework */; };
 		A18CF189D70FDE1E604A7538 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC495FFC34D1F473FCFB224 /* AVFoundation.framework */; };
@@ -53,6 +54,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6D6DF07C1BC535C800EBA00F;
 			remoteInfo = Applozic;
+		};
+		8B1461A720DA33DB00785DF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D6DF1E91BC551FA00EBA00F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D6DF1F01BC551FA00EBA00F;
+			remoteInfo = applozicdemo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -103,6 +111,9 @@
 		6D7F4C6E1C314EBD00AE04CF /* ALChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALChatManager.h; sourceTree = "<group>"; };
 		6D7F4C6F1C314EBD00AE04CF /* ALChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALChatManager.m; sourceTree = "<group>"; };
 		6DAA09D11BE39F6A00CBF133 /* Applozic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Applozic.xcodeproj; path = Applozic/Applozic.xcodeproj; sourceTree = "<group>"; };
+		8B1461A220DA33DB00785DF2 /* applozicdemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = applozicdemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALRegisterUserClientServiceTests.m; sourceTree = "<group>"; };
+		8B1461A620DA33DB00785DF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C7ACBBC71DB650DD0087EE35 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		C7ACBBC81DB650DD0087EE35 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -130,6 +141,13 @@
 				A18CF189D70FDE1E604A7538 /* AVFoundation.framework in Frameworks */,
 				DD2A6CFC168403D86BCF47A0 /* CoreMedia.framework in Frameworks */,
 				1DE667DF7B311A11C9675E35 /* CoreVideo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B14619F20DA33DB00785DF2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +205,7 @@
 				6D54E5F31BE4B28E001BD278 /* Default-568h@2x.png */,
 				6DAA09D11BE39F6A00CBF133 /* Applozic.xcodeproj */,
 				6D6DF1F31BC551FA00EBA00F /* applozicdemo */,
+				8B1461A320DA33DB00785DF2 /* applozicdemoTests */,
 				6D6DF1F21BC551FA00EBA00F /* Products */,
 				462D5B421DA40C7000F5CD73 /* Frameworks */,
 			);
@@ -196,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				6D6DF1F11BC551FA00EBA00F /* applozicdemo.app */,
+				8B1461A220DA33DB00785DF2 /* applozicdemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,6 +256,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8B1461A320DA33DB00785DF2 /* applozicdemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */,
+				8B1461A620DA33DB00785DF2 /* Info.plist */,
+			);
+			path = applozicdemoTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -258,6 +287,24 @@
 			productName = applozicdemo;
 			productReference = 6D6DF1F11BC551FA00EBA00F /* applozicdemo.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8B1461A120DA33DB00785DF2 /* applozicdemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B1461A920DA33DB00785DF2 /* Build configuration list for PBXNativeTarget "applozicdemoTests" */;
+			buildPhases = (
+				8B14619E20DA33DB00785DF2 /* Sources */,
+				8B14619F20DA33DB00785DF2 /* Frameworks */,
+				8B1461A020DA33DB00785DF2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B1461A820DA33DB00785DF2 /* PBXTargetDependency */,
+			);
+			name = applozicdemoTests;
+			productName = applozicdemoTests;
+			productReference = 8B1461A220DA33DB00785DF2 /* applozicdemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -287,6 +334,12 @@
 							};
 						};
 					};
+					8B1461A120DA33DB00785DF2 = {
+						CreatedOnToolsVersion = 9.4;
+						DevelopmentTeam = C25JNDCBM4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 6D6DF1F01BC551FA00EBA00F;
+					};
 				};
 			};
 			buildConfigurationList = 6D6DF1EC1BC551FA00EBA00F /* Build configuration list for PBXProject "applozicdemo" */;
@@ -309,6 +362,7 @@
 			projectRoot = "";
 			targets = (
 				6D6DF1F01BC551FA00EBA00F /* applozicdemo */,
+				8B1461A120DA33DB00785DF2 /* applozicdemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -336,6 +390,13 @@
 				32A5E88E1F3B870500E99655 /* Localizable.strings in Resources */,
 				6D54E6011BE4B73D001BD278 /* Info.plist in Resources */,
 				6D4F28CB1BC58F6C007E7B35 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B1461A020DA33DB00785DF2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +433,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B14619E20DA33DB00785DF2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B1461A520DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -379,6 +448,11 @@
 			isa = PBXTargetDependency;
 			name = Applozic;
 			targetProxy = 6DAA09D71BE39F8D00CBF133 /* PBXContainerItemProxy */;
+		};
+		8B1461A820DA33DB00785DF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D6DF1F01BC551FA00EBA00F /* applozicdemo */;
+			targetProxy = 8B1461A720DA33DB00785DF2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -542,6 +616,74 @@
 			};
 			name = Release;
 		};
+		8B1461AA20DA33DB00785DF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C25JNDCBM4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = applozicdemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.applozicdemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/applozicdemo.app/applozicdemo";
+			};
+			name = Debug;
+		};
+		8B1461AB20DA33DB00785DF2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C25JNDCBM4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = applozicdemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.applozicdemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/applozicdemo.app/applozicdemo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -559,6 +701,15 @@
 			buildConfigurations = (
 				6D6DF20C1BC551FA00EBA00F /* Debug */,
 				6D6DF20D1BC551FA00EBA00F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B1461A920DA33DB00785DF2 /* Build configuration list for PBXNativeTarget "applozicdemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B1461AA20DA33DB00785DF2 /* Debug */,
+				8B1461AB20DA33DB00785DF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

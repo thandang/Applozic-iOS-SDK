@@ -64,74 +64,100 @@
 }
 
 -(void) downloadImageUrl: (NSString *) blobKey withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
-    
-    
-    NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
-    if([ALApplozicSettings isGoogleCloudServiceEnabled]){
-        NSString * theUrlString = [NSString stringWithFormat:@"%@files/url",KBASE_FILE_URL];
-        NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
-        urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
-        
-    }else if([ALApplozicSettings isS3StorageServiceEnabled]) {
-        NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/file/url",KBASE_FILE_URL];
-        NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
-        urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
-        
-    }else if([ALApplozicSettings isStorageServiceEnabled]) {
-        NSString * theUrlString = [NSString stringWithFormat:@"%@%@?key=%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT,blobKey];
-        completion(theUrlString, nil);
-        return;
-    }else {
-        NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/%@",KBASE_FILE_URL,blobKey];
-        completion(theUrlString, nil);
-        return;
-    }
-    
-    [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {
-        
-        if (theError)
-        {
-            completion(nil,theError);
-            return;
-        }
-        NSString * imageDownloadURL = (NSString *)theJson;
-        NSLog(@"RESPONSE_IMG_URL :: %@",imageDownloadURL);
-        completion(imageDownloadURL, nil);
-        
-    }];
+     [self getUrlNSMutableURLRequestForImage:blobKey withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
+         NSMutableURLRequest * nsMutableURLRequest = urlRequest;
+
+         if(nsMutableURLRequest){
+             [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {
+                 
+                 if (theError)
+                 {
+                     completion(nil,theError);
+                     return;
+                 }
+                 NSString * imageDownloadURL = (NSString *)theJson;
+                 NSLog(@"RESPONSE_IMG_URL :: %@",imageDownloadURL);
+                 completion(imageDownloadURL, nil);
+                 
+             }];
+         }else{
+             completion(fileUrl,nil);
+         }
+     }];
     
 }
 
+-(void)getUrlNSMutableURLRequestForImage:(NSString *) blobKey  withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
+    
+    NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
+    if([ALApplozicSettings isGoogleCloudServiceEnabled]){
+        NSString * theUrlString = [NSString stringWithFormat:@"%@files/url",KBASE_FILE_URL];
+        NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
+        urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
+        completion(urlRequest, nil);
+        return;
+    }else if([ALApplozicSettings isS3StorageServiceEnabled]) {
+        NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/file/url",KBASE_FILE_URL];
+        NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
+        urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
+        completion(urlRequest, nil);
+        return;
+    }else if([ALApplozicSettings isStorageServiceEnabled]) {
+        NSString * theUrlString = [NSString stringWithFormat:@"%@%@?key=%@",KBASE_FILE_URL,IMAGE_DOWNLOAD_ENDPOINT,blobKey];
+        completion(nil, theUrlString);
+        return;
+    }else {
+        NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/%@",KBASE_FILE_URL,blobKey];
+        completion(nil, theUrlString);
+        return;
+    }
+}
 
--(void) downloadImageThumbnailUrl: (ALMessage *) message withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
+-(void)getUrlNSMutableURLRequestForThumbnail: (ALMessage *) message withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
     
     NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
     if([ALApplozicSettings isGoogleCloudServiceEnabled]){
         NSString * theUrlString = [NSString stringWithFormat:@"%@files/url",KBASE_FILE_URL];
         NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",message.fileMeta.thumbnailBlobKey];
         urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
-        
+        completion(urlRequest,nil);
+        return;
     }else if([ALApplozicSettings isS3StorageServiceEnabled]) {
         NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/file/url",KBASE_FILE_URL];
         NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",message.fileMeta.thumbnailBlobKey];
         urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
+        completion(urlRequest,nil);
+        return;
     }else {
-        completion(message.fileMeta.thumbnailUrl,nil);
+        completion(nil,message.fileMeta.thumbnailUrl);
         return;
     }
     
-    [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {
-        
-        if (theError)
-        {
-            completion(nil,theError);
+}
+
+-(void) downloadImageThumbnailUrl: (ALMessage *) message withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
+    [self getUrlNSMutableURLRequestForThumbnail:message withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
+        NSMutableURLRequest * nsMutableURLRequest = urlRequest;
+        if(nsMutableURLRequest){
+            [ALResponseHandler processRequest:urlRequest andTag:@"FILE DOWNLOAD URL" WithCompletionHandler:^(id theJson, NSError *theError) {
+                
+                if (theError)
+                {
+                    completion(nil,theError);
+                    return;
+                }
+                NSString * imageDownloadURL = (NSString *)theJson;
+                NSLog(@"RESPONSE_IMG_URL :: %@",imageDownloadURL);
+                completion(imageDownloadURL, nil);
+                
+            }];
+        }else{
+            completion(fileUrl,nil);
             return;
         }
-        NSString * imageDownloadURL = (NSString *)theJson;
-        NSLog(@"RESPONSE_IMG_URL :: %@",imageDownloadURL);
-        completion(imageDownloadURL, nil);
         
     }];
+   
 }
 
 -(void) downloadImageUrlAndSet: (NSString *) blobKey imageView:(UIImageView *) imageView defaultImage:(NSString *) defaultImage {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		04468CDB208F8385008DFEFA /* AppLozic.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DF1371BC5364C00EBA00F /* AppLozic.xcdatamodeld */; };
 		048E2F33209A04A300C40B8B /* ALChannelOfTwoMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 048E2F31209A04A300C40B8B /* ALChannelOfTwoMetaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		048E2F34209A04A300C40B8B /* ALChannelOfTwoMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 048E2F32209A04A300C40B8B /* ALChannelOfTwoMetaData.m */; };
 		105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -365,6 +367,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04468CDA208F7C35008DFEFA /* AppLozic 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 8.xcdatamodel"; sourceTree = "<group>"; };
 		048E2F31209A04A300C40B8B /* ALChannelOfTwoMetaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALChannelOfTwoMetaData.h; sourceTree = "<group>"; };
 		048E2F32209A04A300C40B8B /* ALChannelOfTwoMetaData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALChannelOfTwoMetaData.m; sourceTree = "<group>"; };
 		105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlChannelFeedResponse.h; path = Applozic/AlChannelFeedResponse.h; sourceTree = "<group>"; };
@@ -1684,6 +1687,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04468CDB208F8385008DFEFA /* AppLozic.xcdatamodeld in Resources */,
 				4612E8F31E13882D0022DB23 /* Doxyfile in Resources */,
 				6D7757161D5B83660025560B /* TSMessagesDefaultDesign.json in Resources */,
 				4612E9191E13882D0022DB23 /* MQTTWebsocketTransport in Resources */,
@@ -2104,6 +2108,7 @@
 		6D6DF1371BC5364C00EBA00F /* AppLozic.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				04468CDA208F7C35008DFEFA /* AppLozic 8.xcdatamodel */,
 				10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */,
 				C706DC0E1EA6194600E28BFB /* AppLozic 6.xcdatamodel */,
 				46C808321E7C32FA0076DDB7 /* AppLozic 5.xcdatamodel */,
@@ -2112,7 +2117,7 @@
 				C7EF19C71DF2FDB600529704 /* AppLozic 2.xcdatamodel */,
 				6D6DF1381BC5364C00EBA00F /* AppLozic.xcdatamodel */,
 			);
-			currentVersion = 10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */;
+			currentVersion = 04468CDA208F7C35008DFEFA /* AppLozic 8.xcdatamodel */;
 			name = AppLozic.xcdatamodeld;
 			path = Applozic/AppLozic.xcdatamodeld;
 			sourceTree = "<group>";

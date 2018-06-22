@@ -161,6 +161,7 @@
     ALMessageDBService * dbService;
 }
 
+
 //==============================================================================================================================================
 #pragma mark - VIEW LIFECYCLE
 //==============================================================================================================================================
@@ -4527,10 +4528,12 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)handleTapGestureForKeyBoard
 {
-    if([self.sendMessageTextView isFirstResponder])
-    {
-        [self.sendMessageTextView resignFirstResponder];
-    }
+    
+        if([self.sendMessageTextView isFirstResponder])
+        {
+            [self.sendMessageTextView resignFirstResponder];
+        }
+
 }
 
 -(void)proccessReloadAndForwardMessage:(ALMessage *)alMessage{

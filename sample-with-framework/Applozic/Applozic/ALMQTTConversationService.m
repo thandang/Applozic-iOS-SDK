@@ -169,6 +169,12 @@
             ALPushAssist* assistant = [[ALPushAssist alloc] init];
             ALMessage *alMessage = [[ALMessage alloc] initWithDictonary:[theMessageDict objectForKey:@"message"]];
             
+            NSLog(@"ALMESSAGE's DeviceKey : %@ \n Current DeviceKey : %@", alMessage.deviceKey, [ALUserDefaultsHandler getDeviceKeyString]);
+            if(alMessage.deviceKey && [alMessage.deviceKey isEqualToString:[ALUserDefaultsHandler getDeviceKeyString]]) {
+                NSLog(@"MQTT : RETURNING, SENT_BY_SELF_DEVICE");
+                return;
+            }
+            
             if([alMessage isHiddenMessage])
             {
                 NSLog(@"< HIDDEN MESSAGE RECEIVED >");

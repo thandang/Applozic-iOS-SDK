@@ -3697,7 +3697,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     theTime = [theTime substringFromIndex:[@"0" length]];
                 }
                 
-                str = [str stringByAppendingString: [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"hrsAgo", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],@"%@ mins ago", @""), theTime]];
+                str = [str stringByAppendingString: [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"mins", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],@"%@ mins ago", @""), theTime]];
                 
             }
             [self.label setText:str];

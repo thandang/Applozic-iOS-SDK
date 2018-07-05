@@ -158,7 +158,13 @@
         if(contact.contactImageUrl){
             userContact.contactImageUrl = contact.contactImageUrl;
         }
+        
+        if(contact.unreadCount != nil && [contact.unreadCount  compare:[NSNumber numberWithInt:0]] != NSOrderedSame){
+            userContact.unreadCount = contact.unreadCount;
+        }
+        
         userContact.unreadCount = contact.unreadCount ? contact.unreadCount : [NSNumber numberWithInt:0];
+
         userContact.userStatus = contact.userStatus;
         userContact.connected = contact.connected;
         if(contact.displayName)

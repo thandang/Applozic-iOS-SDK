@@ -1176,4 +1176,16 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
++(BOOL)isChannelMembersSubtitleEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:CHANNEL_MEMBER_INFO_IN_SUBTITEL];
+}
+
++(void)setChannelMembersSubtitle:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CHANNEL_MEMBER_INFO_IN_SUBTITEL];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

@@ -35,8 +35,7 @@
 
 "userUnBlock" = "USER UNBLOCK";
 
-"blockedSusccessFullyInfo" = "is unblocked successfully";
-
+"blockedSusccessFullyInfo" = "%@ is unblocked successfully";
 
 "lastSeenLabelText" = "Last seen ";
 
@@ -44,8 +43,10 @@
 
 "lastSeenJustNowLabelText" = "Last seen Just Now ";
 
-"hrsAgo" = "hrs ago";
-"mins" = " mins ago";
+"lastSeenYesterday" = "Last seen yesterday at ";
+
+"hrsAgo" = "%@ hrs ago";
+"mins" = "%@ mins ago";
 
 "permissionPopMessageForCamera" = "Enable Camera Permission";
 
@@ -66,7 +67,7 @@
 "sendAudioOption" = "Send Audio";
 "sendVideoOption" = "Send Video";
 "blockUserOption"= "Block User";
-"blockedSuccessfullyText" = "is blocked successfully";
+"blockedSuccessfullyText" = " %@ is blocked successfully";
 "userBlock" ="USER BLOCK";
 "shareContact"= "Share Contact";
 "currentLocationOption" = "Current location";

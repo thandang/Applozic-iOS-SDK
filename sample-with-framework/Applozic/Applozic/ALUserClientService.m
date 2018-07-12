@@ -480,7 +480,7 @@
     
 }
 
--(void) updatePassword:(NSString*)oldPassword withNewPassword :(NSString *) newPassword withCompletion:(void(^)(id theJson, NSError *theError))completion
+-(void) updatePassword:(NSString*)oldPassword withNewPassword :(NSString *) newPassword withCompletion:(void(^)(ALAPIResponse *apiResponse, NSError *theError))completion
 {
     
     NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/update/password", KBASE_URL];
@@ -490,12 +490,37 @@
     NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:theParamString];
     
     [ALResponseHandler processRequest:theRequest andTag:@"UPDATE_USER_PASSWORD" WithCompletionHandler:^(id theJson, NSError *theError) {
-        
-        completion(theJson, theError);
-        
+        ALAPIResponse *apiResponse = nil;
+        if(!theError){
+            apiResponse = [[ALAPIResponse alloc] initWithJSONString:(NSString *)theJson];
+        }
+        completion(apiResponse, theError);
+
     }];
     
+}
+
+-(void)getListOfUsersWithUserName:(NSString *)userName withCompletion:(void(^)(ALAPIResponse* response, NSError * error))completion
+{
+    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/search/contact",KBASE_URL];
     
+    NSString * theParamString = [NSString stringWithFormat:@"name=%@", userName];
+
+    NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:theParamString];
+    [ALResponseHandler processRequest:theRequest andTag:@"FETCH_LIST_OF_USERS_WITH_NAME" WithCompletionHandler:^(id theJson, NSError * theError) {
+        
+        if (theError)
+        {
+            completion(nil, theError);
+            NSLog(@"Error in list of users api  call : %@", theError);
+            return;
+        }
+        
+        NSLog(@"RESPONSE_FETCH_LIST_OF_USERS_WITH_NAME_JSON : %@",(NSString *)theJson);
+        
+        ALAPIResponse * aLAPIResponse = [[ALAPIResponse alloc] initWithJSONString:(NSString *)theJson];
+        completion(aLAPIResponse, theError);
+    }];
 }
 
 

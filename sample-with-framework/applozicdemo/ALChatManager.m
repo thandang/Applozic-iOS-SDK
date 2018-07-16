@@ -425,7 +425,7 @@
     
     
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
-    [ALApplozicSettings setChannelMembersSubtitle:YES];
+    [ALApplozicSettings showChannelMembersInfoInNavigationBar:YES];
     [ALApplozicSettings setSendMsgTextColor:[UIColor whiteColor]];
     [ALApplozicSettings setReceiveMsgTextColor:[UIColor grayColor]];
     [ALApplozicSettings setColorForReceiveMessages:[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:1]];

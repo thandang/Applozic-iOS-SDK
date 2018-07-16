@@ -414,7 +414,7 @@
 +(void)setCategoryName:(NSString*)categoryName;
 +(NSString*)getCategoryName;
 
-+(BOOL)isChannelMembersSubtitleEnabled;
-+(void)setChannelMembersSubtitle:(BOOL)flag;
++(BOOL)isChannelMembersInfoInNavigationBarEnabled;
++(void)showChannelMembersInfoInNavigationBar:(BOOL)flag;
 
 @end

@@ -3611,7 +3611,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }
         else if (self.alChannel.type != GROUP_OF_TWO)
         {
-            if([ALApplozicSettings isChannelMembersSubtitleEnabled]){
+            if([ALApplozicSettings isChannelMembersInfoInNavigationBarEnabled]){
                 [self.label setText:[channelService stringFromChannelUserList:self.channelKey]];
             }else{
                 [self.label setText:@""];

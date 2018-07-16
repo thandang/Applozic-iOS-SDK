@@ -1177,14 +1177,14 @@
 }
 
 
-+(BOOL)isChannelMembersSubtitleEnabled
++(BOOL)isChannelMembersInfoInNavigationBarEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:CHANNEL_MEMBER_INFO_IN_SUBTITEL];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
 }
 
-+(void)setChannelMembersSubtitle:(BOOL)flag
++(void)showChannelMembersInfoInNavigationBar:(BOOL)flag
 {
-    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CHANNEL_MEMBER_INFO_IN_SUBTITEL];
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

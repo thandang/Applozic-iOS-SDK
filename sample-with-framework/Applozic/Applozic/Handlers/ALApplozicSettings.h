@@ -98,7 +98,7 @@
 #define GOOGLE_CLOUD_SERVICE_ENABLE @"com.applozic.userdefault.GOOGLE_CLOUD_SERVICE_ENABLE"
 #define TEMPLATE_MESSAGES @"com.applozic.TEMPLATE_MESSAGES"
 #define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
-#define CHANNEL_MEMBER_INFO_IN_SUBTITEL @"com.applozic.CHANNEL_MEMBER_INFO_IN_SUBTITEL"
+#define CHANNEL_MEMBER_INFO_IN_SUBTITLE @"com.applozic.CHANNEL_MEMBER_INFO_IN_SUBTITLE"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

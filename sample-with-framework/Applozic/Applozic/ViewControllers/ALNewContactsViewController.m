@@ -750,7 +750,7 @@
     // Do the search...
     ALChatViewController * theVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ALChatViewController"];
     theVC.contactIds = searchBar.text;
-    if (self.selectedSegment == 0)
+    if (self.selectedSegment == 0 && [ALApplozicSettings isContactSearchEnabled])
     {
         [[self activityIndicator] startAnimating];
         

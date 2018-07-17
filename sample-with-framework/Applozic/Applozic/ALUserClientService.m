@@ -504,7 +504,7 @@
 {
     NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/search/contact",KBASE_URL];
     
-    NSString * theParamString = [NSString stringWithFormat:@"name=%@", userName];
+    NSString * theParamString = [NSString stringWithFormat:@"name=%@", [userName urlEncodeUsingNSUTF8StringEncoding]];
 
     NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:theParamString];
     [ALResponseHandler processRequest:theRequest andTag:@"FETCH_LIST_OF_USERS_WITH_NAME" WithCompletionHandler:^(id theJson, NSError * theError) {

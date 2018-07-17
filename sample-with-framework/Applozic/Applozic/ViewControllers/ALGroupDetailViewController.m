@@ -441,8 +441,6 @@
 {
     if(buttonIndex == 1)
     {
-        
-        
         ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
         ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
     

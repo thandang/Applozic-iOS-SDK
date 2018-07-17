@@ -441,7 +441,12 @@
 {
     if(buttonIndex == 1)
     {
-        if(![self isThisChannelLeft:self.channelKeyID])
+        
+        
+        ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+        ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
+    
+        if(![self isThisChannelLeft:self.channelKeyID] && channel.type != BROADCAST)
         {
             [self turnUserInteractivityForNavigationAndTableView:NO];
             ALChannelService * alchannelService = [[ALChannelService alloc] init];
@@ -573,8 +578,10 @@
             [theController addAction:removeAction];
             
         }
-        
-        if(alChannelUserX.role.intValue != ADMIN){
+    
+            ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
+
+            if(alChannelUserX.role.intValue != ADMIN  && channel.type != BROADCAST ){
             
             [theController addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"makeAdminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Make admin", @"") stringByAppendingString: @" %@"]
                                                                      , memberNames[row]]
@@ -689,8 +696,19 @@
             case 2:
             {
                 [self.memberNameLabel setTextColor:[UIColor redColor]];
-                NSString * labelTitle = (![self isThisChannelLeft:self.channelKeyID]) ?
-                NSLocalizedStringWithDefaultValue(@"exitGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Exit Group", @""):                NSLocalizedStringWithDefaultValue(@"deleteGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Group", @"") ;
+                
+                ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+                ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
+                NSString * labelTitle;
+                if(channel.type == BROADCAST){
+                    labelTitle = NSLocalizedStringWithDefaultValue(@"deleteBroadcast", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Broadcast", @"");
+                }else{
+                    
+                    labelTitle =  [self isThisChannelLeft:self.channelKeyID]?
+                    NSLocalizedStringWithDefaultValue(@"exitGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Exit Group", @""):
+                    NSLocalizedStringWithDefaultValue(@"deleteGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Group", @"");
+                    
+                }
                 self.memberNameLabel.text = labelTitle;
             }break;
             default:break;

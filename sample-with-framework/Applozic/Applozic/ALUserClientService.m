@@ -310,42 +310,47 @@
 
 -(void)subProcessUserDetailServerCall:(NSString *)paramString withCompletion:(void(^)(NSMutableArray * userDetailArray, NSError * theError))completionMark
 {
-    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/detail",KBASE_URL];
-    NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:paramString];
     
-    [ALResponseHandler processRequest:theRequest andTag:@"USERS_DETAILS_FOR_ONLINE_CONTACT_LIMIT" WithCompletionHandler:^(id theJson, NSError *theError) {
+    @try
+    {
         
-        if (theError)
-        {
-            completionMark(nil, theError);
-            NSLog(@"ERROR_IN_USERS_DETAILS_FOR_ONLINE_CONTACT_LIMIT : %@", theError);
-            return;
-        }
+        NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/detail",KBASE_URL];
+        NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:paramString];
         
-        NSString *json = (NSString *)theJson;
-        
-        if(json && [json isEqualToString:AL_EMPTY_JSON_STRING]){
-            completionMark(nil, theError);
-            return;
-        }
+        [ALResponseHandler processRequest:theRequest andTag:@"USERS_DETAILS_FOR_ONLINE_CONTACT_LIMIT" WithCompletionHandler:^(id theJson, NSError *theError) {
             
-        NSLog(@"SEVER_RESPONSE_FOR_ONLINE_CONTACT_LIMIT_JSON : %@", (NSString *)theJson);
-        NSArray * jsonArray = [NSArray arrayWithArray:(NSArray *)theJson];
-        if(jsonArray.count)
-        {
-            NSMutableArray * ALLUserDetailArray = [NSMutableArray new];
-            NSDictionary * JSONDictionary = (NSDictionary *)theJson;
-            for (NSDictionary * theDictionary in JSONDictionary)
+            if (theError)
             {
-                ALUserDetail * userDetail = [[ALUserDetail alloc] initWithDictonary:theDictionary];
-                userDetail.unreadCount = 0;
-                [ALLUserDetailArray addObject:userDetail];
+                completionMark(nil, theError);
+                NSLog(@"ERROR_IN_USERS_DETAILS_FOR_ONLINE_CONTACT_LIMIT : %@", theError);
+                return;
             }
-            completionMark(ALLUserDetailArray, theError);
-        }else{
-            completionMark(nil, theError);
-        }
-    }];
+            
+            NSLog(@"SEVER_RESPONSE_FOR_ONLINE_CONTACT_LIMIT_JSON : %@", (NSString *)theJson);
+            NSArray * jsonArray = [NSArray arrayWithArray:(NSArray *)theJson];
+            if(jsonArray.count)
+            {
+                NSMutableArray * ALLUserDetailArray = [NSMutableArray new];
+                NSDictionary * JSONDictionary = (NSDictionary *)theJson;
+                for (NSDictionary * theDictionary in JSONDictionary)
+                {
+                    ALUserDetail * userDetail = [[ALUserDetail alloc] initWithDictonary:theDictionary];
+                    userDetail.unreadCount = 0;
+                    [ALLUserDetailArray addObject:userDetail];
+                }
+                completionMark(ALLUserDetailArray, theError);
+            }else{
+                completionMark(nil, theError);
+            }
+        }];
+        
+    }
+    @catch(NSException * exp)
+    {
+        NSLog(@"EXCEPTION : UserDetail :: %@",exp.description);
+
+    }
+    
 }
 
 //========================================================================================================================
@@ -480,9 +485,8 @@
     
 }
 
--(void) updatePassword:(NSString*)oldPassword withNewPassword :(NSString *) newPassword withCompletion:(void(^)(id theJson, NSError *theError))completion
-{
-    
+-(void)updatePassword:(NSString*)oldPassword withNewPassword :(NSString *) newPassword  withCompletion:(void (^)(ALAPIResponse *apiResponse, NSError *error))completion{
+
     NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/user/update/password", KBASE_URL];
     NSString * theParamString = [NSString stringWithFormat:@"oldPassword=%@&newPassword=%@", oldPassword,
                                  newPassword];
@@ -494,7 +498,6 @@
         completion(theJson, theError);
         
     }];
-    
     
 }
 

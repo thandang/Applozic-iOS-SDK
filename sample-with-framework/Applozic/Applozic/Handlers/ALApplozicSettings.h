@@ -98,6 +98,7 @@
 #define GOOGLE_CLOUD_SERVICE_ENABLE @"com.applozic.userdefault.GOOGLE_CLOUD_SERVICE_ENABLE"
 #define TEMPLATE_MESSAGES @"com.applozic.TEMPLATE_MESSAGES"
 #define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
+#define AL_CONTACT_SEARCH @"com.applozic.AL_CONTACT_SEARCH"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -412,5 +413,9 @@
 
 +(void)setCategoryName:(NSString*)categoryName;
 +(NSString*)getCategoryName;
+
++(BOOL)isContactSearchEnabled;
++(void)enableContactSearch:(BOOL)flag;
+
 
 @end

@@ -1812,8 +1812,8 @@
     ALChannel * alChannel = [alChannelService getChannelByKey:self.channelKey];
     if(self.conversationId && [ALApplozicSettings getContextualChatOption]){
         return self.getHeaderView.frame.size.height;
-    }else if(alChannel.metadata!=nil && [alChannel.metadata objectForKey:@"title"]){
-        return self.getContextGroupOfTwoView.frame.size.height;
+    }else if(alChannel.metadata !=nil && [alChannel isContextBasedChat]){
+        return self.getContextBasedGroupView.frame.size.height;
     } else {
         return 0;
     }
@@ -1827,14 +1827,14 @@
 {
     ALChannelService * alChannelService = [ALChannelService new];
     ALChannel * alChannel = [alChannelService getChannelByKey:self.channelKey];
-    if(alChannel.metadata!=nil && [alChannel.metadata objectForKey:@"title"]){
-        return self.getContextGroupOfTwoView;
+    if(alChannel.metadata!=nil && [alChannel isContextBasedChat]){
+        return self.getContextBasedGroupView;
     }else{
         return self.getHeaderView;
     }
 }
 
--(UIView *)getContextGroupOfTwoView
+-(UIView *)getContextBasedGroupView
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 84)];
     

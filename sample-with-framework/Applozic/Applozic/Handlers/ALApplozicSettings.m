@@ -1176,6 +1176,16 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(BOOL)isContactSearchEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:AL_CONTACT_SEARCH];
+}
+
++(void)enableContactSearch:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:AL_CONTACT_SEARCH];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 +(BOOL)isChannelMembersInfoInNavigationBarEnabled
 {
@@ -1187,5 +1197,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+
 
 @end

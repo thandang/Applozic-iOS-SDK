@@ -39,7 +39,7 @@
         }
         else
         {
-//            NSLog(@"SEVER RESPONSE FROM JSON : %@", (NSString *)theJson);
+//            NSLog(@"SERVER RESPONSE FROM JSON : %@", (NSString *)theJson);
             NSNumber * generatedAt =  [theJson  valueForKey:@"generatedAt"];
             [ALUserDefaultsHandler setLastSeenSyncTime:generatedAt];
             ALLastSeenSyncFeed  * responseFeed =  [[ALLastSeenSyncFeed alloc] initWithJSONString:(NSString*)theJson];
@@ -70,7 +70,7 @@
         {
             if(((NSArray*)theJson).count > 0)
             {
-                NSLog(@"SEVER RESPONSE FROM JSON : %@", (NSString *)theJson);
+                NSLog(@"SERVER RESPONSE FROM JSON : %@", (NSString *)theJson);
                 ALUserDetail *userDetailObject = [[ALUserDetail alloc] initWithDictonary:[theJson objectAtIndex:0]];
                 [userDetailObject userDetail];
                 completionMark(userDetailObject);
@@ -303,7 +303,7 @@
         }
         
         NSString * JSONString = (NSString *)theJson;
-        NSLog(@"SEVER_RESPONSE_CONTACT_FETCH_WITH_LIMIT_JSON : %@", JSONString);
+        NSLog(@"SERVER_RESPONSE_CONTACT_FETCH_WITH_LIMIT_JSON : %@", JSONString);
         completion(theJson, theError);
     }];
 }
@@ -326,7 +326,7 @@
                 return;
             }
             
-            NSLog(@"SEVER_RESPONSE_FOR_ONLINE_CONTACT_LIMIT_JSON : %@", (NSString *)theJson);
+            NSLog(@"SERVER_RESPONSE_FOR_ONLINE_CONTACT_LIMIT_JSON : %@", (NSString *)theJson);
             NSArray * jsonArray = [NSArray arrayWithArray:(NSArray *)theJson];
             if(jsonArray.count)
             {
@@ -429,11 +429,11 @@
     
     [ALResponseHandler processRequest:theRequest andTag:@"USERS_DETAILS_FOR_ONLINE_CONTACT_LIMIT_POST" WithCompletionHandler:^(id theJson, NSError *theError) {
         
-        NSLog(@"SEVER_RESPONSE_POST_CONTACT : %@", (NSString *)theJson);
+        NSLog(@"SERVER_RESPONSE_POST_CONTACT : %@", (NSString *)theJson);
         if (theError)
         {
             completionMark(nil, theError);
-            NSLog(@"ERROR_SEVER_RESPONSE_POST_CONTACT : %@", theError);
+            NSLog(@"ERROR_SERVER_RESPONSE_POST_CONTACT : %@", theError);
             return;
         }
         

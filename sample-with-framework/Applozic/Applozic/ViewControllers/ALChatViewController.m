@@ -3550,6 +3550,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }
         else
         {
+            self.loadEarlierAction.hidden = YES;
             NSLog(@"some error");
         }
     }];

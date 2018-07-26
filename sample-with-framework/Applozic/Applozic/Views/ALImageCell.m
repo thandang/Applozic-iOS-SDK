@@ -136,6 +136,8 @@ UIViewController * modalCon;
                                                    font:self.imageWithText.font.fontName
                                                fontSize:self.imageWithText.font.pointSize];
     
+    
+    
     [self.mChannelMemberName setHidden:YES];
     [self.mNameLabel setHidden:YES];
     [self.imageWithText setHidden:YES];
@@ -193,7 +195,7 @@ UIViewController * modalCon;
               
             self.mChannelMemberName.frame = CGRectMake(self.mBubleImageView.frame.origin.x + CHANNEL_PADDING_X,
                                                        self.mBubleImageView.frame.origin.y + CHANNEL_PADDING_Y,
-                                                       self.mBubleImageView.frame.size.width + CHANNEL_PADDING_WIDTH, CHANNEL_PADDING_HEIGHT);
+                                                       self.mBubleImageView.frame.size.width, CHANNEL_PADDING_HEIGHT);
             
             requiredHeight = requiredHeight + self.mChannelMemberName.frame.size.height;
             imageViewY = imageViewY +  self.mChannelMemberName.frame.size.height;

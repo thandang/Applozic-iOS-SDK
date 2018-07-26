@@ -271,7 +271,7 @@
             
             self.mChannelMemberName.frame = CGRectMake(self.mBubleImageView.frame.origin.x + CHANNEL_PADDING_X,
                                                        self.mBubleImageView.frame.origin.y + CHANNEL_PADDING_Y,
-                                                       (self.mBubleImageView.frame.size.width), CHANNEL_PADDING_HEIGHT);
+                                                       (self.mBubleImageView.frame.size.width)+ CHANNEL_PADDING_WIDTH, CHANNEL_PADDING_HEIGHT);
             
             [self.mChannelMemberName setText:receiverName];
             
@@ -315,15 +315,14 @@
         
         self.mDateLabel.textAlignment = NSTextAlignmentLeft;
 
-        
+
         if(alMessage.groupId){
-            
+
             self.mChannelMemberName.frame = CGRectMake(self.mBubleImageView.frame.origin.x + CHANNEL_PADDING_X,
                                                        self.mBubleImageView.frame.origin.y + CHANNEL_PADDING_Y,
-                                                       (self.mBubleImageView.frame.size.width - BUBBLE_PADDING_WIDTH), CHANNEL_PADDING_HEIGHT);
-            
+                                                       (self.mBubleImageView.frame.size.width -10), CHANNEL_PADDING_HEIGHT);
         }
-        
+
         if(alContact.contactImageUrl)
         {
             ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];

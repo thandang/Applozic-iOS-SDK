@@ -276,7 +276,7 @@
         [buffer appendData:self.data];
     }
     
-    ALDDLogVerbose(@"[MQTTMessage] wireFormat(%lu)=%@...",
+    ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTMessage] wireFormat(%lu)=%@...",
               (unsigned long)buffer.length,
               [buffer subdataWithRange:NSMakeRange(0, MIN(256, buffer.length))]);
     
@@ -298,7 +298,7 @@
         UInt8 digit;
         do {
             if (data.length < offset) {
-                ALDDLogWarn(@"[MQTTMessage] message data incomplete remaining length");
+                ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] message data incomplete remaining length");
                 offset = -1;
                 break;
             }
@@ -307,7 +307,7 @@
             remainingLength += (digit & 0x7f) * multiplier;
             multiplier *= 128;
             if (multiplier > 128*128*128) {
-                ALDDLogWarn(@"[MQTTMessage] message data too long remaining length");
+                ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] message data too long remaining length");
                 multiplier = -1;
                 break;
             }
@@ -356,7 +356,7 @@
                             [message.data getBytes:&digit range:NSMakeRange(1, 1)];
                             message.mid += digit;
                         } else {
-                            ALDDLogWarn(@"[MQTTMessage] missing packet identifier");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] missing packet identifier");
                             message = nil;
                         }
                     }
@@ -366,7 +366,7 @@
                         type == MQTTPubcomp ||
                         type == MQTTUnsuback ) {
                         if (message.data.length > 2) {
-                            ALDDLogWarn(@"[MQTTMessage] unexpected payload after packet identifier");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] unexpected payload after packet identifier");
                             message = nil;
                         }
                     }
@@ -374,51 +374,51 @@
                         type == MQTTPingresp ||
                         type == MQTTDisconnect) {
                         if (message.data.length > 2) {
-                            ALDDLogWarn(@"[MQTTMessage] unexpected payload");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] unexpected payload");
                             message = nil;
                         }
                     }
                     if (type == MQTTConnect) {
                         if (message.data.length < 3) {
-                            ALDDLogWarn(@"[MQTTMessage] missing connect variable header");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] missing connect variable header");
                             message = nil;
                         }
                     }
                     if (type == MQTTConnack) {
                         if (message.data.length != 2) {
-                            ALDDLogWarn(@"[MQTTMessage] missing connack variable header");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] missing connack variable header");
                             message = nil;
                         }
                     }
                     if (type == MQTTSubscribe) {
                         if (message.data.length < 3) {
-                            ALDDLogWarn(@"[MQTTMessage] missing subscribe variable header");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] missing subscribe variable header");
                             message = nil;
                         }
                     }
                     if (type == MQTTSuback) {
                         if (message.data.length < 3) {
-                            ALDDLogWarn(@"[MQTTMessage] missing suback variable header");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] missing suback variable header");
                             message = nil;
                         }
                     }
                     if (type == MQTTUnsubscribe) {
                         if (message.data.length < 3) {
-                            ALDDLogWarn(@"[MQTTMessage] missing unsubscribe variable header");
+                            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] missing unsubscribe variable header");
                             message = nil;
                         }
                     }
                 } else {
-                    ALDDLogWarn(@"[MQTTMessage] illegal header flags");
+                    ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] illegal header flags");
                 }
             } else {
-                ALDDLogWarn(@"[MQTTMessage] remaining data wrong length");
+                ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] remaining data wrong length");
             }
         } else {
-            ALDDLogWarn(@"[MQTTMessage] illegal message type");
+            ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] illegal message type");
         }
     } else {
-        ALDDLogWarn(@"[MQTTMessage] message data length < 2");
+        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTMessage] message data length < 2");
     }
     return message;
 }

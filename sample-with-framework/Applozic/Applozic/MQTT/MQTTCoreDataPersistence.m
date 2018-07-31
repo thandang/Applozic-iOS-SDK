@@ -349,7 +349,7 @@ static unsigned long long fileSystemFreeSize;
 
 - (void)internalSync {
     if (self.managedObjectContext.hasChanges) {
-        ALDDLogVerbose(@"[MQTTPersistence] pre-sync: i%lu u%lu d%lu",
+        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTPersistence] pre-sync: i%lu u%lu d%lu",
                      (unsigned long)self.managedObjectContext.insertedObjects.count,
                      (unsigned long)self.managedObjectContext.updatedObjects.count,
                      (unsigned long)self.managedObjectContext.deletedObjects.count
@@ -361,7 +361,7 @@ static unsigned long long fileSystemFreeSize;
         if (self.managedObjectContext.hasChanges) {
             ALDDLogError(@"[MQTTPersistence] sync not complete");
         }
-        ALDDLogVerbose(@"[MQTTPersistence] postsync: i%lu u%lu d%lu",
+        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTPersistence] postsync: i%lu u%lu d%lu",
                      (unsigned long)self.managedObjectContext.insertedObjects.count,
                      (unsigned long)self.managedObjectContext.updatedObjects.count,
                      (unsigned long)self.managedObjectContext.deletedObjects.count
@@ -424,7 +424,7 @@ static unsigned long long fileSystemFreeSize;
                             messageId:(UInt16)messageId {
     __block MQTTCoreDataFlow *flow = nil;
 
-    ALDDLogVerbose(@"flowforClientId requestingPerform");
+    ALSLogBasic(ALLoggerSeverityInfo, @"flowforClientId requestingPerform");
     if ([NSThread isMainThread]) {
         flow = [self internalFlowForClientId:clientId
                                 incomingFlag:incomingFlag
@@ -436,7 +436,7 @@ static unsigned long long fileSystemFreeSize;
                                        messageId:messageId];
         }];
     }
-    ALDDLogVerbose(@"flowforClientId performed");
+    ALSLogBasic(ALLoggerSeverityInfo, @"flowforClientId performed");
     return flow;
 }
 
@@ -445,7 +445,7 @@ static unsigned long long fileSystemFreeSize;
                                     messageId:(UInt16)messageId {
     MQTTCoreDataFlow *flow = nil;
 
-    ALDDLogVerbose(@"flowforClientId performing");
+    ALSLogBasic(ALLoggerSeverityInfo, @"flowforClientId performing");
 
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MQTTFlow"];
     fetchRequest.predicate = [NSPredicate predicateWithFormat:
@@ -613,7 +613,7 @@ static unsigned long long fileSystemFreeSize;
 
         NSURL *persistentStoreURL = [[self applicationDocumentsDirectory]
                                      URLByAppendingPathComponent:@"MQTTClient"];
-        ALDDLogInfo(@"[MQTTPersistence] Persistent store: %@", persistentStoreURL.path);
+        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTPersistence] Persistent store: %@", persistentStoreURL.path);
 
 
         NSError *error = nil;
@@ -663,6 +663,6 @@ static unsigned long long fileSystemFreeSize;
         fileSize = 0;
         fileSystemFreeSize = 0;
     }
-    ALDDLogVerbose(@"[MQTTPersistence] sizes %llu/%llu", fileSize, fileSystemFreeSize);
+    ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTPersistence] sizes %llu/%llu", fileSize, fileSystemFreeSize);
 }
 @end

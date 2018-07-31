@@ -13,6 +13,7 @@
 #import <Applozic/ALChatViewController.h>
 #import <Applozic/ALMessage.h>
 #import <Applozic/ALNewContactsViewController.h>
+#import <Applozic/ALLogger.h>
 
 
 @implementation ALChatManager
@@ -29,9 +30,15 @@
     {
         [ALUserDefaultsHandler setApplicationKey:applicationKey];
         self.permissableVCList = [[NSArray alloc] init];
+        // Assumption: This init will be called from AppDelegate and it won't be deallocated till the app closes otherwise log's will not be saved.
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveLogs) name:UIApplicationWillTerminateNotification object:nil];
     }
     
     return self;
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIApplicationWillTerminateNotification];
 }
 
 //==============================================================================================================================================
@@ -696,6 +703,11 @@
     //    UIViewController * customView = [storyboard instantiateViewControllerWithIdentifier:@"CustomVC"];
     //    ALChatViewController * chatVC = (ALChatViewController *)chatView;
     //    [chatVC presentViewController:customView animated:YES completion:nil];
+}
+
+-(void) saveLogs
+{
+    [ALLogger saveLogArray];
 }
 
 @end

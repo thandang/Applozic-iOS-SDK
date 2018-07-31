@@ -44,6 +44,7 @@
 #import "ALPushAssist.h"
 #import "ALGroupCreationViewController.h"
 #import "ALMessageClientService.h"
+#import "ALLogger.h"
 
 // Constants
 #define DEFAULT_TOP_LANDSCAPE_CONSTANT -34
@@ -107,8 +108,15 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [ALLogger setMinimumSeverity:ALLoggerSeverityWarn];
+    ALSLogPlain(ALLoggerSeverityDebug,    @" - Logged with severity => ALLoggerSeverityDebug");
+    ALSLogPlain(ALLoggerSeverityInfo,    @" - Logged with severity => ALLoggerSeverityInfo");
+    ALSLogPlain(ALLoggerSeverityWarn,    @" - Logged with severity => ALLoggerSeverityWarn");
+    ALSLogBasic(ALLoggerSeverityError,    @" - Logged with severity => ALLoggerSeverityError");
+    ALSLogPlain(ALLoggerSeverityFatal,    @" - Logged with severity => ALLoggerSeverityFatal");
+    ALSLogPlain(ALLoggerSeverityFatal, @" - 2 logs do not show because they do not meet the minimum severity (ALLoggerSeverityWarn)");
+
     self.mqttRetryCount = 0;
-    
     [self setUpTableView];
     self.mTableView.allowsMultipleSelectionDuringEditing = NO;
     [self.mActivityIndicator startAnimating];
@@ -163,7 +171,7 @@
     
     if (self.navigationController.viewControllers.count == 1 && !profileFlag)
     {
-        NSLog(@"MSG VC : CLOSING_MQTT_CONNECTIONS");
+        ALSLogBasic(ALLoggerSeverityInfo, @"MSG VC : CLOSING_MQTT_CONNECTIONS");
         [self.alMqttConversationService unsubscribeToConversation];
     }
 }
@@ -212,7 +220,7 @@
     }
 
     //register for notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotificationhandler:) name:@"pushNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotificationhandler:) name:@"pushNotification" object:nil];    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callLastSeenStatusUpdate)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -362,10 +370,10 @@
         
         if(error)
         {
-            NSLog(@"ERROR: IN REFRESH MSG VC :: %@",error);
+            ALSLogBasic(ALLoggerSeverityError, @"ERROR: IN REFRESH MSG VC :: %@",error);
             return;
         }
-        NSLog(@"REFRESH MSG VC");
+        ALSLogBasic(ALLoggerSeverityInfo, @"REFRESH MSG VC");
     }];
 }
 
@@ -418,7 +426,7 @@
         }
     }
     [self.mTableView reloadData];
-    NSLog(@"GETTING MESSAGE ARRAY");
+    ALSLogBasic(ALLoggerSeverityInfo, @"GETTING MESSAGE ARRAY");
 }
 
 -(void)didUpdateBroadCastMessages {
@@ -537,7 +545,7 @@
                 }
             }
             
-            NSLog(@"contact cell not found ....");
+            ALSLogBasic(ALLoggerSeverityInfo, @"contact cell not found ....");
         }
     }
     if(isreloadRequire)
@@ -1007,7 +1015,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         
-        NSLog(@"DELETE_PRESSED");
+        ALSLogBasic(ALLoggerSeverityInfo, @"DELETE_PRESSED");
         if(![ALDataNetworkConnection checkDataNetworkAvailable])
         {
             [self noDataNotificationView];
@@ -1033,7 +1041,7 @@
             
             if(error)
             {
-                NSLog(@"DELETE_FAILED_CONVERSATION_ERROR_DESCRIPTION :: %@", error.description);
+                ALSLogBasic(ALLoggerSeverityError, @"DELETE_FAILED_CONVERSATION_ERROR_DESCRIPTION :: %@", error.description);
                 [ALUtilityClass displayToastWithMessage:@"Delete failed"];
                 return;
             }
@@ -1063,7 +1071,7 @@
 
 -(void)subProcessDeleteMessageThread:(NSArray *)theFilteredArray
 {
-    NSLog(@"GETTING_FILTERED_ARRAY_COUNT :: %lu", (unsigned long)theFilteredArray.count);
+    ALSLogBasic(ALLoggerSeverityInfo, @"GETTING_FILTERED_ARRAY_COUNT :: %lu", (unsigned long)theFilteredArray.count);
     [self.mContactsMessageListArray removeObjectsInArray:theFilteredArray];
     [self emptyConversationAlertLabel];
     [self.mTableView reloadData];
@@ -1076,7 +1084,7 @@
 -(void)updateConversationTableNotification:(NSNotification *)notification
 {
     ALMessage * theMessage = notification.object;
-    NSLog(@"NOTIFICATION_FOR_TABLE_UPDATE :: %@", theMessage.message);
+    ALSLogBasic(ALLoggerSeverityInfo, @"NOTIFICATION_FOR_TABLE_UPDATE :: %@", theMessage.message);
     NSArray * theFilteredArray = [self.mContactsMessageListArray
                                   filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"contactIds = %@", theMessage.contactIds]];
     //check for group id also
@@ -1131,7 +1139,7 @@
 
 -(void)updateUserDetail:(NSString *)userId
 {
-    NSLog(@"ALMSGVC : USER_DETAIL_CHANGED_CALL_UPDATE");
+    ALSLogBasic(ALLoggerSeverityInfo, @"ALMSGVC : USER_DETAIL_CHANGED_CALL_UPDATE");
     [ALUserService updateUserDetail:userId withCompletion:^(ALUserDetail *userDetail) {
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"USER_DETAIL_OTHER_VC" object:userDetail];
@@ -1218,7 +1226,7 @@
 
 -(void)updateTypingStatus:(NSString *)applicationKey userId:(NSString *)userId status:(BOOL)status
 {
-    NSLog(@"==== (MSG_VC) Received typing status %d for: %@ ====", status, userId);
+    ALSLogBasic(ALLoggerSeverityInfo, @"==== (MSG_VC) Received typing status %d for: %@ ====", status, userId);
     ALContactDBService *contactDBService = [[ALContactDBService alloc] init];
     ALContact *alContact = [contactDBService loadContactByKey:@"userId" value: userId];
     if((alContact.block || alContact.blockBy) && !self.detailChatViewController.channelKey)
@@ -1280,8 +1288,8 @@
     
     if([ALDataNetworkConnection checkDataNetworkAvailable] && !isBackgroundState)
     {
-        NSLog(@"MQTT connection closed, subscribing again: %lu", (long)_mqttRetryCount);
-        NSLog(@"ALMessageVC subscribing channel again....");
+        ALSLogBasic(ALLoggerSeverityInfo, @"MQTT connection closed, subscribing again: %lu", (long)_mqttRetryCount);
+        ALSLogBasic(ALLoggerSeverityInfo, @"ALMessageVC subscribing channel again....");
         [self.alMqttConversationService subscribeToConversation];
         self.mqttRetryCount++;
     }
@@ -1339,7 +1347,7 @@
     }
     else if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
-        NSLog(@"######## IT SHOULD NEVER COME HERE #########");
+        ALSLogBasic(ALLoggerSeverityInfo, @"######## IT SHOULD NEVER COME HERE #########");
         [self createDetailChatViewController: contactId];
 //      [self.detailChatViewController fetchAndRefresh];
         [self.detailChatViewController setRefresh: YES];
@@ -1374,12 +1382,12 @@
     if((self.isViewLoaded && self.view.window) ||
        (self.detailChatViewController && self.detailChatViewController.isViewLoaded && self.detailChatViewController.view.window))
     {
-        NSLog(@"VIEW_CONTROLLER IS VISIBLE");
+        ALSLogBasic(ALLoggerSeverityInfo, @"VIEW_CONTROLLER IS VISIBLE");
         return YES;
     }
     else
     {
-        NSLog(@"VIEW_CONTROLLER IS NOT VISIBLE");
+        ALSLogBasic(ALLoggerSeverityInfo, @"VIEW_CONTROLLER IS NOT VISIBLE");
         return NO;
     }
 }
@@ -1436,7 +1444,7 @@
 
 -(void)appWillEnterForeground:(NSNotification *)notification
 {
-    NSLog(@"will enter foreground notification");
+    ALSLogBasic(ALLoggerSeverityInfo, @"will enter foreground notification");
    // [self syncCall:nil];
     //[self callLastSeenStatusUpdate];
 }
@@ -1547,11 +1555,11 @@
 {
     if(self.parentGroupKey && [ALApplozicSettings getSubGroupLaunchFlag])
     {
-        NSLog(@"NOT REQUIRE FOR PARENT GROUP");
+        ALSLogBasic(ALLoggerSeverityInfo, @"NOT REQUIRE FOR PARENT GROUP");
         return;
     }
     
-    NSLog(@"END_SCROCLLING_TRY");
+    ALSLogBasic(ALLoggerSeverityInfo, @"END_SCROCLLING_TRY");
     CGPoint offset = scrollView.contentOffset;
     CGRect bounds = scrollView.bounds;
     CGSize size = scrollView.contentSize;

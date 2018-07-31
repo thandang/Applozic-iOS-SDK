@@ -64,7 +64,7 @@
         chatView.text = text;
         chatView.individualLaunch = YES;
         chatView.chatViewDelegate = self;
-        NSLog(@"CALLED_VIA_NOTIFICATION");
+        ALSLogBasic(ALLoggerSeverityInfo, @"CALLED_VIA_NOTIFICATION");
         
         UINavigationController * conversationViewNavController = [self createNavigationControllerForVC:chatView];
         conversationViewNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -109,7 +109,7 @@
                                //Channel information
                                
                                
-       NSLog(@" alChannel ###%@ ", alChannel.name);
+       ALSLogBasic(ALLoggerSeverityInfo, @" alChannel ###%@ ", alChannel.name);
        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Applozic"
                                    
                                                             bundle:[NSBundle bundleForClass:ALChatViewController.class]];

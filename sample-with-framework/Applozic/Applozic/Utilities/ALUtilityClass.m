@@ -49,7 +49,7 @@
     
     if (! jsonData)
     {
-        NSLog(@"Got an error: %@", error);
+        ALSLogBasic(ALLoggerSeverityError, @"Got an error: %@", error);
     }
     else
     {
@@ -418,7 +418,7 @@
     AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
         
         if (result != AVAssetImageGeneratorSucceeded) {
-            NSLog(@"couldn't generate thumbnail, error:%@", error);
+            ALSLogBasic(ALLoggerSeverityError, @"couldn't generate thumbnail, error:%@", error);
         }
         
         completion([UIImage imageWithCGImage:im]);
@@ -471,10 +471,10 @@
 {
     BOOL debug;
     #ifdef DEBUG
-        NSLog(@"DEBUG_MODE");
+        ALSLogBasic(ALLoggerSeverityInfo, @"DEBUG_MODE");
         debug = YES;
     #else
-        NSLog(@"RELEASE_MODE");
+        ALSLogBasic(ALLoggerSeverityInfo, @"RELEASE_MODE");
         debug = NO;
     #endif
     

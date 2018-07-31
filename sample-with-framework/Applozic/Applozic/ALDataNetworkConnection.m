@@ -30,11 +30,11 @@
     
     if(canReach)
     {
-        NSLog(@"NETWORK AVAILABLE");
+        ALSLogBasic(ALLoggerSeverityInfo, @"NETWORK AVAILABLE");
     }
     else
     {
-        NSLog(@"NETWORK ISN'T AVAILABLE");
+        ALSLogBasic(ALLoggerSeverityInfo, @"NETWORK ISN'T AVAILABLE");
     }
     
     return canReach;

@@ -11,4 +11,5 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "ALLogs.h"
+#import "ALLogger.h"
 #endif

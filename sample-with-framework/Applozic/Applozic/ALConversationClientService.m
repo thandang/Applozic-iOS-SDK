@@ -35,13 +35,13 @@
         
         if (theError)
         {
-            NSLog(@"ERROR IN CREATE_CONVERSATION %@", theError);
+            ALSLogBasic(ALLoggerSeverityError, @"ERROR IN CREATE_CONVERSATION %@", theError);
         }
         else
         {
             response = [[ALConversationCreateResponse alloc] initWithJSONString:theJson];
         }
-        NSLog(@"SEVER RESPONSE FROM JSON CREATE_CONVERSATION : %@", theJson);
+        ALSLogBasic(ALLoggerSeverityInfo, @"SEVER RESPONSE FROM JSON CREATE_CONVERSATION : %@", theJson);
         completion(theError, response);
         
     }];
@@ -60,7 +60,7 @@
         ALAPIResponse *response = nil;
         if(theError)
         {
-            NSLog(@"ERROR IN FETCH_TOPIC_DETAILS SERVER CALL REQUEST %@", theError);
+            ALSLogBasic(ALLoggerSeverityError, @"ERROR IN FETCH_TOPIC_DETAILS SERVER CALL REQUEST %@", theError);
         }
         else
         {

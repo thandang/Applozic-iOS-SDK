@@ -348,6 +348,8 @@
 		6DEAEE8D1D4CDBC700360060 /* ALUserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */; };
 		8B00F0E020C65A9A00ADBFC9 /* ALApplicationInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B00F0DE20C65A9A00ADBFC9 /* ALApplicationInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B00F0E120C65A9A00ADBFC9 /* ALApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B00F0DF20C65A9A00ADBFC9 /* ALApplicationInfo.m */; };
+		8B1AD692210B490700AB2060 /* ALLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1AD690210B490600AB2060 /* ALLogger.m */; };
+		8B1AD693210B490700AB2060 /* ALLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B1AD691210B490700AB2060 /* ALLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6C119F1FC2D9AF007CFB54 /* SoundRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */; };
 		C70273CB1DED445E00BA2C8A /* ALUserDetailListFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = C70273C91DED445E00BA2C8A /* ALUserDetailListFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C70273CC1DED445E00BA2C8A /* ALUserDetailListFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C70273CA1DED445E00BA2C8A /* ALUserDetailListFeed.m */; };
@@ -711,6 +713,8 @@
 		6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALUserProfileVC.m; sourceTree = "<group>"; };
 		8B00F0DE20C65A9A00ADBFC9 /* ALApplicationInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALApplicationInfo.h; sourceTree = "<group>"; };
 		8B00F0DF20C65A9A00ADBFC9 /* ALApplicationInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALApplicationInfo.m; sourceTree = "<group>"; };
+		8B1AD690210B490600AB2060 /* ALLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALLogger.m; path = ../../../../../clones/UALogger/ALLogger.m; sourceTree = "<group>"; };
+		8B1AD691210B490700AB2060 /* ALLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALLogger.h; path = ../../../../../clones/UALogger/ALLogger.h; sourceTree = "<group>"; };
 		8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundRecordingView.swift; sourceTree = "<group>"; };
 		C70273C91DED445E00BA2C8A /* ALUserDetailListFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALUserDetailListFeed.h; path = Applozic/ALUserDetailListFeed.h; sourceTree = "<group>"; };
 		C70273CA1DED445E00BA2C8A /* ALUserDetailListFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALUserDetailListFeed.m; path = Applozic/ALUserDetailListFeed.m; sourceTree = "<group>"; };
@@ -917,6 +921,8 @@
 		6D6DF0A21BC5364C00EBA00F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				8B1AD691210B490700AB2060 /* ALLogger.h */,
+				8B1AD690210B490600AB2060 /* ALLogger.m */,
 				6D4FE48D1D7411F70044A7E6 /* NSData+AES.h */,
 				6D4FE48E1D7411F70044A7E6 /* NSData+AES.m */,
 				29CBF2001C0303A700BE6A20 /* ALColorUtility.h */,
@@ -1581,6 +1587,7 @@
 				6DEAEE8C1D4CDBC700360060 /* ALUserProfileVC.h in Headers */,
 				2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */,
 				294637B61C6F16050025ED76 /* ALGroupCreationViewController.h in Headers */,
+				8B1AD693210B490700AB2060 /* ALLogger.h in Headers */,
 				6D6DF1561BC5364C00EBA00F /* ALBaseViewController.h in Headers */,
 				6D6DF1401BC5364C00EBA00F /* ALConnectionQueueHandler.h in Headers */,
 				6D6DF1841BC5364C00EBA00F /* DB_Message.h in Headers */,
@@ -1835,6 +1842,7 @@
 				C75576EF1E27A5B300358D9B /* ALMuteRequest.m in Sources */,
 				6D7757281D5B841B0025560B /* ALMessageInfoViewController.m in Sources */,
 				6D6DF1411BC5364C00EBA00F /* ALConnectionQueueHandler.m in Sources */,
+				8B1AD692210B490700AB2060 /* ALLogger.m in Sources */,
 				6D6DF1BB1BC5364C00EBA00F /* SDWebImageDecoder.m in Sources */,
 				29CBF2031C0303A700BE6A20 /* ALColorUtility.m in Sources */,
 				6D6DF1451BC5364C00EBA00F /* ALImagePickerHandler.m in Sources */,

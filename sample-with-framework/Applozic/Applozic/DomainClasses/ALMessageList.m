@@ -37,10 +37,10 @@
     NSMutableArray * conversationProxyList = [NSMutableArray new];
 
     NSDictionary * theMessageDict = [messagejson valueForKey:@"message"];
-    NSLog(@"MESSAGES_DICT_COUNT :: %lu",(unsigned long)theMessageDict.count);
+    ALSLogBasic(ALLoggerSeverityInfo, @"MESSAGES_DICT_COUNT :: %lu",(unsigned long)theMessageDict.count);
     if(theMessageDict.count ==0)
     {
-        NSLog(@"NO_MORE_MESSAGES");
+        ALSLogBasic(ALLoggerSeverityInfo, @"NO_MORE_MESSAGES");
         [ALUserDefaultsHandler setFlagForAllConversationFetched: YES];
     }
     

@@ -46,7 +46,7 @@
     NSError * error;
     [theDBHandler.managedObjectContext save:&error];
     if(![theDBHandler.managedObjectContext save:&error]){
-        NSLog(@"Unable to save error :%@",error);
+        ALSLogBasic(ALLoggerSeverityError, @"Unable to save error :%@",error);
         
     }
     return messageArray;
@@ -107,7 +107,7 @@
     NSError *fetchError = nil;
     
     NSArray *result = [dbHandler.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
-    NSLog(@"Found Messages to update to DELIVERED_AND_READ in DB :%lu",(unsigned long)result.count);
+    ALSLogBasic(ALLoggerSeverityInfo, @"Found Messages to update to DELIVERED_AND_READ in DB :%lu",(unsigned long)result.count);
     for (DB_Message *message in result) {
         [message setStatus:[NSNumber numberWithInt:status]];
     }
@@ -117,8 +117,8 @@
     BOOL success = [dbHandler.managedObjectContext save:&Error];
     
     if (!success) {
-        NSLog(@"Unable to save STATUS OF managed objects.");
-        NSLog(@"%@, %@", Error, Error.localizedDescription);
+        ALSLogBasic(ALLoggerSeverityInfo, @"Unable to save STATUS OF managed objects.");
+        ALSLogBasic(ALLoggerSeverityError, @"%@, %@", Error, Error.localizedDescription);
     }
     
 }
@@ -134,10 +134,10 @@
     
     NSError *error = nil;
     if ( ![dbHandler.managedObjectContext save:&error] && message){
-        NSLog(@"Error in updating Message Delivery Report");
+        ALSLogBasic(ALLoggerSeverityError, @"Error in updating Message Delivery Report");
     }
     else{
-        NSLog(@"updateMessageDeliveryReport DB update Success %@", messageKeyString);
+        ALSLogBasic(ALLoggerSeverityInfo, @"updateMessageDeliveryReport DB update Success %@", messageKeyString);
     }
     
 }
@@ -151,7 +151,7 @@
     [message setValue:@"1" forKey:@"isSent"];
     NSError *error = nil;
     if ( [dbHandler.managedObjectContext save:&error]){
-        NSLog(@"message found and maked as deliverd");
+        ALSLogBasic(ALLoggerSeverityInfo, @"message found and maked as deliverd");
     } else {
        // NSLog(@"message not found with this key");
     }
@@ -176,11 +176,11 @@
 
         NSError *error = nil;
         if ( [dbHandler.managedObjectContext save:&error]){
-            NSLog(@"message found ");
+            ALSLogBasic(ALLoggerSeverityInfo, @"message found ");
         }
     }
     else{
-         NSLog(@"message not found with this key");
+         ALSLogBasic(ALLoggerSeverityInfo, @"message not found with this key");
     }
     
 }
@@ -216,8 +216,8 @@
    BOOL success = [dbHandler.managedObjectContext save:&deleteError];
     
     if (!success) {
-        NSLog(@"Unable to save managed object context.");
-        NSLog(@"%@, %@", deleteError, deleteError.localizedDescription);
+        ALSLogBasic(ALLoggerSeverityInfo, @"Unable to save managed object context.");
+        ALSLogBasic(ALLoggerSeverityError, @"%@, %@", deleteError, deleteError.localizedDescription);
     }
     
 }
@@ -235,7 +235,7 @@
     if(error == nil ){
         return !(count >0);
     }else{
-         NSLog(@"Error fetching count :%@",error);
+         ALSLogBasic(ALLoggerSeverityError, @"Error fetching count :%@",error);
     }
     return true;
 }
@@ -256,7 +256,7 @@
         NSArray *items = [dbHandler.managedObjectContext executeFetchRequest:fetchRequest error:&error];
         
         if (error) {
-            NSLog(@"Error requesting items from Core Data: %@", [error localizedDescription]);
+            ALSLogBasic(ALLoggerSeverityError, @"Error requesting items from Core Data: %@", [error localizedDescription]);
         }
         
         for (NSManagedObject *managedObject in items) {
@@ -264,7 +264,7 @@
         }
         
         if (![dbHandler.managedObjectContext save:&error]) {
-            NSLog(@"Error deleting %@ - error:%@", entityDescription, [error localizedDescription]);
+            ALSLogBasic(ALLoggerSeverityError, @"Error deleting %@ - error:%@", entityDescription, [error localizedDescription]);
         }
     }  
 }
@@ -348,7 +348,7 @@
     
     [ALMessageService getLatestMessageForUser:deviceKeyString withCompletion:^(NSMutableArray *messageArray, NSError *error) {
         if (error) {
-            NSLog(@"GetLatestMsg Error%@",error);
+            ALSLogBasic(ALLoggerSeverityError, @"GetLatestMsg Error%@",error);
             return ;
         }
         [self.delegate updateMessageList:messageArray];
@@ -366,7 +366,7 @@
     [ALMessageService getMessagesListGroupByContactswithCompletionService:^(NSMutableArray *messages, NSError *error) {
         
         if (error) {
-            NSLog(@"%@",error);
+            ALSLogBasic(ALLoggerSeverityError, @"%@",error);
             completion(NO,nil);
             return ;
         }
@@ -469,7 +469,7 @@
         
     }
     if(!self.delegate ){
-        NSLog(@"delegate is not set.");
+        ALSLogBasic(ALLoggerSeverityInfo, @"delegate is not set.");
         return;
     }
     
@@ -712,13 +712,13 @@
         ALMessage * theMessage = [self createMessageEntity:theEntity];
         if([theMessage.groupId isEqualToNumber:[NSNumber numberWithInt:0]])
         {
-            NSLog(@"groupId is coming as 0..setting it null" );
+            ALSLogBasic(ALLoggerSeverityInfo, @"groupId is coming as 0..setting it null" );
             theMessage.groupId = NULL;
         }
-        [msgArray addObject:theMessage]; NSLog(@"Pending Message status:%@",theMessage.status);
+        [msgArray addObject:theMessage]; ALSLogBasic(ALLoggerSeverityInfo, @"Pending Message status:%@",theMessage.status);
     }
     
-    NSLog(@" get pending messages ...getPendingMessages ..%lu",(unsigned long)msgArray.count);
+    ALSLogBasic(ALLoggerSeverityInfo, @" get pending messages ...getPendingMessages ..%lu",(unsigned long)msgArray.count);
     return msgArray;
 }
 
@@ -752,7 +752,7 @@
             
             for (NSString *userId in memberList)
             {
-                NSLog(@"BROADCAST_CHANNEL_MEMBER : %@",userId);
+                ALSLogBasic(ALLoggerSeverityInfo, @"BROADCAST_CHANNEL_MEMBER : %@",userId);
                 DB_Message * dbMsgEntity = [NSEntityDescription insertNewObjectForEntityForName:@"DB_Message"
                                                                          inManagedObjectContext:dbHandler.managedObjectContext];
                 dbMsgEntity.contactId = userId;
@@ -788,7 +788,7 @@
                 
                 NSError * error;
                 BOOL flag = [dbHandler.managedObjectContext save:&error];
-                NSLog(@"ERROR(IF_ANY) BROADCAST MSG : %@ and flag : %i",error.description, flag);
+                ALSLogBasic(ALLoggerSeverityError, @"ERROR(IF_ANY) BROADCAST MSG : %@ and flag : %i",error.description, flag);
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"BROADCAST_MSG_UPDATE" object:nil];
         }];
@@ -920,8 +920,8 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     BOOL success = [dbHandler.managedObjectContext save:&Error];
     
     if (!success) {
-        NSLog(@"Unable to save replytype .");
-        NSLog(@"%@, %@", Error, Error.localizedDescription);
+        ALSLogBasic(ALLoggerSeverityInfo, @"Unable to save replytype .");
+        ALSLogBasic(ALLoggerSeverityError, @"%@, %@", Error, Error.localizedDescription);
     }
 }
 -(void) updateMessageSentDetails:(NSString*)messageKeyString withCreatedAtTime : (NSNumber *) createdAtTime withDbMessage:(DB_Message *) dbMessage {

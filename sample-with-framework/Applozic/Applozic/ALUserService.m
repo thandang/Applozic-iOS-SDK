@@ -57,7 +57,7 @@
         [repString appendString:strr];
     }
     
-    NSLog(@"USER_ID_STRING :: %@",repString);
+    ALSLogBasic(ALLoggerSeverityInfo, @"USER_ID_STRING :: %@",repString);
 
     ALUserClientService * client = [ALUserClientService new];
     [client subProcessUserDetailServerCall:repString withCompletion:^(NSMutableArray * userDetailArray, NSError * error) {
@@ -129,12 +129,12 @@
             
             if(theError)
             {
-                NSLog(@"GETTING ERROR in SEVER CALL FOR DISPLAY NAME");
+                ALSLogBasic(ALLoggerSeverityError, @"GETTING ERROR in SEVER CALL FOR DISPLAY NAME");
             }
             else
             {
                 ALAPIResponse *apiResponse = [[ALAPIResponse alloc] initWithJSONString:theJson];
-                NSLog(@"RESPONSE_STATUS :: %@", apiResponse.status);
+                ALSLogBasic(ALLoggerSeverityInfo, @"RESPONSE_STATUS :: %@", apiResponse.status);
             }
             
         }];
@@ -151,7 +151,7 @@
 
     ALContactDBService * userDBService =[[ALContactDBService alloc] init];
     NSUInteger count = [userDBService markConversationAsDeliveredAndRead:contactId];
-    NSLog(@"Found %ld messages for marking as read.", (unsigned long)count);
+    ALSLogBasic(ALLoggerSeverityInfo, @"Found %ld messages for marking as read.", (unsigned long)count);
     
     if(count == 0){
         return;
@@ -193,7 +193,7 @@
     //Server Call
     ALUserClientService * clientService = [[ALUserClientService alloc] init];
     [clientService markMessageAsReadforPairedMessageKey:pairedkeyValue withCompletion:^(NSString * response, NSError * error) {
-        NSLog(@"Response Marking Message :%@",response);
+        ALSLogBasic(ALLoggerSeverityInfo, @"Response Marking Message :%@",response);
         completion(response,error);
     }];
     
@@ -418,7 +418,7 @@
 
         if(![contactService isContactExist:userId])
         {
-            NSLog(@"###contact is not found");
+            ALSLogBasic(ALLoggerSeverityError, @"###contact is not found");
 
             [ALUserService userDetailServerCall:userId withCompletion:^(ALUserDetail *alUserDetail) {
                 
@@ -429,7 +429,7 @@
         }
         else
         {
-            NSLog(@" contact is found");
+            ALSLogBasic(ALLoggerSeverityInfo, @" contact is found");
 
             ALContact * alContact = [contactDBService loadContactByKey:@"userId" value:userId];
             completion(alContact);
@@ -444,7 +444,7 @@
     
     ALUserClientService *clientService = [ALUserClientService new];
     [clientService updateApplicationInfoDeatils:userApplicationInfo withCompletion:^(NSString *json, NSError *error) {
-        NSLog(@"Response For user application update reponse :%@",json);
+        ALSLogBasic(ALLoggerSeverityInfo, @"Response For user application update reponse :%@",json);
     }];
     
 }

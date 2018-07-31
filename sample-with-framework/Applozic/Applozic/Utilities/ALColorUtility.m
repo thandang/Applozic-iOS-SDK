@@ -93,7 +93,7 @@
     }
     @catch(NSException *ex)
     {
-        NSLog(@"ALPHABET = ' %@ ' && EXPCEPTION :: %@", alphabet, ex);
+        ALSLogBasic(ALLoggerSeverityInfo, @"ALPHABET = ' %@ ' && EXPCEPTION :: %@", alphabet, ex);
         colour = [UIColor lightGrayColor];
     }
     

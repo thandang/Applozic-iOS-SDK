@@ -108,14 +108,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [ALLogger setMinimumSeverity:ALLoggerSeverityWarn];
-    ALSLogPlain(ALLoggerSeverityDebug,    @" - Logged with severity => ALLoggerSeverityDebug");
-    ALSLogPlain(ALLoggerSeverityInfo,    @" - Logged with severity => ALLoggerSeverityInfo");
-    ALSLogPlain(ALLoggerSeverityWarn,    @" - Logged with severity => ALLoggerSeverityWarn");
-    ALSLogBasic(ALLoggerSeverityError,    @" - Logged with severity => ALLoggerSeverityError");
-    ALSLogPlain(ALLoggerSeverityFatal,    @" - Logged with severity => ALLoggerSeverityFatal");
-    ALSLogPlain(ALLoggerSeverityFatal, @" - 2 logs do not show because they do not meet the minimum severity (ALLoggerSeverityWarn)");
-
     self.mqttRetryCount = 0;
     [self setUpTableView];
     self.mTableView.allowsMultipleSelectionDuringEditing = NO;

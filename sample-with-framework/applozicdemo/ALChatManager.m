@@ -37,10 +37,6 @@
     
     return self;
 }
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:UIApplicationWillTerminateNotification];
-}
 
 //==============================================================================================================================================
 // Call This at time of your app's user authentication OR User registration.

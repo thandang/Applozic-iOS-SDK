@@ -46,13 +46,13 @@
 - (void)stream:(NSStream*)sender handleEvent:(NSStreamEvent)eventCode {
     
     if (eventCode & NSStreamEventOpenCompleted) {
-        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventOpenCompleted");
+        ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventOpenCompleted");
         self.state = MQTTCFSocketDecoderStateReady;
         [self.delegate decoderDidOpen:self];
     }
     
     if (eventCode &  NSStreamEventHasBytesAvailable) {
-        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventHasBytesAvailable");
+        ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventHasBytesAvailable");
         if (self.state == MQTTCFSocketDecoderStateInitializing) {
             self.state = MQTTCFSocketDecoderStateReady;
         }
@@ -67,25 +67,25 @@
                 [self.delegate decoder:self didFailWithError:nil];
             } else {
                 NSData *data = [NSData dataWithBytes:buffer length:n];
-                ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] received (%lu)=%@...", (unsigned long)data.length,
+                ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] received (%lu)=%@...", (unsigned long)data.length,
                              [data subdataWithRange:NSMakeRange(0, MIN(256, data.length))]);
                 [self.delegate decoder:self didReceiveMessage:data];
             }
         }
     }
     if (eventCode &  NSStreamEventHasSpaceAvailable) {
-        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventHasSpaceAvailable");
+        ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventHasSpaceAvailable");
     }
     
     if (eventCode &  NSStreamEventEndEncountered) {
-        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventEndEncountered");
+        ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventEndEncountered");
         self.state = MQTTCFSocketDecoderStateInitializing;
         self.error = nil;
         [self.delegate decoderdidClose:self];
     }
     
     if (eventCode &  NSStreamEventErrorOccurred) {
-        ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventErrorOccurred");
+        ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketDecoder] NSStreamEventErrorOccurred");
         self.state = MQTTCFSocketDecoderStateError;
         self.error = self.stream.streamError;
         [self.delegate decoder:self didFailWithError:self.error];

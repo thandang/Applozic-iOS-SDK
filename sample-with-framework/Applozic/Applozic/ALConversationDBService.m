@@ -23,7 +23,7 @@
     NSError *error = nil;
     if(![theDBHandler.managedObjectContext save:&error])
     {
-        ALSLogBasic(ALLoggerSeverityError, @"ERROR: InsertConversationProxy METHOD %@",error);
+        ALSLog(ALLoggerSeverityError, @"ERROR: InsertConversationProxy METHOD %@",error);
     }
     
 }
@@ -45,10 +45,10 @@
     [theDBHandler.managedObjectContext save:&error];
     if(error)
     {
-        ALSLogBasic(ALLoggerSeverityError, @"ERROR: TopicDetails Insert METHOD %@",error);
+        ALSLog(ALLoggerSeverityError, @"ERROR: TopicDetails Insert METHOD %@",error);
     }
     else{
-        ALSLogBasic(ALLoggerSeverityInfo, @"SUCCESS: TopicDetails Insertion in DB ");
+        ALSLog(ALLoggerSeverityInfo, @"SUCCESS: TopicDetails Insertion in DB ");
     }
 
 }
@@ -104,7 +104,7 @@
         predicate = [NSPredicate predicateWithFormat:@"userId = %@",userId];
     }
     else{
-        ALSLogBasic(ALLoggerSeverityError, @"Error");
+        ALSLog(ALLoggerSeverityError, @"Error");
     }
     
     [fetchRequest setEntity:entity];
@@ -134,7 +134,7 @@
         predicate = [NSPredicate predicateWithFormat:@"userId == %@ && topicId == %@",userId,topicId];
     }
     else{
-        ALSLogBasic(ALLoggerSeverityError, @"Error");
+        ALSLog(ALLoggerSeverityError, @"Error");
     }
     
     [fetchRequest setEntity:entity];
@@ -162,7 +162,7 @@
         predicate = [NSPredicate predicateWithFormat:@"groupId = %@",channelKey];
     }
     else{
-        ALSLogBasic(ALLoggerSeverityError, @"Error");
+        ALSLog(ALLoggerSeverityError, @"Error");
     }
     
     [fetchRequest setEntity:entity];

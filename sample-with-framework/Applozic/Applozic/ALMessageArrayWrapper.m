@@ -302,7 +302,7 @@
             ALMessage * oldMessage = [self.messageArray objectAtIndex:i];
             if ([oldMessage.key isEqualToString:message.key])
             {
-                ALSLogBasic(ALLoggerSeverityInfo, @"removing duplicate object found....");
+                ALSLog(ALLoggerSeverityInfo, @"removing duplicate object found....");
                 [newMessageArray removeObject:message];
             }
             else if (message.createdAtTime  > oldMessage.createdAtTime)

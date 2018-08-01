@@ -26,14 +26,14 @@
                                if(connectionError.code == kCFURLErrorUserCancelledAuthentication)
                                {
                                    NSString * failingURL = connectionError.userInfo[@"NSErrorFailingURLStringKey"] != nil ? connectionError.userInfo[@"NSErrorFailingURLStringKey"]:@"Empty";
-                                   ALSLogBasic(ALLoggerSeverityError, @"Authentication error: HTTP 401 : ERROR CODE : %ld, FAILING URL: %@",  (long)connectionError.code,  failingURL);
+                                   ALSLog(ALLoggerSeverityError, @"Authentication error: HTTP 401 : ERROR CODE : %ld, FAILING URL: %@",  (long)connectionError.code,  failingURL);
                                    reponseCompletion(nil,[self errorWithDescription:@"Authentication error: 401"]);
                                    return;
                                }
                                else if(connectionError.code == kCFURLErrorNotConnectedToInternet)
                                {
                                    NSString * failingURL = connectionError.userInfo[@"NSErrorFailingURLStringKey"] != nil ? connectionError.userInfo[@"NSErrorFailingURLStringKey"]:@"Empty";
-                                   ALSLogBasic(ALLoggerSeverityError, @"NO INTERNET CONNECTIVITY, ERROR CODE : %ld, FAILING URL: %@",  (long)connectionError.code, failingURL);
+                                   ALSLog(ALLoggerSeverityError, @"NO INTERNET CONNECTIVITY, ERROR CODE : %ld, FAILING URL: %@",  (long)connectionError.code, failingURL);
                                    reponseCompletion(nil,[self errorWithDescription:@"No Internet connectivity"]);
                                    return;
                                }
@@ -41,7 +41,7 @@
                                // Handle any other connection error
                                else if (connectionError)
                                {
-                                   ALSLogBasic(ALLoggerSeverityError, @"ERROR_RESPONSE : %@ && ERROR:CODE : %ld ", connectionError.description, (long)connectionError.code);
+                                   ALSLog(ALLoggerSeverityError, @"ERROR_RESPONSE : %@ && ERROR:CODE : %ld ", connectionError.description, (long)connectionError.code);
                                    reponseCompletion(nil, [self errorWithDescription:connectionError.localizedDescription]);
                                    return;
                                }
@@ -49,7 +49,7 @@
                                if (theHttpResponse.statusCode != 200 && theHttpResponse.statusCode != 201)
                                {
                                    NSMutableString * errorString = [[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   ALSLogBasic(ALLoggerSeverityError, @"api error : %@ - %@",tag,errorString);
+                                   ALSLog(ALLoggerSeverityError, @"api error : %@ - %@",tag,errorString);
                                    reponseCompletion(nil,[self errorWithDescription:message_SomethingWentWrong]);
                                    return;
                                }
@@ -57,7 +57,7 @@
                                if (data == nil)
                                {
                                    reponseCompletion(nil,[self errorWithDescription:message_SomethingWentWrong]);
-                                   ALSLogBasic(ALLoggerSeverityError, @"api error - %@",tag);
+                                   ALSLog(ALLoggerSeverityError, @"api error - %@",tag);
                                    return;
                                }
                                
@@ -73,7 +73,7 @@
                                    if (theData == nil)
                                    {
                                        reponseCompletion(nil,[self errorWithDescription:message_SomethingWentWrong]);
-                                       ALSLogBasic(ALLoggerSeverityError, @"api error - %@",tag);
+                                       ALSLog(ALLoggerSeverityError, @"api error - %@",tag);
                                        return;
                                    }
                                    
@@ -85,7 +85,7 @@
                                        
                                    }else{
                                        reponseCompletion(nil,[self errorWithDescription:message_SomethingWentWrong]);
-                                       ALSLogBasic(ALLoggerSeverityError, @"api error - %@",tag);
+                                       ALSLog(ALLoggerSeverityError, @"api error - %@",tag);
                                        return;
                                    }
                                }

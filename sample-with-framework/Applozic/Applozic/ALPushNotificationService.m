@@ -36,16 +36,16 @@
 -(BOOL) isApplozicNotification:(NSDictionary *)dictionary
 {
     NSString *type = (NSString *)[dictionary valueForKey:@"AL_KEY"];
-    ALSLogBasic(ALLoggerSeverityInfo, @"APNs GOT NEW MESSAGE & NOTIFICATION TYPE :: %@", type);
+    ALSLog(ALLoggerSeverityInfo, @"APNs GOT NEW MESSAGE & NOTIFICATION TYPE :: %@", type);
     BOOL prefixCheck = ([type hasPrefix:APPLOZIC_PREFIX]) || ([type hasPrefix:@"MT_"]);
     return (type != nil && ([ALPushNotificationService.ApplozicNotificationTypes containsObject:type] || prefixCheck));
 }
 
 -(BOOL) processPushNotification:(NSDictionary *)dictionary updateUI:(NSNumber *)updateUI
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"APNS_DICTIONARY :: %@",dictionary.description);
-    ALSLogBasic(ALLoggerSeverityInfo, @"UPDATE UI VALUE :: %@",updateUI);
-    ALSLogBasic(ALLoggerSeverityInfo, @"UPDATE UI :: %@", ([updateUI isEqualToNumber:[NSNumber numberWithInt:1]]) ? @"ACTIVE" : @"BACKGROUND/INACTIVE");
+    ALSLog(ALLoggerSeverityInfo, @"APNS_DICTIONARY :: %@",dictionary.description);
+    ALSLog(ALLoggerSeverityInfo, @"UPDATE UI VALUE :: %@",updateUI);
+    ALSLog(ALLoggerSeverityInfo, @"UPDATE UI :: %@", ([updateUI isEqualToNumber:[NSNumber numberWithInt:1]]) ? @"ACTIVE" : @"BACKGROUND/INACTIVE");
     
     if ([self isApplozicNotification:dictionary])
     {
@@ -74,15 +74,15 @@
         NSString *notificationId = (NSString *)[theMessageDict valueForKey:@"id"];
         if(notificationId && [ALUserDefaultsHandler isNotificationProcessd:notificationId])
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"Returning from ALPUSH because notificationId is already processed... %@",notificationId);
+            ALSLog(ALLoggerSeverityInfo, @"Returning from ALPUSH because notificationId is already processed... %@",notificationId);
             BOOL isInactive = ([[UIApplication sharedApplication] applicationState] == UIApplicationStateInactive);
             if(isInactive && ([type isEqualToString:MT_SYNC] || [type isEqualToString:MT_MESSAGE_SENT]))
             {
-                ALSLogBasic(ALLoggerSeverityInfo, @"ALAPNs : APP_IS_INACTIVE");
+                ALSLog(ALLoggerSeverityInfo, @"ALAPNs : APP_IS_INACTIVE");
                 if([type isEqualToString:MT_MESSAGE_SENT] ){
                     if(([[notificationMsg componentsSeparatedByString:@":"][1] isEqualToString:[ALUserDefaultsHandler getDeviceKeyString]]))
                     {
-                        ALSLogBasic(ALLoggerSeverityInfo, @"APNS: Sent by self-device ignore");
+                        ALSLog(ALLoggerSeverityInfo, @"APNS: Sent by self-device ignore");
                         return YES;
                     }
                 }
@@ -92,7 +92,7 @@
             }
             else
             {
-                ALSLogBasic(ALLoggerSeverityInfo, @"ALAPNs : APP_IS_ACTIVE");
+                ALSLog(ALLoggerSeverityInfo, @"ALAPNs : APP_IS_ACTIVE");
             }
             
             return true;
@@ -105,7 +105,7 @@
             [ALMessageService getLatestMessageForUser:[ALUserDefaultsHandler getDeviceKeyString]
                                        withCompletion:^(NSMutableArray *message, NSError *error) { }];
             
-            ALSLogBasic(ALLoggerSeverityInfo, @"ALPushNotificationService's SYNC CALL");
+            ALSLog(ALLoggerSeverityInfo, @"ALPushNotificationService's SYNC CALL");
             [dict setObject:(alertValue ? alertValue : @"") forKey:@"alertValue"];
             
             [self assitingNotificationMessage:notificationMsg andDictionary:dict];
@@ -113,7 +113,7 @@
         }
         else if ([type isEqualToString:@"MESSAGE_SENT"]||[type isEqualToString:@"APPLOZIC_02"])
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"APNS: APPLOZIC_02 ARRIVED");
+            ALSLog(ALLoggerSeverityInfo, @"APNS: APPLOZIC_02 ARRIVED");
             
             NSString *alValueJson = (NSString *)[dictionary valueForKey:@"AL_VALUE"];
             NSData* data = [alValueJson dataUsingEncoding:NSUTF8StringEncoding];
@@ -121,17 +121,17 @@
             NSError *error = nil;
             NSDictionary *theMessageDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             NSString*  notificationMsg = [theMessageDict valueForKey:@"message"];
-            ALSLogBasic(ALLoggerSeverityInfo, @"\nNotification Message:%@\n\nDeviceString:%@\n",notificationMsg,
+            ALSLog(ALLoggerSeverityInfo, @"\nNotification Message:%@\n\nDeviceString:%@\n",notificationMsg,
                   [ALUserDefaultsHandler getDeviceKeyString]);
             
             if(([[notificationMsg componentsSeparatedByString:@":"][1] isEqualToString:[ALUserDefaultsHandler getDeviceKeyString]]))
             {
-                ALSLogBasic(ALLoggerSeverityInfo, @"APNS: Sent by self-device");
+                ALSLog(ALLoggerSeverityInfo, @"APNS: Sent by self-device");
                 return YES;
             }
             
             [ALMessageService getLatestMessageForUser:[ALUserDefaultsHandler getDeviceKeyString] withCompletion:^(NSMutableArray *message, NSError *error) {
-                ALSLogBasic(ALLoggerSeverityInfo, @"APPLOZIC_02 Sync Call Completed");
+                ALSLog(ALLoggerSeverityInfo, @"APPLOZIC_02 Sync Call Completed");
             }];
         }
         else if ([type isEqualToString:@"MT_MESSAGE_DELIVERED"]||[type isEqualToString:MT_DELIVERED]){
@@ -228,7 +228,7 @@
         }
         else if ([type isEqualToString:@"APPLOZIC_20"])
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"Process Push Notification APPLOZIC_20");
+            ALSLog(ALLoggerSeverityInfo, @"Process Push Notification APPLOZIC_20");
         }
         else if ([type isEqualToString:@"APPLOZIC_30"])
         {
@@ -240,7 +240,7 @@
         }
         else
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"APNs NOTIFICATION \"%@\" IS NOT HANDLED",type);
+            ALSLog(ALLoggerSeverityInfo, @"APNs NOTIFICATION \"%@\" IS NOT HANDLED",type);
         }
 
         return TRUE;
@@ -259,7 +259,7 @@
     }
     else
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"ASSISTING : OUR_VIEW_IS_IN_TOP");
+        ALSLog(ALLoggerSeverityInfo, @"ASSISTING : OUR_VIEW_IS_IN_TOP");
         // Message View Controller
         [[NSNotificationCenter defaultCenter] postNotificationName:@"pushNotification"
                                                              object:notificationMsg
@@ -279,7 +279,7 @@
     
     if( metadataDictionary && [metadataDictionary valueForKey:APPLOZIC_CATEGORY_KEY] && [[metadataDictionary valueForKey:APPLOZIC_CATEGORY_KEY] isEqualToString:CATEGORY_PUSHNNOTIFICATION] )
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @" Puhs notification with category, just open app %@",[metadataDictionary valueForKey:APPLOZIC_CATEGORY_KEY]);
+        ALSLog(ALLoggerSeverityInfo, @" Puhs notification with category, just open app %@",[metadataDictionary valueForKey:APPLOZIC_CATEGORY_KEY]);
         if([updateUI intValue] == APP_STATE_ACTIVE)
         {
             [ALNotificationView showPromotionalNotifications:alertValue];
@@ -312,7 +312,7 @@
         # App is transitioning from background to foreground (user taps notification), do what you need when user taps here!
          
         # SYNC AND PUSH DETAIL VIEW CONTROLLER
-        ALSLogBasic(ALLoggerSeverityInfo, @"APP_STATE_INACTIVE APP_DELEGATE");
+        ALSLog(ALLoggerSeverityInfo, @"APP_STATE_INACTIVE APP_DELEGATE");
          */
         [self processPushNotification:userInfo updateUI:[NSNumber numberWithInt:APP_STATE_INACTIVE]];
     }
@@ -322,7 +322,7 @@
          # App is currently active, can update badges count here
        
          # SYNC AND PUSH DETAIL VIEW CONTROLLER
-         ALSLogBasic(ALLoggerSeverityInfo, @"APP_STATE_ACTIVE APP_DELEGATE");
+         ALSLog(ALLoggerSeverityInfo, @"APP_STATE_ACTIVE APP_DELEGATE");
          */
         [self processPushNotification:userInfo updateUI:[NSNumber numberWithInt:APP_STATE_ACTIVE]];
     }
@@ -331,7 +331,7 @@
         /* # App is in background, if content-available key of your notification is set to 1, poll to your backend to retrieve data and update your interface here
         
         # SYNC ONLY
-        ALSLogBasic(ALLoggerSeverityInfo, @"APP_STATE_BACKGROUND APP_DELEGATE");
+        ALSLog(ALLoggerSeverityInfo, @"APP_STATE_BACKGROUND APP_DELEGATE");
         */
          [self processPushNotification:userInfo updateUI:[NSNumber numberWithInt:APP_STATE_BACKGROUND]];
     }

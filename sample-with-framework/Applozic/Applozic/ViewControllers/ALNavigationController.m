@@ -21,12 +21,12 @@
 }
 
 -(void)customNavigationItemClicked:(id)sender withTag:(NSString*)tag{
-    ALSLogBasic(ALLoggerSeverityInfo, @"baseController ALNavigationController...");
+    ALSLog(ALLoggerSeverityInfo, @"baseController ALNavigationController...");
 }
 
 -(NSMutableArray*)getCustomButtons
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @" Base getCustomButtonView");
+    ALSLog(ALLoggerSeverityInfo, @" Base getCustomButtonView");
     return nil;
 }
 

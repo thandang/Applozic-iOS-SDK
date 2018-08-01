@@ -375,7 +375,7 @@
     [self.delegate deleteMessageFromView:self.mMessage];
     [ALMessageService deleteMessage:self.mMessage.key andContactId:self.mMessage.contactIds withCompletion:^(NSString *string, NSError *error) {
         
-        ALSLogBasic(ALLoggerSeverityError, @"DELETE MESSAGE ERROR :: %@", error.description);
+        ALSLog(ALLoggerSeverityError, @"DELETE MESSAGE ERROR :: %@", error.description);
     }];
 }
 
@@ -387,7 +387,7 @@
 
 -(void) messageForward:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Message forward option is pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Message forward option is pressed");
     [self.delegate processForwardMessage:self.mMessage];
     
 }
@@ -434,7 +434,7 @@
 
 -(void) messageReply:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Message forward option is pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Message forward option is pressed");
     [self.delegate processMessageReply:self.mMessage];
     
 }

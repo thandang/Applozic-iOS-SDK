@@ -196,7 +196,7 @@
 -(void)handleAPNS:(NSNotification *)notification
 {
     NSString * contactId = notification.object;
-    ALSLogBasic(ALLoggerSeverityInfo, @"USER_PROFILE_VC_NOTIFICATION_OBJECT : %@",contactId);
+    ALSLog(ALLoggerSeverityInfo, @"USER_PROFILE_VC_NOTIFICATION_OBJECT : %@",contactId);
     NSDictionary *dict = notification.userInfo;
     NSNumber * updateUI = [dict valueForKey:@"updateUI"];
     NSString * alertValue = [dict valueForKey:@"alertValue"];
@@ -212,7 +212,7 @@
     
     if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_ACTIVE]] && pushAssist.isUserProfileVCOnTop)
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"######## USER PROFILE VC : APP_STATE_ACTIVE #########");
+        ALSLog(ALLoggerSeverityInfo, @"######## USER PROFILE VC : APP_STATE_ACTIVE #########");
         
         ALMessage *alMessage = [[ALMessage alloc] init];
         alMessage.message = alertValue;
@@ -242,7 +242,7 @@
     }
     else if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"######## USER PROFILE VC : APP_STATE_INACTIVE #########");
+        ALSLog(ALLoggerSeverityInfo, @"######## USER PROFILE VC : APP_STATE_INACTIVE #########");
         
         [self.tabBarController setSelectedIndex:0];
         UINavigationController *navVC = (UINavigationController *)self.tabBarController.selectedViewController;
@@ -348,8 +348,8 @@
     
     [ALRegisterUserClientService updateNotificationMode:modeValue withCompletion:^(ALRegistrationResponse *response, NSError *error) {
         
-        ALSLogBasic(ALLoggerSeverityInfo, @"RESPONSE :: %@",response.message);
-        ALSLogBasic(ALLoggerSeverityError, @"RESPONSE_ERROR :: %@",error.description);
+        ALSLog(ALLoggerSeverityInfo, @"RESPONSE :: %@",response.message);
+        ALSLog(ALLoggerSeverityError, @"RESPONSE_ERROR :: %@",error.description);
         if(!error)
         {
             
@@ -448,32 +448,32 @@
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    ALSLogBasic(ALLoggerSeverityError, @"PROFILE_IMAGE_UPLOAD_ERROR :: %@",error.description);
+    ALSLog(ALLoggerSeverityError, @"PROFILE_IMAGE_UPLOAD_ERROR :: %@",error.description);
     [self.activityIndicator stopAnimating];
 }
 
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten
 totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"TOTAL_BYTES_WRITTEN :: %lu",totalBytesWritten);
+    ALSLog(ALLoggerSeverityInfo, @"TOTAL_BYTES_WRITTEN :: %lu",totalBytesWritten);
 }
 
 -(void)connectionDidFinishLoading:(ALConnection *)connection
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"CONNNECTION_FINISHED");
+    ALSLog(ALLoggerSeverityInfo, @"CONNNECTION_FINISHED");
     [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:connection];
     if([connection.connectionType isEqualToString:CONNECTION_TYPE_USER_IMG_UPLOAD])
     {
         imageLinkFromServer = [[NSString alloc] initWithData:connection.mData encoding:NSUTF8StringEncoding];
-        ALSLogBasic(ALLoggerSeverityInfo, @"IMAGE_LINK :: %@",imageLinkFromServer);
+        ALSLog(ALLoggerSeverityInfo, @"IMAGE_LINK :: %@",imageLinkFromServer);
         ALUserService *userService = [ALUserService new];
         [userService updateUserDisplayName:@"" andUserImage:imageLinkFromServer userStatus:@"" withCompletion:^(id theJson, NSError *error) {
             
-            ALSLogBasic(ALLoggerSeverityInfo, @"SERVER_RESPONSE_IMAGE_UPDATE :: %@",(NSString *)theJson);
-            ALSLogBasic(ALLoggerSeverityError, @"ERROR :: %@",error.description);
+            ALSLog(ALLoggerSeverityInfo, @"SERVER_RESPONSE_IMAGE_UPDATE :: %@",(NSString *)theJson);
+            ALSLog(ALLoggerSeverityError, @"ERROR :: %@",error.description);
             if(!error)
             {
-                ALSLogBasic(ALLoggerSeverityInfo, @"IMAGE_UPDATED_SUCCESSFULLY");
+                ALSLog(ALLoggerSeverityInfo, @"IMAGE_UPDATED_SUCCESSFULLY");
                 
                 
                 [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"imageUpdateText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Image Updated Successfully!!!" , @"")  andTitle:NSLocalizedStringWithDefaultValue(@"alertText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Alert" , @"") ];
@@ -553,7 +553,7 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
         NSMutableData *body = [NSMutableData data];
         NSString *FileParamConstant = @"file";
         NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
-        ALSLogBasic(ALLoggerSeverityInfo, @"IMAGE_DATA :: %f",imageData.length/1024.0);
+        ALSLog(ALLoggerSeverityInfo, @"IMAGE_DATA :: %f",imageData.length/1024.0);
         
         //Assuming data is not nil we add this to the multipart form
         if (imageData)
@@ -633,14 +633,14 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
                                                                                       userStatus:statusText
                                                                                   withCompletion:^(id theJson, NSError *error) {
                                                                                       
-                                                                                      ALSLogBasic(ALLoggerSeverityInfo, @"SERVER_RESPONSE_STATUS_UPDATE :: %@", (NSString *)theJson);
-                                                                                      ALSLogBasic(ALLoggerSeverityError, @"ERROR :: %@",error.description);
+                                                                                      ALSLog(ALLoggerSeverityInfo, @"SERVER_RESPONSE_STATUS_UPDATE :: %@", (NSString *)theJson);
+                                                                                      ALSLog(ALLoggerSeverityError, @"ERROR :: %@",error.description);
                                                                                       
                                                                                       if(!error)
                                                                                       {
-                                                                                          ALSLogBasic(ALLoggerSeverityInfo, @"USER_STATUS_UPDATED_SUCCESSFULLY");
+                                                                                          ALSLog(ALLoggerSeverityInfo, @"USER_STATUS_UPDATED_SUCCESSFULLY");
                                                                                           myContact.userStatus = statusText;
-                                                                                          ALSLogBasic(ALLoggerSeverityInfo, @"USER_STATUS_UPDATED_SUCCESSFULLY  %@", myContact.userStatus);
+                                                                                          ALSLog(ALLoggerSeverityInfo, @"USER_STATUS_UPDATED_SUCCESSFULLY  %@", myContact.userStatus);
                                                                                           [alContactService updateContact:myContact];
                                                                                           [self.userStatusLabel setText: statusText];
                                                                                           [ALUserDefaultsHandler setLoggedInUserStatus:statusText];

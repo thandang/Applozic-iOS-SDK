@@ -18,7 +18,7 @@ static NSString			*UA__verbosityFormatFull	= nil;
 static NSString			*UA__bundleName				= nil;
 static NSString			*UA__userDefaultsKey		= nil;
 static ALLoggerSeverity	UA__minimumSeverity			= ALLoggerSeverityUnset;
-static NSInteger		UA__maxLogsRetained			= 30;
+static NSInteger		UA__maxLogsRetained			= 200;
 
 
 @implementation ALLogger

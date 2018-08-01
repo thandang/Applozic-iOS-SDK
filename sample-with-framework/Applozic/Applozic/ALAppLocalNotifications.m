@@ -59,7 +59,7 @@
         
         [ALMessageService getLatestMessageForUser:[ALUserDefaultsHandler getDeviceKeyString] withCompletion:^(NSMutableArray *messageArray, NSError *error) {
             if (error) {
-                ALSLogBasic(ALLoggerSeverityError, @"ERROR");
+                ALSLog(ALLoggerSeverityError, @"ERROR");
             }
             else{
             }
@@ -147,29 +147,29 @@
     {
         if([reach isReachable])
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"========== IF googleReach ============");
+            ALSLog(ALLoggerSeverityInfo, @"========== IF googleReach ============");
         }
         else
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"========== ELSE googleReach ============");
+            ALSLog(ALLoggerSeverityInfo, @"========== ELSE googleReach ============");
         }
     }
     else if (reach == self.localWiFiReach)
     {
         if([reach isReachable])
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"========== IF localWiFiReach ============");
+            ALSLog(ALLoggerSeverityInfo, @"========== IF localWiFiReach ============");
         }
         else
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"========== ELSE localWiFiReach ============");
+            ALSLog(ALLoggerSeverityInfo, @"========== ELSE localWiFiReach ============");
         }
     }
     else if (reach == self.internetConnectionReach)
     {
         if([reach isReachable])
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"========== IF internetConnectionReach ============");
+            ALSLog(ALLoggerSeverityInfo, @"========== IF internetConnectionReach ============");
             [self proactivelyConnectMQTT];
             [ALMessageService syncMessages];
             [ALMessageService processPendingMessages];
@@ -180,7 +180,7 @@
         }
         else
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"========== ELSE internetConnectionReach ============");
+            ALSLog(ALLoggerSeverityInfo, @"========== ELSE internetConnectionReach ============");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NETWORK_DISCONNECTED" object:nil];
         }
     }
@@ -228,7 +228,7 @@
     
     if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"App launched from Background....Directly opening view from %@",self.dict);
+        ALSLog(ALLoggerSeverityInfo, @"App launched from Background....Directly opening view from %@",self.dict);
         [self thirdPartyNotificationTap1:self.contactId withGroupId:groupId]; // Directly launching Chat
         return;
     }
@@ -237,7 +237,7 @@
     {
         if( alertValue || alertValue.length >0)
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"posting to notification....%@",notification.userInfo);
+            ALSLog(ALLoggerSeverityInfo, @"posting to notification....%@",notification.userInfo);
             if (groupId && [ALChannelService isChannelMuted:groupId])
             {
                 return;
@@ -255,7 +255,7 @@
         }
         else
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"Nil Alert Value");
+            ALSLog(ALLoggerSeverityInfo, @"Nil Alert Value");
         }
     }
     if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_BACKGROUND]])
@@ -263,7 +263,7 @@
         if(alertValue || alertValue.length >0)
         {
             ALPushAssist* assitant = [[ALPushAssist alloc] init];
-            ALSLogBasic(ALLoggerSeverityInfo, @"APP_STATE_BACKGROUND :: %@",notification.userInfo);
+            ALSLog(ALLoggerSeverityInfo, @"APP_STATE_BACKGROUND :: %@",notification.userInfo);
             if(!assitant.isOurViewOnTop)
             {
            //     [ALUtilityClass thirdDisplayNotificationTS:alertValue andForContactId:self.contactId withGroupId:groupId delegate:self];
@@ -275,7 +275,7 @@
 -(void)thirdPartyNotificationTap1:(NSString *)contactId withGroupId:(NSNumber *)groupID
 {
     ALPushAssist* pushAssistant = [[ALPushAssist alloc] init];
-    ALSLogBasic(ALLoggerSeverityInfo, @"Chat Launch Contact ID: %@",self.contactId);
+    ALSLog(ALLoggerSeverityInfo, @"Chat Launch Contact ID: %@",self.contactId);
     
     if(!pushAssistant.isOurViewOnTop)
     {
@@ -297,7 +297,7 @@
 
 -(void)dealloc
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"DEALLOC METHOD CALLED");
+    ALSLog(ALLoggerSeverityInfo, @"DEALLOC METHOD CALLED");
 }
 
 

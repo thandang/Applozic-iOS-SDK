@@ -31,7 +31,7 @@
 }
 
 - (void)open {
-    ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketTransport] open");
+    ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketTransport] open");
     self.state = MQTTTransportOpening;
 
     NSError* connectError;
@@ -90,7 +90,7 @@
 }
 
 - (void)close {
-    ALSLogBasic(ALLoggerSeverityInfo, @"[MQTTCFSocketTransport] close");
+    ALSLog(ALLoggerSeverityInfo, @"[MQTTCFSocketTransport] close");
     self.state = MQTTTransportClosing;
 
     if (self.encoder) {
@@ -141,18 +141,18 @@
 
 + (NSArray *)clientCertsFromP12:(NSString *)path passphrase:(NSString *)passphrase {
     if (!path) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] no p12 path given");
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] no p12 path given");
         return nil;
     }
     
     NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:path];
     if (!pkcs12data) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] reading p12 failed");
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] reading p12 failed");
         return nil;
     }
     
     if (!passphrase) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] no passphrase given");
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] no passphrase given");
         return nil;
     }
     CFArrayRef keyref = NULL;
@@ -162,27 +162,27 @@
                                                                        forKey:(__bridge id)kSecImportExportPassphrase],
                                             &keyref);
     if (importStatus != noErr) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] Error while importing pkcs12 [%d]", (int)importStatus);
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] Error while importing pkcs12 [%d]", (int)importStatus);
         return nil;
     }
     
     CFDictionaryRef identityDict = CFArrayGetValueAtIndex(keyref, 0);
     if (!identityDict) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] could not CFArrayGetValueAtIndex");
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] could not CFArrayGetValueAtIndex");
         return nil;
     }
     
     SecIdentityRef identityRef = (SecIdentityRef)CFDictionaryGetValue(identityDict,
                                                                       kSecImportItemIdentity);
     if (!identityRef) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] could not CFDictionaryGetValue");
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] could not CFDictionaryGetValue");
         return nil;
     };
     
     SecCertificateRef cert = NULL;
     OSStatus status = SecIdentityCopyCertificate(identityRef, &cert);
     if (status != noErr) {
-        ALSLogBasic(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] SecIdentityCopyCertificate failed [%d]", (int)status);
+        ALSLog(ALLoggerSeverityWarn, @"[MQTTCFSocketTransport] SecIdentityCopyCertificate failed [%d]", (int)status);
         return nil;
     }
     

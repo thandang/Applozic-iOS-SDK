@@ -540,7 +540,7 @@
 
 -(void) messageForward:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Message forward option is pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Message forward option is pressed");
     [self.delegate processForwardMessage:self.mMessage];
 }
 
@@ -548,7 +548,7 @@
 // Default copy method
 - (void)copy:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Copy in ALChatCell, messageId: %@", self.mMessage.message);
+    ALSLog(ALLoggerSeverityInfo, @"Copy in ALChatCell, messageId: %@", self.mMessage.message);
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     
     if(self.mMessage.message != NULL)
@@ -565,16 +565,16 @@
 
 -(void) delete:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Delete in ALChatCell pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Delete in ALChatCell pressed");
     
     //UI
-    ALSLogBasic(ALLoggerSeverityInfo, @"message to deleteUI %@",self.mMessage.message);
+    ALSLog(ALLoggerSeverityInfo, @"message to deleteUI %@",self.mMessage.message);
     [self.delegate deleteMessageFromView:self.mMessage];
     
     //serverCall
     [ALMessageService deleteMessage:self.mMessage.key andContactId:self.mMessage.contactIds withCompletion:^(NSString *string, NSError *error) {
         
-        ALSLogBasic(ALLoggerSeverityError, @"DELETE MESSAGE ERROR :: %@", error.description);
+        ALSLog(ALLoggerSeverityError, @"DELETE MESSAGE ERROR :: %@", error.description);
     }];
 }
 
@@ -602,7 +602,7 @@
 
 -(void) messageReply:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Message forward option is pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Message forward option is pressed");
     [self.delegate processMessageReply:self.mMessage];
     
 }
@@ -711,11 +711,11 @@
     if(self.mBubleImageView.frame.size.width> replyWidthRequired )
     {
         replyWidthRequired = (self.mBubleImageView.frame.size.width);
-        ALSLogBasic(ALLoggerSeverityInfo, @" replyWidthRequired is less from parent one : %d", replyWidthRequired);
+        ALSLog(ALLoggerSeverityInfo, @" replyWidthRequired is less from parent one : %d", replyWidthRequired);
     }
     else
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @" replyWidthRequired is grater from parent one : %d", replyWidthRequired);
+        ALSLog(ALLoggerSeverityInfo, @" replyWidthRequired is grater from parent one : %d", replyWidthRequired);
         
     }
     

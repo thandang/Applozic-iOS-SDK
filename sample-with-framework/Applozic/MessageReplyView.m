@@ -256,10 +256,10 @@
                 [messageClientService downloadImageUrl:replyMessage.fileMeta.thumbnailBlobKey withCompletion:^(NSString *fileURL, NSError *error) {
                     if(error)
                     {
-                        ALSLogBasic(ALLoggerSeverityError, @"ERROR GETTING DOWNLOAD URL : %@", error);
+                        ALSLog(ALLoggerSeverityError, @"ERROR GETTING DOWNLOAD URL : %@", error);
                         return;
                     }
-                    ALSLogBasic(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
+                    ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
                     [self setImage:[NSURL URLWithString:fileURL]];
                 }];
                 

@@ -30,11 +30,11 @@
     
     if(canReach)
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"NETWORK AVAILABLE");
+        ALSLog(ALLoggerSeverityInfo, @"NETWORK AVAILABLE");
     }
     else
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"NETWORK ISN'T AVAILABLE");
+        ALSLog(ALLoggerSeverityInfo, @"NETWORK ISN'T AVAILABLE");
     }
     
     return canReach;

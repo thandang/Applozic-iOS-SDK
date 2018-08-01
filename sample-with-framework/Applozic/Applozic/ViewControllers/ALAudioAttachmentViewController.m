@@ -207,13 +207,13 @@
     {
         case AVAudioSessionInterruptionTypeBegan:
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"AUDIO_INTERRUPTION_START : RECORDING_STOPPED");
+            ALSLog(ALLoggerSeverityInfo, @"AUDIO_INTERRUPTION_START : RECORDING_STOPPED");
             [self stopAction];
             break;
         }
         case AVAudioSessionInterruptionTypeEnded:
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @"AUDIO_INTERRUPTION_END");
+            ALSLog(ALLoggerSeverityInfo, @"AUDIO_INTERRUPTION_END");
             [self alertDialog: @"Recording stopped !!!"];
             break;
         }

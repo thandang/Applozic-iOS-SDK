@@ -256,7 +256,7 @@ UIViewController * modalCon;
         
         if (alMessage.imageFilePath == NULL)
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @" file path not found making download button visible ....ALImageCell");
+            ALSLog(ALLoggerSeverityInfo, @" file path not found making download button visible ....ALImageCell");
             self.mDowloadRetryButton.alpha = 1;
             [self.mDowloadRetryButton setTitle:[alMessage.fileMeta getTheSize] forState:UIControlStateNormal];
             [self.mDowloadRetryButton setImage:[ALUtilityClass getImageFromFramworkBundle:@"downloadI6.png"] forState:UIControlStateNormal];
@@ -268,7 +268,7 @@ UIViewController * modalCon;
         }
         if (alMessage.inProgress == YES)
         {
-            ALSLogBasic(ALLoggerSeverityInfo, @" In progress making download button invisible ....");
+            ALSLog(ALLoggerSeverityInfo, @" In progress making download button invisible ....");
             self.progresLabel.alpha = 1;
             self.mDowloadRetryButton.alpha = 0;
         }
@@ -380,7 +380,7 @@ UIViewController * modalCon;
         if (alMessage.inProgress == YES)
         {
             self.progresLabel.alpha = 1;
-            ALSLogBasic(ALLoggerSeverityInfo, @"calling you progress label....");
+            ALSLog(ALLoggerSeverityInfo, @"calling you progress label....");
         }
         else if( !alMessage.imageFilePath && alMessage.fileMeta.blobKey)
         {
@@ -443,7 +443,7 @@ UIViewController * modalCon;
             ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
             [messageClientService downloadImageThumbnailUrl:alMessage withCompletion:^(NSString *fileURL, NSError *error) {
              
-                ALSLogBasic(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
+                ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
                 if(error == nil){
                     [self.delegate thumbnailDownload:alMessage.key withThumbnailUrl:fileURL];
                 }
@@ -586,7 +586,7 @@ UIViewController * modalCon;
 
 -(BOOL) canPerformAction:(SEL)action withSender:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Action: %@", NSStringFromSelector(action));
+    ALSLog(ALLoggerSeverityInfo, @"Action: %@", NSStringFromSelector(action));
     
     if(self.mMessage.groupId){
         ALChannelService *channelService = [[ALChannelService alloc] init];
@@ -608,19 +608,19 @@ UIViewController * modalCon;
 -(void) delete:(id)sender
 {
     //UI
-    ALSLogBasic(ALLoggerSeverityInfo, @"message to deleteUI %@",self.mMessage.message);
+    ALSLog(ALLoggerSeverityInfo, @"message to deleteUI %@",self.mMessage.message);
     [self.delegate deleteMessageFromView:self.mMessage];
     
     //serverCall
     [ALMessageService deleteMessage:self.mMessage.key andContactId:self.mMessage.contactIds withCompletion:^(NSString *string, NSError *error) {
         
-        ALSLogBasic(ALLoggerSeverityError, @"DELETE MESSAGE ERROR :: %@", error.description);
+        ALSLog(ALLoggerSeverityError, @"DELETE MESSAGE ERROR :: %@", error.description);
     }];
 }
 
 -(void) messageForward:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Message forward option is pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Message forward option is pressed");
     [self.delegate processForwardMessage:self.mMessage];
     
 }
@@ -628,7 +628,7 @@ UIViewController * modalCon;
 
 -(void) messageReply:(id)sender
 {
-    ALSLogBasic(ALLoggerSeverityInfo, @"Message forward option is pressed");
+    ALSLog(ALLoggerSeverityInfo, @"Message forward option is pressed");
     [self.delegate processMessageReply:self.mMessage];
     
 }

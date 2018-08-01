@@ -31,7 +31,7 @@
         theUrl = [NSURL URLWithString:urlString];
         
     }
-    ALSLogBasic(ALLoggerSeverityInfo, @"GET_URL :: %@", theUrl);
+    ALSLog(ALLoggerSeverityInfo, @"GET_URL :: %@", theUrl);
     
     [theRequest setURL:theUrl];
     [theRequest setTimeoutInterval:600];
@@ -66,7 +66,7 @@
         [theRequest setValue:[NSString stringWithFormat:@"%lu",(unsigned long)[thePostData length]] forHTTPHeaderField:@"Content-Length"];
     }
     
-    ALSLogBasic(ALLoggerSeverityInfo, @"POST_URL :: %@", urlString);
+    ALSLog(ALLoggerSeverityInfo, @"POST_URL :: %@", urlString);
     
     [self addGlobalHeader:theRequest];
     return theRequest;
@@ -84,7 +84,7 @@
     {
         theUrl = [NSURL URLWithString:urlString];
     }
-    ALSLogBasic(ALLoggerSeverityInfo, @"GET_URL :: %@", theUrl);
+    ALSLog(ALLoggerSeverityInfo, @"GET_URL :: %@", theUrl);
     [theRequest setURL:theUrl];
     [theRequest setTimeoutInterval:600];
     [theRequest setHTTPMethod:@"GET"];
@@ -114,7 +114,7 @@
     [request setValue:authString forHTTPHeaderField:@"Authorization"];
     //Add header for device key ....
     
-    ALSLogBasic(ALLoggerSeverityInfo, @"Basic string...%@",authString);
+    ALSLog(ALLoggerSeverityInfo, @"Basic string...%@",authString);
 }
 @end
 

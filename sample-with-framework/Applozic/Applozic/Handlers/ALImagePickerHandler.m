@@ -42,18 +42,18 @@
         AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset presetName:AVAssetExportPresetPassthrough];
         tempPath  = [docDir stringByAppendingString:[NSString stringWithFormat:@"/VID-%f.mp4",[[NSDate date] timeIntervalSince1970] * 1000]];
         exportSession.outputURL = [NSURL fileURLWithPath:tempPath];
-        ALSLogBasic(ALLoggerSeverityInfo, @"Final file = %@",tempPath);
+        ALSLog(ALLoggerSeverityInfo, @"Final file = %@",tempPath);
         exportSession.outputFileType = AVFileTypeMPEG4;
         [exportSession exportAsynchronouslyWithCompletionHandler:^{
             switch ([exportSession status]) {
                 case AVAssetExportSessionStatusFailed:
-                    ALSLogBasic(ALLoggerSeverityError, @"Export failed: %@", [[exportSession error] localizedDescription]);
+                    ALSLog(ALLoggerSeverityError, @"Export failed: %@", [[exportSession error] localizedDescription]);
                     break;
                 case AVAssetExportSessionStatusCancelled:
-                    ALSLogBasic(ALLoggerSeverityInfo, @"Export canceled");
+                    ALSLog(ALLoggerSeverityInfo, @"Export canceled");
                     break;
                 case AVAssetExportSessionStatusCompleted:
-                    ALSLogBasic(ALLoggerSeverityInfo, @"completed");
+                    ALSLog(ALLoggerSeverityInfo, @"completed");
                 default:
                     break;
             }

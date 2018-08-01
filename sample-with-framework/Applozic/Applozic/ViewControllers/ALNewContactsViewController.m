@@ -238,7 +238,7 @@
 -(void)handleAPNS:(NSNotification *)notification
 {
     NSString * contactId = notification.object;
-    ALSLogBasic(ALLoggerSeverityInfo, @"CONTACT_VC_NOTIFICATION_OBJECT : %@",contactId);
+    ALSLog(ALLoggerSeverityInfo, @"CONTACT_VC_NOTIFICATION_OBJECT : %@",contactId);
     NSDictionary *dict = notification.userInfo;
     NSNumber * updateUI = [dict valueForKey:@"updateUI"];
     NSString * alertValue = [dict valueForKey:@"alertValue"];
@@ -252,7 +252,7 @@
     ALPushAssist *pushAssist = [ALPushAssist new];
     if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_ACTIVE]] && pushAssist.isContactVCOnTop)
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"######## CONTACT VC : APP_STATE_ACTIVE #########");
+        ALSLog(ALLoggerSeverityInfo, @"######## CONTACT VC : APP_STATE_ACTIVE #########");
         
         ALMessage *alMessage = [[ALMessage alloc] init];
         alMessage.message = alertValue;
@@ -282,7 +282,7 @@
     }
     else if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"######## CONTACT VC : APP_STATE_INACTIVE #########");
+        ALSLog(ALLoggerSeverityInfo, @"######## CONTACT VC : APP_STATE_INACTIVE #########");
         ALNewContactsViewController * contactVC = self;
         ALMessagesViewController *msgVC = (ALMessagesViewController *)[self.navigationController.viewControllers objectAtIndex:0];
         
@@ -486,10 +486,10 @@
                                                           scrollPosition:UITableViewScrollPositionNone];
                             [self tableView:self.contactsTableView didSelectRowAtIndexPath:indexPath];
                             
-                            ALSLogBasic(ALLoggerSeverityInfo, @"SELECTED:%@",contact.userId);
+                            ALSLog(ALLoggerSeverityInfo, @"SELECTED:%@",contact.userId);
                             
                         }else{
-                            ALSLogBasic(ALLoggerSeverityInfo, @"NOT SELECTED :%@",contact.userId);
+                            ALSLog(ALLoggerSeverityInfo, @"NOT SELECTED :%@",contact.userId);
                         }
                     }
                 }
@@ -517,7 +517,7 @@
         
     } @catch (NSException *exception) {
         
-        ALSLogBasic(ALLoggerSeverityInfo, @"RAISED_EXP :: %@",exception.description);
+        ALSLog(ALLoggerSeverityInfo, @"RAISED_EXP :: %@",exception.description);
     }
     
     
@@ -891,7 +891,7 @@
                     [self.forwardDelegate proccessReloadAndForwardMessage:self.alMessage];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }else{
-                    ALSLogBasic(ALLoggerSeverityInfo, @"User is deleted !!");
+                    ALSLog(ALLoggerSeverityInfo, @"User is deleted !!");
                     
                 }
                 
@@ -906,7 +906,7 @@
                     [self.forwardDelegate proccessReloadAndForwardMessage:self.alMessage];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }else{
-                    ALSLogBasic(ALLoggerSeverityInfo, @"Group is deleted or your not in this group !!");
+                    ALSLog(ALLoggerSeverityInfo, @"Group is deleted or your not in this group !!");
                 }
                 
             }
@@ -955,11 +955,11 @@
     NSMutableArray *viewControllersFromStack = [self.navigationController.viewControllers mutableCopy];
     for (UIViewController *currentVC in viewControllersFromStack)
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"IN_NAVIGATION-BAR ::VCs : %@",currentVC.description);
+        ALSLog(ALLoggerSeverityInfo, @"IN_NAVIGATION-BAR ::VCs : %@",currentVC.description);
         if ([currentVC isKindOfClass:[ALMessagesViewController class]])
         {
             [(ALMessagesViewController*)currentVC setChannelKey:channelKey];
-            ALSLogBasic(ALLoggerSeverityInfo, @"IN_NAVIGATION-BAR :: found in backStack .....launching from current vc");
+            ALSLog(ALLoggerSeverityInfo, @"IN_NAVIGATION-BAR :: found in backStack .....launching from current vc");
             [(ALMessagesViewController*) currentVC createDetailChatViewController:contactId];
             isFoundInBackStack = true;
         }
@@ -967,7 +967,7 @@
     
     if(!isFoundInBackStack)
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"NOT_FOUND_IN_BACKSTACK_OF_NAVIAGTION");
+        ALSLog(ALLoggerSeverityInfo, @"NOT_FOUND_IN_BACKSTACK_OF_NAVIAGTION");
         self.tabBarController.selectedIndex=0;
         UINavigationController * uicontroller =  self.tabBarController.selectedViewController;
         NSMutableArray *viewControllersFromStack = [uicontroller.childViewControllers mutableCopy];
@@ -977,7 +977,7 @@
             if ([currentVC isKindOfClass:[ALMessagesViewController class]])
             {
                 [(ALMessagesViewController*)currentVC setChannelKey:channelKey];
-                ALSLogBasic(ALLoggerSeverityInfo, @"IN_TAB-BAR :: found in backStack .....launching from current vc");
+                ALSLog(ALLoggerSeverityInfo, @"IN_TAB-BAR :: found in backStack .....launching from current vc");
                 [(ALMessagesViewController*) currentVC createDetailChatViewController:contactId];
                 isFoundInBackStack = true;
             }
@@ -1074,7 +1074,7 @@
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
-                                       ALSLogBasic(ALLoggerSeverityInfo, @"OK action");
+                                       ALSLog(ALLoggerSeverityInfo, @"OK action");
                                    }];
         [alertController addAction:okAction];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -1273,7 +1273,7 @@
         NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastSeenAt" ascending:NO];
         NSArray * descriptors = [NSArray arrayWithObject:sortDescriptor];
         self.filteredContactList = [NSMutableArray arrayWithArray:[array sortedArrayUsingDescriptors:descriptors]];
-        ALSLogBasic(ALLoggerSeverityInfo, @"ARRAY_COUNT : %lu",(unsigned long)self.filteredContactList.count);
+        ALSLog(ALLoggerSeverityInfo, @"ARRAY_COUNT : %lu",(unsigned long)self.filteredContactList.count);
         [[self activityIndicator] stopAnimating];
         [self.contactsTableView reloadData];
         [self emptyConversationAlertLabel];
@@ -1351,7 +1351,7 @@
         [channelService createChannel:channelName andParentChannelKey:parentChannel.key orClientChannelKey:clientChannelKey andMembersList:userList
                          andImageLink:nil channelType:GROUP_OF_TWO andMetaData:nil withCompletion:^(ALChannel *alChannel, NSError *error) {
                              
-                             ALSLogBasic(ALLoggerSeverityInfo, @"CHANNEL RESPONSE GET :: %@",alChannel.name);
+                             ALSLog(ALLoggerSeverityInfo, @"CHANNEL RESPONSE GET :: %@",alChannel.name);
                              if(alChannel)
                              {
                                  [self chatLaunchForGroupOfTwo:alChannel andUser:alContact];
@@ -1360,7 +1360,7 @@
     }
     else
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"GROUP FOUND : %@",previousChannel.clientChannelKey);
+        ALSLog(ALLoggerSeverityInfo, @"GROUP FOUND : %@",previousChannel.clientChannelKey);
         [self chatLaunchForGroupOfTwo:previousChannel andUser:alContact];
     }
 }
@@ -1370,7 +1370,7 @@
     NSMutableArray *viewControllersFromStack = [self.navigationController.viewControllers mutableCopy];
     for (UIViewController *currentVC in viewControllersFromStack)
     {
-        ALSLogBasic(ALLoggerSeverityInfo, @"CLASS NAME : %@",currentVC.description);
+        ALSLog(ALLoggerSeverityInfo, @"CLASS NAME : %@",currentVC.description);
         if ([currentVC isKindOfClass:[ALMessagesViewController class]])
         {
             // LAUNCH VIA BACK STACK FROM MSG VC
@@ -1395,7 +1395,7 @@
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if(![ALUserDefaultsHandler isContactScrollingIsInProgress] && self.groupOrContacts.intValue == SHOW_CONTACTS && ![ALApplozicSettings isContactsGroupEnabled] ){
-        ALSLogBasic(ALLoggerSeverityInfo, @"Contact scrolling ");
+        ALSLog(ALLoggerSeverityInfo, @"Contact scrolling ");
         CGPoint offset = scrollView.contentOffset;
         CGRect bounds = scrollView.bounds;
         CGSize size = scrollView.contentSize;

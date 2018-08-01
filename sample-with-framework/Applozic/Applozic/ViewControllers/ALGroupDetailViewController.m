@@ -51,7 +51,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupDetailsSyncCall) name:@"GroupDetailTableReload" object:nil];
     self.lastSeenMembersArray = [[NSMutableArray alloc] init];
     self.alChannel =[[ALChannelService new] getChannelByKey:self.channelKeyID];
-    NSLog(@"## self.alChannel ::", self.alChannel.notificationAfterTime);
+    ALSLog(ALLoggerSeverityInfo, @"## self.alChannel ::", self.alChannel.notificationAfterTime);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -92,7 +92,7 @@
 -(void)handleAPNS:(NSNotification *)notification
 {
     NSString * contactId = notification.object;
-    NSLog(@"GROUP_DETAIL_VC_NOTIFICATION_OBJECT : %@",contactId);
+    ALSLog(ALLoggerSeverityInfo, @"GROUP_DETAIL_VC_NOTIFICATION_OBJECT : %@",contactId);
     NSDictionary *dict = notification.userInfo;
     NSNumber * updateUI = [dict valueForKey:@"updateUI"];
     NSString * alertValue = [dict valueForKey:@"alertValue"];
@@ -136,7 +136,7 @@
     }
     else if([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
-        NSLog(@"######## GROUP DETAIL VC : APP_STATE_INACTIVE #########");
+        ALSLog(ALLoggerSeverityInfo, @"######## GROUP DETAIL VC : APP_STATE_INACTIVE #########");
         
         ALGroupDetailViewController * groupDetailVC = self;
         ALMessagesViewController *msgVC = (ALMessagesViewController *)[self.navigationController.viewControllers objectAtIndex:0];
@@ -228,7 +228,7 @@
         [memberNames addObject:[contact getDisplayName]];
     }
     self.memberCount = memberIds.count;
-    NSLog(@"Member Count :%ld",(long)self.memberCount);
+    ALSLog(ALLoggerSeverityInfo, @"Member Count :%ld",(long)self.memberCount);
 }
 
 -(void)groupDetailsSyncCall
@@ -468,7 +468,7 @@
                 
                 if(error)
                 {
-                    NSLog(@"DELETE FAILED: Unable to delete contact conversation : %@", error.description);
+                    ALSLog(ALLoggerSeverityError, @"DELETE FAILED: Unable to delete contact conversation : %@", error.description);
                     [ALUtilityClass displayToastWithMessage:NSLocalizedStringWithDefaultValue(@"deleteFailed", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete failed!", @"")];
                     return;
                 }
@@ -864,7 +864,7 @@
 {
     
     if([ALApplozicSettings isGroupInfoEditDisabled] || [ALChannelService isConversationClosed: alchannel.key] ){
-        NSLog(@"group edit is disabled");
+        ALSLog(ALLoggerSeverityInfo, @"group edit is disabled");
         return;
     }
     
@@ -950,7 +950,7 @@
     ALChannelService *alChannelService = [[ALChannelService alloc]init];
     [[self activityIndicator] startAnimating];
     [alChannelService muteChannel:alMuteRequest withCompletion:^(ALAPIResponse *response, NSError *error) {
-        NSLog(@"actionSheet response from server:: %@", response.status);
+        ALSLog(ALLoggerSeverityInfo, @"actionSheet response from server:: %@", response.status);
         [[self activityIndicator] stopAnimating];
         self.alChannel.notificationAfterTime= alMuteRequest.notificationAfterTime;
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];

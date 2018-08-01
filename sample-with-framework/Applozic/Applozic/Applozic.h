@@ -85,7 +85,6 @@ FOUNDATION_EXPORT const unsigned char ApplozicVersionString[];
 #import <Applozic/ALConversationClientService.h>
 #import <Applozic/ALConversationCreateResponse.h>
 #import <Applozic/ALConversationDBService.h>
-#import <Applozic/ALLogs.h>
 #import <Applozic/ALMQTTConversationService.h>
 #import <Applozic/ALMultipleAttachmentView.h>
 #import <Applozic/ALPushAssist.h>
@@ -106,6 +105,7 @@ FOUNDATION_EXPORT const unsigned char ApplozicVersionString[];
 #import <Applozic/AlChannelResponse.h>
 #import <Applozic/AlChannelFeedResponse.h>
 #import <Applozic/ALGroupUser.h>
+#import <Applozic/ALLogger.h>
 
 #import <Applozic/ALChannelMsgCell.h>
 #import <Applozic/ALChannelUser.h>

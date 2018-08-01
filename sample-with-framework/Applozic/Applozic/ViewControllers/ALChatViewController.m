@@ -311,7 +311,7 @@
     
     if(self.individualLaunch)
     {
-        NSLog(@"INDIVIDUAL_LAUNCH :: SUBSCRIBING_MQTT");
+        ALSLog(ALLoggerSeverityInfo, @"INDIVIDUAL_LAUNCH :: SUBSCRIBING_MQTT");
         self.mqttObject.mqttConversationDelegate = self;
         if(self.mqttObject)
         {
@@ -319,7 +319,7 @@
         }
         else
         {
-            NSLog(@"mqttObject is not found...");
+            ALSLog(ALLoggerSeverityInfo, @"mqttObject is not found...");
         }
     }
     
@@ -409,14 +409,14 @@
     if(proccessfilterArray.count != 0)
     {
         ALMessage *msg = [proccessfilterArray objectAtIndex:0];
-        NSLog(@"Messsage 05:%@",msg.message);
+        ALSLog(ALLoggerSeverityInfo, @"Messsage 05:%@",msg.message);
         msg.deleted = YES;
         
            [self deleteMessageFromView:msg]; // Removes message from U.I.
         
         [ALMessageService deleteMessage:messageKey andContactId:self.contactIds withCompletion:^(NSString * response, NSError * error) {
             
-            NSLog(@"Message Deleted upon APPLOZIC_05",response);
+            ALSLog(ALLoggerSeverityInfo, @"Message Deleted upon APPLOZIC_05",response);
             
         }];
 //        ALMessageDBService * almessageDBService = [[ALMessageDBService alloc] init];
@@ -463,15 +463,15 @@
     
     if(self.individualLaunch)
     {
-        NSLog(@"ALChatVC: Individual launch ...unsubscribeToConversation to mqtt..");
+        ALSLog(ALLoggerSeverityInfo, @"ALChatVC: Individual launch ...unsubscribeToConversation to mqtt..");
         if(self.mqttObject)
         {
             [self.mqttObject unsubscribeToConversation];
-            NSLog(@"ALChatVC: In ViewWillDisapper .. MQTTObject in ==IF== now");
+            ALSLog(ALLoggerSeverityInfo, @"ALChatVC: In ViewWillDisapper .. MQTTObject in ==IF== now");
         }
         else
         {
-            NSLog(@"mqttObject is not found...");
+            ALSLog(ALLoggerSeverityInfo, @"mqttObject is not found...");
         }
     }
     
@@ -530,12 +530,12 @@
 {
     ALUserService * userService = [ALUserService new];
     int count = [[userService getTotalUnreadCount] intValue];
-    NSLog(@"CHATVC_UNREAD_COUNT :: %i",count);
+    ALSLog(ALLoggerSeverityInfo, @"CHATVC_UNREAD_COUNT :: %i",count);
     if(count == 0)
     {
         [userService resettingUnreadCountWithCompletion:^(NSString *json, NSError *error) {
             
-            NSLog(@"RESET_UNREAD_COUNT CALL :: %@ and ERROR :: %@",json, error.description);
+            ALSLog(ALLoggerSeverityError, @"RESET_UNREAD_COUNT CALL :: %@ and ERROR :: %@",json, error.description);
         }];
     }
 }
@@ -549,7 +549,7 @@
             
             if(error)
             {
-                NSLog(@"Error while marking messages as read channel %@",self.channelKey);
+                ALSLog(ALLoggerSeverityError, @"Error while marking messages as read channel %@",self.channelKey);
             }
             else
             {
@@ -563,7 +563,7 @@
         [ALUserService markConversationAsRead:self.contactIds withCompletion:^(NSString * string, NSError *error) {
             if(error)
             {
-                NSLog(@"Error while marking messages as read for contact %@", self.contactIds);
+                ALSLog(ALLoggerSeverityError, @"Error while marking messages as read for contact %@", self.contactIds);
             }
             else
             {
@@ -583,7 +583,7 @@
                 
                 if(error)
                 {
-                    NSLog(@"GROUP: Marking message read error:%@",error);
+                    ALSLog(ALLoggerSeverityError, @"GROUP: Marking message read error:%@",error);
                 }
             }];
         }
@@ -596,7 +596,7 @@
                 
                 if(error)
                 {
-                    NSLog(@"Individual: Marking message read error:%@",error);
+                    ALSLog(ALLoggerSeverityError, @"Individual: Marking message read error:%@",error);
                 }
             }];
         }
@@ -850,8 +850,8 @@
     self.isUserBlockedBy = contact.blockBy;
     [self.label setHidden:NO];
     
-    NSLog(@"USER_STATE BLOCKED : %i AND BLOCKED BY : %i", contact.block, contact.blockBy);
-    NSLog(@"USER : %@", contact.userId);
+    ALSLog(ALLoggerSeverityInfo, @"USER_STATE BLOCKED : %i AND BLOCKED BY : %i", contact.block, contact.blockBy);
+    ALSLog(ALLoggerSeverityInfo, @"USER : %@", contact.userId);
     if((contact.blockBy || contact.block) && (self.alChannel.type == GROUP_OF_TWO || !self.channelKey))
     {
         [self.label setHidden:YES];
@@ -1051,7 +1051,7 @@
     
     if(conversationList.count == 0)
     {
-        NSLog(@"No conversation list ");
+        ALSLog(ALLoggerSeverityInfo, @"No conversation list ");
         return;
     }
     
@@ -1067,7 +1067,7 @@
         }
         else
         {
-            NSLog(@"<< ERROR: Topic Detail NILL >>");
+            ALSLog(ALLoggerSeverityError, @"<< ERROR: Topic Detail NILL >>");
         }
     }
    
@@ -1142,7 +1142,7 @@
     }
     if(self.alChannel.type == GROUP_OF_TWO)
     {
-        NSLog(@"CURENT clientChannelKey :: %@",self.alChannel.clientChannelKey);
+        ALSLog(ALLoggerSeverityInfo, @"CURENT clientChannelKey :: %@",self.alChannel.clientChannelKey);
         ALContactService * contactService = [ALContactService new];
         self.alContact = [contactService loadContactByKey:@"userId" value:[self.alChannel getReceiverIdInGroupOfTwo]];
         [titleLabelButton setTitle:[self.alContact getDisplayName] forState:UIControlStateNormal];
@@ -1172,7 +1172,7 @@
 
 -(void)fetchMessageFromDB
 {
-    NSLog(@"fetchMessageFromDB  called:: ");
+    ALSLog(ALLoggerSeverityInfo, @"fetchMessageFromDB  called:: ");
     ALDBHandler * theDbHandler = [ALDBHandler sharedInstance];
     NSFetchRequest * theRequest = [NSFetchRequest fetchRequestWithEntityName:@"DB_Message"];
     NSPredicate* predicate1;
@@ -1328,7 +1328,7 @@
         
         if(error)
         {
-            NSLog(@"SEND_MSG_ERROR :: %@", error.description);
+            ALSLog(ALLoggerSeverityError, @"SEND_MSG_ERROR :: %@", error.description);
             [self handleErrorStatus:theMessage];
             return;
         }
@@ -1381,7 +1381,7 @@
 
 -(void)googleLocationErrorAlert
 {
-    NSLog(@"Google Map Length = ZERO");
+    ALSLog(ALLoggerSeverityInfo, @"Google Map Length = ZERO");
     NSString * alertMsg = @"Unable to fetch current location. Try Again!!!";
     [ALUtilityClass showAlertMessage:alertMsg andTitle:@"Current Location"];
 }
@@ -2002,7 +2002,7 @@
      anIndex = [self.pickerConvIdsArray indexOfObject:iD];
     }
     if(NSNotFound == anIndex) {
-        NSLog(@"PickerView Index not found %ld",(long)anIndex);
+        ALSLog(ALLoggerSeverityInfo, @"PickerView Index not found %ld",(long)anIndex);
         return;
     }
     
@@ -2298,7 +2298,7 @@
 
 -(void)deleteMessageFromView:(ALMessage *)message
 {
-    NSLog(@"  deleteMessageFromView in controller...:: ");
+    ALSLog(ALLoggerSeverityInfo, @"  deleteMessageFromView in controller...:: ");
     [self.alMessageWrapper removeALMessageFromMessageArray:message];
     [UIView animateWithDuration:1.5 animations:^{
         [self.mTableView reloadData];
@@ -2359,18 +2359,18 @@
         {
             [ALMessageService processImageDownloadforMessage:message withdelegate:self];
         }
-        NSLog(@"starting thread for..%@", message.key);
+        ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
     }
     else
     {
-        NSLog(@"connection already present do nothing###");
+        ALSLog(ALLoggerSeverityInfo, @"connection already present do nothing###");
     }
     
 }
 
 -(void)stopDownloadForIndex:(int)index andMessage:(ALMessage *)message
 {
-    NSLog(@"Called get image stopDownloadForIndex stopDownloadForIndex ####");
+    ALSLog(ALLoggerSeverityInfo, @"Called get image stopDownloadForIndex stopDownloadForIndex ####");
     
     ALMediaBaseCell *imageCell = (ALMediaBaseCell *)[self.mTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     imageCell.progresLabel.alpha = 0;
@@ -2398,7 +2398,7 @@
     [connection.mData appendData:data];
     if ([connection.connectionType isEqualToString:@"Image Posting"])
     {
-        NSLog(@" file posting done");
+        ALSLog(ALLoggerSeverityInfo, @" file posting done");
         return;
     }
     
@@ -2513,7 +2513,7 @@
     imageCell.downloadRetryView.alpha = 1;
     imageCell.sizeLabel.alpha = 1;
     [self handleErrorStatus:imageCell.mMessage];
-    NSLog(@"didFailWithError ::: %@",error);
+    ALSLog(ALLoggerSeverityError, @"didFailWithError ::: %@",error);
     [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:connection];
 }
 
@@ -2530,7 +2530,7 @@
     }
     else
     {
-        NSLog(@"CONNECTION_NOT_FOUND");
+        ALSLog(ALLoggerSeverityInfo, @"CONNECTION_NOT_FOUND");
     }
 }
 
@@ -2648,7 +2648,7 @@
         
         if(!imageCell)
         {
-            NSLog(@" not able to find the image cell for upload....");
+            ALSLog(ALLoggerSeverityInfo, @" not able to find the image cell for upload....");
             return;
         }
         
@@ -2676,7 +2676,7 @@
             
             if (error)
             {
-                NSLog(@"%@",error);
+                ALSLog(ALLoggerSeverityError, @"%@",error);
                 imageCell.progresLabel.alpha = 0;
                 imageCell.mDowloadRetryButton.alpha = 1;
                 imageCell.downloadRetryView.alpha = 1;
@@ -3133,7 +3133,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         if(error)
         {
-            NSLog(@"SEND_MSG_ERROR :: %@",error.description);
+            ALSLog(ALLoggerSeverityError, @"SEND_MSG_ERROR :: %@",error.description);
             [self handleErrorStatus:theMessage];
             return;
         }
@@ -3183,7 +3183,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         if(error)
         {
-            NSLog(@"ERROR_GetLatestMessageForUser :: %@",error);
+            ALSLog(ALLoggerSeverityError, @"ERROR_GetLatestMessageForUser :: %@",error);
             return ;
         }
         else
@@ -3200,7 +3200,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self scrollTableViewToBottomWithAnimation:YES];
                 [self setTitle];
             });
-            NSLog(@"FETCH AND REFRESH METHOD");
+            ALSLog(ALLoggerSeverityInfo, @"FETCH AND REFRESH METHOD");
         }
     }];
 }
@@ -3214,7 +3214,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     NSCompoundPredicate * compoundPred = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
     NSArray * filteredArray = [[self.alMessageWrapper getUpdatedMessageArray] filteredArrayUsingPredicate:compoundPred];
     
-    NSLog(@"Found Messages to update to DELIVERED_AND_READ in ChatView :%lu", (unsigned long)filteredArray.count);
+    ALSLog(ALLoggerSeverityInfo, @"Found Messages to update to DELIVERED_AND_READ in ChatView :%lu", (unsigned long)filteredArray.count);
     
     for(ALMessage * message in filteredArray)
     {
@@ -3253,7 +3253,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 -(void)individualNotificationhandler:(NSNotification *) notification
 {
     ALMessage* alMessage  = [[ALMessage alloc] init];
-    NSLog(@" OUR Individual Notificationhandler ");
+    ALSLog(ALLoggerSeverityInfo, @" OUR Individual Notificationhandler ");
     [self setRefreshMainView:TRUE];
     // see if this view is visible or not...
 
@@ -3263,7 +3263,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     NSDictionary *dict = notification.userInfo;
     NSNumber *updateUI = [dict valueForKey:@"updateUI"];
     NSString *alertValue = [dict valueForKey:@"alertValue"];
-    NSLog(@"Notification received by Individual chat list: %@", contactId);
+    ALSLog(ALLoggerSeverityInfo, @"Notification received by Individual chat list: %@", contactId);
     
     NSArray *componentsContactId = [contactId componentsSeparatedByString:@":"];
     
@@ -3309,7 +3309,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }
     else if ([updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_INACTIVE]])
     {
-        NSLog(@"it was in background, updateUI is false");
+        ALSLog(ALLoggerSeverityInfo, @"it was in background, updateUI is false");
         self.conversationId = alMessage.conversationId;
         self.channelKey = alMessage.groupId;
         self.contactIds = alMessage.contactIds;
@@ -3321,7 +3321,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     {
         if(![alMessage.type isEqualToString:@"5"] && ![updateUI isEqualToNumber:[NSNumber numberWithInt:APP_STATE_BACKGROUND]])
         {
-            NSLog(@"SHOW_NOTIFICATION (OTHER_THREAD_IS_OPENED)");
+            ALSLog(ALLoggerSeverityInfo, @"SHOW_NOTIFICATION (OTHER_THREAD_IS_OPENED)");
             [self showNativeNotification:alMessage andAlert:alertValue];
         }
     }
@@ -3429,7 +3429,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }
     else
     {
-        NSLog(@" time### %@ ",time);
+        ALSLog(ALLoggerSeverityInfo, @" time### %@ ",time);
         time = NULL;
     }
     
@@ -3448,7 +3448,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [ALMessageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
         
         [self.mActivityIndicator stopAnimating];
-        NSLog(@"LIST_CALL_CALLED");
+        ALSLog(ALLoggerSeverityInfo, @"LIST_CALL_CALLED");
         if(self.conversationId && [ALApplozicSettings getContextualChatOption] && messages.count)
         {
             [self setupPickerView];
@@ -3502,7 +3502,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 {
                     ALMessage *msg1 = [[self.alMessageWrapper getUpdatedMessageArray] objectAtIndex:0];
                     if(msg1.createdAtTime.doubleValue <= msg.createdAtTime.doubleValue) {
-                        NSLog(@"ignoring as coming message has grater time..continue....");
+                        ALSLog(ALLoggerSeverityInfo, @"ignoring as coming message has grater time..continue....");
                         continue;
                     }
                     
@@ -3519,7 +3519,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 
                 if( ![msg isHiddenMessage] )  // Filters Hidden Messages and VOIP Notifcation messages
                 {
-                    //NSLog(@"insterting message at index 0 ::%@", msg.key);
+                    //ALSLog(ALLoggerSeverityInfo, @"insterting message at index 0 ::%@", msg.key);
                     [[self.alMessageWrapper getUpdatedMessageArray] insertObject:msg atIndex:0];
                     [self.noConLabel setHidden:YES];
                 }
@@ -3551,7 +3551,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         else
         {
             self.loadEarlierAction.hidden = YES;
-            NSLog(@"some error");
+            ALSLog(ALLoggerSeverityError, @"some error");
         }
     }];
 }
@@ -3577,15 +3577,15 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }
         else
         {
-            NSLog(@"CHECK LAST_SEEN_SERVER CALL");
+            ALSLog(ALLoggerSeverityInfo, @"CHECK LAST_SEEN_SERVER CALL");
         }
     }];
 }
 
 -(void)updateLastSeenAtStatus: (ALUserDetail *) alUserDetail
 {
-    NSLog(@"USER DET : %@",alUserDetail.userId);
-    NSLog(@"self.contactIds : %@",self.contactIds);
+    ALSLog(ALLoggerSeverityInfo, @"USER DET : %@",alUserDetail.userId);
+    ALSLog(ALLoggerSeverityInfo, @"self.contactIds : %@",self.contactIds);
     [self setRefreshMainView:TRUE];
     
     double value = [alUserDetail.lastSeenAtTime doubleValue];
@@ -3747,7 +3747,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         userDetails.userId = userID;
         userDetails.lastSeenAtTime = contact.lastSeenAt;
         double value = contact.lastSeenAt.doubleValue;
-        NSLog(@"Contact :: %@ && Value :: %@", contact.userId, contact.lastSeenAt);
+        ALSLog(ALLoggerSeverityInfo, @"Contact :: %@ && Value :: %@", contact.userId, contact.lastSeenAt);
         if(contact.lastSeenAt == NULL)
         {
             [userDetailsArray addObject:@" "];
@@ -3986,7 +3986,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)mqttDidConnected {
 
-    NSLog(@"MQTT_CONNECTED : CALL BACK COMES ALCHATVC");
+    ALSLog(ALLoggerSeverityInfo, @"MQTT_CONNECTED : CALL BACK COMES ALCHATVC");
     if (self.individualLaunch) {
         [self subscrbingChannel];
     }
@@ -3998,7 +3998,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)updateUserDetail:(NSString *)userId  // MQTT DELEGATE
 {
-    NSLog(@"ALCHATVC : USER_DETAIL_CHANGED_CALL_UPDATE");
+    ALSLog(ALLoggerSeverityInfo, @"ALCHATVC : USER_DETAIL_CHANGED_CALL_UPDATE");
     
     [ALUserService updateUserDetail:userId withCompletion:^(ALUserDetail *userDetail) {
         
@@ -4009,7 +4009,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)subProcessDetailUpdate:(ALUserDetail *)userDetail  // (COMMON METHOD CALL FROM SELF and ALMSGVC)
 {
-    NSLog(@"ALCHATVC : USER_DETAIL_SUB_PROCESS");
+    ALSLog(ALLoggerSeverityInfo, @"ALCHATVC : USER_DETAIL_SUB_PROCESS");
     if(![self isGroup] && [userDetail.userId isEqualToString:self.contactIds])
     {
         ALContactService *contactService = [ALContactService new];
@@ -4070,7 +4070,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)updateTypingStatus:(NSString *)applicationKey userId:(NSString *)userId status:(BOOL)status
 {
-    NSLog(@"==== (CHAT_VC) Received typing status %d for: %@ ====", status, userId);
+    ALSLog(ALLoggerSeverityInfo, @"==== (CHAT_VC) Received typing status %d for: %@ ====", status, userId);
     if ([self.contactIds isEqualToString:userId] || self.channelKey)
     {
         [self showTypingLabel:status userId:userId];
@@ -4089,7 +4089,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     
     if([ALDataNetworkConnection checkDataNetworkAvailable] && !isBackgroundState)
     {
-        NSLog(@"MQTT connection closed, subscribing again: %lu", (long)_mqttRetryCount);
+        ALSLog(ALLoggerSeverityInfo, @"MQTT connection closed, subscribing again: %lu", (long)_mqttRetryCount);
         [self.mqttObject subscribeToConversation];
         [self subscrbingChannel];
         self.mqttRetryCount++;
@@ -4098,7 +4098,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)appWillEnterForegroundInChat:(NSNotification *)notification
 {
-    NSLog(@"will enter foreground notification");
+    ALSLog(ALLoggerSeverityInfo, @"will enter foreground notification");
     // [self syncCall:self.contactIds updateUI:nil alertValue:nil];
 }
 
@@ -4124,7 +4124,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     NSArray *descriptors = [NSArray arrayWithObject:valueDescriptor];
     NSArray *sortedArray = [theFilteredArray sortedArrayUsingDescriptors:descriptors];
     if(sortedArray.count==0){
-        NSLog(@"No message for contact .....%@",self.contactIds);
+        ALSLog(ALLoggerSeverityInfo, @"No message for contact .....%@",self.contactIds);
         return;
     }
     [self setTitle];
@@ -4147,7 +4147,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)newMessageHandler:(NSNotification *)notification
 {
-    NSLog(@" newMessageHandler called ::#### ");
+    ALSLog(ALLoggerSeverityInfo, @" newMessageHandler called ::#### ");
     NSMutableArray * messageArray = notification.object;
 
     [self addMessageToList:messageArray];
@@ -4385,10 +4385,10 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [messageClientService downloadImageUrl:message.fileMeta.thumbnailBlobKey withCompletion:^(NSString *fileURL, NSError *error) {
                     if(error)
                     {
-                        NSLog(@"ERROR GETTING DOWNLOAD URL : %@", error);
+                        ALSLog(ALLoggerSeverityError, @"ERROR GETTING DOWNLOAD URL : %@", error);
                         return;
                     }
-                    NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
+                    ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
                     [self showImage: [NSURL URLWithString:fileURL]];
                 }];
             
@@ -4484,7 +4484,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }
     else
     {
-        NSLog(@"Reply cell not found..");
+        ALSLog(ALLoggerSeverityInfo, @"Reply cell not found..");
     }
     
 }

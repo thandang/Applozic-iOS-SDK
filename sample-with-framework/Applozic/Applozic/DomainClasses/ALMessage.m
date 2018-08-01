@@ -32,7 +32,7 @@
     }
     @catch (NSException *exception)
     {
-        NSLog(@"EXCEPTION : MSG_PARSING :: %@",exception.description);
+        ALSLog(ALLoggerSeverityError, @"EXCEPTION : MSG_PARSING :: %@",exception.description);
     }
     @finally
     { }
@@ -294,7 +294,7 @@
                                                                                       error:&error];
         if(!metaDataDictionary)
         {
-//            NSLog(@"ERROR: COULD NOT PARSE META-DATA : %@", error.description);
+//            ALSLog(ALLoggerSeverityError, @"ERROR: COULD NOT PARSE META-DATA : %@", error.description);
         }
     }
     @catch(NSException * exp)

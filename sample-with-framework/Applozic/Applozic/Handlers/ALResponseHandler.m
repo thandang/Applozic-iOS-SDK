@@ -64,7 +64,7 @@
                                id theJson = nil;
                                
                                // DECRYPTING DATA WITH KEY
-                               if([ALUserDefaultsHandler getEncryptionKey] && ![tag isEqualToString:@"CREATE ACCOUNT"] && ![tag isEqualToString:@"CREATE FILE URL"] && ![tag isEqualToString:@"UPDATE NOTIFICATION MODE"])
+                               if([ALUserDefaultsHandler getEncryptionKey] && ![tag isEqualToString:@"CREATE ACCOUNT"] && ![tag isEqualToString:@"CREATE FILE URL"] && ![tag isEqualToString:@"UPDATE NOTIFICATION MODE"] && ![tag isEqualToString:@"FILE DOWNLOAD URL"])
                                {
                                    
                                    NSData *base64DecodedData = [[NSData alloc] initWithBase64EncodedData:data options:0];

@@ -441,7 +441,11 @@
 {
     if(buttonIndex == 1)
     {
-        if(![self isThisChannelLeft:self.channelKeyID])
+        ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+        ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
+    
+        
+        if(![self isThisChannelLeft:self.channelKeyID] && !channel.isBroadcastGroup)
         {
             [self turnUserInteractivityForNavigationAndTableView:NO];
             ALChannelService * alchannelService = [[ALChannelService alloc] init];
@@ -544,8 +548,7 @@
         
         ALChannelUserX *alChannelUserXLoggedInUser =  [channelDBService loadChannelUserXByUserId:self.channelKeyID andUserId:[ALUserDefaultsHandler getUserId]];
         
-        
-        if(alChannelUserXLoggedInUser.role.intValue !=MEMBER && alChannelUserXLoggedInUser.role.intValue != USER){
+        if(alChannelUserXLoggedInUser.isAdminUser){
             
             UIAlertAction *removeAction = [UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"removeText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Remove", @"") stringByAppendingString: @" %@"], memberNames[row]]
                                                                    style:UIAlertActionStyleDefault
@@ -573,8 +576,10 @@
             [theController addAction:removeAction];
             
         }
-        
-        if(alChannelUserX.role.intValue != ADMIN){
+    
+            ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
+
+            if(!alChannelUserX.isAdminUser  && !channel.isBroadcastGroup){
             
             [theController addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"makeAdminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Make admin", @"") stringByAppendingString: @" %@"]
                                                                      , memberNames[row]]
@@ -689,8 +694,19 @@
             case 2:
             {
                 [self.memberNameLabel setTextColor:[UIColor redColor]];
-                NSString * labelTitle = (![self isThisChannelLeft:self.channelKeyID]) ?
-                NSLocalizedStringWithDefaultValue(@"exitGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Exit Group", @""):                NSLocalizedStringWithDefaultValue(@"deleteGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Group", @"") ;
+                
+                ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+                ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
+                NSString * labelTitle;
+                if(channel.isBroadcastGroup){
+                    labelTitle = NSLocalizedStringWithDefaultValue(@"deleteBroadcast", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Broadcast", @"");
+                }else{
+                    
+                    labelTitle =  [self isThisChannelLeft:self.channelKeyID]?
+                    NSLocalizedStringWithDefaultValue(@"exitGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Exit Group", @""):
+                    NSLocalizedStringWithDefaultValue(@"deleteGroup", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Group", @"");
+                    
+                }
                 self.memberNameLabel.text = labelTitle;
             }break;
             default:break;
@@ -707,7 +723,7 @@
     ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
     ALChannelUserX *alChannelUserX = [channelDBService loadChannelUserXByUserId:self.channelKeyID andUserId:memberIds[row]];
     
-    if(alChannelUserX.role.intValue == ADMIN)
+    if(alChannelUserX.isAdminUser)
     {
         [self.adminLabel setHidden:NO];
     }
@@ -760,7 +776,6 @@
     self.adminLabel = (UILabel*)[memberCell viewWithTag:104];
     [self.adminLabel setText:NSLocalizedStringWithDefaultValue(@"adminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Admin", @"")];
     self.adminLabel.textColor = self.view.tintColor;
-    
     self.lastSeenLabel = (UILabel *)[memberCell viewWithTag:105];
 }
 

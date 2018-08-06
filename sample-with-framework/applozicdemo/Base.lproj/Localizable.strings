@@ -231,6 +231,7 @@
 "sendLocationViewTitle" = "Send Location";
 "exitGroup"= "Exit Group";
 "deleteGroup" = "Delete Group";
+"deleteBroadcast" = "Delete Broadcast";
 
 "selectAtleastAttachment" = "Select at least one attachment";
 

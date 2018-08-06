@@ -65,6 +65,7 @@ typedef enum
 -(BOOL) isNotificationMuted;
 -(BOOL) isConversationClosed;
 -(BOOL) isContextBasedChat;
+-(BOOL) isBroadcastGroup;
 -(NSString*)getReceiverIdInGroupOfTwo;
 
 -(NSMutableDictionary *)getMetaDataDictionary:(NSString *)string;

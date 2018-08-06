@@ -63,6 +63,8 @@ typedef enum
 -(NSNumber *)getChannelMemberParentKey:(NSString *)userId;
 -(BOOL) isNotificationMuted;
 -(BOOL) isConversationClosed;
+-(BOOL) isBroadcastGroup;
+
 
 -(NSString*)getReceiverIdInGroupOfTwo;
 

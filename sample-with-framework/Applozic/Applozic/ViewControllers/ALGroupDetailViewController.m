@@ -547,8 +547,7 @@
         
         ALChannelUserX *alChannelUserXLoggedInUser =  [channelDBService loadChannelUserXByUserId:self.channelKeyID andUserId:[ALUserDefaultsHandler getUserId]];
         
-        
-        if(alChannelUserXLoggedInUser.role.intValue !=MEMBER && alChannelUserXLoggedInUser.role.intValue != USER){
+        if(alChannelUserXLoggedInUser.isRemoveMemberOptionEnabled){
             
             UIAlertAction *removeAction = [UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"removeText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Remove", @"") stringByAppendingString: @" %@"], memberNames[row]]
                                                                    style:UIAlertActionStyleDefault
@@ -579,7 +578,7 @@
     
             ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
 
-            if(alChannelUserX.role.intValue != ADMIN  && channel.type != BROADCAST ){
+            if(!alChannelUserX.isAdminUser  && !channel.isBroadcastGroup){
             
             [theController addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"makeAdminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Make admin", @"") stringByAppendingString: @" %@"]
                                                                      , memberNames[row]]

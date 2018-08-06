@@ -21,4 +21,14 @@
     
 }
 
+-(BOOL)isRemoveMemberOptionEnabled{
+
+   return  self.role.intValue !=MEMBER && self.role.intValue != USER;
+}
+
+-(BOOL)isAdminUser{
+    
+    return  self.role.intValue == ADMIN;
+}
+
 @end

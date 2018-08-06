@@ -32,5 +32,7 @@ typedef enum
 @property (nonatomic, strong) NSNumber *role;
 
 -(id)initWithDictonary:(NSDictionary *)messageDictonary;
+-(BOOL)isRemoveMemberOptionEnabled;
+-(BOOL)isAdminUser;
 
 @end

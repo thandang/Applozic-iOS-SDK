@@ -53,7 +53,7 @@ static ALMessageClientService *alMsgClientService;
             
             if(alMessageListResponse.messageList.count){
                 
-                 for(ALMessage *message in [alMessageListResponse.messageList subarrayWithRange:NSMakeRange(0, 6)] ){
+                 for(ALMessage *message in [alMessageListResponse.messageList subarrayWithRange:NSMakeRange(0, MIN(6, alMessageListResponse.messageList.count))] ){
                     
                     if(message.groupId != nil && message.groupId != 0){
                         
@@ -81,7 +81,7 @@ static ALMessageClientService *alMsgClientService;
             }
         }
         else{
-            NSLog(@"Message List Response Nil");
+            ALSLog(ALLoggerSeverityInfo, @"Message List Response Nil");
         }
     }];
 }
@@ -149,7 +149,7 @@ static ALMessageClientService *alMsgClientService;
     }
     else
     {
-        NSLog(@"message list is coming from DB %ld", (unsigned long)messageList.count);
+        ALSLog(ALLoggerSeverityInfo, @"message list is coming from DB %ld", (unsigned long)messageList.count);
     }
     
     
@@ -199,10 +199,10 @@ static ALMessageClientService *alMsgClientService;
                        
                        if(userNotPresentIds.count>0)
                        {
-                           NSLog(@"Call userDetails...");
+                           ALSLog(ALLoggerSeverityInfo, @"Call userDetails...");
                            ALUserService *alUserService = [ALUserService new];
                            [alUserService fetchAndupdateUserDetails:userNotPresentIds withCompletion:^(NSMutableArray *userDetailArray, NSError *theError) {
-                               NSLog(@"User detail response sucessfull.");
+                               ALSLog(ALLoggerSeverityInfo, @"User detail response sucessfull.");
                                [alContactDBService addUserDetails:userDetailArray];
                                completion(messages, error,userDetailArray);
                            }];
@@ -277,7 +277,7 @@ static ALMessageClientService *alMsgClientService;
     
     if (alMessage.msgDBObjectId == nil)
     {
-        NSLog(@"message not in DB new insertion.");
+        ALSLog(ALLoggerSeverityInfo, @"message not in DB new insertion.");
         if(channel ){
             if(channel.type != OPEN){
                 dbMessage = [dbService addMessage:alMessage];
@@ -288,7 +288,7 @@ static ALMessageClientService *alMsgClientService;
     }
     else
     {
-        NSLog(@"message found in DB just getting it not inserting new one...");
+        ALSLog(ALLoggerSeverityInfo, @"message found in DB just getting it not inserting new one...");
         dbMessage = (DB_Message*)[dbService getMeesageById:alMessage.msgDBObjectId error:&theError];
     }
     //convert to dic
@@ -333,7 +333,7 @@ static ALMessageClientService *alMsgClientService;
             }
             
         }else{
-            NSLog(@" got error while sending messages");
+            ALSLog(ALLoggerSeverityError, @" got error while sending messages");
         }
         completion(statusStr,theError);
     }];
@@ -386,7 +386,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         
         if (error)
         {
-            NSLog(@" <<<ERROR>>> SEND PHOTO FOR USER%@",error);
+            ALSLog(ALLoggerSeverityError, @" <<<ERROR>>> SEND PHOTO FOR USER%@",error);
 //            [self handleErrorStatus:theMessage];
              completion (message,error);
             return;
@@ -553,14 +553,14 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     NSError *error;
     if (![[dbMessage managedObjectContext] save:&error])
     {
-        NSLog(@"Delete Flag Not Set");
+        ALSLog(ALLoggerSeverityInfo, @"Delete Flag Not Set");
     }
     
     ALMessageDBService * dbService2 = [[ALMessageDBService alloc]init];
     DB_Message* dbMessage2=(DB_Message*)[dbService2 getMessageByKey:@"key" value:keyString];
     NSArray *keys = [[[dbMessage2 entity] attributesByName] allKeys];
     NSDictionary *dict = [dbMessage2 dictionaryWithValuesForKeys:keys];
-    NSLog(@"DB Message In Del: %@",dict);
+    ALSLog(ALLoggerSeverityInfo, @"DB Message In Del: %@",dict);
     
     
     ALMessageClientService *alMessageClientService =  [[ALMessageClientService alloc]init];
@@ -593,7 +593,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         if (!error)
         {
              //delete sucessfull
-             NSLog(@"sucessfully deleted !");
+             ALSLog(ALLoggerSeverityInfo, @"sucessfully deleted !");
              ALMessageDBService * dbService = [[ALMessageDBService alloc] init];
              [dbService deleteAllMessagesByContact:contactId orChannelKey:channelKey];
              
@@ -616,7 +616,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * timestamp = message.imageFilePath;
     NSString * filePath = [docDirPath stringByAppendingPathComponent:timestamp];
-    NSLog(@"FILE_PATH : %@",filePath);
+    ALSLog(ALLoggerSeverityInfo, @"FILE_PATH : %@",filePath);
     NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         //Create boundary, it can be anything
@@ -642,7 +642,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
             FileParamConstant = @"files[]";
         }
         NSData *imageData = [[NSData alloc]initWithContentsOfFile:filePath];
-        NSLog(@"Attachment data length: %f",imageData.length/1024.0);
+        ALSLog(ALLoggerSeverityInfo, @"Attachment data length: %f",imageData.length/1024.0);
         //Assuming data is not nil we add this to the multipart form
         if (imageData)
         {
@@ -663,17 +663,17 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         NSArray * theFiletredArray = [theCurrentConnectionsArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"keystring == %@", message.key]];
         
         if( theFiletredArray.count>0 ){
-            NSLog(@"upload is already running .....not starting new one ....");
+            ALSLog(ALLoggerSeverityInfo, @"upload is already running .....not starting new one ....");
             return;
         }
         ALConnection * connection = [[ALConnection alloc] initWithRequest:request delegate:delegate startImmediately:YES];
         connection.keystring = message.key;
         connection.connectionType = @"Image Posting";
         [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:connection];
-        NSLog(@"CONNECTION_BEFORE_MQTT : %@",connection.mData);
+        ALSLog(ALLoggerSeverityInfo, @"CONNECTION_BEFORE_MQTT : %@",connection.mData);
     }
     else{
-        NSLog(@"<<< ERROR >>> :: FILE DO NOT EXIT AT GIVEN PATH");
+        ALSLog(ALLoggerSeverityError, @"<<< ERROR >>> :: FILE DO NOT EXIT AT GIVEN PATH");
     }
     
 }
@@ -684,10 +684,10 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     [messageClientService downloadImageUrl:message.fileMeta.blobKey withCompletion:^(NSString *fileURL, NSError *error) {
         if(error)
         {
-            NSLog(@"ERROR GETTING DOWNLOAD URL : %@", error);
+            ALSLog(ALLoggerSeverityError, @"ERROR GETTING DOWNLOAD URL : %@", error);
             return;
         }
-        NSLog(@"ATTACHMENT DOWNLOAD URL : %@", fileURL);
+        ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
         
         NSMutableURLRequest * theRequest;
         if(ALApplozicSettings.isS3StorageServiceEnabled) {
@@ -725,30 +725,30 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 {
     ALMessageDBService * dbService = [[ALMessageDBService alloc] init];
     NSMutableArray * pendingMessageArray = [dbService getPendingMessages];
-    NSLog(@"service called....%lu",(unsigned long)pendingMessageArray.count);
+    ALSLog(ALLoggerSeverityInfo, @"service called....%lu",(unsigned long)pendingMessageArray.count);
     
     for(ALMessage *msg  in pendingMessageArray )
     {
         
         if((!msg.fileMeta && !msg.pairedMessageKey))
         {
-            NSLog(@"RESENDING_MESSAGE : %@", msg.message);
+            ALSLog(ALLoggerSeverityInfo, @"RESENDING_MESSAGE : %@", msg.message);
             [self sendMessages:msg withCompletion:^(NSString *message, NSError *error) {
                 if(error)
                 {
-                    NSLog(@"PENDING_MESSAGES_NO_SENT : %@", error);
+                    ALSLog(ALLoggerSeverityError, @"PENDING_MESSAGES_NO_SENT : %@", error);
                     return;
                 }
-                NSLog(@"SENT_SUCCESSFULLY....MARKED_AS_DELIVERED : %@", message);
+                ALSLog(ALLoggerSeverityInfo, @"SENT_SUCCESSFULLY....MARKED_AS_DELIVERED : %@", message);
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATE_MESSAGE_SEND_STATUS" object:msg];
             }];
         }
         else if(msg.contentType == ALMESSAGE_CONTENT_VCARD)
         {
-            NSLog(@"REACH_PRESENT");
+            ALSLog(ALLoggerSeverityInfo, @"REACH_PRESENT");
             NSError *THE_ERROR;
             DB_Message *dbMessage = (DB_Message*)[dbService getMeesageById:msg.msgDBObjectId error:&THE_ERROR];
-            NSLog(@"ERROR_IF_ANY : %@", THE_ERROR);
+            ALSLog(ALLoggerSeverityError, @"ERROR_IF_ANY : %@", THE_ERROR);
             dbMessage.inProgress = [NSNumber numberWithBool:YES];
             dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
             [[ALDBHandler sharedInstance].managedObjectContext save:nil];
@@ -766,7 +766,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         }
         else
         {
-            NSLog(@"FILE_META_PRESENT : %@",msg.fileMeta );
+            ALSLog(ALLoggerSeverityInfo, @"FILE_META_PRESENT : %@",msg.fileMeta );
         }
     }
 }
@@ -779,7 +779,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
             
             if(error)
             {
-                NSLog(@"ERROR IN LATEST MSG APNs CLASS : %@",error);
+                ALSLog(ALLoggerSeverityError, @"ERROR IN LATEST MSG APNs CLASS : %@",error);
             }
         }];
     }
@@ -799,7 +799,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         
         if(theError)
         {
-            NSLog(@"ERROR IN MSG INFO RESPONSE : %@", theError);
+            ALSLog(ALLoggerSeverityError, @"ERROR IN MSG INFO RESPONSE : %@", theError);
         }
         else
         {
@@ -828,7 +828,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         
         if(error)
         {
-            NSLog(@"SERVICE_ERROR: Multi User Send Message : %@", error);
+            ALSLog(ALLoggerSeverityError, @"SERVICE_ERROR: Multi User Send Message : %@", error);
         }
         
         completion(json, error);
@@ -858,7 +858,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
             
             if(error)
             {
-                NSLog(@"REACH_SEND_ERROR : %@",error);
+                ALSLog(ALLoggerSeverityError, @"REACH_SEND_ERROR : %@",error);
                 return;
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATE_MESSAGE_SEND_STATUS" object:almessage];
@@ -877,14 +877,14 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     [connection.mData appendData:data];
     if ([connection.connectionType isEqualToString:@"Image Posting"])
     {
-        NSLog(@"FILE_POSTING_MSG_SERVICE");
+        ALSLog(ALLoggerSeverityInfo, @"FILE_POSTING_MSG_SERVICE");
         return;
     }
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"OFFLINE_FAILED_TO_UPLOAD : %@", error);
+    ALSLog(ALLoggerSeverityError, @"OFFLINE_FAILED_TO_UPLOAD : %@", error);
 }
 
 +(ALMessage *)createCustomTextMessageEntitySendTo:(NSString *)to withText:(NSString*)text

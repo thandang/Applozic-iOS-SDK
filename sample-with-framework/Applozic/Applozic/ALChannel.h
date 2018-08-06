@@ -16,6 +16,7 @@
 #define CHANNEL_CONVERSATION_STATUS @"CONVERSATION_STATUS"
 #define CATEGORY @"AL_CATEGORY"
 
+static NSString * const AL_CONTEXT_BASED_CHAT = @"AL_CONTEXT_BASED_CHAT";
 
 /*********************
  type = 7 SPECIAL CASE
@@ -63,9 +64,8 @@ typedef enum
 -(NSNumber *)getChannelMemberParentKey:(NSString *)userId;
 -(BOOL) isNotificationMuted;
 -(BOOL) isConversationClosed;
+-(BOOL) isContextBasedChat;
 -(BOOL) isBroadcastGroup;
-
-
 -(NSString*)getReceiverIdInGroupOfTwo;
 
 -(NSMutableDictionary *)getMetaDataDictionary:(NSString *)string;

@@ -1176,4 +1176,37 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(BOOL)isContactSearchEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:AL_CONTACT_SEARCH];
+}
+
++(void)enableContactSearch:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:AL_CONTACT_SEARCH];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)isChannelMembersInfoInNavigationBarEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
+}
+
++(void)showChannelMembersInfoInNavigationBar:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:CHANNEL_MEMBER_INFO_IN_SUBTITLE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray *) metadataKeysToHideMessages
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:HIDE_MESSAGES_WITH_METADATA_KEYS];
+}
+
++(void) hideMessagesWithMetadataKeys:(NSArray *)keys
+{
+    [[NSUserDefaults standardUserDefaults] setObject:keys forKey:HIDE_MESSAGES_WITH_METADATA_KEYS];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

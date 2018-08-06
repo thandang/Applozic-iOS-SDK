@@ -205,7 +205,7 @@
 
 -(void)addChildKeyList:(NSMutableArray *)childKeyList andParentKey:(NSNumber *)parentKey withCompletion:(void(^)(id json, NSError *error))completion
 {
-    NSLog(@"ADD_CHILD :: PARENT_KEY : %@ && CHILD_KEYs : %@",parentKey,childKeyList.description);
+    ALSLog(ALLoggerSeverityInfo, @"ADD_CHILD :: PARENT_KEY : %@ && CHILD_KEYs : %@",parentKey,childKeyList.description);
     if(parentKey)
     {
         [ALChannelClientService addChildKeyList:childKeyList andParentKey:parentKey withCompletion:^(id json, NSError *error) {
@@ -226,7 +226,7 @@
 
 -(void)removeChildKeyList:(NSMutableArray *)childKeyList andParentKey:(NSNumber *)parentKey withCompletion:(void(^)(id json, NSError *error))completion
 {
-    NSLog(@"REMOVE_CHILD :: PARENT_KEY : %@ && CHILD_KEYs : %@",parentKey,childKeyList.description);
+    ALSLog(ALLoggerSeverityInfo, @"REMOVE_CHILD :: PARENT_KEY : %@ && CHILD_KEYs : %@",parentKey,childKeyList.description);
     if(parentKey)
     {
         [ALChannelClientService removeChildKeyList:childKeyList andParentKey:parentKey withCompletion:^(id json, NSError *error) {
@@ -252,7 +252,7 @@
 -(void)addClientChildKeyList:(NSMutableArray *)clientChildKeyList andParentKey:(NSString *)clientParentKey
               withCompletion:(void(^)(id json, NSError *error))completion
 {
-    NSLog(@"ADD_CHILD :: PARENT_KEY : %@ && CHILD_KEYs (VIA_CLIENT) : %@",clientParentKey,clientChildKeyList.description);
+    ALSLog(ALLoggerSeverityInfo, @"ADD_CHILD :: PARENT_KEY : %@ && CHILD_KEYs (VIA_CLIENT) : %@",clientParentKey,clientChildKeyList.description);
     if(clientParentKey)
     {
         [ALChannelClientService addClientChildKeyList:clientChildKeyList andClientParentKey:clientParentKey withCompletion:^(id json, NSError *error) {
@@ -274,7 +274,7 @@
 -(void)removeClientChildKeyList:(NSMutableArray *)clientChildKeyList andParentKey:(NSString *)clientParentKey
                  withCompletion:(void(^)(id json, NSError *error))completion
 {
-    NSLog(@"REMOVE_CHILD :: PARENT_KEY : %@ && CHILD_KEYs (VIA_CLIENT) : %@",clientParentKey,clientChildKeyList.description);
+    ALSLog(ALLoggerSeverityInfo, @"REMOVE_CHILD :: PARENT_KEY : %@ && CHILD_KEYs (VIA_CLIENT) : %@",clientParentKey,clientChildKeyList.description);
     if(clientParentKey)
     {
         [ALChannelClientService removeClientChildKeyList:clientChildKeyList andClientParentKey:clientParentKey withCompletion:^(id json, NSError *error) {
@@ -346,7 +346,7 @@
     }
     else
     {
-        NSLog(@"ERROR : CHANNEL NAME MISSING");
+        ALSLog(ALLoggerSeverityError, @"ERROR : CHANNEL NAME MISSING");
         return;
     }
 }
@@ -370,14 +370,14 @@
                                       }
                                       else
                                       {
-                                          NSLog(@"ERROR_IN_CHANNEL_CREATING :: %@",error);
+                                          ALSLog(ALLoggerSeverityError, @"ERROR_IN_CHANNEL_CREATING :: %@",error);
                                           completion(nil, error);
                                       }
                                   }];
     }
     else
     {
-        NSLog(@"ERROR : CHANNEL NAME MISSING");
+        ALSLog(ALLoggerSeverityError, @"ERROR : CHANNEL NAME MISSING");
         return;
     }
 }
@@ -418,7 +418,7 @@
     }
     else
     {
-        NSLog(@"EMPTY_BROADCAST_MEMBER_LIST");
+        ALSLog(ALLoggerSeverityError, @"EMPTY_BROADCAST_MEMBER_LIST");
         NSError *failError = [NSError errorWithDomain:@"EMPTY BROADCAST MEMBER LIST" code:0 userInfo:nil];
         completion(nil, failError);
     }
@@ -476,14 +476,14 @@
                                       }
                                       else
                                       {
-                                          NSLog(@"ERROR_IN_CHANNEL_CREATING :: %@",error);
+                                          ALSLog(ALLoggerSeverityError, @"ERROR_IN_CHANNEL_CREATING :: %@",error);
                                           completion(nil, error);
                                       }
                                   }];
     }
     else
     {
-        NSLog(@"ERROR : CHANNEL NAME MISSING");
+        ALSLog(ALLoggerSeverityError, @"ERROR : CHANNEL NAME MISSING");
         return;
     }
 }
@@ -721,7 +721,7 @@
     
     ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
     NSUInteger count = [channelDBService markConversationAsRead:channelKey];
-    NSLog(@"Found %ld messages for marking as read.", (unsigned long)count);
+    ALSLog(ALLoggerSeverityInfo, @"Found %ld messages for marking as read.", (unsigned long)count);
     
     if(count == 0){
         return;
@@ -962,6 +962,32 @@
     }
 }
 
+- (NSDictionary *)metadataToTurnOffActionMessagesNotifications {
+    return [self metadataToTurnOffActionMessagesNotificationsAndhideMessages:NO];
+}
 
+- (NSDictionary *)metadataToHideActionMessagesAndTurnOffNotifications {
+    return [self metadataToTurnOffActionMessagesNotificationsAndhideMessages:YES];
+}
+
+-(NSDictionary *)metadataToTurnOffActionMessagesNotificationsAndhideMessages:(BOOL)hideMessages {
+
+    // In case of just turning off the notifications, only 'Alert' key needs to be false.
+    if(!hideMessages) {
+        return @{@"Alert":@"false"};
+    }
+    NSDictionary *basicMetadata = @{@"CREATE_GROUP_MESSAGE":@"",
+                               @"REMOVE_MEMBER_MESSAGE":@"",
+                               @"ADD_MEMBER_MESSAGE":@"",
+                               @"JOIN_MEMBER_MESSAGE":@"",
+                               @"GROUP_NAME_CHANGE_MESSAGE":@"",
+                               @"GROUP_ICON_CHANGE_MESSAGE":@"",
+                               @"GROUP_LEFT_MESSAGE":@"",
+                               @"DELETED_GROUP_MESSAGE":@"",
+                               };
+    NSMutableDictionary *metadata = [[NSMutableDictionary alloc] initWithDictionary:basicMetadata];
+    metadata[@"hide"] = @"true";
+    metadata[@"Alert"] = @"false";
+    return metadata;
+}
 @end
-

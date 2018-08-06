@@ -13,6 +13,7 @@
 #import <Applozic/ALChatViewController.h>
 #import <Applozic/ALMessage.h>
 #import <Applozic/ALNewContactsViewController.h>
+#import <Applozic/ALLogger.h>
 
 
 @implementation ALChatManager
@@ -29,6 +30,9 @@
     {
         [ALUserDefaultsHandler setApplicationKey:applicationKey];
         self.permissableVCList = [[NSArray alloc] init];
+        [ALLogger setMinimumSeverity:ALLoggerSeverityInfo];
+        // Assumption: This init will be called from AppDelegate and it won't be deallocated till the app closes otherwise log's will not be saved.
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveLogs) name:UIApplicationWillTerminateNotification object:nil];
     }
     
     return self;
@@ -425,7 +429,7 @@
     
     
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
-    
+    [ALApplozicSettings showChannelMembersInfoInNavigationBar:YES];
     [ALApplozicSettings setSendMsgTextColor:[UIColor whiteColor]];
     [ALApplozicSettings setReceiveMsgTextColor:[UIColor grayColor]];
     [ALApplozicSettings setColorForReceiveMessages:[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:1]];
@@ -696,6 +700,11 @@
     //    UIViewController * customView = [storyboard instantiateViewControllerWithIdentifier:@"CustomVC"];
     //    ALChatViewController * chatVC = (ALChatViewController *)chatView;
     //    [chatVC presentViewController:customView animated:YES completion:nil];
+}
+
+-(void) saveLogs
+{
+    [ALLogger saveLogArray];
 }
 
 @end

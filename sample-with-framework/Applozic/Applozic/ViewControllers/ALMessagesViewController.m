@@ -120,8 +120,6 @@
     self.alMqttConversationService = [ALMQTTConversationService sharedInstance];
     self.alMqttConversationService.mqttConversationDelegate = self;
     
-    [self.alMqttConversationService subscribeToConversation];
-    
     CGFloat navigationHeight = self.navigationController.navigationBar.frame.size.height +
     [UIApplication sharedApplication].statusBarFrame.size.height;
     
@@ -147,31 +145,10 @@
     [self.dBService getMessages:self.childGroupList];
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
-    BOOL profileFlag = NO;
-    UIViewController *VC = self.tabBarController.selectedViewController;
-    UINavigationController *navVC = (UINavigationController *)VC;
-    
-    for(UIViewController *VC in navVC.viewControllers)
-    {
-        if([NSStringFromClass([VC class]) isEqualToString:@"ALUserProfileVC"])
-        {
-            profileFlag = YES;
-        }
-    }
-    
-    if (self.navigationController.viewControllers.count == 1 && !profileFlag)
-    {
-        ALSLog(ALLoggerSeverityInfo, @"MSG VC : CLOSING_MQTT_CONNECTIONS");
-        [self.alMqttConversationService unsubscribeToConversation];
-    }
-}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self.alMqttConversationService subscribeToConversation];
     if([ALApplozicSettings isDropShadowInNavigationBarEnabled])
     {
         [self dropShadowInNavigationBar];
@@ -1356,6 +1333,7 @@
 -(void)dealloc
 {
 //    NSLog(@"dealloc called. Unsubscribing with mqtt.");
+    [self.alMqttConversationService unsubscribeToConversation];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"USER_DETAILS_UPDATE_CALL" object:nil];
 }

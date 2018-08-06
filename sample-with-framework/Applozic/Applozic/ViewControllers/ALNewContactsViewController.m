@@ -1127,7 +1127,12 @@
                                                              
                                                              for (UIViewController *aViewController in allViewControllers)
                                                              {
-                                                                 if ([ALPushAssist isViewObjIsMsgVC:aViewController])
+                                                                 if([aViewController isKindOfClass:NSClassFromString([ALApplozicSettings getMsgContainerVC])])
+                                                                 {
+                                                                     
+                                                                     [self.navigationController popToViewController:aViewController animated:YES];
+                                                                     
+                                                                 } else if ([ALPushAssist isViewObjIsMsgVC:aViewController])
                                                                  {
                                                                      ALMessagesViewController * messageVC = (ALMessagesViewController *)aViewController;
                                                                      [messageVC insertChannelMessage:alChannel.key];
@@ -1165,7 +1170,12 @@
                                      
                                      for (UIViewController *aViewController in allViewControllers)
                                      {
-                                         if ([ALPushAssist isViewObjIsMsgVC:aViewController])
+                                         if([aViewController isKindOfClass:NSClassFromString([ALApplozicSettings getMsgContainerVC])])
+                                         {
+                                             
+                                             [self.navigationController popToViewController:aViewController animated:YES];
+                                             
+                                         } else if ([ALPushAssist isViewObjIsMsgVC:aViewController])
                                          {
                                              ALMessagesViewController * messageVC = (ALMessagesViewController *)aViewController;
                                              [messageVC insertChannelMessage:alChannel.key];

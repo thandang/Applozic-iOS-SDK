@@ -23,6 +23,7 @@
 #import "ALGroupDetailViewController.h"
 #import "ALUserProfileVC.h"
 #import "ALUserService.h"
+#import "Applozic.h"
 
 
 @implementation ALNotificationView
@@ -390,7 +391,22 @@
              }
              else
              {
-                 ALSLog(ALLoggerSeverityInfo, @"View Already Opened and Notification coming already");
+                //This will come here once the notiifcation clicked from other views for opening the chat screen
+                 
+                 if(top.isChatViewOnTop){
+                     [self updateChatScreen:delegate];
+                 }else{
+                     ALChatLauncher *chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:[ALUserDefaultsHandler getApplicationKey]];
+                     
+                     if(self.groupId){
+                         self.contactId = nil;
+                     }else{
+                         self.groupId = nil;
+                     }
+                     
+                     [chatLauncher launchIndividualChat:self.contactId withGroupId: self.groupId withDisplayName:nil andViewControllerObject:top.topViewController andWithText:nil];
+                 }
+
              }
          }
          @catch (NSException * exp)

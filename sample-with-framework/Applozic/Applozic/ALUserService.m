@@ -457,10 +457,8 @@
     }
     
     ALUserClientService *clientService = [ALUserClientService new];
-    [clientService updatePassword:oldPassword  withNewPassword: newPassword  withCompletion:^(id theJson, NSError *theError) {
-        
-        ALAPIResponse *alAPIResponse = [[ALAPIResponse alloc] initWithJSONString:(NSString *)theJson];
-        
+    [clientService updatePassword:oldPassword  withNewPassword: newPassword  withCompletion:^(ALAPIResponse *alAPIResponse, NSError *theError) {
+
         if(!theError){
             
             if([alAPIResponse.status isEqualToString:@"error"])

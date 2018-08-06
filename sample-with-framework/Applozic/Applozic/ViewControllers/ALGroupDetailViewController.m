@@ -444,7 +444,8 @@
         ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
         ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
     
-        if(![self isThisChannelLeft:self.channelKeyID] && channel.type != BROADCAST)
+        
+        if(![self isThisChannelLeft:self.channelKeyID] && !channel.isBroadcastGroup)
         {
             [self turnUserInteractivityForNavigationAndTableView:NO];
             ALChannelService * alchannelService = [[ALChannelService alloc] init];
@@ -697,7 +698,7 @@
                 ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
                 ALChannel *channel = [channelDBService loadChannelByKey:self.channelKeyID];
                 NSString * labelTitle;
-                if(channel.type == BROADCAST){
+                if(channel.isBroadcastGroup){
                     labelTitle = NSLocalizedStringWithDefaultValue(@"deleteBroadcast", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Delete Broadcast", @"");
                 }else{
                     
@@ -722,7 +723,7 @@
     ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
     ALChannelUserX *alChannelUserX = [channelDBService loadChannelUserXByUserId:self.channelKeyID andUserId:memberIds[row]];
     
-    if(alChannelUserX.role.intValue == ADMIN)
+    if(alChannelUserX.isAdminUser)
     {
         [self.adminLabel setHidden:NO];
     }
@@ -775,7 +776,6 @@
     self.adminLabel = (UILabel*)[memberCell viewWithTag:104];
     [self.adminLabel setText:NSLocalizedStringWithDefaultValue(@"adminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Admin", @"")];
     self.adminLabel.textColor = self.view.tintColor;
-    
     self.lastSeenLabel = (UILabel *)[memberCell viewWithTag:105];
 }
 

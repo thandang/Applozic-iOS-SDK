@@ -332,6 +332,16 @@
 {
     BOOL hide = [[self.metadata objectForKey:@"hide"] boolValue];
 
+    // Check messages that we need to hide
+    NSArray *keys = [ALApplozicSettings metadataKeysToHideMessages];
+    if(keys != nil) {
+        for(NSString *key in keys) {
+            // If this key is present then it's a hidden message
+            if([self.metadata objectForKey:key] != nil) {
+                return true;
+            }
+        }
+    }
     return hide;
 }
 

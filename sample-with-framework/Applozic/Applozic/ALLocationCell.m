@@ -341,7 +341,7 @@
 
 -(void)showMaps:(UITapGestureRecognizer *)sender
 {
-    NSString * URLString = [NSString stringWithFormat:@"https://maps.google.com/maps?q=loc:%@",[self formatLocationJson:super.mMessage]];
+    NSString * URLString = [NSString stringWithFormat:@"https://maps.google.com/maps?q=%@",[self formatLocationJson:super.mMessage]];
     NSURL * locationURL = [NSURL URLWithString:URLString];
     [[UIApplication sharedApplication] openURL:locationURL];
 }

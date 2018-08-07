@@ -3637,11 +3637,12 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(NSString *)formatDateTime:(ALUserDetail*)alUserDetail andValue:(double)value
 {
+    
     NSDate *current = [[NSDate alloc] init];
     NSDate *date  = [[NSDate alloc] initWithTimeIntervalSince1970:value/1000];
-
+    
     NSTimeInterval difference = [current timeIntervalSinceDate:date];
-
+    
     NSDate *today = [NSDate date];
     NSDate *yesterday = [today dateByAddingTimeInterval: -86400.0];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -3649,29 +3650,30 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     NSString *todaydate = [format stringFromDate:current];
     NSString *yesterdaydate =[format stringFromDate:yesterday];
     NSString *serverdate =[format stringFromDate:date];
-
+    
+    
     if([serverdate compare:todaydate] == NSOrderedSame)
     {
-
+        
         NSString *str = NSLocalizedStringWithDefaultValue(@"lastSeenLabelText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Last seen ", @"");
-
+        
         double minutes = 2 * 60.00;
         if(alUserDetail.connected)
         {
             [self.label setText:NSLocalizedStringWithDefaultValue(@"onlineLabelText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Online", @"")];
-
+            
         }
         else if(difference < minutes)
         {
             [self.label setText:NSLocalizedStringWithDefaultValue(@"lastSeenJustNowLabelText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Last seen Just Now ", @"")];
-
+            
         }
         else
         {
             NSString *theTime;
             int hours =  difference / 3600;
             int minutes = (difference - hours * 3600 ) / 60;
-
+            
             if(hours > 0)
             {
                 theTime = [NSString stringWithFormat:@"%.2d:%.2d", hours, minutes];
@@ -3679,7 +3681,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 {
                     theTime = [theTime substringFromIndex:[@"0" length]];
                 }
-
+                
                 str = [str stringByAppendingString: [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"hrsAgo", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"%@ hrs ago", @""), theTime]];
             }
             else
@@ -3689,20 +3691,21 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 {
                     theTime = [theTime substringFromIndex:[@"0" length]];
                 }
-
+                
                 str = [str stringByAppendingString: [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"mins", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],@"%@ mins ago", @""), theTime]];
-
+                
             }
             [self.label setText:str];
         }
-
+        
     }
     else if ([serverdate compare:yesterdaydate] == NSOrderedSame)
     {
+        
         NSString *str = NSLocalizedStringWithDefaultValue(@"lastSeenYesterday", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Last seen yesterday at %@", @"");
         [format setDateFormat:@"hh:mm a"];
-
-        str = [str stringByAppendingString:[format stringFromDate:date]];
+        
+        str = [NSString stringWithFormat:str,[format stringFromDate:date]];
         if([str hasPrefix:@"0"])
         {
             str = [str substringFromIndex:[@"0" length]];
@@ -3713,11 +3716,11 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     {
         [format setDateFormat:@"EE, MMM dd, yyy"];
         NSString *str = NSLocalizedStringWithDefaultValue(@"lastSeenLabelText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Last seen ", @"");
-
+        
         str = [str stringByAppendingString:[format stringFromDate:date]];
         [self.label setText:str];
     }
-
+    
     return self.label.text;
 }
 -(NSMutableArray *)getLastSeenForGroupDetails

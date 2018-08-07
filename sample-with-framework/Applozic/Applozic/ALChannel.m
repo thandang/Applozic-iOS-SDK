@@ -157,8 +157,8 @@
 
 -(BOOL)isPartOfCategory:(NSString*)category{
     
-    if( _metadata && [_metadata  valueForKey:CATEGORY] ){
-        return ([ [_metadata  valueForKey:CATEGORY] isEqualToString:category]);
+    if( _metadata && [_metadata  valueForKey:AL_CATEGORY] ){
+        return ([ [_metadata  valueForKey:AL_CATEGORY] isEqualToString:category]);
     }
     return NO;
 }

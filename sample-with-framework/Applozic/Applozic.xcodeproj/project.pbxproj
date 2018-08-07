@@ -20,6 +20,12 @@
 		10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B6DABB204E980300B6E024 /* ALGroupUser.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
+		181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12D1BC5364C00EBA00F /* UIImageView+WebCache.m */; };
+		1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584220E2470E00B75802 /* ALRealTimeUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1863584E20E2480800B75802 /* ApplozicClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584C20E2480800B75802 /* ApplozicClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1863584F20E2480800B75802 /* ApplozicClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863584D20E2480800B75802 /* ApplozicClient.m */; };
+		186885A120ECC5FE00919802 /* ALMessgaeBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1868859F20ECC5FE00919802 /* ALMessgaeBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		186885A220ECC5FE00919802 /* ALMessgaeBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 186885A020ECC5FE00919802 /* ALMessgaeBuilder.m */; };
 		18A2BA2020C44DB500AD47A2 /* ALTemplateMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */; };
 		18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */; };
 		18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */; };
@@ -212,7 +218,6 @@
 		6D6DF1CD1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF12A1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.h */; };
 		6D6DF1CE1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12B1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.m */; };
 		6D6DF1CF1BC5364C00EBA00F /* UIImageView+WebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF12C1BC5364C00EBA00F /* UIImageView+WebCache.h */; };
-		6D6DF1D01BC5364C00EBA00F /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12D1BC5364C00EBA00F /* UIImageView+WebCache.m */; };
 		6D6DF1D11BC5364C00EBA00F /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF12E1BC5364C00EBA00F /* UIView+WebCacheOperation.h */; };
 		6D6DF1D21BC5364C00EBA00F /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12F1BC5364C00EBA00F /* UIView+WebCacheOperation.m */; };
 		6D6DF1D31BC5364C00EBA00F /* KAProgressLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF1311BC5364C00EBA00F /* KAProgressLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -380,6 +385,11 @@
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
+		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
+		1863584C20E2480800B75802 /* ApplozicClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplozicClient.h; path = Applozic/ApplozicClient.h; sourceTree = "<group>"; };
+		1863584D20E2480800B75802 /* ApplozicClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApplozicClient.m; path = Applozic/ApplozicClient.m; sourceTree = "<group>"; };
+		1868859F20ECC5FE00919802 /* ALMessgaeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALMessgaeBuilder.h; path = Applozic/ALMessgaeBuilder.h; sourceTree = "<group>"; };
+		186885A020ECC5FE00919802 /* ALMessgaeBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALMessgaeBuilder.m; path = Applozic/ALMessgaeBuilder.m; sourceTree = "<group>"; };
 		18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageCell.swift; path = Applozic/ALTemplateMessageCell.swift; sourceTree = "<group>"; };
 		18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesView.swift; path = Applozic/ALTemplateMessagesView.swift; sourceTree = "<group>"; };
 		18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesViewModel.swift; path = Applozic/ALTemplateMessagesViewModel.swift; sourceTree = "<group>"; };
@@ -750,6 +760,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181D17F020DD292F0016781E /* applozickit */ = {
+			isa = PBXGroup;
+			children = (
+				1863584C20E2480800B75802 /* ApplozicClient.h */,
+				1863584D20E2480800B75802 /* ApplozicClient.m */,
+				1863584220E2470E00B75802 /* ALRealTimeUpdate.h */,
+				1868859F20ECC5FE00919802 /* ALMessgaeBuilder.h */,
+				186885A020ECC5FE00919802 /* ALMessgaeBuilder.m */,
+			);
+			name = applozickit;
+			sourceTree = "<group>";
+		};
 		18A2BA2320C44E5E00AD47A2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1104,6 +1126,7 @@
 		6D6DF1DD1BC5376800EBA00F /* ApplozicLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				181D17F020DD292F0016781E /* applozickit */,
 				6D34AEB11CA441D7005FA8D4 /* contact */,
 				6D4C2B1E1C81836B0031C677 /* conversation */,
 				6D52A4261C7CA8A5008CBA3A /* media */,
@@ -1595,6 +1618,9 @@
 				C76D314B1F0AAFCE0087291F /* ALAudioVideoBaseVC.h in Headers */,
 				105F30C61FFBAEEC00D60431 /* AlChannelInfoModel.h in Headers */,
 				105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */,
+				186885A120ECC5FE00919802 /* ALMessgaeBuilder.h in Headers */,
+				1863584E20E2480800B75802 /* ApplozicClient.h in Headers */,
+				1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */,
 				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
 				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
 				10B6DABC204E980400B6E024 /* ALGroupUser.h in Headers */,
@@ -1604,21 +1630,21 @@
 				6D36F2081BFF3EE3003D46D3 /* ALApplozicSettings.h in Headers */,
 				6D9547691BE38DFF00776652 /* ALContactDBService.h in Headers */,
 				6D6DF1541BC5364C00EBA00F /* UIImage+Utility.h in Headers */,
-				6D6DF1CF1BC5364C00EBA00F /* UIImageView+WebCache.h in Headers */,
 				6D6DF1B21BC5364C00EBA00F /* MKAnnotationView+WebCache.h in Headers */,
-				6D6DF1BC1BC5364C00EBA00F /* SDWebImageDownloader.h in Headers */,
+				6D6DF1CF1BC5364C00EBA00F /* UIImageView+WebCache.h in Headers */,
+				6D6DF1C01BC5364C00EBA00F /* SDWebImageManager.h in Headers */,
+				6D6DF1BA1BC5364C00EBA00F /* SDWebImageDecoder.h in Headers */,
+				6D6DF1B81BC5364C00EBA00F /* SDWebImageCompat.h in Headers */,
 				6D6DF1B61BC5364C00EBA00F /* SDImageCache.h in Headers */,
+				6D6DF1C21BC5364C00EBA00F /* SDWebImageOperation.h in Headers */,
+				6D6DF1BC1BC5364C00EBA00F /* SDWebImageDownloader.h in Headers */,
 				6D6DF1C91BC5364C00EBA00F /* UIImage+MultiFormat.h in Headers */,
 				6D6DF1C51BC5364C00EBA00F /* UIButton+WebCache.h in Headers */,
 				6D6DF1C71BC5364C00EBA00F /* UIImage+GIF.h in Headers */,
 				6D6DF1B41BC5364C00EBA00F /* NSData+ImageContentType.h in Headers */,
 				6D6DF1CB1BC5364C00EBA00F /* UIImage+WebP.h in Headers */,
 				6D6DF1C31BC5364C00EBA00F /* SDWebImagePrefetcher.h in Headers */,
-				6D6DF1C01BC5364C00EBA00F /* SDWebImageManager.h in Headers */,
-				6D6DF1C21BC5364C00EBA00F /* SDWebImageOperation.h in Headers */,
-				6D6DF1B81BC5364C00EBA00F /* SDWebImageCompat.h in Headers */,
 				6D6DF1D11BC5364C00EBA00F /* UIView+WebCacheOperation.h in Headers */,
-				6D6DF1BA1BC5364C00EBA00F /* SDWebImageDecoder.h in Headers */,
 				6D6DF1BE1BC5364C00EBA00F /* SDWebImageDownloaderOperation.h in Headers */,
 				6D6DF1CD1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.h in Headers */,
 			);
@@ -1720,6 +1746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */,
 				6D7756B41D5B80DF0025560B /* ALChannelInfo.m in Sources */,
 				6D1385751CA9B80D009E6F50 /* ALMultipleAttachmentView.m in Sources */,
 				6D6DF1671BC5364C00EBA00F /* ALNotificationView.m in Sources */,
@@ -1736,6 +1763,7 @@
 				8B00F0E120C65A9A00ADBFC9 /* ALApplicationInfo.m in Sources */,
 				293446161D4F426F007BD1B4 /* ALShowImageViewController.m in Sources */,
 				6D4FE4901D7411F70044A7E6 /* NSData+AES.m in Sources */,
+				1863584F20E2480800B75802 /* ApplozicClient.m in Sources */,
 				4612E9021E13882D0022DB23 /* MQTTInMemoryPersistence.m in Sources */,
 				6D6DF1C81BC5364C00EBA00F /* UIImage+GIF.m in Sources */,
 				6D7756761D5B7F150025560B /* ALVCFClass.m in Sources */,
@@ -1826,6 +1854,7 @@
 				6D7757481D5B85100025560B /* ALLocationCell.m in Sources */,
 				6D7756B01D5B80DF0025560B /* ALChannelDBService.m in Sources */,
 				18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */,
+				186885A220ECC5FE00919802 /* ALMessgaeBuilder.m in Sources */,
 				10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */,
 				2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */,
 				4612E8F91E13882D0022DB23 /* MQTTCFSocketTransport.m in Sources */,
@@ -1855,7 +1884,6 @@
 				6D6DF1C61BC5364C00EBA00F /* UIButton+WebCache.m in Sources */,
 				6D6DF1791BC5364C00EBA00F /* ALMessageList.m in Sources */,
 				048E2F34209A04A300C40B8B /* ALChannelOfTwoMetaData.m in Sources */,
-				6D6DF1D01BC5364C00EBA00F /* UIImageView+WebCache.m in Sources */,
 				6D1385791CA9B83C009E6F50 /* AlMultipleAttachmentCell.m in Sources */,
 				C76D314D1F0AAFCF0087291F /* ALAudioVideoBaseVC.m in Sources */,
 				6D7756D81D5B82000025560B /* ALMessageInfoResponse.m in Sources */,

@@ -146,11 +146,12 @@
     self.selectedEnvirnLabel.text = environmentURLArray[pickerRowSelected];
     
     NSString * alKBASE_URL=[NSString stringWithFormat:@"https://%@.applozic.com",envrn];
-
-     NSString * alMQTT_URL = [NSString stringWithFormat:@"%@.applozic.com",envrn];
     
-    NSString * alFILE_URL = [NSString stringWithFormat:@"https://%@.com",([envrn isEqualToString:@"apps"]||[envrn isEqualToString:@"chat"])?@"applozic":@"apps-test.applozic"];
-
+    NSString * alMQTT_URL = [NSString stringWithFormat:@"%@.applozic.com",envrn];
+    
+    NSString * alFILE_URL = [NSString stringWithFormat:@"https://%@.com",([envrn isEqualToString:@"apps"]||[envrn isEqualToString:@"chat"])?@"applozic":@"mobi-com-alpha.appspot"];
+    
+    
     [ALUserDefaultsHandler setBASEURL:alKBASE_URL];
     [ALUserDefaultsHandler setMQTTURL:alMQTT_URL];
     [ALUserDefaultsHandler setFILEURL:alFILE_URL];

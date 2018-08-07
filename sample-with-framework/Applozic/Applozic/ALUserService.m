@@ -215,8 +215,10 @@
                 ALContactDBService *contactDB = [[ALContactDBService alloc] init];
                 [contactDB setBlockUser:userId andBlockedState:YES];
                 completion(error, YES);
+                return;
             }
         }
+        completion(error, NO);
         
     }];
 }
@@ -263,8 +265,11 @@
                 ALContactDBService *contactDB = [[ALContactDBService alloc] init];
                 [contactDB setBlockUser:userId andBlockedState:NO];
                 completion(error, YES);
+                return;
             }
         }
+        completion(error, NO);
+
     }];
 
 }
@@ -478,6 +483,25 @@
     }];
     
 }
+
+//==============================================================================================================================================
+#pragma mark - REST UNREAD COUNT + CONVERSATION READ HELPER METHODS
+//==============================================================================================================================================
+
+-(void)processResettingUnreadCount
+{
+    ALUserService * userService = [ALUserService new];
+    int count = [[userService getTotalUnreadCount] intValue];
+    NSLog(@"CHATVC_UNREAD_COUNT :: %i",count);
+    if(count == 0)
+    {
+        [userService resettingUnreadCountWithCompletion:^(NSString *json, NSError *error) {
+            
+            NSLog(@"RESET_UNREAD_COUNT CALL :: %@ and ERROR :: %@",json, error.description);
+        }];
+    }
+}
+
 
 
 -(void)getListOfUsersWithUserName:(NSString *)userName withCompletion:(void(^)(ALAPIResponse* response, NSError * error))completion

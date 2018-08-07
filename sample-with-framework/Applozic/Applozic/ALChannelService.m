@@ -597,27 +597,46 @@
     {
         [ALChannelClientService leaveChannel:channelKey orClientChannelKey:clientChannelKey
                                   withUserId:(NSString *)userId andCompletion:^(NSError *error, ALAPIResponse *response) {
-                                      
-                                      if([response.status isEqualToString:@"success"])
-                                      {
-                                          ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
-                                          if(clientChannelKey != nil)
-                                          {
-                                              ALChannel *alChannel = [channelDBService loadChannelByClientChannelKey:clientChannelKey];
-                                              [channelDBService removeMemberFromChannel:userId andChannelKey:alChannel.key];
-                                              [channelDBService setLeaveFlag:YES forChannel:alChannel.key];
-                                          }
-                                          else
-                                          {
-                                              [channelDBService removeMemberFromChannel:userId andChannelKey:channelKey];
-                                              [channelDBService setLeaveFlag:YES forChannel:channelKey];
-                                          }
-                                          
-                                      }
+                                      [self proccessLeaveResponse:channelKey andUserId:userId orClientChannelKey:clientChannelKey withResponse:response withError:error];
                                       completion(error);
                                   }];
     }
 }
+
+-(void) proccessLeaveResponse:(NSNumber *)channelKey andUserId:(NSString *)userId orClientChannelKey:(NSString *)clientChannelKey withResponse:(ALAPIResponse *) response  withError:(NSError*)error{
+    
+    if([response.status isEqualToString:@"success"])
+    {
+        ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+        if(clientChannelKey != nil)
+        {
+            ALChannel *alChannel = [channelDBService loadChannelByClientChannelKey:clientChannelKey];
+            [channelDBService removeMemberFromChannel:userId andChannelKey:alChannel.key];
+            [channelDBService setLeaveFlag:YES forChannel:alChannel.key];
+        }
+        else
+        {
+            [channelDBService removeMemberFromChannel:userId andChannelKey:channelKey];
+            [channelDBService setLeaveFlag:YES forChannel:channelKey];
+        }
+        
+    }
+}
+
+-(void)leaveChannelWithChannelKey:(NSNumber *)channelKey andUserId:(NSString *)userId orClientChannelKey:(NSString *)clientChannelKey
+                   withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion
+{
+    if((channelKey != nil || clientChannelKey != nil) && userId != nil)
+    {
+        [ALChannelClientService leaveChannel:channelKey orClientChannelKey:clientChannelKey
+                                  withUserId:(NSString *)userId andCompletion:^(NSError *error, ALAPIResponse *response) {
+                                      [self proccessLeaveResponse:channelKey andUserId:userId orClientChannelKey:clientChannelKey withResponse:response withError:error];
+                                      completion(error,response);
+                                  }];
+    }
+    
+}
+    
 
 //===========================================================================================================================
 #pragma mark UPDATE CHANNEL (FROM DEVICE SIDE)
@@ -646,25 +665,44 @@
     {
         [ALChannelClientService updateChannel:channelKey orClientChannelKey:clientChannelKey andNewName:newName andImageURL:imageURL metadata:metaData orChildKeys:childKeysList  orChannelUsers:(NSMutableArray *)channelUsers andCompletion:^(NSError *error, ALAPIResponse *response) {
             
-            if([response.status isEqualToString:@"success"])
-            {
-                ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
-                if(clientChannelKey != nil)
-                {
-                    ALChannel *alChannel = [channelDBService loadChannelByClientChannelKey:clientChannelKey];
-                    [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
-                }
-                else
-                {
-                    ALChannel *alChannel = [channelDBService loadChannelByKey:channelKey];
-                    [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
-                }
-                
-            }
+            [self proccessUpdateChannelResponse:channelKey andNewName:newName andImageURL:imageURL orClientChannelKey:clientChannelKey isUpdatingMetaData:flag metadata:metaData orChildKeys:childKeysList orChannelUsers:channelUsers withResponse:response];
             completion(error);
         }];
     }
 }
+
+-(void)updateChannelWithChannelKey:(NSNumber *)channelKey andNewName:(NSString *)newName andImageURL:(NSString *)imageURL orClientChannelKey:(NSString *)clientChannelKey
+  isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion
+{
+    if(channelKey != nil || clientChannelKey != nil)
+    {
+        [ALChannelClientService updateChannel:channelKey orClientChannelKey:clientChannelKey andNewName:newName andImageURL:imageURL metadata:metaData orChildKeys:childKeysList  orChannelUsers:(NSMutableArray *)channelUsers andCompletion:^(NSError *error, ALAPIResponse *response) {
+            
+            [self proccessUpdateChannelResponse:channelKey andNewName:newName andImageURL:imageURL orClientChannelKey:clientChannelKey isUpdatingMetaData:flag metadata:metaData orChildKeys:childKeysList orChannelUsers:channelUsers withResponse:response];
+            completion(error,response);
+        }];
+    }
+}
+
+-(void)proccessUpdateChannelResponse:(NSNumber *)channelKey andNewName:(NSString *)newName andImageURL:(NSString *)imageURL orClientChannelKey:(NSString *)clientChannelKey isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withResponse :(ALAPIResponse *) response{
+    
+    if([response.status isEqualToString:@"success"])
+    {
+        ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
+        if(clientChannelKey != nil)
+        {
+            ALChannel *alChannel = [channelDBService loadChannelByClientChannelKey:clientChannelKey];
+            [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
+        }
+        else
+        {
+            ALChannel *alChannel = [channelDBService loadChannelByKey:channelKey];
+            [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
+        }
+        
+    }
+}
+
 
 -(void)updateChannelMetaData:(NSNumber *)channelKey
           orClientChannelKey:(NSString *)clientChannelKey

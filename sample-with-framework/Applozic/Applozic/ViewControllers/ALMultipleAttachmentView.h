@@ -23,6 +23,7 @@
 
 @property (nonatomic, strong) UIImage * classImage;
 @property (nonatomic, strong) NSString * classVideoPath;
+@property (nonatomic, strong) NSData * dataGIF;
 
 @property (nonatomic, weak) id <ALMUltipleAttachmentDelegate> multipleAttachmentDelegate;
 

@@ -5,7 +5,7 @@
 //
 //  Copyright (c) 2015 AppLozic. All rights reserved.
 //
-
+#include "stdio.h"
 #import "UIView+Toast.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "ALChatViewController.h"
@@ -2699,7 +2699,10 @@
     for(ALMultipleAttachmentView * attachment in attachmentPathArray)
     {
         NSString *filePath = @"";
-        if(attachment.classImage)
+        if(attachment.dataGIF){
+            filePath = [ALImagePickerHandler saveGifToDocDirectory:attachment.classImage withGIFData :attachment.dataGIF];
+            [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+        }else if(attachment.classImage)
         {
             filePath = [ALImagePickerHandler saveImageToDocDirectory:attachment.classImage];
             [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];

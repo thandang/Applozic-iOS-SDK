@@ -64,6 +64,8 @@
 #define CHANNEL_PADDING_WIDTH 5
 #define CHANNEL_HEIGHT 20
 #define CHANNEL_PADDING_HEIGHT 20
+#define AL_CONTACT_PADDING_Y 20
+
 
 
 
@@ -219,7 +221,7 @@
             requiredHeight = requiredHeight + self.mChannelMemberName.frame.size.height;
             imageViewY = imageViewY +  self.mChannelMemberName.frame.size.height;
             
-            contactProfileViewY =  self.mChannelMemberName.frame.origin.x;
+            contactProfileViewY =  self.mChannelMemberName.frame.origin.x-AL_CONTACT_PADDING_Y;
 
         }
         

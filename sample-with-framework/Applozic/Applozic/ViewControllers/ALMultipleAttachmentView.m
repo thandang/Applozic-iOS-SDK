@@ -15,6 +15,7 @@
 #import "ALImagePickerHandler.h"
 #import "ALImagePickerController.h"
 #import "UIImage+animatedGIF.h"
+#import "ALAttachmentPickerData.h"
 
 #define NAVIGATION_TEXT_SIZE 20
 
@@ -110,13 +111,21 @@ static NSString * const reuseIdentifier = @"collectionCell";
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    __block ALMultipleAttachmentView * object = [ALMultipleAttachmentView new];
+    __block ALAttachmentPickerData * object = [ALAttachmentPickerData new];
     object.classVideoPath = nil;
     object.classImage = nil;
     object.dataGIF = nil;
+    object.attachmentType = nil;
     
     __block UIImage * image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    UIImage * globalThumbnail = [UIImage new];
+    __block UIImage * globalThumbnail = [UIImage new];
+    
+    if(image)
+    {
+        object.classImage = [ALUtilityClass getNormalizedImage:image];
+        object.attachmentType = (ALAttachmentType) ALAttachmentTypeImage;
+        globalThumbnail = image;
+    }
     
     NSURL * refUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
     if (refUrl) {
@@ -135,18 +144,15 @@ static NSString * const reuseIdentifier = @"collectionCell";
                     // success, data is in imageData
                     CFStringRef uti = (__bridge CFStringRef)dataUTI;
                     if(UTTypeConformsTo(uti, kUTTypeGIF)){
+                        object.attachmentType = (ALAttachmentType) ALAttachmentTypeGif;
                         object.dataGIF = imageData;
                         image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+                        object.classImage = image;
+                        globalThumbnail = image;
                     }
                 }
             }];
         }
-    }
-    
-    if(image )
-    {
-        object.classImage = [ALUtilityClass getNormalizedImage:image];
-        globalThumbnail = image;
     }
     
     NSString *mediaType = info[UIImagePickerControllerMediaType];
@@ -155,6 +161,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
     {
         NSURL *videoURL = info[UIImagePickerControllerMediaURL];
         object.classVideoPath = [videoURL path];
+        object.attachmentType = (ALAttachmentType) ALAttachmentTypeVideo;
         globalThumbnail = [ALUtilityClass subProcessThumbnail:videoURL];
     }
     

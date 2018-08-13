@@ -5,7 +5,6 @@
 //
 //  Copyright (c) 2015 AppLozic. All rights reserved.
 //
-#include "stdio.h"
 #import "UIView+Toast.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "ALChatViewController.h"

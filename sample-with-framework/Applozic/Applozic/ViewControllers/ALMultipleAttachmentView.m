@@ -122,8 +122,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
     
     if(image)
     {
-        object.classImage = [ALUtilityClass getNormalizedImage:image];
-        object.attachmentType = (ALAttachmentType) ALAttachmentTypeImage;
+        [self saveAttachmentData:&object ofType:ALAttachmentTypeImage withImage:[ALUtilityClass getNormalizedImage:image] withGif:nil withVideo:nil];
         globalThumbnail = image;
     }
     
@@ -140,15 +139,14 @@ static NSString * const reuseIdentifier = @"collectionCell";
                 NSNumber * isCloud = [info objectForKey:PHImageResultIsInCloudKey];
                 if ([isError boolValue] || [isCloud boolValue] || ! imageData) {
                     // fail
+                    ALSLog(ALLoggerSeverityInfo, @"Couldn't find gif data");
                 } else {
                     // success, data is in imageData
                     CFStringRef uti = (__bridge CFStringRef)dataUTI;
                     if(UTTypeConformsTo(uti, kUTTypeGIF)){
-                        object.attachmentType = (ALAttachmentType) ALAttachmentTypeGif;
-                        object.dataGIF = imageData;
                         image = [UIImage animatedImageWithAnimatedGIFData:imageData];
-                        object.classImage = image;
                         globalThumbnail = image;
+                        [self saveAttachmentData:&object ofType:ALAttachmentTypeGif withImage:image withGif:imageData withVideo:nil];
                     }
                 }
             }];
@@ -160,9 +158,8 @@ static NSString * const reuseIdentifier = @"collectionCell";
     if(isMovie)
     {
         NSURL *videoURL = info[UIImagePickerControllerMediaURL];
-        object.classVideoPath = [videoURL path];
-        object.attachmentType = (ALAttachmentType) ALAttachmentTypeVideo;
         globalThumbnail = [ALUtilityClass subProcessThumbnail:videoURL];
+        [self saveAttachmentData:&object ofType:ALAttachmentTypeVideo withImage:nil withGif:nil withVideo:[videoURL path]];
     }
     
     [self.imageArray insertObject:globalThumbnail atIndex:0];
@@ -170,6 +167,15 @@ static NSString * const reuseIdentifier = @"collectionCell";
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     [self.collectionView reloadData];
+}
+
+-(void) saveAttachmentData:(ALAttachmentPickerData **) attachment ofType:(ALAttachmentType)type
+                 withImage:(UIImage *) image withGif:(NSData *) gif withVideo:(NSString *) video
+{
+    (* attachment).attachmentType = type;
+    (* attachment).classImage = image;
+    (* attachment).dataGIF = gif;
+    (* attachment).classVideoPath = video;
 }
 
 //====================================================================================================================================

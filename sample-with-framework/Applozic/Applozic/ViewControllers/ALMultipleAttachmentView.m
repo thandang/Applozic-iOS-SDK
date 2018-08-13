@@ -238,9 +238,18 @@ static NSString * const reuseIdentifier = @"collectionCell";
 
 -(void)pickImageFromGallery
 {
-    self.mImagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    self.mImagePicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie];
-    [self presentViewController:self.mImagePicker animated:YES completion:nil];
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        if (status == PHAuthorizationStatusAuthorized)
+        {
+            self.mImagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            self.mImagePicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie];
+            [self presentViewController:self.mImagePicker animated:YES completion:nil];
+        }
+        else
+        {
+            [ALUtilityClass permissionPopUpWithMessage:NSLocalizedStringWithDefaultValue(@"permissionPopMessageForCamera", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Enable Photos Permission", @"") andViewController:self];
+        }
+    }];
 }
 
 //====================================================================================================================================

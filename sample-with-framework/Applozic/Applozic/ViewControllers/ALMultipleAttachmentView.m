@@ -122,7 +122,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
     
     if(image)
     {
-        [self saveAttachmentData:&object ofType:ALAttachmentTypeImage withImage:[ALUtilityClass getNormalizedImage:image] withGif:nil withVideo:nil];
+        object = [self saveAttachmentData:ALAttachmentTypeImage withImage:[ALUtilityClass getNormalizedImage:image] withGif:nil withVideo:nil];
         globalThumbnail = image;
     }
     
@@ -146,7 +146,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
                     if(UTTypeConformsTo(uti, kUTTypeGIF)){
                         image = [UIImage animatedImageWithAnimatedGIFData:imageData];
                         globalThumbnail = image;
-                        [self saveAttachmentData:&object ofType:ALAttachmentTypeGif withImage:image withGif:imageData withVideo:nil];
+                        object = [self saveAttachmentData:ALAttachmentTypeGif withImage:image withGif:imageData withVideo:nil];
                     }
                 }
             }];
@@ -159,7 +159,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
     {
         NSURL *videoURL = info[UIImagePickerControllerMediaURL];
         globalThumbnail = [ALUtilityClass subProcessThumbnail:videoURL];
-        [self saveAttachmentData:&object ofType:ALAttachmentTypeVideo withImage:nil withGif:nil withVideo:[videoURL path]];
+        object = [self saveAttachmentData:ALAttachmentTypeVideo withImage:nil withGif:nil withVideo:[videoURL path]];
     }
     
     [self.imageArray insertObject:globalThumbnail atIndex:0];
@@ -169,13 +169,15 @@ static NSString * const reuseIdentifier = @"collectionCell";
     [self.collectionView reloadData];
 }
 
--(void) saveAttachmentData:(ALAttachmentPickerData **) attachment ofType:(ALAttachmentType)type
+-(ALAttachmentPickerData *) saveAttachmentData:(ALAttachmentType)type
                  withImage:(UIImage *) image withGif:(NSData *) gif withVideo:(NSString *) video
 {
-    (* attachment).attachmentType = type;
-    (* attachment).classImage = image;
-    (* attachment).dataGIF = gif;
-    (* attachment).classVideoPath = video;
+    ALAttachmentPickerData * updateAttachment = [ALAttachmentPickerData new];
+    updateAttachment.attachmentType = type;
+    updateAttachment.classImage = image;
+    updateAttachment.dataGIF = gif;
+    updateAttachment.classVideoPath = video;
+    return updateAttachment;
 }
 
 //====================================================================================================================================

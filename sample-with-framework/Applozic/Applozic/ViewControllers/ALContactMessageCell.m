@@ -235,22 +235,16 @@
         }
 
 
-        [self.mBubleImageView setFrame:CGRectMake(self.mUserProfileImageView.frame.size.width + BUBBLE_PADDING_X , 0,
-                                                  viewSize.width - BUBBLE_PADDING_WIDTH, requiredHeight)];
-        
-        
+        [self.mBubleImageView setFrame:CGRectMake(self.mUserProfileImageView.frame.size.width + BUBBLE_PADDING_X , 0,viewSize.width - BUBBLE_PADDING_WIDTH, requiredHeight)];
         
         if(!alMessage.groupId){
             contactProfileViewY =  self.mUserProfileImageView.frame.origin.x + 20;
         }
         
-      
         [self.contactProfileImage setFrame:CGRectMake(self.mBubleImageView.frame.origin.x + CNT_PROFILE_X,
                                                      contactProfileViewY,
                                                       CNT_PROFILE_WIDTH, CNT_PROFILE_HEIGHT)];
         
-
-
         CGFloat widthName = self.mBubleImageView.frame.size.width - (self.contactProfileImage.frame.size.width + 25);
 
         [self.contactPerson setFrame:CGRectMake(self.contactProfileImage.frame.origin.x + self.contactProfileImage.frame.size.width + CNT_PERSON_X,

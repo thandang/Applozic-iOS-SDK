@@ -354,6 +354,8 @@
 		6DEAEE8D1D4CDBC700360060 /* ALUserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */; };
 		8B00F0E020C65A9A00ADBFC9 /* ALApplicationInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B00F0DE20C65A9A00ADBFC9 /* ALApplicationInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B00F0E120C65A9A00ADBFC9 /* ALApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B00F0DF20C65A9A00ADBFC9 /* ALApplicationInfo.m */; };
+		8B170C202122CEFF003A14B3 /* CustomPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B170C1E2122CEFF003A14B3 /* CustomPicker.storyboard */; };
+		8B170C212122CEFF003A14B3 /* ALCustomPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B170C1F2122CEFF003A14B3 /* ALCustomPickerViewController.swift */; };
 		8B1AD6992110809800AB2060 /* ALLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1AD6972110809800AB2060 /* ALLogger.m */; };
 		8B1AD69A2110809800AB2060 /* ALLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B1AD6982110809800AB2060 /* ALLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6C119F1FC2D9AF007CFB54 /* SoundRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */; };
@@ -726,6 +728,8 @@
 		6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALUserProfileVC.m; sourceTree = "<group>"; };
 		8B00F0DE20C65A9A00ADBFC9 /* ALApplicationInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALApplicationInfo.h; sourceTree = "<group>"; };
 		8B00F0DF20C65A9A00ADBFC9 /* ALApplicationInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALApplicationInfo.m; sourceTree = "<group>"; };
+		8B170C1E2122CEFF003A14B3 /* CustomPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CustomPicker.storyboard; path = Applozic/CustomPicker.storyboard; sourceTree = "<group>"; };
+		8B170C1F2122CEFF003A14B3 /* ALCustomPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALCustomPickerViewController.swift; path = Applozic/ALCustomPickerViewController.swift; sourceTree = "<group>"; };
 		8B1AD6972110809800AB2060 /* ALLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALLogger.m; sourceTree = "<group>"; };
 		8B1AD6982110809800AB2060 /* ALLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALLogger.h; sourceTree = "<group>"; };
 		8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundRecordingView.swift; sourceTree = "<group>"; };
@@ -1105,6 +1109,8 @@
 		6D6DF1DB1BC5371200EBA00F /* ApplozicUIWidget */ = {
 			isa = PBXGroup;
 			children = (
+				8B170C1F2122CEFF003A14B3 /* ALCustomPickerViewController.swift */,
+				8B170C1E2122CEFF003A14B3 /* CustomPicker.storyboard */,
 				18A2BA2320C44E5E00AD47A2 /* ViewModel */,
 				18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */,
 				18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */,
@@ -1731,6 +1737,7 @@
 				6D6DF1861BC5364C00EBA00F /* Images.xcassets in Resources */,
 				6D6DF16F1BC5364C00EBA00F /* Applozic.storyboard in Resources */,
 				6D6DF1871BC5364C00EBA00F /* ALChatCostomization.plist in Resources */,
+				8B170C202122CEFF003A14B3 /* CustomPicker.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1781,6 +1788,7 @@
 				6D7756761D5B7F150025560B /* ALVCFClass.m in Sources */,
 				6D36F2091BFF3EE3003D46D3 /* ALApplozicSettings.m in Sources */,
 				322B304B1EF9537600DB01FC /* AlApplicationInfoFeed.m in Sources */,
+				8B170C212122CEFF003A14B3 /* ALCustomPickerViewController.swift in Sources */,
 				4612E8F51E13882D0022DB23 /* MQTTCFSocketDecoder.m in Sources */,
 				465EBAF21E9624C100E7B79B /* ALSubViewController.m in Sources */,
 				6D6DF1811BC5364C00EBA00F /* DB_CONTACT.m in Sources */,

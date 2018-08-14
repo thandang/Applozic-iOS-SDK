@@ -77,7 +77,7 @@
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
-                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol>
+                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol, ALCustomPickerDelegate>
 
 @property (nonatomic, assign) NSInteger startIndex;
 @property (nonatomic, assign) int rp;
@@ -2833,11 +2833,15 @@
 
     if(![ALApplozicSettings isPhotoGalleryOptionHidden]){
         [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"photosOrVideoOption", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Photos/Videos" , @"")  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-
-            UIStoryboard* storyboardM = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:ALChatViewController.class]];
-            ALMultipleAttachmentView *launchChat = (ALMultipleAttachmentView *)[storyboardM instantiateViewControllerWithIdentifier:@"collectionView"];
-            launchChat.multipleAttachmentDelegate = self;
-            [self.navigationController pushViewController:launchChat animated:YES];
+            if([ALApplozicSettings isMultiSelectGalleryViewDisabled]) {
+                UIStoryboard* storyboardM = [UIStoryboard storyboardWithName:@"Applozic" bundle:[NSBundle bundleForClass:ALChatViewController.class]];
+                ALMultipleAttachmentView *launchChat = (ALMultipleAttachmentView *)[storyboardM instantiateViewControllerWithIdentifier:@"collectionView"];
+                launchChat.multipleAttachmentDelegate = self;
+                [self.navigationController pushViewController:launchChat animated:YES];
+            } else {
+                ALBaseNavigationViewController *controller = [ALCustomPickerViewController makeInstanceWithDelegate:self];
+                [self presentViewController:controller animated:NO completion:nil];
+            }
         }]];
     }
 
@@ -4592,4 +4596,18 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [templateMessageView setHidden:NO];
     }
 }
+
+#pragma mark - ALCustomPickerDelegate
+
+- (void)filesSelectedWithImages:(NSArray<UIImage *> * _Nonnull)images videos:(NSArray<NSString *> * _Nonnull)videos {
+    NSLog(@"Images selected");
+    //TODO: Need to handle videos and images both.
+    for(UIImage * image in images)
+    {
+        NSString *filePath = @"";
+        filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
+        [self processAttachment:filePath andMessageText:@"" andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+    }
+}
+
 @end

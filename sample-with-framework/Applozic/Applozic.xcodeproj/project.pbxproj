@@ -30,6 +30,9 @@
 		18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */; };
 		18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */; };
 		18A2BA2720C44E9200AD47A2 /* ALTemplateMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */; };
+		1A3264D2211C116700737C79 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */; };
+		1A9CB20E211D8E7C00B19EC2 /* ALAttachmentPickerData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9CB20C211D8E7C00B19EC2 /* ALAttachmentPickerData.h */; };
+		1A9CB20F211D8E7C00B19EC2 /* ALAttachmentPickerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CB20D211D8E7C00B19EC2 /* ALAttachmentPickerData.m */; };
 		2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2932B9F21C7C875F0017911D /* ALGroupDetailViewController.m */; };
 		293446131D4F426F007BD1B4 /* ALImageActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 2934460F1D4F426F007BD1B4 /* ALImageActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -394,6 +397,10 @@
 		18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesView.swift; path = Applozic/ALTemplateMessagesView.swift; sourceTree = "<group>"; };
 		18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesViewModel.swift; path = Applozic/ALTemplateMessagesViewModel.swift; sourceTree = "<group>"; };
 		18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageModel.swift; path = Applozic/ALTemplateMessageModel.swift; sourceTree = "<group>"; };
+		1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		1A9CB20C211D8E7C00B19EC2 /* ALAttachmentPickerData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALAttachmentPickerData.h; sourceTree = "<group>"; };
+		1A9CB20D211D8E7C00B19EC2 /* ALAttachmentPickerData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALAttachmentPickerData.m; sourceTree = "<group>"; };
 		2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALGroupDetailViewController.h; sourceTree = "<group>"; };
 		2932B9F21C7C875F0017911D /* ALGroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALGroupDetailViewController.m; sourceTree = "<group>"; };
 		2934460F1D4F426F007BD1B4 /* ALImageActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALImageActivity.h; sourceTree = "<group>"; };
@@ -954,6 +961,10 @@
 				29C849A01CC932050042643C /* NSString+Encode.h */,
 				29C849A11CC932050042643C /* NSString+Encode.m */,
 				29D6F8681D193D9000A75369 /* TEXT VIEW */,
+				1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */,
+				1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */,
+				1A9CB20C211D8E7C00B19EC2 /* ALAttachmentPickerData.h */,
+				1A9CB20D211D8E7C00B19EC2 /* ALAttachmentPickerData.m */,
 			);
 			name = Utilities;
 			path = Applozic/Utilities;
@@ -1493,6 +1504,7 @@
 				6D6DF15E1BC5364C00EBA00F /* ALChatCell.h in Headers */,
 				6D6DF1761BC5364C00EBA00F /* ALMessage.h in Headers */,
 				6D6DF1D51BC5364C00EBA00F /* TPPropertyAnimation.h in Headers */,
+				1A9CB20E211D8E7C00B19EC2 /* ALAttachmentPickerData.h in Headers */,
 				6D6DF1621BC5364C00EBA00F /* ALContactCell.h in Headers */,
 				6D6DF16C1BC5364C00EBA00F /* ALMessageDBService.h in Headers */,
 				6D6DF1681BC5364C00EBA00F /* ALLocationManager.h in Headers */,
@@ -1678,7 +1690,7 @@
 		6D6DF0741BC535C800EBA00F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "applozic Inc";
 				TargetAttributes = {
 					6D6DF07C1BC535C800EBA00F = {
@@ -1896,6 +1908,7 @@
 				6D7756871D5B7FBE0025560B /* ALConversationClientService.m in Sources */,
 				6D7756F21D5B82A70025560B /* ALDataNetworkConnection.m in Sources */,
 				6D6DF14F1BC5364C00EBA00F /* ALMessageService.m in Sources */,
+				1A3264D2211C116700737C79 /* UIImage+animatedGIF.m in Sources */,
 				6D7756D41D5B82000025560B /* ALLastSeenSyncFeed.m in Sources */,
 				6D77572E1D5B84940025560B /* ALCustomCell.m in Sources */,
 				105F30C81FFBAEEC00D60431 /* AlChannelInfoModel.m in Sources */,
@@ -1904,6 +1917,7 @@
 				6D6DF1551BC5364C00EBA00F /* UIImage+Utility.m in Sources */,
 				6D46B6C61BD025060014A5D3 /* ALMapViewController.m in Sources */,
 				6DEAEE8D1D4CDBC700360060 /* ALUserProfileVC.m in Sources */,
+				1A9CB20F211D8E7C00B19EC2 /* ALAttachmentPickerData.m in Sources */,
 				6D6DF1531BC5364C00EBA00F /* ALUtilityClass.m in Sources */,
 				294637B71C6F16050025ED76 /* ALGroupCreationViewController.m in Sources */,
 				6D95476C1BE38DFF00776652 /* ALContactService.m in Sources */,
@@ -1944,13 +1958,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
@@ -1994,13 +2018,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
@@ -2023,6 +2057,7 @@
 				PROVISIONING_PROFILE = "4375e45c-3077-480b-b2d6-b7f7c5f4cd54";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2070,7 +2105,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C25JNDCBM4;
 				DYLIB_COMPATIBILITY_VERSION = 1;

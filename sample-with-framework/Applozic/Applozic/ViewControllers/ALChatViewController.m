@@ -5,7 +5,6 @@
 //
 //  Copyright (c) 2015 AppLozic. All rights reserved.
 //
-
 #import "UIView+Toast.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "ALChatViewController.h"
@@ -68,6 +67,7 @@
 #import "ALAudioVideoBaseVC.h"
 #import "ALVOIPNotificationHandler.h"
 #import "ALChannelService.h"
+#import "ALAttachmentPickerData.h"
 #import <Applozic/Applozic-Swift.h>
 
 #define MQTT_MAX_RETRY 3
@@ -2683,22 +2683,29 @@
 
 -(void)multipleAttachmentProcess:(NSMutableArray *)attachmentPathArray andText:(NSString *)messageText
 {
-    for(ALMultipleAttachmentView * attachment in attachmentPathArray)
+    for(ALAttachmentPickerData * attachment in attachmentPathArray)
     {
         NSString *filePath = @"";
-        if(attachment.classImage)
-        {
-            filePath = [ALImagePickerHandler saveImageToDocDirectory:attachment.classImage];
-            [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
-        }
-        else
-        {
-            NSURL * videoURL = [NSURL fileURLWithPath:attachment.classVideoPath];
-            [ALImagePickerHandler saveVideoToDocDirectory:videoURL handler:^(NSString * filePath){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
-                });
-             }];
+        NSURL * videoURL;
+        switch (attachment.attachmentType) {
+            case ALAttachmentTypeGif:
+                filePath = [ALImagePickerHandler saveGifToDocDirectory:attachment.classImage withGIFData :attachment.dataGIF];
+                [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+                break;
+                
+            case ALAttachmentTypeImage:
+                filePath = [ALImagePickerHandler saveImageToDocDirectory:attachment.classImage];
+                [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+                break;
+                
+            case ALAttachmentTypeVideo:
+                videoURL = [NSURL fileURLWithPath:attachment.classVideoPath];
+                [ALImagePickerHandler saveVideoToDocDirectory:videoURL handler:^(NSString * filePath){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+                    });
+                }];
+                break;
         }
     }
 }

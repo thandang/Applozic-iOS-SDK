@@ -433,6 +433,8 @@ UIViewController * modalCon;
 
     if (alMessage.imageFilePath != NULL)
     {
+        NSString *name = alMessage.imageFilePath;
+       
         NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
         [self setInImageView:[NSURL fileURLWithPath:filePath]];
@@ -463,7 +465,8 @@ UIViewController * modalCon;
 }
 
 -(void) setInImageView:(NSURL*)url{
-    [self.mImageView sd_setImageWithPreviousCachedImageWithURL:url andPlaceholderImage:nil options:0 progress:nil completed:nil];
+    [self.mImageView sd_setImageWithURL:url placeholderImage:nil options:0];
+
 
 }
 

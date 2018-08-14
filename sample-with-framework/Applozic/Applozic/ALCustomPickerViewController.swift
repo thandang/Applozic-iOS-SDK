@@ -47,7 +47,7 @@ public class ALBaseNavigationViewController: UINavigationController {
 }
 
 @objc public protocol ALCustomPickerDelegate: class {
-    @objc func filesSelected(images: [UIImage], videos: [NSString])
+    @objc func filesSelected(images: [UIImage], videos: [NSString], gifs: [NSData])
 }
 
 @objc public class ALCustomPickerViewController: UIViewController {
@@ -60,12 +60,12 @@ public class ALBaseNavigationViewController: UINavigationController {
     var selectedRows = [Int]()
     var selectedImages = [Int: UIImage]()
     var selectedVideos = [Int: String]()
+    var selectedGifs = [Int: NSData]()
 
     @IBOutlet weak var doneButton: UIBarButtonItem!
     weak var delegate: ALCustomPickerDelegate?
 
     @IBOutlet weak var previewGallery: UICollectionView!
-
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +98,6 @@ public class ALBaseNavigationViewController: UINavigationController {
     //MARK: - UI control
     private func setupNavigation() {
         self.navigationController?.title = title
-        self.navigationController?.navigationBar.backgroundColor = UIColor.white
         guard let navVC = self.navigationController else {return}
         navVC.navigationBar.shadowImage = UIImage()
         navVC.navigationBar.isTranslucent = true
@@ -107,8 +106,12 @@ public class ALBaseNavigationViewController: UINavigationController {
             backImage = backImage?.imageFlippedForRightToLeftLayoutDirection()
         }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: backImage, style: .plain, target: self , action: #selector(dismissAction(_:)))
-        self.navigationController?.navigationBar.tintColor = UIColor.black
-
+        self.navigationController?.navigationBar.barTintColor = ALApplozicSettings.getColorForNavigation()
+        self.navigationController?.navigationBar.tintColor = ALApplozicSettings.getColorForNavigationItem()
+        if let aSize = UIFont(name: "Helvetica-Bold", size: 18) {
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: ALApplozicSettings.getColorForNavigationItem(),
+                                                                            NSAttributedStringKey.font: aSize]
+        }
     }
 
     private func checkPhotoLibraryPermission() {
@@ -217,15 +220,16 @@ public class ALBaseNavigationViewController: UINavigationController {
 
         let videos = Array(selectedVideos.values)
         let images = Array(selectedImages.values)
-        delegate?.filesSelected(images: images, videos: videos as [NSString])
+        let gifs = Array(selectedGifs.values)
+        delegate?.filesSelected(images: images, videos: videos as [NSString], gifs: gifs as [NSData])
         self.navigationController?.dismiss(animated: false, completion: nil)
 
     }
-
 
     @IBAction func dismissAction(_ sender: UIBarButtonItem) {
         self.navigationController?.dismiss(animated: false, completion: nil)
     }
+    
 }
 
 extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
@@ -245,14 +249,18 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
         let asset = allPhotos.object(at: indexPath.item)
         if selectedRows[indexPath.row] == 1 {
             selectedRows[indexPath.row] = 0
-            if asset.mediaType == .video {
+            if checkGif(asset: asset){
+                selectedGifs.removeValue(forKey: indexPath.row)
+            }else if asset.mediaType == .video {
                 selectedVideos.removeValue(forKey: indexPath.row)
             } else {
                 selectedImages.removeValue(forKey: indexPath.row)
             }
         } else {
             selectedRows[indexPath.row] = 1
-            if asset.mediaType == .video {
+            if checkGif(asset: asset){
+                exportGifAsset(indexPath: indexPath, asset)
+            }else if asset.mediaType == .video {
                 exportVideoAsset(indexPath: indexPath, asset)
             } else {
                 PHCachingImageManager.default().requestImageData(for: asset, options:nil) { (imageData, _, _, _) in
@@ -263,6 +271,37 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
         }
 
         previewGallery.reloadItems(at: [indexPath])
+    }
+    
+    func checkGif(asset: PHAsset) -> Bool{
+        if let identifier = asset.value(forKey: "uniformTypeIdentifier") as? String
+        {
+            if identifier == kUTTypeGIF as String
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    func exportGifAsset(indexPath: IndexPath, _ asset: PHAsset){
+        print("SHIVAMMM getting gifs")
+        let options = PHImageRequestOptions()
+        options.isSynchronous = true;
+        options.isNetworkAccessAllowed = false;
+        options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat;
+        
+        let defaultManager = PHImageManager()
+        
+        defaultManager.requestImageData(for: asset, options: options) { (imageData, dataUti, orientation, info) in
+            if let isError = info?[PHImageErrorKey] as? String, !isError.isEmpty {print("Error"); return}
+            if let isCloud = info?[PHImageResultIsInCloudKey] as? Bool, isCloud {return}
+            // success, data is in imageData
+            let uti = dataUti as! CFString
+            if UTTypeConformsTo(uti, kUTTypeGIF){
+                self.selectedGifs[indexPath.row] = imageData as! NSData
+            }
+        }
     }
 
     // MARK: UICollectionViewDataSource

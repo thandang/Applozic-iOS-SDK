@@ -69,6 +69,7 @@
 #import "ALChannelService.h"
 #import "ALAttachmentPickerData.h"
 #import <Applozic/Applozic-Swift.h>
+#import "UIImage+animatedGIF.h"
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -2683,12 +2684,14 @@
 
 -(void)multipleAttachmentProcess:(NSMutableArray *)attachmentPathArray andText:(NSString *)messageText
 {
+    NSLog(@"SHIVAMMMM its coming coming");
     for(ALAttachmentPickerData * attachment in attachmentPathArray)
     {
         NSString *filePath = @"";
         NSURL * videoURL;
         switch (attachment.attachmentType) {
             case ALAttachmentTypeGif:
+                NSLog(@"SHIVAMMMM its coming as a gif gif gif");
                 filePath = [ALImagePickerHandler saveGifToDocDirectory:attachment.classImage withGIFData :attachment.dataGIF];
                 [self processAttachment:filePath andMessageText:messageText andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
                 break;
@@ -4599,15 +4602,39 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 #pragma mark - ALCustomPickerDelegate
 
-- (void)filesSelectedWithImages:(NSArray<UIImage *> * _Nonnull)images videos:(NSArray<NSString *> * _Nonnull)videos {
+- (void)filesSelectedWithImages:(NSArray<UIImage *> * _Nonnull)images videos:(NSArray<NSString *> * _Nonnull)videos gifs:(NSArray<NSData *> * _Nonnull)gifs{
     NSLog(@"Images selected");
     //TODO: Need to handle videos and images both.
+    
+    NSMutableArray * attachmentArray = [NSMutableArray new];
+    
     for(UIImage * image in images)
     {
-        NSString *filePath = @"";
-        filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
-        [self processAttachment:filePath andMessageText:@"" andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+        [attachmentArray addObject: [self getAttachmentDataOfType:ALAttachmentTypeImage withImage:image withGif:nil withVideo:nil]] ;
     }
+    
+    for(NSString * video in videos){
+        [attachmentArray addObject: [self getAttachmentDataOfType:ALAttachmentTypeVideo withImage:nil withGif:nil withVideo:video]] ;
+    }
+    
+    for(NSData * gifData in gifs){
+        NSLog(@"SHIVAMMMMM GIFS selected");
+        [attachmentArray addObject: [self getAttachmentDataOfType:ALAttachmentTypeGif
+                                                     withImage:[UIImage animatedImageWithAnimatedGIFData:gifData] withGif:gifData withVideo:nil]] ;
+    }
+    
+    [self multipleAttachmentProcess: attachmentArray andText:@""];
+}
+
+-(ALAttachmentPickerData *) getAttachmentDataOfType:(ALAttachmentType)type withImage:(UIImage *) image
+                                            withGif:(NSData *) gif withVideo:(NSString *) video
+{
+    ALAttachmentPickerData * updateAttachment = [ALAttachmentPickerData new];
+    updateAttachment.attachmentType = type;
+    updateAttachment.classImage = image;
+    updateAttachment.dataGIF = gif;
+    updateAttachment.classVideoPath = video;
+    return updateAttachment;
 }
 
 @end

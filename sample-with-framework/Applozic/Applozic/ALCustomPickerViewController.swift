@@ -47,7 +47,7 @@ public class ALBaseNavigationViewController: UINavigationController {
 }
 
 @objc public protocol ALCustomPickerDelegate: class {
-    @objc func filesSelected(images: [UIImage], videos: [NSString], gifs: [NSData])
+    @objc func multimediaSelected(_ list: [ALMultimediaData])
 }
 
 @objc public class ALCustomPickerViewController: UIViewController {
@@ -60,10 +60,13 @@ public class ALBaseNavigationViewController: UINavigationController {
     var selectedRows = [Int]()
     var selectedImages = [Int: UIImage]()
     var selectedVideos = [Int: String]()
-    var selectedGifs = [Int: NSData]()
-
+    var selectedGifs = [Int: Data]()
+    
+    var multimediaData: ALMultimediaData = ALMultimediaData()
+    
     @IBOutlet weak var doneButton: UIBarButtonItem!
     weak var delegate: ALCustomPickerDelegate?
+    
 
     @IBOutlet weak var previewGallery: UICollectionView!
 
@@ -81,7 +84,6 @@ public class ALBaseNavigationViewController: UINavigationController {
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigation()
-
     }
 
     @objc public static func makeInstanceWith(delegate: ALCustomPickerDelegate) -> ALBaseNavigationViewController? {
@@ -215,19 +217,71 @@ public class ALBaseNavigationViewController: UINavigationController {
             print("status: \(exportSession!.status.rawValue)")
         }
     }
+    
+    func exportGifAsset(indexPath: IndexPath, _ asset: PHAsset){
+        let options = PHImageRequestOptions()
+        options.isSynchronous = true;
+        options.isNetworkAccessAllowed = false;
+        options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat;
+        
+        let data = getGifData(asset: asset, options: options)
+        if data.isEmpty{
+            print("Error")
+        }else{
+            self.selectedGifs[indexPath.row] = data
+        }
+    }
+    
+    func getGifData(asset: PHAsset, options: PHImageRequestOptions) -> Data{
+        var data = Data.init()
+        PHImageManager().requestImageData(for: asset, options: options) { (imageData, dataUti, orientation, info) in
+            if let isError = info?[PHImageErrorKey] as? String, !isError.isEmpty {
+                return
+            }
+            if let isCloud = info?[PHImageResultIsInCloudKey] as? Bool, isCloud {return}
+            // success, data is in imageData
+            let uti = dataUti as! CFString
+            if UTTypeConformsTo(uti, kUTTypeGIF){
+                data = imageData!
+            }
+        }
+        return data
+    }
 
     @IBAction func doneButtonAction(_ sender: UIBarButtonItem) {
 
         let videos = Array(selectedVideos.values)
         let images = Array(selectedImages.values)
         let gifs = Array(selectedGifs.values)
-        delegate?.filesSelected(images: images, videos: videos as [NSString], gifs: gifs as [NSData])
+        delegate?.multimediaSelected(selectedMultimediaList(images: images, videos: videos, gifs: gifs))
         self.navigationController?.dismiss(animated: false, completion: nil)
 
     }
 
     @IBAction func dismissAction(_ sender: UIBarButtonItem) {
         self.navigationController?.dismiss(animated: false, completion: nil)
+    }
+    
+    func selectedMultimediaList(images: [UIImage], videos: [String], gifs: [Data]) -> [ALMultimediaData]{
+        var multimediaList = [ALMultimediaData]()
+
+        for image in images
+        {
+            multimediaList.append(multimediaData.getOf(ALMultimediaTypeImage, with: image, withGif: nil, withVideo: nil))
+        }
+
+        for video in videos
+        {
+            multimediaList.append(multimediaData.getOf(ALMultimediaTypeVideo, with: nil, withGif: nil, withVideo: video))
+        }
+
+        for gifData in gifs
+        {
+            multimediaList.append(multimediaData.getOf(ALMultimediaTypeGif, with: UIImage.animatedImage(withAnimatedGIFData: gifData),
+                                                       withGif: gifData, withVideo: nil))
+        }
+
+        return multimediaList
     }
     
 }
@@ -284,26 +338,6 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
         return false;
     }
     
-    func exportGifAsset(indexPath: IndexPath, _ asset: PHAsset){
-        print("SHIVAMMM getting gifs")
-        let options = PHImageRequestOptions()
-        options.isSynchronous = true;
-        options.isNetworkAccessAllowed = false;
-        options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat;
-        
-        let defaultManager = PHImageManager()
-        
-        defaultManager.requestImageData(for: asset, options: options) { (imageData, dataUti, orientation, info) in
-            if let isError = info?[PHImageErrorKey] as? String, !isError.isEmpty {print("Error"); return}
-            if let isCloud = info?[PHImageResultIsInCloudKey] as? Bool, isCloud {return}
-            // success, data is in imageData
-            let uti = dataUti as! CFString
-            if UTTypeConformsTo(uti, kUTTypeGIF){
-                self.selectedGifs[indexPath.row] = imageData as! NSData
-            }
-        }
-    }
-
     // MARK: UICollectionViewDataSource
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(allPhotos == nil)
@@ -336,6 +370,10 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
         PHCachingImageManager.default().requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: option, resultHandler: { image, _ in
             cell.imgPreview.image = image
         })
+        if checkGif(asset: asset), !getGifData(asset: asset, options: option).isEmpty{
+            //show GIF
+            cell.imgPreview.image = UIImage.animatedImage(withAnimatedGIFData: getGifData(asset: asset, options: option))
+        }
 
         cell.imgPreview.backgroundColor = UIColor.white
 

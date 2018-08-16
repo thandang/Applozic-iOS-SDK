@@ -224,28 +224,34 @@ public class ALBaseNavigationViewController: UINavigationController {
         options.isNetworkAccessAllowed = false;
         options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat;
         
-        let data = getGifData(asset: asset, options: options)
-        if data.isEmpty{
-            print("Error")
-        }else{
-            self.selectedGifs[indexPath.row] = data
-        }
+        gifData(asset: asset, options: options, completionHandler: {
+            data, error in
+            if let gifData = data {
+                self.selectedGifs[indexPath.row] = gifData
+            }else{
+                NSLog("Error while exporting gif \(error ?? "")")
+            }
+        })
     }
     
-    func getGifData(asset: PHAsset, options: PHImageRequestOptions) -> Data{
-        var data = Data.init()
+    func gifData(asset: PHAsset, options: PHImageRequestOptions, completionHandler: @escaping ((Data?, String?)->())){
         PHImageManager().requestImageData(for: asset, options: options) { (imageData, dataUti, orientation, info) in
             if let isError = info?[PHImageErrorKey] as? String, !isError.isEmpty {
+                completionHandler(nil, isError)
+            }
+            if let isCloud = info?[PHImageResultIsInCloudKey] as? Bool, isCloud {
+                completionHandler(nil, "gif is not even present in cloud")
+            }
+            // success, data is in imageData
+            guard let uti = dataUti else{
+                completionHandler(nil, "Optional String is found to be nil")
                 return
             }
-            if let isCloud = info?[PHImageResultIsInCloudKey] as? Bool, isCloud {return}
-            // success, data is in imageData
-            let uti = dataUti as! CFString
-            if UTTypeConformsTo(uti, kUTTypeGIF){
-                data = imageData!
+            let gifUti = uti as CFString
+            if UTTypeConformsTo(gifUti, kUTTypeGIF){
+                completionHandler(imageData, nil)
             }
         }
-        return data
     }
 
     @IBAction func doneButtonAction(_ sender: UIBarButtonItem) {
@@ -370,9 +376,16 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
         PHCachingImageManager.default().requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: option, resultHandler: { image, _ in
             cell.imgPreview.image = image
         })
-        if checkGif(asset: asset), !getGifData(asset: asset, options: option).isEmpty{
+        if checkGif(asset: asset){
             //show GIF
-            cell.imgPreview.image = UIImage.animatedImage(withAnimatedGIFData: getGifData(asset: asset, options: option))
+            gifData(asset: asset, options: option, completionHandler: {
+                data, error in
+                if let gifData = data {
+                    cell.imgPreview.image = UIImage.animatedImage(withAnimatedGIFData: gifData)
+                }else{
+                    NSLog("Cannot show gif while selecting multiple medias \(error ?? "")")
+                }
+            })
         }
 
         cell.imgPreview.backgroundColor = UIColor.white

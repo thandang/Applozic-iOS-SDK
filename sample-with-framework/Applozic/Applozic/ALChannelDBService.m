@@ -873,6 +873,7 @@
     for(ALChannel *channelObject in channelArray)
     {
         [self createChannel:channelObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATED_CHANNEL_OBJECT" object:channelObject];
     }
 }
 

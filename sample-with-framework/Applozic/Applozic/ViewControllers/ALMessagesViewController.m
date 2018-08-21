@@ -1115,9 +1115,14 @@
         ALContactCell * contactCell = [self getCell:userId];
         UILabel* nameIcon = (UILabel *)[contactCell viewWithTag:102];
         [nameIcon setText:[ALColorUtility getAlphabetForProfileImage:[userDetail getDisplayName]]];
-       
+        
         if(contactCell)
         {
+            
+            if(userDetail.getDisplayName){
+                contactCell.mUserNameLabel.text = userDetail.getDisplayName;
+            }
+            
             NSURL * URL = [NSURL URLWithString:userDetail.imageLink];
             if(URL)
             {

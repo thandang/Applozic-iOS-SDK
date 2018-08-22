@@ -439,6 +439,9 @@
     [ALApplozicSettings setCustomMessageFontSize:14];                                     /*  SET CUSTOM MESSAGE FONT SIZE */
     [ALApplozicSettings setCustomMessageFont:@"Helvetica"];
     
+    [ALApplozicSettings setChatCellFontTextStyle:UIFontTextStyleSubheadline];
+    [ALApplozicSettings setChatChannelCellFontTextStyle:UIFontTextStyleSubheadline];
+    
     //****************** DATE COLOUR : AT THE BOTTOM OF MESSAGE BUBBLE ******************/
     [ALApplozicSettings setDateColor:[UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:0.5]];
     

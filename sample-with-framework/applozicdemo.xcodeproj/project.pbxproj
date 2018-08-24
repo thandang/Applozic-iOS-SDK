@@ -30,6 +30,7 @@
 		6DAA09DA1BE39FCB00CBF133 /* Applozic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA09D61BE39F6B00CBF133 /* Applozic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79E9593767F7DFCB4CC72D74 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1ED364E65158421A4DCED3 /* AssetsLibrary.framework */; };
 		842F66858A6423DE9E523B39 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1266FFF6FF481F4CFF88E7 /* CoreTelephony.framework */; };
+		8B11D376212FD46A0084F74A /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B11D375212FD46A0084F74A /* libOCMock.a */; };
 		8B1461A520DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */; };
 		8B344D621FB5DF2B00BAFD49 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */; };
 		8FFB428979FD738E5C4A3BD5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71166F2B6E73BE1C8CE86E /* SystemConfiguration.framework */; };
@@ -111,6 +112,7 @@
 		6D7F4C6E1C314EBD00AE04CF /* ALChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALChatManager.h; sourceTree = "<group>"; };
 		6D7F4C6F1C314EBD00AE04CF /* ALChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALChatManager.m; sourceTree = "<group>"; };
 		6DAA09D11BE39F6A00CBF133 /* Applozic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Applozic.xcodeproj; path = Applozic/Applozic.xcodeproj; sourceTree = "<group>"; };
+		8B11D375212FD46A0084F74A /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = usr/lib/libOCMock.a; sourceTree = "<group>"; };
 		8B1461A220DA33DB00785DF2 /* applozicdemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = applozicdemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALRegisterUserClientServiceTests.m; sourceTree = "<group>"; };
 		8B1461A620DA33DB00785DF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B11D376212FD46A0084F74A /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +200,7 @@
 		6D6DF1E81BC551FA00EBA00F = {
 			isa = PBXGroup;
 			children = (
+				8B11D375212FD46A0084F74A /* libOCMock.a */,
 				C7ACBBC71DB650DD0087EE35 /* Fabric.framework */,
 				C7ACBBC81DB650DD0087EE35 /* Crashlytics.framework */,
 				4694ECDE1D99575B006050AB /* restrictWords.txt */,
@@ -580,6 +584,10 @@
 				INFOPLIST_FILE = applozicdemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.customer.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -607,6 +615,10 @@
 				INFOPLIST_FILE = applozicdemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.customer.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -640,9 +652,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C25JNDCBM4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/usr/include";
 				INFOPLIST_FILE = applozicdemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/usr/lib",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.applozicdemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -674,9 +692,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C25JNDCBM4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/usr/include";
 				INFOPLIST_FILE = applozicdemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/usr/lib",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.applozicdemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

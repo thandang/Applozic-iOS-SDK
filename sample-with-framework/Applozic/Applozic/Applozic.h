@@ -119,3 +119,5 @@ FOUNDATION_EXPORT const unsigned char ApplozicVersionString[];
 #import <Applozic/ALMessgaeBuilder.h>
 #import <Applozic/ApplozicClient.h>
 #import <Applozic/ALRealTimeUpdate.h>
+#import <Applozic/ALMultimediaData.h>
+#import <Applozic/UIImage+animatedGIF.h>

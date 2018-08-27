@@ -26,6 +26,7 @@
 @interface ApplozicClient : NSObject  <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) id<ApplozicAttachmentDelegate>attachmentProgressDelegate;
+@property (nonatomic, retain) ALMessageService* messageService;
 
 -(instancetype)initWithApplicationKey:(NSString *)applicationKey;
 

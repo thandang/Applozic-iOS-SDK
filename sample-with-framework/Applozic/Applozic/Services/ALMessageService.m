@@ -34,6 +34,16 @@
 
 static ALMessageClientService *alMsgClientService;
 
++(ALMessageService *)sharedInstance
+{
+    static ALMessageService *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[ALMessageService alloc] init];
+    });
+    return sharedInstance;
+}
+
 +(void) processLatestMessagesGroupByContact
 {
     ALMessageClientService * almessageClientService = [[ALMessageClientService alloc] init];
@@ -261,7 +271,7 @@ static ALMessageClientService *alMsgClientService;
 }
 
 
-+(void) sendMessages:(ALMessage *)alMessage withCompletion:(void(^)(NSString * message, NSError * error)) completion {
+-(void) sendMessages:(ALMessage *)alMessage withCompletion:(void(^)(NSString * message, NSError * error)) completion {
 
     //DB insert if objectID is null
     DB_Message* dbMessage;
@@ -748,7 +758,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         if((!msg.fileMeta && !msg.pairedMessageKey))
         {
             ALSLog(ALLoggerSeverityInfo, @"RESENDING_MESSAGE : %@", msg.message);
-            [self sendMessages:msg withCompletion:^(NSString *message, NSError *error) {
+            [[ALMessageService sharedInstance] sendMessages:msg withCompletion:^(NSString *message, NSError *error) {
                 if(error)
                 {
                     ALSLog(ALLoggerSeverityError, @"PENDING_MESSAGES_NO_SENT : %@", error);
@@ -877,7 +887,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         }
 
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
-        [ALMessageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
+        [[ALMessageService sharedInstance] sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
 
             if(error)
             {

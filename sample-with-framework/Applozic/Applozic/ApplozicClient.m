@@ -50,6 +50,7 @@
         alPushNotificationService.realTimeUpdate = delegate;
         alMQTTConversationService = [ALMQTTConversationService sharedInstance];
         alMQTTConversationService.realTimeUpdate = delegate;
+        _messageService = [ALMessageService sharedInstance];
 
     }
     return self;
@@ -284,7 +285,7 @@
         completion(nil,messageError);
     }
     
-    [ALMessageService sendMessages:alMessage withCompletion:^(NSString *message, NSError *error) {
+    [_messageService sendMessages:alMessage withCompletion:^(NSString *message, NSError *error) {
         if(error)
         {
             NSLog(@"SEND_MSG_ERROR :: %@",error.description);
@@ -405,7 +406,7 @@
             [message.fileMeta populate:fileInfo];
         }
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
-        [ALMessageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
+        [_messageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
             
             if(error)
             {

@@ -32,6 +32,7 @@
 		842F66858A6423DE9E523B39 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1266FFF6FF481F4CFF88E7 /* CoreTelephony.framework */; };
 		8B11D376212FD46A0084F74A /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B11D375212FD46A0084F74A /* libOCMock.a */; };
 		8B1461A520DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */; };
+		8B1E77C5212F07BA00A5CE04 /* ApplozicClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1E77C4212F07BA00A5CE04 /* ApplozicClientTests.m */; };
 		8B344D621FB5DF2B00BAFD49 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */; };
 		8FFB428979FD738E5C4A3BD5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71166F2B6E73BE1C8CE86E /* SystemConfiguration.framework */; };
 		A18CF189D70FDE1E604A7538 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DC495FFC34D1F473FCFB224 /* AVFoundation.framework */; };
@@ -116,6 +117,7 @@
 		8B1461A220DA33DB00785DF2 /* applozicdemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = applozicdemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALRegisterUserClientServiceTests.m; sourceTree = "<group>"; };
 		8B1461A620DA33DB00785DF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B1E77C4212F07BA00A5CE04 /* ApplozicClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplozicClientTests.m; sourceTree = "<group>"; };
 		8B344D611FB5DF1A00BAFD49 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C7ACBBC71DB650DD0087EE35 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		C7ACBBC81DB650DD0087EE35 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 			children = (
 				8B1461A420DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m */,
 				8B1461A620DA33DB00785DF2 /* Info.plist */,
+				8B1E77C4212F07BA00A5CE04 /* ApplozicClientTests.m */,
 			);
 			path = applozicdemoTests;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B1E77C5212F07BA00A5CE04 /* ApplozicClientTests.m in Sources */,
 				8B1461A520DA33DB00785DF2 /* ALRegisterUserClientServiceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1311,7 +1311,7 @@
 
 -(void)sendLocationMessage:(ALMessage *)theMessage withCompletion:(void(^)(NSString *message, NSError *error))completion
 {
-    [ALMessageService sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
+    [[ALMessageService sharedInstance] sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
 
         if(error)
         {
@@ -3124,7 +3124,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)sendMessage:(ALMessage *)theMessage messageAtIndex:(NSUInteger) messageIndex{
     [self resetMessageReplyView];
-    [ALMessageService sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
+    [[ALMessageService sharedInstance] sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
 
         if(error)
         {

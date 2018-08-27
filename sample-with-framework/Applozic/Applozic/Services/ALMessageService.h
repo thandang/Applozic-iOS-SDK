@@ -86,5 +86,6 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 +(void)syncMessages;
 +(void) getLatestMessageForUser:(NSString *)deviceKeyString withDelegate : (id<ApplozicUpdatesDelegate>)theDelegate withCompletion:(void (^)( NSMutableArray *, NSError *))completion;
 
+-(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion;
 
 @end

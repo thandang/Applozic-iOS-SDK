@@ -89,5 +89,16 @@
 
 -(void)subscribeToTypingStatusForChannel:(NSNumber *) channelKey;
 
+/**
+ This method getLatestMessages method is for getting messages for contact or group
+ 
+ @param isNextPage if you want to load next set of messages pass YES or true to load else pass NO or false
+ @param withOnlyGroups If you want groups messages only then pass YES or true it will give group latest messages, if you wa nt to get only contact latest messages then PASS NO or false
+ 
+ @param NSMutableArray and  NSError  if your typing pass YES in isTyping else on stop pass NO to stop the typing
+ 
+ */
+-(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error))completion;
+
 
 @end

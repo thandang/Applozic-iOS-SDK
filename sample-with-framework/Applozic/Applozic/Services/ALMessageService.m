@@ -1023,5 +1023,16 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     }
 }
 
+-(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
+    
+    ALMessageDBService *messageDbService = [[ALMessageDBService alloc] init];
+    
+    [messageDbService getLatestMessages:isNextPage withOnlyGroups:isGroup withCompletionHandler:^(NSMutableArray *messageList, NSError *error) {
+        
+        completion(messageList,error);
+        
+    }];
+}
+
 
 @end

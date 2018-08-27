@@ -50,7 +50,7 @@
         alPushNotificationService.realTimeUpdate = delegate;
         alMQTTConversationService = [ALMQTTConversationService sharedInstance];
         alMQTTConversationService.realTimeUpdate = delegate;
-
+        
     }
     return self;
 }
@@ -119,7 +119,7 @@
  @param completion ALAPIResponse will be having a complete response like status  else it NSError
  */
 -(void)logoutUserWithCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion{
-
+    
     ALRegisterUserClientService * alUserClientService = [[ALRegisterUserClientService alloc] init];
     
     if([ALUserDefaultsHandler getDeviceKeyString])
@@ -781,6 +781,8 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
  @param isTyping if your typing pass YES in isTyping else on stop pass NO to stop the typing
  
  */
+
+
 -(void)sendTypingStatusForUserId:(NSString *)userId orForGroupId:(NSNumber*)channelKey withTyping:(BOOL) isTyping
 {
     if(channelKey){
@@ -788,6 +790,16 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     }else if (userId){
         [self sendTypingStatusForUserId:userId withTyping:isTyping];
     }
+}
+
+-(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
+    
+    ALMessageService *messageService = [[ALMessageService alloc] init];
+    [messageService getLatestMessages:isNextPage withOnlyGroups:isGroup withCompletionHandler:^(NSMutableArray *messageList, NSError *error) {
+        completion(messageList,error);
+        
+    }];
+    
 }
 
 @end

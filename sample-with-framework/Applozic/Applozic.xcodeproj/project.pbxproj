@@ -24,8 +24,8 @@
 		1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584220E2470E00B75802 /* ALRealTimeUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1863584E20E2480800B75802 /* ApplozicClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584C20E2480800B75802 /* ApplozicClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1863584F20E2480800B75802 /* ApplozicClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863584D20E2480800B75802 /* ApplozicClient.m */; };
-		186885A120ECC5FE00919802 /* ALMessgaeBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1868859F20ECC5FE00919802 /* ALMessgaeBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		186885A220ECC5FE00919802 /* ALMessgaeBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 186885A020ECC5FE00919802 /* ALMessgaeBuilder.m */; };
+		186885A120ECC5FE00919802 /* ALMessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1868859F20ECC5FE00919802 /* ALMessageBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		186885A220ECC5FE00919802 /* ALMessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 186885A020ECC5FE00919802 /* ALMessageBuilder.m */; };
 		18A2BA2020C44DB500AD47A2 /* ALTemplateMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */; };
 		18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */; };
 		18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */; };
@@ -394,8 +394,8 @@
 		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
 		1863584C20E2480800B75802 /* ApplozicClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplozicClient.h; path = Applozic/ApplozicClient.h; sourceTree = "<group>"; };
 		1863584D20E2480800B75802 /* ApplozicClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApplozicClient.m; path = Applozic/ApplozicClient.m; sourceTree = "<group>"; };
-		1868859F20ECC5FE00919802 /* ALMessgaeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALMessgaeBuilder.h; path = Applozic/ALMessgaeBuilder.h; sourceTree = "<group>"; };
-		186885A020ECC5FE00919802 /* ALMessgaeBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALMessgaeBuilder.m; path = Applozic/ALMessgaeBuilder.m; sourceTree = "<group>"; };
+		1868859F20ECC5FE00919802 /* ALMessageBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALMessageBuilder.h; path = Applozic/ALMessageBuilder.h; sourceTree = "<group>"; };
+		186885A020ECC5FE00919802 /* ALMessageBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALMessageBuilder.m; path = Applozic/ALMessageBuilder.m; sourceTree = "<group>"; };
 		18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageCell.swift; path = Applozic/ALTemplateMessageCell.swift; sourceTree = "<group>"; };
 		18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesView.swift; path = Applozic/ALTemplateMessagesView.swift; sourceTree = "<group>"; };
 		18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesViewModel.swift; path = Applozic/ALTemplateMessagesViewModel.swift; sourceTree = "<group>"; };
@@ -778,8 +778,8 @@
 				1863584C20E2480800B75802 /* ApplozicClient.h */,
 				1863584D20E2480800B75802 /* ApplozicClient.m */,
 				1863584220E2470E00B75802 /* ALRealTimeUpdate.h */,
-				1868859F20ECC5FE00919802 /* ALMessgaeBuilder.h */,
-				186885A020ECC5FE00919802 /* ALMessgaeBuilder.m */,
+				1868859F20ECC5FE00919802 /* ALMessageBuilder.h */,
+				186885A020ECC5FE00919802 /* ALMessageBuilder.m */,
 			);
 			name = applozickit;
 			sourceTree = "<group>";
@@ -1638,7 +1638,7 @@
 				C76D314B1F0AAFCE0087291F /* ALAudioVideoBaseVC.h in Headers */,
 				105F30C61FFBAEEC00D60431 /* AlChannelInfoModel.h in Headers */,
 				105F30C71FFBAEEC00D60431 /* AlChannelResponse.h in Headers */,
-				186885A120ECC5FE00919802 /* ALMessgaeBuilder.h in Headers */,
+				186885A120ECC5FE00919802 /* ALMessageBuilder.h in Headers */,
 				1863584E20E2480800B75802 /* ApplozicClient.h in Headers */,
 				1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */,
 				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
@@ -1875,7 +1875,7 @@
 				6D7757481D5B85100025560B /* ALLocationCell.m in Sources */,
 				6D7756B01D5B80DF0025560B /* ALChannelDBService.m in Sources */,
 				18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */,
-				186885A220ECC5FE00919802 /* ALMessgaeBuilder.m in Sources */,
+				186885A220ECC5FE00919802 /* ALMessageBuilder.m in Sources */,
 				10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */,
 				2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */,
 				4612E8F91E13882D0022DB23 /* MQTTCFSocketTransport.m in Sources */,

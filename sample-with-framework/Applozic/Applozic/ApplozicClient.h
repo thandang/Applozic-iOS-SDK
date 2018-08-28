@@ -9,6 +9,9 @@
 #import "Applozic.h"
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, ApplozicClientError) {
+    MessageNotPresent = 1
+};
 
 @protocol ApplozicAttachmentDelegate <NSObject>
 

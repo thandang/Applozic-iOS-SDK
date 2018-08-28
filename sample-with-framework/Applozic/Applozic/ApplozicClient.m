@@ -14,6 +14,7 @@
     ALPushNotificationService *alPushNotificationService;
 }
 
+NSString * const ApplozicClientDomain = @"ApplozicClient";
 
 /**
  This is for initialization the applicationKey
@@ -281,7 +282,10 @@
 -(void)sendTextMessage:(ALMessage*) alMessage withCompletion:(void(^)(ALMessage *message, NSError *error))completion{
     
     if(!alMessage){
-        NSError *messageError = [NSError errorWithDomain:@"message is nil" code:0 userInfo:nil];
+        NSError *messageError = [NSError errorWithDomain:ApplozicClientDomain
+                                                    code:MessageNotPresent
+                                                userInfo:@{NSLocalizedDescriptionKey : @"Empty message passed"}];
+
         completion(nil,messageError);
     }
     

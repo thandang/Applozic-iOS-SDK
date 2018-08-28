@@ -16,42 +16,44 @@
 
 @implementation ApplozicClientTests
 
+ApplozicClient * client;
+id mockService;
+ALMessage *testMessage;
+
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
+    client = [[ApplozicClient alloc] init];
+    mockService = OCMClassMock([ALMessageService class]);
+    client.messageService = mockService;
 
-- (void)test_whenMessageSentSuccessfully_thatErrorIsNil{
-    ApplozicClient * client = [[ApplozicClient alloc] init];;
-    id mockConnection = OCMClassMock([ALMessageService class]);
-    client.messageService = mockConnection;
-
-    ALMessage *alMessage = [ALMessage build:^(ALMessgaeBuilder * alMessageBuilder) {
+    testMessage = [ALMessage build:^(ALMessgaeBuilder * alMessageBuilder) {
         alMessageBuilder.to = @"userId";
         alMessageBuilder.message = @"messageText";
     }];
+}
 
-    OCMStub([mockConnection sendMessages:alMessage withCompletion:([OCMArg invokeBlockWithArgs:@"message",[OCMArg defaultValue], nil])]);
-    [client sendTextMessage:alMessage withCompletion:^(ALMessage* message, NSError* error) {
+- (void)test_whenMessageSentSuccessfully_thatErrorIsNil{
+
+    OCMStub([mockService sendMessages:testMessage withCompletion:([OCMArg invokeBlockWithArgs:@"message",[OCMArg defaultValue], nil])]);
+    [client sendTextMessage:testMessage withCompletion:^(ALMessage* message, NSError* error) {
         XCTAssert(error == nil);
         XCTAssert([message.message isEqualToString:@"messageText"]);
     }];
 }
 
 - (void)test_whenMessageSentUnsuccessful_thatErrorIsPresent{
-    ApplozicClient * client = [[ApplozicClient alloc] init];
-    id mockConnection = OCMClassMock([ALMessageService class]);
-    client.messageService = mockConnection;
 
-    ALMessage *alMessage = [ALMessage build:^(ALMessgaeBuilder * alMessageBuilder) {
-        alMessageBuilder.to = @"userId";
-        alMessageBuilder.message = @"messageText";
-    }];
     NSError *theError = [NSError errorWithDomain:@"Network Error" code:999 userInfo:nil];
-    OCMStub([mockConnection sendMessages:alMessage withCompletion:([OCMArg invokeBlockWithArgs:@"message", theError, nil])]);
-    [client sendTextMessage:alMessage withCompletion:^(ALMessage* message, NSError* error) {
+    OCMStub([mockService sendMessages:testMessage withCompletion:([OCMArg invokeBlockWithArgs:@"message", theError, nil])]);
+    [client sendTextMessage:testMessage withCompletion:^(ALMessage* message, NSError* error) {
         XCTAssert(error.code == 999);
         XCTAssert(message == nil);
+    }];
+}
+
+- (void)test_whenMessagePassedIsNil_thatErrorIsPresent{
+    [client sendTextMessage:nil withCompletion:^(ALMessage* message, NSError* error) {
+        XCTAssert(error.code == MessageNotPresent);
     }];
 }
 

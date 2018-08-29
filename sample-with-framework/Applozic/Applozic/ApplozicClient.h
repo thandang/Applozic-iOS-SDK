@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, ApplozicClientError) {
 
 @property (nonatomic, strong) id<ApplozicAttachmentDelegate>attachmentProgressDelegate;
 @property (nonatomic, retain) ALMessageService* messageService;
+@property (nonatomic, retain) ALMessageDBService *messageDbService;
 
 -(instancetype)initWithApplicationKey:(NSString *)applicationKey;
 

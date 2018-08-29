@@ -52,6 +52,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
         alMQTTConversationService = [ALMQTTConversationService sharedInstance];
         alMQTTConversationService.realTimeUpdate = delegate;
         _messageService = [ALMessageService sharedInstance];
+        _messageDbService = [ALMessageDBService new];
 
     }
     return self;
@@ -188,8 +189,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
  */
 
 -(void) getLatestMessages:(BOOL)isNextPage withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
-    ALMessageDBService *messageDataBaseService = [ALMessageDBService new];
-    [messageDataBaseService getLatestMessages:isNextPage withCompletionHandler:^(NSMutableArray *messageListArray, NSError *error) {
+    [_messageDbService getLatestMessages:isNextPage withCompletionHandler:^(NSMutableArray *messageListArray, NSError *error) {
         completion(messageListArray,error);
     }];
 }

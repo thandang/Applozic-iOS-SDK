@@ -135,4 +135,25 @@ NSError *testError;
     }];
 }
 
+-(void)test_whenMarkConversationReadForGroupIsSuccessful_thatErrorIsNotPresent {
+    id channelServiceMock = OCMClassMock([ALChannelService class]);
+    NSNumber *groupId = [[NSNumber alloc] initWithInt:123];
+    OCMStub([channelServiceMock markConversationAsRead:groupId withCompletion:(@"Success", [OCMArg defaultValue], nil)]);
+    [client markConversationReadForGroup:groupId withCompletion:^(NSString *response, NSError *error){
+        XCTAssertNil(error);
+        XCTAssertNotNil(response);
+    }];
+}
+
+
+-(void)test_whenMarkConversationReadForGroupIsUnsuccessful_thatErrorIsPresent {
+    id channelServiceMock = OCMClassMock([ALChannelService class]);
+    NSNumber *groupId = [[NSNumber alloc] initWithInt:123];
+    OCMStub([channelServiceMock markConversationAsRead:groupId withCompletion:([OCMArg defaultValue], testError, nil)]);
+    [client markConversationReadForGroup:groupId withCompletion:^(NSString *response, NSError *error){
+        XCTAssertNotNil(error);
+        XCTAssertNil(response);
+    }];
+}
+
 @end

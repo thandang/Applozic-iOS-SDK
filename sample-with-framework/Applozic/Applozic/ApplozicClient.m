@@ -61,6 +61,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
     _messageService = [ALMessageService sharedInstance];
     _messageDbService = [ALMessageDBService new];
     _userService = [ALUserService sharedInstance];
+    _channelService = [ALChannelService sharedInstance];
 }
 
 //==============================================================================================================================================
@@ -227,7 +228,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
 {
     if(groupId && groupId != 0)
     {
-        [ALChannelService markConversationAsRead:groupId withCompletion:^(NSString * conversationResponse, NSError * error) {
+        [_channelService markConversationAsRead:groupId withCompletion:^(NSString * conversationResponse, NSError * error) {
             
             if(error)
             {

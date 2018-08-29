@@ -527,7 +527,7 @@
     BOOL isGroupNotification = (self.channelKey == nil ? false : true);
     if(self.channelKey && isGroupNotification)
     {
-        [ALChannelService markConversationAsRead:self.channelKey withCompletion:^(NSString * string, NSError * error) {
+        [[ALChannelService sharedInstance] markConversationAsRead:self.channelKey withCompletion:^(NSString * string, NSError * error) {
 
             if(error)
             {

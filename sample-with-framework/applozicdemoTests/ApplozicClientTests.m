@@ -19,6 +19,7 @@
 ApplozicClient * client;
 id mockService;
 ALMessage *testMessage;
+NSError *testError;
 
 - (void)setUp {
     [super setUp];
@@ -30,6 +31,7 @@ ALMessage *testMessage;
         alMessageBuilder.to = @"userId";
         alMessageBuilder.message = @"messageText";
     }];
+    testError = [NSError errorWithDomain:@"Network Error" code:999 userInfo:nil];
 }
 
 - (void)test_whenTextMessageSentSuccessfully_thatErrorIsNil{
@@ -78,12 +80,58 @@ ALMessage *testMessage;
 -(void)test_whenLoadingInitialMessageListUnsuccessful_thatErrorIsPresent {
     id mockDbService = OCMClassMock([ALMessageDBService class]);
     client.messageDbService = mockDbService;
-    NSError *testError = [NSError errorWithDomain:@"Network Error" code:999 userInfo:nil];
     OCMStub([mockDbService getLatestMessages:NO withCompletionHandler:([OCMArg invokeBlockWithArgs:[OCMArg defaultValue], testError, nil])]);
     [client getLatestMessages:NO withCompletionHandler:^(NSMutableArray* messageList, NSError* error) {
         XCTAssertNotNil(error);
         XCTAssert(error.code == 999);
         XCTAssertNil(messageList);
+    }];
+}
+
+-(void)test_whenLoadingMessagesForUserIdIsSuccessful_thatMessageListIsPresent {
+    MessageListRequest *request = [[MessageListRequest alloc] init];
+    request.userId = @"userid"; // pass userId
+    NSMutableArray *sampleMessageList = [[NSMutableArray alloc] initWithObjects:testMessage, nil];
+    OCMStub([mockService getMessageListForUser:request withCompletion:(sampleMessageList,[OCMArg defaultValue],[OCMArg defaultValue])]);
+    [client getMessages: request withCompletionHandler:^(NSMutableArray *messageList, NSError *error) {
+        XCTAssertNotNil(messageList);
+        XCTAssertNil(error);
+        XCTAssert(messageList.count == 1);
+        if(messageList.count == 0) {
+            return;
+        }
+        ALMessage *firstMessage = messageList.firstObject;
+        XCTAssert(firstMessage.message == testMessage.message);
+        XCTAssert(firstMessage.contactIds == testMessage.contactIds);
+    }];
+}
+
+-(void)test_whenLoadingMessagesForUserIdIsUnsuccessful_thatErrorIsPresent {
+    MessageListRequest *request = [[MessageListRequest alloc] init];
+    request.userId = @"userid"; // pass userId
+    OCMStub([mockService getMessageListForUser:request withCompletion:([OCMArg defaultValue],testError,[OCMArg defaultValue])]);
+    [client getMessages: request withCompletionHandler:^(NSMutableArray *messageList, NSError *error) {
+        XCTAssertNotNil(error);
+        XCTAssert(error.code == 999);
+        XCTAssertNil(messageList);
+    }];
+}
+
+-(void)test_whenMarkConversationIsSuccessful_thatErrorIsNotPresent {
+    id userServiceMock = OCMClassMock([ALUserService class]);
+    OCMStub([userServiceMock markConversationAsRead:@"userId" withCompletion:(@"Success", [OCMArg defaultValue], nil)]);
+    [client markConversationReadForOnetoOne: @"userId" withCompletion:^(NSString *response, NSError *error) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(response);
+    }];
+}
+
+-(void)test_whenMarkConversationIsUnsuccessful_thatErrorIsPresent {
+    id userServiceMock = OCMClassMock([ALUserService class]);
+    OCMStub([userServiceMock markConversationAsRead:@"userId" withCompletion:([OCMArg defaultValue], testError, nil)]);
+    [client markConversationReadForOnetoOne: @"userId" withCompletion:^(NSString *response, NSError *error) {
+        XCTAssertNotNil(error);
+        XCTAssertNil(response);
     }];
 }
 

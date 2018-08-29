@@ -28,6 +28,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
     if (self)
     {
         [ALUserDefaultsHandler setApplicationKey:applicationKey];
+        [self setUpServices];
     }
     return self;
 }
@@ -51,13 +52,16 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
         alPushNotificationService.realTimeUpdate = delegate;
         alMQTTConversationService = [ALMQTTConversationService sharedInstance];
         alMQTTConversationService.realTimeUpdate = delegate;
-        _messageService = [ALMessageService sharedInstance];
-        _messageDbService = [ALMessageDBService new];
-
+        [self setUpServices];
     }
     return self;
 }
 
+-(void)setUpServices {
+    _messageService = [ALMessageService sharedInstance];
+    _messageDbService = [ALMessageDBService new];
+    _userService = [ALUserService sharedInstance];
+}
 
 //==============================================================================================================================================
 #pragma mark - Login method
@@ -202,7 +206,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
  @param completion completion description
  */
 -(void) getMessages:(MessageListRequest *)messageListRequest withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
-    [ALMessageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+    [_messageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
         completion(messages,error);
     }];
 }
@@ -252,7 +256,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
     
     if(userId)
     {
-        [ALUserService markConversationAsRead:userId withCompletion:^(NSString * conversationResponse, NSError *error) {
+        [_userService markConversationAsRead:userId withCompletion:^(NSString * conversationResponse, NSError *error) {
             if(error)
             {
                 NSLog(@"Error while marking messages as read for contact %@", userId);

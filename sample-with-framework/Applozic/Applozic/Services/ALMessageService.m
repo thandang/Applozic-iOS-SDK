@@ -73,7 +73,7 @@ static ALMessageClientService *alMsgClientService;
                         messageListRequest.channelKey = message.groupId;
                         messageListRequest.skipRead = YES;
 
-                        [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+                        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
                         }];
                     }else{
@@ -83,7 +83,7 @@ static ALMessageClientService *alMsgClientService;
                         messageListRequest.channelKey = nil;
                         messageListRequest.skipRead = YES;
 
-                        [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+                        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
                         }];
 
@@ -135,7 +135,7 @@ static ALMessageClientService *alMsgClientService;
         messageListRequest.endTimeStamp = time;
         messageListRequest.conversationId = alMessage.conversationId;
 
-        [self getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
             completion (messages,error,userDetailArray);
         }];
@@ -145,7 +145,7 @@ static ALMessageClientService *alMsgClientService;
 
 }
 
-+(void)getMessageListForUser:(MessageListRequest *)messageListRequest withCompletion:(void (^)(NSMutableArray *, NSError *, NSMutableArray *))completion
+-(void)getMessageListForUser:(MessageListRequest *)messageListRequest withCompletion:(void (^)(NSMutableArray *, NSError *, NSMutableArray *))completion
 {
     //On Message List Cell Tap
     ALMessageDBService *almessageDBService =  [[ALMessageDBService alloc] init];

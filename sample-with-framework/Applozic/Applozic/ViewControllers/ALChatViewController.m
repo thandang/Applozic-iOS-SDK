@@ -544,7 +544,7 @@
 
     if(self.contactIds && !self.isGroup)
     {
-        [ALUserService markConversationAsRead:self.contactIds withCompletion:^(NSString * string, NSError *error) {
+        [[ALUserService sharedInstance] markConversationAsRead:self.contactIds withCompletion:^(NSString * string, NSError *error) {
             if(error)
             {
                 ALSLog(ALLoggerSeverityError, @"Error while marking messages as read for contact %@", self.contactIds);
@@ -694,7 +694,7 @@
         NSNumber *lastMsgTime = [NSNumber numberWithDouble:doubleTime];
         messageListRequest.startTimeStamp = lastMsgTime;
 
-        [ALMessageService getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
             if(messages.count)
             {
@@ -3440,7 +3440,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         messageListRequest.conversationId = self.conversationId;
     }
 
-    [ALMessageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+    [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
         [self.mActivityIndicator stopAnimating];
         ALSLog(ALLoggerSeverityInfo, @"LIST_CALL_CALLED");

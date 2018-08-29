@@ -29,8 +29,9 @@ typedef NS_ENUM(NSInteger, ApplozicClientError) {
 @interface ApplozicClient : NSObject  <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) id<ApplozicAttachmentDelegate>attachmentProgressDelegate;
-@property (nonatomic, retain) ALMessageService* messageService;
+@property (nonatomic, retain) ALMessageService *messageService;
 @property (nonatomic, retain) ALMessageDBService *messageDbService;
+@property (nonatomic, retain) ALUserService *userService;
 
 -(instancetype)initWithApplicationKey:(NSString *)applicationKey;
 

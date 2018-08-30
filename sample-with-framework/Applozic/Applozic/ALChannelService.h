@@ -33,7 +33,7 @@
 -(void)callForChannelServiceForDBInsertion:(id)theJson;
 
 /**
- This method is used for fetch information of channel like channel name, imageUrl of a channel, type of channel and other information.
+ This method is used to fetch information of channel like channel name, imageUrl of a channel, type of channel and other information.
  
  @param channelKey NSNumber its channelkey or groupId that is required to get the channel information.
  @param clientChannelKey if you have your clientChannelKey then you can pass to get the channel information.
@@ -71,7 +71,7 @@
 
 
 /**
- This method is used for fetch information of channel like channel name,imageUrl of chanel, type of channel and other information.
+ This method is used to fetch information of channel like channel name,imageUrl of chanel, type of channel and other information.
  
  @param channelKey NSNumber its channelkey or groupId that is required to get the channel information.
  @param clientChannelKey if you have your clientChannelKey then you can pass to get the channel information.
@@ -81,7 +81,7 @@
 -(void)getChannelInformationByResponse:(NSNumber *)channelKey orClientChannelKey:(NSString *)clientChannelKey withCompletion:(void (^)(NSError *error,ALChannel *alChannel3,AlChannelFeedResponse *channelResponse)) completion;
 
 /**
- This method is used for creating a channel where it needs below details to pass while creating.
+ This method is used to create a channel where it needs below details to pass while creating.
  
  @param channelName its channel name that you want to set for the channel.
  @param clientChannelKey if you have your own channelClientKey then you can set it while creating channel then you can use this in other places to get the details.
@@ -96,7 +96,7 @@
 
 
 /**
- This method is used for creating a channel where it needs  below details to pass while creating
+ This method is used to create a channel where it needs below details to pass while creating
  
  
  @param channelName its channel name that you want to set for the channel.
@@ -117,7 +117,7 @@
 
 
 /**
- This method is used for creating a channel where it needs  below details to pass while creating
+ This method is used to create a channel where it needs below details to pass while creating
  
  
  @param channelName it's channel name that you want to set for the channel.
@@ -139,7 +139,7 @@
 
 
 /**
- This method is used for creating a channel where it needs  below details to pass while creating
+ This method is used to create a channel where it needs below details to pass while creating
  
  @param channelName it's channel name that you want to set for the channel.
  @param clientChannelKey if you have your own channelClientKey then you can set it while creating channel then you can use this in other places to get the details.
@@ -181,7 +181,7 @@
 
 
 /**
- This method is used for adding a member to a channel.
+ This method is used to add a member to a channel.
  
  @param userId whom you want add in a channel.
  @param channelKey NSNumber its channelkey or groupId that is required for adding a member in a channel.
@@ -193,7 +193,7 @@
 
 
 /**
- This method is used for removing a member in a channel.
+ This method is used to remove a member from a channel.
  
  @param userId whom you want remove from a channel.
  @param channelKey NSNumber its channelkey or groupId that is required for removing a member from a channel.
@@ -205,7 +205,7 @@
 
 
 /**
- This method is used for deleting a channel from server only admin can call this method
+ This method is used to delete a channel from server. Only the group admin can call this method.
  
  @param channelKey NSNumber its channelkey or groupId that is required for deleting a channel.
  @param clientChannelKey or if you have your own clientChannelKey then pass it for deleting a channel.
@@ -219,7 +219,7 @@
 
 
 /**
- This method you can use for leaving a member from channel
+ You can use this method for leaving a member from channel
  
  @param channelKey The channel key you can get it from  channel.key
  @param userId pass login userId here to leave from channel
@@ -232,7 +232,7 @@
      withCompletion:(void(^)(NSError *error))completion;
 
 /**
- This method is used for adding multiple members in multiple channels
+ This method is used to add multiple members in multiple channels
  
  @param channelKeys NSMutableArray pass channelKey or array of channelKeys
  @param channelUsers NSMutableArray pass userIds you  want to add in channels or channel
@@ -247,7 +247,7 @@
 
 
 /**
- This method is used for updating channel information like name, imageUrl
+ This method is used to update channel information like name, imageUrl etc
  
  @param channelKey The channel key you can get it from  channel.key
  @param newName  its new  channel name of a channel
@@ -272,7 +272,7 @@
   isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withCompletion:(void(^)(NSError *error))completion;
 
 /**
- This method is used for updating channel metadata
+ This method is used to update channel metadata
  
  @param channelKey The channel key you can get it from  channel.key
  @param clientChannelKey it's your clientChannelKey where you can pass while updating
@@ -286,7 +286,7 @@
               withCompletion:(void(^)(NSError *error))completion;
 
 /**
- This method is used to mark the Conversation as read in channel
+ This method is used to mark the conversation as read in channel
  
  @param channelKey The channel key you can get it from  channel.key
  @param completion it has a response and error if an error is nil then Conversation is marked successfully
@@ -294,7 +294,7 @@
 +(void)markConversationAsRead:(NSNumber *)channelKey withCompletion:(void (^)(NSString *, NSError *))completion;
 
 /**
- This method is used to check if the login user is left from a channel or not it will return YES OR NO
+ This method is used to check if the logged in user is left from a channel or not. It will return YES or NO.
  
  @param groupID pass the channel key you can get it from  channel.key
  
@@ -312,7 +312,7 @@
 +(BOOL)isChannelDeleted:(NSNumber *)groupId;
 
 /**
- This method is used for checking a channel is closed or not.
+ This method is used to check a channel is closed or not.
  
  @param groupId pass the channel key you can get it from  channel.key.
  @return it will return YES OR NO if the conversation Closed in a channel.
@@ -320,7 +320,7 @@
 +(BOOL)isConversationClosed:(NSNumber *)groupId;
 
 /**
- This method is used for closing the channel conversation.
+ This method is used to close the channel conversation.
  
  @param groupId  pass the channel key you can get it from  channel.key.
  @param completion if error is nil then the  channel is closed.
@@ -336,7 +336,7 @@
 +(BOOL)isChannelMuted:(NSNumber *)groupId;
 
 /**
- This method is an internal used for setting channel unread cout to zero
+ This method is internal, used to set channel unread cout to zero
  */
 +(void)setUnreadCountZeroForGroupID:(NSNumber*)channelKey;
 
@@ -356,7 +356,7 @@
 -(ALChannel *)fetchChannelWithClientChannelKey:(NSString *)clientChannelKey;
 
 /**
- This method is used to check if the login user is in channel or not
+ This method is used to check if the logged in user is in channel or not
  
  @param channelKey pass the channel key you can get it from  channel.key.
  @return it will return YES OR NO if the user is in a channel or not.
@@ -364,7 +364,7 @@
 -(BOOL)isLoginUserInChannel:(NSNumber *)channelKey;
 
 /**
- This method is used to get all channels for login user from local DB
+ This method is used to get all channels for logged in user from local DB
  
  @return it will return the NSMutableArray of AlChannel object.
  */
@@ -394,7 +394,7 @@
         withCompletion:(void(^)(id json, NSError *error))completion;
 
 /**
- This method is used for removing the child keys from parent channelKey where it was added to the parent
+ This method is used to remove the child keys from parent channelKey where it was added to the parent
  
  @param clientChildKeyList NSMutableArray list of child channelKeys to the parent you want to remove from parentKey
  
@@ -418,7 +418,7 @@
 
 
 /**
- This method is used for removing the child keys from client ParentKey where it was added to the child keys to parent
+ This method is used to remove the child keys from client ParentKey where it was added to the child keys to parent
  
  @param clientChildKeyList NSMutableArray list of client child channelKeys to the parent you want to remove from clientParentKey
  @param clientParentKey clientParentKey description
@@ -430,7 +430,7 @@
 
 
 /**
- This method is used for mute the channel or unmutes channel
+ This method is used to mute or unmute the channel
  
  @param muteRequest its an object of ALMuteRequest where you need to pass channelKey and notificationTime its time you want to mute from or unmute
  
@@ -445,7 +445,7 @@
 -(void)muteChannel:(ALMuteRequest *)muteRequest withCompletion:(void(^)(ALAPIResponse * response, NSError *error))completion;
 
 /**
- This method is used for creating a broadcast channel.
+ This method is used to create a broadcast channel.
  
  @param memberArray pass member userId whom you want to add in the broadcast channel.
  @param metaData You can pass extra information in a channel where you can access it later from channel.metaData from the channel object.
@@ -469,7 +469,7 @@
                        withCompletion:(void(^)(NSMutableArray* channelInfoList, NSError *error))completion;
 
 /**
- This method is used fetch the list of  channel information  by Category
+ This method is used to fetch the list of channel information by Category
  
  @param category pass category that you want to get the channels from category
  @param completion if an error is a nil and the channelInfoList count is > 0 then you have channels information in NSMutableArray its type is ALChannel object.
@@ -514,7 +514,7 @@
  
  @param contactGroupId pass contactsGroupId which will be unique string.
  @param groupType pass  type as 9 for contacts group
- @param completion   if error is nil and ALAPIResponse has status if its  success  then you will get members userId who are in contacts group
+ @param completion if error is nil and ALAPIResponse has status if its  success  then you will get members userId who are in contacts group
  */
 +(void) getMembersFromContactGroupOfType:(NSString *)contactGroupId  withGroupType :(short) groupType withCompletion:(void(^)(NSError *error, ALChannel *channel)) completion;
 
@@ -525,7 +525,7 @@
 -(NSMutableArray *)getListOfAllUsersInChannelByNameForContactsGroup:(NSString *)channelName;
 
 /**
- This method is used for removing a member from the contacts group.
+ This method is used to remove a member from the contacts group.
  
  @param contactsGroupId pass contactsGroupId which will be unique string.
  @param userId of the user you want to remove the member from the contacts group.
@@ -534,8 +534,7 @@
 +(void) removeMemberFromContactGroup:(NSString*) contactsGroupId withUserId :(NSString*) userId  withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion;
 
 /**
- This method is used for removing a member from contacts group with type
- 
+ This method is used to remove a member from contacts group with type
  
  @param contactsGroupId pass contactsGroupId which will be unique string.
  @param groupType pass  type as 9 for contacts group.
@@ -554,7 +553,7 @@
 
 
 /**
- This method is used for creating a channel where it needs  below details to pass while creating
+ This method is used to create a channel where it needs below details to pass while creating
  
  @param channelName its channel name that you want to set for the channel.
  @param clientChannelKey if you have your own channelClientKey then you can set it while creating channel then you can use this in other places to get the details.
@@ -589,7 +588,7 @@
 - (NSDictionary *)metadataToHideActionMessagesAndTurnOffNotifications;
 
 /**
- This method you can use for leaving a member from channel
+ You can use this method for leaving a member from channel
  
  @param channelKey The channel key you can get it from  channel.key
  @param userId pass login userId here to leave from channel
@@ -600,7 +599,7 @@
                    withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion;
 
 /**
- This method is used for updating channel information like name, imageUrl
+ This method is used to update channel information like name, imageUrl etc
  
  @param channelKey The channel key you can get it from  channel.key
  @param newName  its new  channel name of a channel

@@ -1,14 +1,15 @@
 //
-//  ALMessgaeBuilder.h
+//  ALMessageBuilder.h
 //  Applozic
 //
 //  Created by apple on 04/07/18.
 //  Copyright © 2018 applozic Inc. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
 
-@interface ALMessgaeBuilder : NSObject
+@interface ALMessageBuilder : NSObject
 
 @property (nonatomic, copy) NSString * to;
 

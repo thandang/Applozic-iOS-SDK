@@ -341,9 +341,9 @@
             NSMutableArray * contactArray = [NSMutableArray new];
             ALUserDetail * userDetail = [ALUserDetail new];
             [userDetail parsingDictionaryFromJSON:JSONDictionary];
-            paramString = userDetail.userIdString;
+            self->paramString = userDetail.userIdString;
 
-            [client subProcessUserDetailServerCall:paramString withCompletion:^(NSMutableArray * userDetailArray, NSError * error) {
+            [client subProcessUserDetailServerCall:self->paramString withCompletion:^(NSMutableArray * userDetailArray, NSError * error) {
 
                 if(error)
                 {

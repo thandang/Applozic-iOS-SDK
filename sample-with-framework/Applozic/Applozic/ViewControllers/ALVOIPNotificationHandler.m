@@ -177,7 +177,7 @@
                 
                 self.backgroundTask = [appObject beginBackgroundTaskWithExpirationHandler:^{
                     ALSLog(ALLoggerSeverityInfo, @"ALVOIP : BACKGROUND_HANDLER_NO_MORE_TASK_RUNNING.");
-                    [appObject endBackgroundTask:self.backgroundTask];
+                    [self->appObject endBackgroundTask:self.backgroundTask];
                     self.backgroundTask = UIBackgroundTaskInvalid;
                 }];
             }

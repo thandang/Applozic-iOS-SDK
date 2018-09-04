@@ -1998,7 +1998,7 @@
 
             self.tableViewTop2Constraint.constant = self.pickerView.frame.size.height;
             self.mTableView.frame = CGRectMake(0,self.pickerView.frame.size.height,
-                                               defaultTableRect.size.height,
+                                               self->defaultTableRect.size.height,
                                                [UIScreen mainScreen].bounds.size.width);
             [self.view layoutIfNeeded];
             [self.pickerView setHidden:NO];
@@ -2042,8 +2042,8 @@
     [UIView animateWithDuration:0.4 animations:^{
 
 
-        self.mTableView.frame = CGRectMake(0,defaultTableRect.origin.y,
-                                           defaultTableRect.size.height,
+        self.mTableView.frame = CGRectMake(0,self->defaultTableRect.origin.y,
+                                           self->defaultTableRect.size.height,
                                            [UIScreen mainScreen].bounds.size.width);
 
         self.tableViewTop2Constraint.constant = 0;

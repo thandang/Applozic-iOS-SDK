@@ -521,7 +521,7 @@
     BOOL isGroupNotification = (self.channelKey == nil ? false : true);
     if(self.channelKey && isGroupNotification)
     {
-        [ALChannelService markConversationAsRead:self.channelKey withCompletion:^(NSString * string, NSError * error) {
+        [[ALChannelService sharedInstance] markConversationAsRead:self.channelKey withCompletion:^(NSString * string, NSError * error) {
 
             if(error)
             {
@@ -538,7 +538,7 @@
 
     if(self.contactIds && !self.isGroup)
     {
-        [ALUserService markConversationAsRead:self.contactIds withCompletion:^(NSString * string, NSError *error) {
+        [[ALUserService sharedInstance] markConversationAsRead:self.contactIds withCompletion:^(NSString * string, NSError *error) {
             if(error)
             {
                 ALSLog(ALLoggerSeverityError, @"Error while marking messages as read for contact %@", self.contactIds);
@@ -688,7 +688,7 @@
         NSNumber *lastMsgTime = [NSNumber numberWithDouble:doubleTime];
         messageListRequest.startTimeStamp = lastMsgTime;
 
-        [ALMessageService getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
             if(messages.count)
             {
@@ -1305,7 +1305,7 @@
 
 -(void)sendLocationMessage:(ALMessage *)theMessage withCompletion:(void(^)(NSString *message, NSError *error))completion
 {
-    [ALMessageService sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
+    [[ALMessageService sharedInstance] sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
 
         if(error)
         {
@@ -3125,7 +3125,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)sendMessage:(ALMessage *)theMessage messageAtIndex:(NSUInteger) messageIndex{
     [self resetMessageReplyView];
-    [ALMessageService sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
+    [[ALMessageService sharedInstance] sendMessages:theMessage withCompletion:^(NSString *message, NSError *error) {
 
         if(error)
         {
@@ -3441,7 +3441,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         messageListRequest.conversationId = self.conversationId;
     }
 
-    [ALMessageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+    [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
         [self.mActivityIndicator stopAnimating];
         ALSLog(ALLoggerSeverityInfo, @"LIST_CALL_CALLED");

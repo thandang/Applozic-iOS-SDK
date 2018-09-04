@@ -26,6 +26,8 @@
 
 @interface ALChannelService : NSObject
 
++(ALChannelService *)sharedInstance;
+
 -(void)callForChannelServiceForDBInsertion:(id)theJson;
 
 -(void)getChannelInformation:(NSNumber *)channelKey orClientChannelKey:(NSString *)clientChannelKey withCompletion:(void (^)(ALChannel *alChannel3)) completion;
@@ -86,7 +88,7 @@
                     metadata:(NSMutableDictionary *)metaData
               withCompletion:(void(^)(NSError *error))completion;
 
-+(void)markConversationAsRead:(NSNumber *)channelKey withCompletion:(void (^)(NSString *, NSError *))completion;
+-(void)markConversationAsRead:(NSNumber *)channelKey withCompletion:(void (^)(NSString *, NSError *))completion;
 
 -(BOOL)isChannelLeft:(NSNumber*)groupID;
 

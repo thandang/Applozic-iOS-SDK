@@ -9,6 +9,9 @@
 #import "Applozic.h"
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, ApplozicClientError) {
+    MessageNotPresent = 1
+};
 
 @protocol ApplozicAttachmentDelegate <NSObject>
 
@@ -26,6 +29,10 @@
 @interface ApplozicClient : NSObject  <NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) id<ApplozicAttachmentDelegate>attachmentProgressDelegate;
+@property (nonatomic, retain) ALMessageService *messageService;
+@property (nonatomic, retain) ALMessageDBService *messageDbService;
+@property (nonatomic, retain) ALUserService *userService;
+@property (nonatomic, retain) ALChannelService *channelService;
 
 -(instancetype)initWithApplicationKey:(NSString *)applicationKey;
 

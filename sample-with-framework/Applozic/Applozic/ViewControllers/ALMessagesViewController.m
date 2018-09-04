@@ -199,7 +199,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable:) name:@"reloadTable" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateChannelSync:)
-                                                 name:@"UPDATED_CHANNEL_OBJECT" object:nil];
+                                                 name:@"Update_channel_Info" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLastSeenAtStatusPUSH:) name:@"update_USER_STATUS" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEntersForegroundIntoListView:) name:@"appCameInForeground" object:nil];
@@ -240,7 +240,7 @@
 //    [self.childGroupList addObject:parentChannel];
 }
 
-// Channel deatils update notification
+// Channel details update notification
 -(void)updateChannelSync:(NSNotification*)notification {
     ALChannel *channel =  notification.object;
     if(channel){
@@ -280,7 +280,7 @@
     [self.tabBarController.tabBar setHidden: [ALUserDefaultsHandler isBottomTabBarHidden]];
     //unregister for notification
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"pushNotification" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UPDATED_CHANNEL_OBJECT" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Update_channel_Info" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NEW_MESSAGE_NOTIFICATION object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BROADCAST_MSG_UPDATE" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

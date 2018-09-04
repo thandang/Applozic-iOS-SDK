@@ -48,14 +48,6 @@
     
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    ALSLog(ALLoggerSeverityInfo, @"didUpdateToLocation: %@", newLocation);
-    CLLocation *currentLocation = newLocation;
-    [ self handleLocationUpdate: currentLocation];
-    
-}
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     

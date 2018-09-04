@@ -1017,8 +1017,6 @@
             
             [self.dBService deleteAllMessagesByContact:nil orChannelKey:[alMessageobj getGroupId]];
             [ALChannelService setUnreadCountZeroForGroupID:[alMessageobj getGroupId]];
-            [self subProcessDeleteMessageThread:filteredArray];
-            return;
         }
         
         [ALMessageService deleteMessageThread:alMessageobj.contactIds orChannelKey:[alMessageobj getGroupId]

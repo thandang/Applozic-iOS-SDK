@@ -14,6 +14,7 @@
     ALPushNotificationService *alPushNotificationService;
 }
 
+NSString * const ApplozicClientDomain = @"ApplozicClient";
 
 /**
  This is for initialization the applicationKey
@@ -27,6 +28,7 @@
     if (self)
     {
         [ALUserDefaultsHandler setApplicationKey:applicationKey];
+        [self setUpServices];
     }
     return self;
 }
@@ -50,11 +52,17 @@
         alPushNotificationService.realTimeUpdate = delegate;
         alMQTTConversationService = [ALMQTTConversationService sharedInstance];
         alMQTTConversationService.realTimeUpdate = delegate;
-
+        [self setUpServices];
     }
     return self;
 }
 
+-(void)setUpServices {
+    _messageService = [ALMessageService sharedInstance];
+    _messageDbService = [ALMessageDBService new];
+    _userService = [ALUserService sharedInstance];
+    _channelService = [ALChannelService sharedInstance];
+}
 
 //==============================================================================================================================================
 #pragma mark - Login method
@@ -186,8 +194,7 @@
  */
 
 -(void) getLatestMessages:(BOOL)isNextPage withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
-    ALMessageDBService *messageDataBaseService = [ALMessageDBService new];
-    [messageDataBaseService getLatestMessages:isNextPage withCompletionHandler:^(NSMutableArray *messageListArray, NSError *error) {
+    [_messageDbService getLatestMessages:isNextPage withCompletionHandler:^(NSMutableArray *messageListArray, NSError *error) {
         completion(messageListArray,error);
     }];
 }
@@ -200,7 +207,7 @@
  @param completion completion description
  */
 -(void) getMessages:(MessageListRequest *)messageListRequest withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
-    [ALMessageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+    [_messageService getMessageListForUser:messageListRequest  withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
         completion(messages,error);
     }];
 }
@@ -221,7 +228,7 @@
 {
     if(groupId && groupId != 0)
     {
-        [ALChannelService markConversationAsRead:groupId withCompletion:^(NSString * conversationResponse, NSError * error) {
+        [_channelService markConversationAsRead:groupId withCompletion:^(NSString * conversationResponse, NSError * error) {
             
             if(error)
             {
@@ -250,7 +257,7 @@
     
     if(userId)
     {
-        [ALUserService markConversationAsRead:userId withCompletion:^(NSString * conversationResponse, NSError *error) {
+        [_userService markConversationAsRead:userId withCompletion:^(NSString * conversationResponse, NSError *error) {
             if(error)
             {
                 NSLog(@"Error while marking messages as read for contact %@", userId);
@@ -280,11 +287,14 @@
 -(void)sendTextMessage:(ALMessage*) alMessage withCompletion:(void(^)(ALMessage *message, NSError *error))completion{
     
     if(!alMessage){
-        NSError *messageError = [NSError errorWithDomain:@"message is nil" code:0 userInfo:nil];
+        NSError *messageError = [NSError errorWithDomain:ApplozicClientDomain
+                                                    code:MessageNotPresent
+                                                userInfo:@{NSLocalizedDescriptionKey : @"Empty message passed"}];
+
         completion(nil,messageError);
     }
     
-    [ALMessageService sendMessages:alMessage withCompletion:^(NSString *message, NSError *error) {
+    [_messageService sendMessages:alMessage withCompletion:^(NSString *message, NSError *error) {
         if(error)
         {
             NSLog(@"SEND_MSG_ERROR :: %@",error.description);
@@ -405,7 +415,7 @@
             [message.fileMeta populate:fileInfo];
         }
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
-        [ALMessageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
+        [_messageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
             
             if(error)
             {

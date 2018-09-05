@@ -31,6 +31,7 @@
 #define GROUP_MEMBER_ADD_OPTION @"com.applozic.userdefault.GROUP_MEMBER_ADD_OPTION"
 #define GROUP_MEMBER_REMOVE_OPTION @"com.applozic.userdefault.GROUP_MEMBER_REMOVE_OPTION"
 #define THIRD_PARTY_VC_NAME @"com.applozic.userdefault.THIRD_PARTY_VC_NAME"
+#define THIRD_PARTY_DETAIL_VC_NOTIFICATION @"com.applozic.userdefault.THIRD_PARTY_DETAIL_VC_NOTIFICATION"
 #define CONTEXTUAL_CHAT_OPTION @"com.applozic.userdefault.CONTEXTUAL_CHAT_OPTION"
 #define USER_CALL_OPTION @"com.applozic.userdefault.USER_CALL_OPTION"
 #define SEND_BUTTON_BG_COLOR @"com.applozic.userdefault.SEND_BUTTON_BG_COLOR"
@@ -196,6 +197,11 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 
 +(NSString *)getCustomClassName;
 +(void)setCustomClassName:(NSString *)className;
+
+// When a user taps on title view in ALChatViewController  with this option you can receive notification with name thirdPartyDetailVCNotification with options to show custom group detail VC
+// might be blocked by "setGroupInfoDisabled" and "setReceiverUserProfileOption"
++(BOOL)getOptionToPushNotificationToShowCustomGroupDetalVC;
++(void)setOptionToPushNotificationToShowCustomGroupDetalVC:(BOOL)option;
 
 +(void)setContextualChat:(BOOL)option;
 +(BOOL)getContextualChatOption;

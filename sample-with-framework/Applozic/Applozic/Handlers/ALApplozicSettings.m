@@ -318,6 +318,17 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(BOOL)getOptionToPushNotificationToShowCustomGroupDetalVC
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:THIRD_PARTY_DETAIL_VC_NOTIFICATION];
+}
+
++(void)setOptionToPushNotificationToShowCustomGroupDetalVC:(BOOL)option
+{
+    [[NSUserDefaults standardUserDefaults] setBool:option forKey:THIRD_PARTY_DETAIL_VC_NOTIFICATION];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 +(void)setCallOption:(BOOL)flag
 {
     [[NSUserDefaults standardUserDefaults] setBool:flag forKey:USER_CALL_OPTION];

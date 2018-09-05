@@ -229,7 +229,7 @@
 {
     ALMessage * customMessage = [ALMessageService createCustomTextMessageEntitySendTo:to withText:text];
     
-    [ALMessageService sendMessages:customMessage withCompletion:^(NSString *message, NSError *error) {
+    [[ALMessageService sharedInstance] sendMessages:customMessage withCompletion:^(NSString *message, NSError *error) {
         if(error)
         {
             NSLog(@"Custom Message Send Error: %@", error);
@@ -269,7 +269,7 @@
     
     ALMessage * messageWithMetaData = [ALMessageService createMessageWithMetaData:dictionary andContentType: ALMESSAGE_CONTENT_DEFAULT andReceiverId:@"receiverId" andMessageText:@"MESG WITH META DATA"];
     
-    [ALMessageService sendMessages:messageWithMetaData withCompletion:^(NSString *message, NSError *error) {
+    [[ALMessageService sharedInstance] sendMessages:messageWithMetaData withCompletion:^(NSString *message, NSError *error) {
         
         if(error)
         {

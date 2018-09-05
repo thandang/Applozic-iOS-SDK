@@ -1,5 +1,14 @@
 ### Changelog
 
+5.13.0 (upcoming release)
+---
+### Enhancements
+
+
+### Fixes
+
+-[AL-2934] Fixed bug where a deleted group reappears when group is deleted after leaving.
+
 __Version 3.8__
 * Group/Subgroup
 * Contact Type for 3rd party
@@ -82,13 +91,13 @@ __Version 3.0__
  * Typing Indicator UI fixes
  * Send/Receive messages text color settings
  * No conversation Label added if chat is empty in individual chat
- * App icon and APNs tap action fixes 
+ * App icon and APNs tap action fixes
 
 __Version 2.8__
 
  * Calling option with option to enable/disable this feature
  * SMS fallback functionality if reciever/sender do not reads thier messages within specific time period
-  
+
  (For above two features to work, User contacts should be registered with their phone numbers)
  * Enable/disable Context-based-chat's view
 
@@ -126,7 +135,7 @@ __Version 2.5__
  * Multiple attachment with configurable limit
 
 __Version 2.2__
- * Contact sharing. 
+ * Contact sharing.
  * Offline message sync.
  * User block/unblock background sync.
  * Background message sync on APNs notification.
@@ -151,4 +160,3 @@ __Version 2.0__
    * Audio messages
    * Video messages
  * Image compression (Configurable)
- 

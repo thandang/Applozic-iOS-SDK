@@ -28,6 +28,28 @@
     return [[NSUserDefaults standardUserDefaults] valueForKey:FONT_FACE];
 }
 
++(void)setChatCellFontTextStyle:(NSString *)fontTextStyle
+{
+    [[NSUserDefaults standardUserDefaults] setObject:fontTextStyle forKey:CHAT_CELL_FONT_TEXT_STYLE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString *)getChatCellFontTextStyle
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:CHAT_CELL_FONT_TEXT_STYLE];
+}
+
++(void)setChatChannelCellFontTextStyle:(NSString *)fontTextStyle
+{
+    [[NSUserDefaults standardUserDefaults] setObject:fontTextStyle forKey:CHAT_CHANNEL_CELL_FONT_TEXT_STYLE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString *)getChatChannelCellFontTextStyle
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:CHAT_CHANNEL_CELL_FONT_TEXT_STYLE];
+}
+
 +(void)setTitleForConversationScreen:(NSString *)titleText
 {
     [[NSUserDefaults standardUserDefaults] setValue:titleText forKey:CONVERSATION_TITLE];

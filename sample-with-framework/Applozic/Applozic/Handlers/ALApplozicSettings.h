@@ -15,6 +15,8 @@
 #define CONVERSATION_TITLE @"com.applozic.userdefault.CONVERSATION_TITLE"
 #define BACK_BUTTON_TITLE @"com.applozic.userdefault.BACK_BUTTON_TITLE"
 #define FONT_FACE @"com.applozic.userdefault.FONT_FACE"
+#define CHAT_CELL_FONT_TEXT_STYLE @"com.applozic.userdefault.CHAT_CELL_FONT_TEXT_STYLE"
+#define CHAT_CHANNEL_CELL_FONT_TEXT_STYLE @"com.applozic.userdefault.CHAT_CHANNEL_CELL_FONT_TEXT_STYLE"
 #define NOTIFICATION_TITLE @"com.applozic.userdefault.NOTIFICATION_TITLE"
 #define IMAGE_COMPRESSION_FACTOR @"com.applozic.userdefault.IMAGE_COMPRESSION_FACTOR"
 #define IMAGE_UPLOAD_MAX_SIZE @"com.applozic.userdefault.IMAGE_UPLOAD_MAX_SIZE"
@@ -109,8 +111,15 @@ static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectG
 @interface ALApplozicSettings : NSObject
 
 +(void)setFontFace:(NSString *)fontFace;
-
 +(NSString *)getFontFace;
+
+// works with font face for iOS 11, uses system font face for iOS 10, being ignored for versions below
++(void)setChatCellFontTextStyle:(NSString *)fontTextStyle;
++(NSString *)getChatCellFontTextStyle;
+
+// works with font face for iOS 11, uses system font face for iOS 10, being ignored for versions below
++(void)setChatChannelCellFontTextStyle:(NSString *)fontTextStyle;
++(NSString *)getChatChannelCellFontTextStyle;
 
 +(void)setUserProfileHidden: (BOOL)flag;
 

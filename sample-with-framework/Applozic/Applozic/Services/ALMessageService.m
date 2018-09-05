@@ -534,7 +534,8 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
        || (message.groupId && message.contentType == ALMESSAGE_CHANNEL_NOTIFICATION)
        || [message.type isEqualToString:@"5"]
        || [message isHiddenMessage]
-       || [message isVOIPNotificationMessage]) {
+       || [message isVOIPNotificationMessage]
+       || [message.status isEqualToNumber:[NSNumber numberWithInt:READ]]) {
 
         return NO;
 

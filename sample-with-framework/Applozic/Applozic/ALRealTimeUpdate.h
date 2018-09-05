@@ -19,10 +19,11 @@
 -(void) onMessageDeleted:(NSString *) messageKey;
 -(void) onMessageDeliveredAndRead:(ALMessage *) message withUserId:(NSString *) userId;
 -(void) onConversationDelete:(NSString *) userId withGroupId: (NSNumber*) groupId;
--(void) onConversationRead:(NSString *) userId;
+-(void) onConversationRead:(NSString *)userId withGroupId:(NSNumber *) groupId;
 -(void) onUpdateTypingStatus:(NSString *) userId status: (BOOL) status;
 -(void) onUpdateLastSeenAtStatus: (ALUserDetail *) alUserDetail;
 -(void) onUserBlockedOrUnBlocked:(NSString *)userId andBlockFlag:(BOOL)flag;
+-(void) onAllMessagesRead:(NSString *)userId;
 
 @optional
 -(void) onMqttConnectionClosed;

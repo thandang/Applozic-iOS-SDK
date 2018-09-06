@@ -205,7 +205,7 @@
                             }
                             else
                             {
-                                [self.alSyncCallService syncCall:alMessage];
+                                [self.alSyncCallService syncCall:alMessage withDelegate:self.realTimeUpdate];
                                 [self.mqttConversationDelegate syncCall:alMessage andMessageList:nil];
                             }
                         }else{

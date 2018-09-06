@@ -868,13 +868,23 @@
 }
 
 
--(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray
-{
+
+-(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
+   
     for(ALChannel *channelObject in channelArray)
     {
         [self createChannel:channelObject];
+        if(delegate){
+            [delegate onChannelUpdated:channelObject];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Update_channel_Info" object:channelObject];
     }
+
+}
+
+-(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray
+{
+    [self processArrayAfterSyncCall:channelArray withDelegate:nil];
 }
 
 //------------------------------------------

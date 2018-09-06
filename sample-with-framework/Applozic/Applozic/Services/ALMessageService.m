@@ -433,51 +433,51 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
                     messageArray = [dbService addMessageList:syncResponse.messagesList];
 
                     NSMutableArray * hiddenMsgFilteredArray = [[NSMutableArray alloc] initWithArray:messageArray];
-                    for(ALMessage * message in hiddenMsgFilteredArray)
-                    {
-                        if([message isHiddenMessage] && ![message isVOIPNotificationMessage])
-                        {
-                            [messageArray removeObject:message];
-                        }
-                       else if(![message isToIgnoreUnreadCountIncrement])
-                        {
-                            [ALMessageService incrementContactUnreadCount:message];
-                        }
-
-                        if (message.groupId != nil && message.contentType == ALMESSAGE_CHANNEL_NOTIFICATION) {
-                            ALChannelService *channelService = [[ALChannelService alloc] init];
-                            [channelService syncCallForChannel];
-                            if([message isMsgHidden]) {
-                                [messageArray removeObject:message];
-                            }
-                        }
-
-                        if(![message isHiddenMessage] && ![message isVOIPNotificationMessage] && theDelegate)
-                        {
-                            if([message.type  isEqual: OUT_BOX]){
-                                [theDelegate onMessageSent: message];
-                            }else{
-                                [theDelegate onMessageReceived: message];
-                            }
-                        }
-
-                    }
 
                     [ALUserService processContactFromMessages:messageArray withCompletion:^{
+                        
+                        for(ALMessage * message in hiddenMsgFilteredArray)
+                        {
+                            if([message isHiddenMessage] && ![message isVOIPNotificationMessage])
+                            {
+                                [messageArray removeObject:message];
+                            }
+                            else if(![message isToIgnoreUnreadCountIncrement])
+                            {
+                                [ALMessageService incrementContactUnreadCount:message];
+                            }
+                            
+                            if (message.groupId != nil && message.contentType == ALMESSAGE_CHANNEL_NOTIFICATION) {
+                                ALChannelService *channelService = [[ALChannelService alloc] init];
+                                [channelService syncCallForChannelWithDelegate:theDelegate];
+                                if([message isMsgHidden]) {
+                                    [messageArray removeObject:message];
+                                }
+                            }
+                            
+                            if(![message isHiddenMessage] && ![message isVOIPNotificationMessage] && theDelegate)
+                            {
+                                if([message.type  isEqual: OUT_BOX]){
+                                    [theDelegate onMessageSent: message];
+                                }else{
+                                    [theDelegate onMessageReceived: message];
+                                }
+                            }
+                            
+                        }
+
                         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_MESSAGE_NOTIFICATION object:messageArray userInfo:nil];
 
                     }];
 
-                    completion(messageArray,error);
-
-                }else
-                {
-                    completion(messageArray,error);
                 }
-
+                
                 [ALUserDefaultsHandler setLastSyncTime:syncResponse.lastSyncTime];
                 ALMessageClientService *messageClientService = [[ALMessageClientService alloc] init];
                 [messageClientService updateDeliveryReports:syncResponse.messagesList];
+                
+                completion(messageArray,error);
+
 
             }
             else

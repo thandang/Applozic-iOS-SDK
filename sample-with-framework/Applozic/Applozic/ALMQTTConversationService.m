@@ -197,7 +197,7 @@
                                 return;
                             }
 
-                            [ALMessageService addOpenGroupMessage:alMessage];
+                            [ALMessageService addOpenGroupMessage:alMessage withDelegate:self.realTimeUpdate];
                             if(!assistant.isOurViewOnTop)
                             {
                                 [assistant assist:alMessage.contactIds and:dict ofUser:alMessage.contactIds];

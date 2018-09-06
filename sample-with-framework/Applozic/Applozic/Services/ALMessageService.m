@@ -1002,34 +1002,42 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     return [alMsgDBService createMessageEntity:dbMessage];
 }
 
-+(void)addOpenGroupMessage:(ALMessage*)alMessage{
++(void)addOpenGroupMessage:(ALMessage*)alMessage withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
     {
-
+        
         if(!alMessage){
             return;
         }
-
+        
         NSMutableArray * singlemessageArray = [[NSMutableArray alloc] init];
         [singlemessageArray addObject:alMessage];
         NSMutableArray * hiddenMsgFilteredArray = [[NSMutableArray alloc] initWithArray:singlemessageArray];
         for(ALMessage * message in hiddenMsgFilteredArray)
         {
-
+            
             if (message.groupId != nil && message.contentType == ALMESSAGE_CHANNEL_NOTIFICATION) {
                 ALChannelService *channelService = [[ALChannelService alloc] init];
-                [channelService syncCallForChannel];
+                [channelService syncCallForChannelWithDelegate:delegate];
                 if([message isMsgHidden]) {
                     [singlemessageArray removeObject:message];
                 }
             }
-
+            
+            if(delegate){
+                if([message.type  isEqual: OUT_BOX]){
+                    [delegate onMessageSent: message];
+                }else{
+                    [delegate onMessageReceived: message];
+                }
+            }
+            
         }
-
+        
         [ALUserService processContactFromMessages:singlemessageArray withCompletion:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:NEW_MESSAGE_NOTIFICATION object:singlemessageArray userInfo:nil];
-
+            
         }];
-
+        
     }
 }
 

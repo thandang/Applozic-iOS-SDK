@@ -868,7 +868,6 @@
 }
 
 
-
 -(void)createChannelsAndUpdateInfo:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
    
     for(ALChannel *channelObject in channelArray)
@@ -882,10 +881,6 @@
 
 }
 
--(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray
-{
-    [self createChannelsAndUpdateInfo:channelArray withDelegate:nil];
-}
 
 //------------------------------------------
 #pragma mark AFTER LEAVE LOGOUT and LOGIN

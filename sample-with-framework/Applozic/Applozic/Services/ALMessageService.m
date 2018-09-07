@@ -408,7 +408,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 
 }
 
-+(void) getLatestMessageForUser:(NSString *)deviceKeyString withDelegate : (id<ApplozicUpdatesDelegate>)theDelegate withCompletion:(void (^)( NSMutableArray *, NSError *))completion
++(void) getLatestMessageForUser:(NSString *)deviceKeyString withDelegate : (id<ApplozicUpdatesDelegate>)delegate withCompletion:(void (^)( NSMutableArray *, NSError *))completion
 {
     if(!alMsgClientService)
     {
@@ -432,12 +432,12 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
                     ALMessageDBService * dbService = [[ALMessageDBService alloc] init];
                     messageArray = [dbService addMessageList:syncResponse.messagesList];
 
-                    NSMutableArray * hiddenMsgFilteredArray = [[NSMutableArray alloc] initWithArray:messageArray];
-
                     [ALUserService processContactFromMessages:messageArray withCompletion:^{
+                        NSMutableArray * hiddenMsgFilteredArray = [[NSMutableArray alloc] initWithArray:messageArray];
                         
                         for(ALMessage * message in hiddenMsgFilteredArray)
                         {
+                            
                             if([message isHiddenMessage] && ![message isVOIPNotificationMessage])
                             {
                                 [messageArray removeObject:message];
@@ -448,26 +448,25 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
                             }
                             
                             if (message.groupId != nil && message.contentType == ALMESSAGE_CHANNEL_NOTIFICATION) {
-                                ALChannelService *channelService = [[ALChannelService alloc] init];
-                                [channelService syncCallForChannelWithDelegate:theDelegate];
+                                [[ALChannelService sharedInstance] syncCallForChannelWithDelegate:delegate];
                                 if([message isMsgHidden]) {
                                     [messageArray removeObject:message];
                                 }
                             }
                             
-                            if(![message isHiddenMessage] && ![message isVOIPNotificationMessage] && theDelegate)
+                            if(![message isHiddenMessage] && ![message isVOIPNotificationMessage] && delegate)
                             {
                                 if([message.type  isEqual: OUT_BOX]){
-                                    [theDelegate onMessageSent: message];
+                                    [delegate onMessageSent: message];
                                 }else{
-                                    [theDelegate onMessageReceived: message];
+                                    [delegate onMessageReceived: message];
                                 }
                             }
                             
                         }
-
+                        
                         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_MESSAGE_NOTIFICATION object:messageArray userInfo:nil];
-
+                        
                     }];
 
                 }
@@ -477,7 +476,6 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
                 [messageClientService updateDeliveryReports:syncResponse.messagesList];
                 
                 completion(messageArray,error);
-
 
             }
             else
@@ -1047,10 +1045,10 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     
     [messageDbService getLatestMessages:isNextPage withOnlyGroups:isGroup withCompletionHandler:^(NSMutableArray *messageList, NSError *error) {
         
+        
         completion(messageList,error);
         
     }];
 }
-
 
 @end

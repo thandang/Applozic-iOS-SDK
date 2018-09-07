@@ -3147,8 +3147,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             return;
         }
 
-        [self addBroadcastMessageToDB:theMessage];
-
         if(messageIndex>0){
             [[self.alMessageWrapper getUpdatedMessageArray]replaceObjectAtIndex: messageIndex-1 withObject:theMessage];
 

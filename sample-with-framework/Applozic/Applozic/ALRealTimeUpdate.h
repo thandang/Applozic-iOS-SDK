@@ -68,12 +68,12 @@
 -(void) onConversationDelete:(NSString *) userId withGroupId: (NSNumber*) groupId;
 
 /**
- onConversationRead will be called once the conversation read by same user login in different devices or platforms.
+ conversationReadByCurrentUser will be called once the conversation read by same user login in different devices or platforms.
 
  @param userId if conversation read for user then userId will be there else groupId will be there.
  @param groupId if conversation raad for channel/group then channelKey will be there and userId will be nil.
  */
--(void) onConversationRead:(NSString *)userId withGroupId:(NSNumber *) groupId;
+-(void) conversationReadByCurrentUser:(NSString *)userId withGroupId:(NSNumber *) groupId;
 
 /**
  onUpdateTypingStatus will be called once the typing.

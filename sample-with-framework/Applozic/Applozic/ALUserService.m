@@ -554,7 +554,7 @@
     
     [ALUserService setUnreadCountZeroForContactId:userId];
     if(delegate){
-        [delegate onConversationRead:userId withGroupId:nil];
+        [delegate conversationReadByCurrentUser:userId withGroupId:nil];
     }
     NSDictionary *dict = @{@"userId":userId};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Update_unread_count" object:dict];

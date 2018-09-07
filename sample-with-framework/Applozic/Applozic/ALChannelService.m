@@ -1042,7 +1042,7 @@
     
     [ALChannelService setUnreadCountZeroForGroupID:channelKey];
     if(delegate){
-        [delegate onConversationRead:nil withGroupId:channelKey];
+        [delegate conversationReadByCurrentUser:nil withGroupId:channelKey];
     }
     NSDictionary *dict = @{@"channelKey":channelKey};
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Update_unread_count" object:dict];

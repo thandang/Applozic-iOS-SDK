@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ALMessage.h"
 #import "ALUserDetail.h"
+#import "ALChannel.h"
 
 @protocol ApplozicUpdatesDelegate <NSObject>
 
@@ -97,6 +98,7 @@
  @param flag if true or YES then user is blocked else false or NO then unblocked
  */
 -(void) onUserBlockedOrUnBlocked:(NSString *)userId andBlockFlag:(BOOL)flag;
+-(void) onChannelUpdated:(ALChannel *)channel;
 
 /**
  onAllMessagesRead will be called once the receiver read the message conversation.

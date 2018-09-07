@@ -622,6 +622,14 @@
 -(void)updateChannelWithChannelKey:(NSNumber *)channelKey andNewName:(NSString *)newName andImageURL:(NSString *)imageURL orClientChannelKey:(NSString *)clientChannelKey
                 isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion;
 
+
+/**
+ This method is used for internal purpose.
+
+ @param delegate For real time updates  callback will be triggered for channel update
+ */
+-(void)syncCallForChannelWithDelegate:(id<ApplozicUpdatesDelegate>)delegate;
+
 /**
  This method will update unread count to zero for channel once the conversation notification is received
 

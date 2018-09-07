@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ALMessage.h"
 #import "ALUserDetail.h"
+#import "ALChannel.h"
 
 @protocol ApplozicUpdatesDelegate <NSObject>
 
@@ -23,6 +24,7 @@
 -(void) onUpdateTypingStatus:(NSString *) userId status: (BOOL) status;
 -(void) onUpdateLastSeenAtStatus: (ALUserDetail *) alUserDetail;
 -(void) onUserBlockedOrUnBlocked:(NSString *)userId andBlockFlag:(BOOL)flag;
+-(void) onChannelUpdated:(ALChannel *)channel;
 
 @optional
 -(void) onMqttConnectionClosed;

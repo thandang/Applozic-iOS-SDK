@@ -197,7 +197,7 @@
                                 return;
                             }
 
-                            [ALMessageService addOpenGroupMessage:alMessage];
+                            [ALMessageService addOpenGroupMessage:alMessage withDelegate:self.realTimeUpdate];
                             if(!assistant.isOurViewOnTop)
                             {
                                 [assistant assist:alMessage.contactIds and:dict ofUser:alMessage.contactIds];
@@ -205,7 +205,7 @@
                             }
                             else
                             {
-                                [self.alSyncCallService syncCall:alMessage];
+                                [self.alSyncCallService syncCall:alMessage withDelegate:self.realTimeUpdate];
                                 [self.mqttConversationDelegate syncCall:alMessage andMessageList:nil];
                             }
                         }else{

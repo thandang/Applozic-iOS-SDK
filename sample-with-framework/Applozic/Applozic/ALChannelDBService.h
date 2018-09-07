@@ -53,7 +53,7 @@
 
 -(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray;
 
--(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate;
+-(void)createChannelsAndUpdateInfo:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate;
 
 -(NSMutableArray *)getListOfAllUsersInChannel:(NSNumber *)key;
 //New Added...

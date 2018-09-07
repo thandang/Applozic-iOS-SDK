@@ -753,7 +753,7 @@
         if([response.status isEqualToString:@"success"])
         {
             ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
-            [channelDBService processArrayAfterSyncCall:response.alChannelArray withDelegate:delegate];
+            [channelDBService createChannelsAndUpdateInfo:response.alChannelArray withDelegate:delegate];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GroupDetailTableReload" object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATE_CHANNEL_NAME" object:nil];
         }

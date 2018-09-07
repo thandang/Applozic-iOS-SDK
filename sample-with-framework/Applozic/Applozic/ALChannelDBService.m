@@ -869,7 +869,7 @@
 
 
 
--(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
+-(void)createChannelsAndUpdateInfo:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
    
     for(ALChannel *channelObject in channelArray)
     {
@@ -884,7 +884,7 @@
 
 -(void)processArrayAfterSyncCall:(NSMutableArray *)channelArray
 {
-    [self processArrayAfterSyncCall:channelArray withDelegate:nil];
+    [self createChannelsAndUpdateInfo:channelArray withDelegate:nil];
 }
 
 //------------------------------------------

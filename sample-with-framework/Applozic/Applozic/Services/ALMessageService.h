@@ -91,4 +91,6 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 
 +(void)addOpenGroupMessage:(ALMessage*)alMessage withDelegate:(id<ApplozicUpdatesDelegate>)delegate;
 
+-(NSMutableArray *)filterMessageListAndUpdateMessageNotification:(NSMutableArray *) messageArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate;
+
 @end

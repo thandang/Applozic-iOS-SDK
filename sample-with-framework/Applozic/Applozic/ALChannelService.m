@@ -1043,4 +1043,15 @@
     metadata[@"Alert"] = @"false";
     return metadata;
 }
+
+-(void)updateConversationReadWithGroupId:(NSNumber *)channelKey withDelegate: (id<ApplozicUpdatesDelegate>)delegate{
+    
+    [ALChannelService setUnreadCountZeroForGroupID:channelKey];
+    if(delegate){
+        [delegate conversationReadByCurrentUser:nil withGroupId:channelKey];
+    }
+    NSDictionary *dict = @{@"channelKey":channelKey};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Update_unread_count" object:dict];
+}
+
 @end

@@ -30,10 +30,7 @@
     }
 
     if ([ALApplozicSettings getChatChannelCellFontTextStyle]) {
-        if (@available(iOS 11.0, *)) {
-            UIFontMetrics *fontMetrics = [UIFontMetrics metricsForTextStyle:[ALApplozicSettings getChatChannelCellFontTextStyle]];
-            return [fontMetrics scaledFontForFont:defaultFont];
-        } else if (@available(iOS 10.0, *)) {
+        if (@available(iOS 10.0, *)) {
             return [UIFont preferredFontForTextStyle:[ALApplozicSettings getChatChannelCellFontTextStyle]];
         }
     }

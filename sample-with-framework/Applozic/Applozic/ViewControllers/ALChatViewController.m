@@ -941,6 +941,16 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         [self freezeView:NO];
     }
 
+    if(self.channelKey){
+        ALChannelDBService *channelDb = [[ALChannelDBService alloc]init];
+        
+        ALChannelUserX *alChannelUserXLoggedInUser = [channelDb loadChannelUserXByUserId:self.channelKey andUserId:[ALUserDefaultsHandler getUserId]];
+        
+        if([channelDb isAdminBroadcastChannel:self.channelKey] && !alChannelUserXLoggedInUser.isAdminUser){
+            self.typingMessageView.hidden = YES;
+        }
+        
+    }
 }
 
 //==============================================================================================================================================

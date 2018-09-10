@@ -1211,7 +1211,7 @@
 
 +(BOOL)isMultiSelectGalleryViewDisabled
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:ALDisableMultiSelectGalleryView];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ALDisableMultiSelectGalleryView];
 }
 +(void)disableMultiSelectGalleryView:(BOOL)enabled
 {

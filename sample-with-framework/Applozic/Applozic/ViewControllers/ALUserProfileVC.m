@@ -455,7 +455,7 @@
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten
 totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    ALSLog(ALLoggerSeverityInfo, @"TOTAL_BYTES_WRITTEN :: %lu",totalBytesWritten);
+    ALSLog(ALLoggerSeverityInfo, @"TOTAL_BYTES_WRITTEN :: %ld",(long)totalBytesWritten);
 }
 
 -(void)connectionDidFinishLoading:(ALConnection *)connection

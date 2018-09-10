@@ -438,7 +438,7 @@
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten
 totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    ALSLog(ALLoggerSeverityInfo, @"GROUP_IMAGE UPLOAD PROGRESS :: %lu out of %lu",totalBytesWritten,totalBytesExpectedToWrite);
+    ALSLog(ALLoggerSeverityInfo, @"GROUP_IMAGE UPLOAD PROGRESS :: %ld out of %lu",(long)totalBytesWritten,totalBytesExpectedToWrite);
 }
 
 -(void)connectionDidFinishLoading:(ALConnection *)connection

@@ -316,7 +316,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 
 -(BOOL)isNotificationStale:(ALMessage*)alMessage
 {
-    ALSLog(ALLoggerSeverityInfo, @"[[NSDate date]timeIntervalSince1970] - [alMessage.createdAtTime doubleValue] ::%d", [[NSDate date]timeIntervalSince1970]*1000 - [alMessage.createdAtTime doubleValue]);
+    ALSLog(ALLoggerSeverityInfo, @"[[NSDate date]timeIntervalSince1970] - [alMessage.createdAtTime doubleValue] ::%f", [[NSDate date]timeIntervalSince1970]*1000 - [alMessage.createdAtTime doubleValue]);
     return ( ([[NSDate date] timeIntervalSince1970] - [alMessage.createdAtTime doubleValue]/1000) > 30);
 }
 

@@ -341,6 +341,10 @@ static ALMessageClientService *alMsgClientService;
                 alMessage.status = [NSNumber numberWithInt:SENT];
 
             }
+            
+            if(self.delegate){
+                [self.delegate onMessageSent:alMessage];
+            }
 
         }else{
             ALSLog(ALLoggerSeverityError, @" got error while sending messages");

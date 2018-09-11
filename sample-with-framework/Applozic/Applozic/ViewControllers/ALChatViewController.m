@@ -4305,7 +4305,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     ALNewContactsViewController *contactVC = (ALNewContactsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ALNewContactsViewController"];
     contactVC.directContactVCLaunchForForward = YES;
     contactVC.alMessage = message;
-    contactVC .forwardDelegate = self;
+    contactVC.forwardDelegate = self;
     UINavigationController *conversationViewNavController = [[UINavigationController alloc] initWithRootViewController:contactVC];
     [self presentViewController:conversationViewNavController animated:YES completion:nil];
 

@@ -4,6 +4,7 @@
 ---
 ### Enhancements
 
+-[AL-2948] Add setting for background color in attachment plus icon.
 
 ### Fixes
 

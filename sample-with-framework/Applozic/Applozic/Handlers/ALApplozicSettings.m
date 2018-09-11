@@ -1252,4 +1252,18 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(void)setBackgroundColorForAttachmentPlusIcon:(UIColor *)backgroundColor
+{
+    NSData *backgroundColorData = [NSKeyedArchiver archivedDataWithRootObject:backgroundColor];
+    [[NSUserDefaults standardUserDefaults] setObject:backgroundColorData forKey:BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getBackgroundColorForAttachmentPlusIcon
+{
+    NSData *backgroundColorData = [[NSUserDefaults standardUserDefaults] objectForKey:BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON];
+    UIColor *backgroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:backgroundColorData];
+    return backgroundColor;
+}
+
 @end

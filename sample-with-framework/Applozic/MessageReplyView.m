@@ -178,8 +178,6 @@
 
 -(void)pouplateValues:(ALMessage*)replyMessage
 {
-    NSURL * url;
-    
     replyMessage.message = [self getMessageText:replyMessage];
     
     if(replyMessage.isSentMessage)

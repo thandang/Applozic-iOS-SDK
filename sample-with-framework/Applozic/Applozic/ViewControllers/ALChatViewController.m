@@ -4371,7 +4371,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.replyMessageText.text = @"Image";
             }
 
-            NSURL *theUrl = nil;
             if (message.imageFilePath != NULL)
             {
                 NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];

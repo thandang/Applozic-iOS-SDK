@@ -641,7 +641,7 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
                                                                                           ALSLog(ALLoggerSeverityInfo, @"USER_STATUS_UPDATED_SUCCESSFULLY");
                                                                                           self->myContact.userStatus = statusText;
                                                                                           ALSLog(ALLoggerSeverityInfo, @"USER_STATUS_UPDATED_SUCCESSFULLY  %@", self->myContact.userStatus);
-                                                                                          [alContactService updateContact:self->myContact];
+                                                                                          [self->alContactService updateContact:self->myContact];
                                                                                           [self.userStatusLabel setText: statusText];
                                                                                           [ALUserDefaultsHandler setLoggedInUserStatus:statusText];
                                                                                           

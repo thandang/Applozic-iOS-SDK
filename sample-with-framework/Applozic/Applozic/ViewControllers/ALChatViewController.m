@@ -417,7 +417,7 @@
 
         [ALMessageService deleteMessage:messageKey andContactId:self.contactIds withCompletion:^(NSString * response, NSError * error) {
 
-            ALSLog(ALLoggerSeverityInfo, @"Message Deleted upon APPLOZIC_05",response);
+            ALSLog(ALLoggerSeverityInfo, @"Message Deleted upon APPLOZIC_05 and response: %@", response);
 
         }];
 //        ALMessageDBService * almessageDBService = [[ALMessageDBService alloc] init];

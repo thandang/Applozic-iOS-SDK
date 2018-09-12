@@ -23,6 +23,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Applozic/Applozic-Swift.h>
 #import <Applozic/ALChannelService.h>
+#import <Applozic/ALLogger.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -119,6 +120,8 @@
 - (IBAction)sendLogsAction:(id)sender {
     if ([MFMailComposeViewController canSendMail])
     {
+
+        [ALLogger saveLogArray];
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
         
         mailer.mailComposeDelegate = self;
@@ -127,15 +130,13 @@
         
         NSArray *toRecipients = [NSArray arrayWithObjects:@"support@applozic.com", nil];
         [mailer setToRecipients:toRecipients];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *txtFilePath = [documentsDirectory stringByAppendingPathComponent:@"AllTheLogs.txt"];
-        NSData *noteData = [NSData dataWithContentsOfFile:txtFilePath];
+
+        NSString *filePath = [ALLogger logArrayFilepath];
+        NSData *noteData = [NSData dataWithContentsOfFile:filePath];
         [mailer setMessageBody:@"Hey there sending you the logs."
                         isHTML:YES];
         [mailer setMailComposeDelegate:self];
-        [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"AllTheLogs.txt"];
+        [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"ApplozicLogs.txt"];
         
         [self presentViewController:mailer animated:YES completion:nil];
     }

@@ -122,18 +122,20 @@
     {
 
         [ALLogger saveLogArray];
+        NSDictionary *infoDictionary = [[NSBundle bundleForClass: [ALLogger class]] infoDictionary];
+        NSString *applozicVersion = [infoDictionary valueForKey:@"CFBundleShortVersionString"];
+
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-        
         mailer.mailComposeDelegate = self;
         
         [mailer setSubject:@"Applozic Logs File"];
-        
         NSArray *toRecipients = [NSArray arrayWithObjects:@"support@applozic.com", nil];
         [mailer setToRecipients:toRecipients];
 
         NSString *filePath = [ALLogger logArrayFilepath];
         NSData *noteData = [NSData dataWithContentsOfFile:filePath];
-        [mailer setMessageBody:@"Hey there sending you the logs."
+        NSString *body = [NSString stringWithFormat:@"Hey there sending you the logs. \n Applozic SDK version no.: %@", applozicVersion];
+        [mailer setMessageBody:body
                         isHTML:YES];
         [mailer setMailComposeDelegate:self];
         [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"ApplozicLogs.txt"];

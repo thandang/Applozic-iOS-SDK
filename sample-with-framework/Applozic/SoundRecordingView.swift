@@ -142,8 +142,6 @@ import Foundation
             // mic access ok...
             isAllow = true
             break;
-        default:
-            break;
         }
 
         return isAllow

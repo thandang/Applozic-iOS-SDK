@@ -115,7 +115,6 @@ static NSString * const reuseIdentifier = @"collectionCell";
     object.classVideoPath = nil;
     object.classImage = nil;
     object.dataGIF = nil;
-    object.attachmentType = nil;
     
     __block UIImage * image = [info valueForKey:UIImagePickerControllerOriginalImage];
     __block UIImage * globalThumbnail = [UIImage new];

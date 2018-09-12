@@ -1030,7 +1030,7 @@
     NSError *fetchError = nil;
     NSArray *result = [dbHandler.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
     
-    ALSLog(ALLoggerSeverityInfo, @"CHILD CHANNEL FOUND : %lu WITH PARENT KEY : %@",result.count, parentGroupKey);
+    ALSLog(ALLoggerSeverityInfo, @"CHILD CHANNEL FOUND : %lu WITH PARENT KEY : %@",(unsigned long)result.count, parentGroupKey);
     ALSLog(ALLoggerSeverityError, @"ERROR (IF-ANY) : %@",fetchError.description);
     
     for(DB_CHANNEL *dbChannel in result)

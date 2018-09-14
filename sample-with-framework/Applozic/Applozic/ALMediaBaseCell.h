@@ -30,6 +30,7 @@
 #import "ALApplozicSettings.h"
 #import "ALChannel.h"
 #import "ALContact.h"
+#import <AVKit/AVKit.h>
 
 @protocol ALMediaBaseCellDelegate <NSObject>
 
@@ -39,7 +40,7 @@
 -(void) showFullScreen:(UIViewController *) fullView;
 -(void) deleteMessageFromView:(ALMessage *)message;
 -(void) loadViewForMedia:(UIViewController *)launch;
--(void) showVideoFullScreen:(MPMoviePlayerViewController *)fullView;
+-(void) showVideoFullScreen:(AVPlayerViewController *)fullView;
 -(void) showSuggestionView:(NSURL *)fileURL andFrame:(CGRect)frame;
 -(void) showAnimationForMsgInfo:(BOOL)flag;
 -(void) processTapGesture:(ALMessage *)alMessage;

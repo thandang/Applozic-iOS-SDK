@@ -432,14 +432,13 @@
 
 +(void)showAlertMessage:(NSString *)text andTitle:(NSString *)title
 {
+    
     UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title
                                                          message:text
-                                                        delegate:self
-                                               cancelButtonTitle:nil
-                                               otherButtonTitles:NSLocalizedStringWithDefaultValue(@"okText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OK" , @""), nil];
-    
-    [alertView show];
-    
+                                                       delegate:self
+                                                     cancelButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedStringWithDefaultValue(@"okText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OK" , @""), nil];
+      [alertView show];
 }
 
 +(UIView *)setStatusBarStyle
@@ -447,7 +446,6 @@
     UIApplication * app = [UIApplication sharedApplication];
     [app setStatusBarHidden:NO];
     [app setStatusBarStyle:[ALApplozicSettings getStatusBarStyle]];
-    
     CGFloat height = app.statusBarFrame.size.height;
     CGFloat width = app.statusBarFrame.size.width;
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -height, width, height)];

@@ -248,8 +248,6 @@
 		6D73B2FE1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73B2FC1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.m */; };
 		6D7756711D5B7EEC0025560B /* ALChatLauncher.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D77566F1D5B7EEC0025560B /* ALChatLauncher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D7756721D5B7EEC0025560B /* ALChatLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7756701D5B7EEC0025560B /* ALChatLauncher.m */; };
-		6D7756751D5B7F150025560B /* ALVCFClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D7756731D5B7F150025560B /* ALVCFClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D7756761D5B7F150025560B /* ALVCFClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7756741D5B7F150025560B /* ALVCFClass.m */; };
 		6D7756851D5B7FBE0025560B /* ALConversationProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D7756771D5B7FBE0025560B /* ALConversationProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D7756861D5B7FBE0025560B /* ALConversationClientService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D7756781D5B7FBE0025560B /* ALConversationClientService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D7756871D5B7FBE0025560B /* ALConversationClientService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7756791D5B7FBE0025560B /* ALConversationClientService.m */; };
@@ -642,8 +640,6 @@
 		6D73B2FC1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALReceiverUserProfileVC.m; sourceTree = "<group>"; };
 		6D77566F1D5B7EEC0025560B /* ALChatLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALChatLauncher.h; path = Applozic/ALChatLauncher.h; sourceTree = "<group>"; };
 		6D7756701D5B7EEC0025560B /* ALChatLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALChatLauncher.m; path = Applozic/ALChatLauncher.m; sourceTree = "<group>"; };
-		6D7756731D5B7F150025560B /* ALVCFClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALVCFClass.h; path = Applozic/ALVCFClass.h; sourceTree = "<group>"; };
-		6D7756741D5B7F150025560B /* ALVCFClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALVCFClass.m; path = Applozic/ALVCFClass.m; sourceTree = "<group>"; };
 		6D7756771D5B7FBE0025560B /* ALConversationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALConversationProxy.h; path = Applozic/ALConversationProxy.h; sourceTree = "<group>"; };
 		6D7756781D5B7FBE0025560B /* ALConversationClientService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALConversationClientService.h; path = Applozic/ALConversationClientService.h; sourceTree = "<group>"; };
 		6D7756791D5B7FBE0025560B /* ALConversationClientService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALConversationClientService.m; path = Applozic/ALConversationClientService.m; sourceTree = "<group>"; };
@@ -910,8 +906,6 @@
 			children = (
 				463E491E1DB7B45D00CDFFE6 /* ALVCardClass.h */,
 				463E491F1DB7B45D00CDFFE6 /* ALVCardClass.m */,
-				6D7756731D5B7F150025560B /* ALVCFClass.h */,
-				6D7756741D5B7F150025560B /* ALVCFClass.m */,
 			);
 			name = contact;
 			sourceTree = "<group>";
@@ -1640,7 +1634,6 @@
 				6D7756ED1D5B82560025560B /* ALReachability.h in Headers */,
 				6D7756D71D5B82000025560B /* ALMessageInfoResponse.h in Headers */,
 				6D4FE48F1D7411F70044A7E6 /* NSData+AES.h in Headers */,
-				6D7756751D5B7F150025560B /* ALVCFClass.h in Headers */,
 				6D7756AB1D5B80DF0025560B /* ALChannelClientService.h in Headers */,
 				29CBF2021C0303A700BE6A20 /* ALColorUtility.h in Headers */,
 				6D6DF13E1BC5364C00EBA00F /* ALConnection.h in Headers */,
@@ -1847,7 +1840,6 @@
 				1863584F20E2480800B75802 /* ApplozicClient.m in Sources */,
 				4612E9021E13882D0022DB23 /* MQTTInMemoryPersistence.m in Sources */,
 				6D6DF1C81BC5364C00EBA00F /* UIImage+GIF.m in Sources */,
-				6D7756761D5B7F150025560B /* ALVCFClass.m in Sources */,
 				6D36F2091BFF3EE3003D46D3 /* ALApplozicSettings.m in Sources */,
 				322B304B1EF9537600DB01FC /* AlApplicationInfoFeed.m in Sources */,
 				8B170C212122CEFF003A14B3 /* ALCustomPickerViewController.swift in Sources */,
@@ -2164,7 +2156,7 @@
 				GCC_PREFIX_HEADER = Applozic/Applozic_Prefix.pch;
 				INFOPLIST_FILE = Applozic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;
@@ -2198,7 +2190,7 @@
 				GCC_PREFIX_HEADER = Applozic/Applozic_Prefix.pch;
 				INFOPLIST_FILE = Applozic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;

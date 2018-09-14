@@ -29,6 +29,8 @@
 
 +(void) processLatestMessagesGroupByContact;
 
++(void) processLatestMessagesGroupByContactWithCompletion:(void(^)(void))completion;
+
 -(void) getMessageListForUser:(MessageListRequest*)messageListRequest withCompletion:(void(^)(NSMutableArray * messages, NSError * error, NSMutableArray *userDetailArray)) completion;
 
 +(void) getMessageListForContactId:(NSString *)contactIds isGroup:(BOOL )isGroup channelKey:(NSNumber *)channelKey conversationId:(NSNumber *)conversationId startIndex:(NSInteger)startIndex withCompletion:(void (^)(NSMutableArray *))completion;

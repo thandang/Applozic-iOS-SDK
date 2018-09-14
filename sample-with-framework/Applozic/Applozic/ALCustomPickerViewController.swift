@@ -62,6 +62,14 @@ public class ALBaseNavigationViewController: UINavigationController {
     var selectedVideos = [Int: PHAsset]()
     var selectedGifs = [Int: PHAsset]()
     
+    // EXPORT PROGRESS VALUES
+    var exportingVideoSessions = [String: AVAssetExportSession]()
+    var progressItems = [String: Progress]()
+    var mainProgress: Progress?
+    var exportProgressBarTimer: Timer?
+    var exportWasCalceled = false
+    
+    
     var multimediaData: ALMultimediaData = ALMultimediaData()
     
     @IBOutlet weak var doneButton: UIBarButtonItem!
@@ -172,13 +180,45 @@ public class ALBaseNavigationViewController: UINavigationController {
         }
 
     }
+    
+    func exportMultipleVideos(_ assets: [PHAsset], exportStarted: @escaping () -> Void, completion: @escaping ([String]) -> Void) {
+        
+        guard !assets.isEmpty else {
+            completion([])
+            return
+        }
+        
+        let dispatchExportStartedGroup = DispatchGroup()
+        let dispatchExportCompletedGroup = DispatchGroup()
+        
+        var videoPaths: [String] = []
+        for video in assets {
+            
+            dispatchExportStartedGroup.enter()
+            dispatchExportCompletedGroup.enter()
+            exportVideoAsset(video, exportStarted: dispatchExportStartedGroup.leave(), completion: { path in
+                if let videoPath = path {
+                    videoPaths.append(videoPath)
+                }
+                dispatchExportCompletedGroup.leave()
+            })
+        }
+        
+        dispatchExportStartedGroup.notify(queue: .main, execute: exportStarted)
+        dispatchExportCompletedGroup.notify(queue: .main) {
+            completion(videoPaths)
+        }
+    }
 
-    func exportVideoAsset(_ asset: PHAsset, completion: @escaping (String) -> Void) {
+    func exportVideoAsset(_ asset: PHAsset, exportStarted: @autoclosure @escaping () -> Void, completion: @escaping (String?) -> Void) {
         let filename = String(format: "VID-%f.mp4", Date().timeIntervalSince1970*1000)
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
         let filePath = documentsUrl.absoluteString.appending(filename)
-        guard var fileurl = URL(string: filePath) else { return }
+        guard var fileurl = URL(string: filePath) else {
+            completion(nil)
+            return
+        }
         print("exporting video to ", fileurl)
         fileurl = fileurl.standardizedFileURL
 
@@ -195,26 +235,32 @@ public class ALBaseNavigationViewController: UINavigationController {
             // most likely, the file didn't exist.  Don't sweat it
         }
 
-        PHImageManager.default().requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetHighestQuality) {
-            (exportSession: AVAssetExportSession?, data: [AnyHashable: Any]?) in
+        PHImageManager.default().requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetHighestQuality) { [weak self]
+            (exportSession: AVAssetExportSession?, _) in
 
-            if exportSession == nil {
+            guard let avExportSession = exportSession else {
                 print("COULD NOT CREATE EXPORT SESSION")
+                completion(nil)
                 return
             }
 
-            exportSession!.outputURL = fileurl
-            exportSession!.outputFileType = AVFileType.mp4 //file type encode goes here, you can change it for other types
+            avExportSession.outputURL = fileurl
+            avExportSession.outputFileType = AVFileType.mp4 //file type encode goes here, you can change it for other types
 
             print("GOT EXPORT SESSION")
-            exportSession!.exportAsynchronously() {
+            avExportSession.exportAsynchronously() {
                 print("EXPORT DONE")
                 completion(fileurl.path)
             }
+            
+            self?.exportingVideoSessions[filePath] = avExportSession
+            self?.progressItems[filePath] = Progress(totalUnitCount: 100)
 
-            print("progress: \(exportSession!.progress)")
-            print("error: \(String(describing: exportSession?.error))")
-            print("status: \(exportSession!.status.rawValue)")
+            print("progress: \(avExportSession.progress)")
+            print("error: \(String(describing: avExportSession.error))")
+            print("status: \(avExportSession.status.rawValue)")
+            
+            exportStarted()
         }
     }
     
@@ -226,11 +272,10 @@ public class ALBaseNavigationViewController: UINavigationController {
         
         gifData(asset: asset, options: options, completionHandler: {
             data, error in
-            if let gifData = data {
-                completion(gifData)
-            }else{
+            if data == nil {
                 NSLog("Error while exporting gif \(error ?? "")")
             }
+            completion(data)
         })
     }
     
@@ -259,13 +304,13 @@ public class ALBaseNavigationViewController: UINavigationController {
         let dispatchGroup = DispatchGroup()
         
         var videoPaths: [String] = []
-        for video in selectedVideos.values {
-            dispatchGroup.enter()
-            exportVideoAsset(video) { path in
-                videoPaths.append(path)
-                dispatchGroup.leave()
-            }
-        }
+        dispatchGroup.enter()
+        exportMultipleVideos(Array(selectedVideos.values), exportStarted: { [weak self] in
+            self?.showProgressAlert()
+        }, completion: { paths in
+            videoPaths = paths
+            dispatchGroup.leave()
+        })
         
         var images: [UIImage] = []
         for image in selectedImages.values {
@@ -289,18 +334,55 @@ public class ALBaseNavigationViewController: UINavigationController {
             }
         }
         
-        previewGallery.alpha = 0.5
-        previewGallery.isUserInteractionEnabled = false
-        
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
-        activityIndicator.startAnimating()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
-        
         dispatchGroup.notify(queue: .main) { [weak self] in
+            
+            self?.exportProgressBarTimer?.invalidate()
+            guard self?.exportWasCalceled == false else {
+                self?.exportWasCalceled = false
+                self?.presentedViewController?.dismiss(animated: true)
+                return
+            }
+            
             if let list = self?.selectedMultimediaList(images: images, videos: videoPaths, gifs: gifsData) {
                 self?.delegate?.multimediaSelected(list)
             }
-            self?.navigationController?.dismiss(animated: false, completion: nil)
+            self?.navigationController?.presentingViewController?.dismiss(animated: false, completion: nil)
+        }
+    }
+    
+    func showProgressAlert() {
+        let alertView = UIAlertController(title: NSLocalizedString("Optimizing...", comment: ""), message: " ", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { [weak self] _ in
+            self?.exportWasCalceled = true
+            self?.exportingVideoSessions.values.forEach { $0.cancelExport() }
+            self?.progressItems.removeAll()
+            self?.exportProgressBarTimer?.invalidate()
+            alertView.dismiss(animated: true)
+        }))
+        
+        let mainProgress = Progress(totalUnitCount: 100)
+        for item in progressItems.values {
+            mainProgress.addChild(item, withPendingUnitCount: Int64(100.0/Double(progressItems.count)))
+        }
+        self.mainProgress = mainProgress
+        
+        //  Show it to your users
+        present(alertView, animated: true, completion: {
+            //  Add your progressbar after alert is shown (and measured)
+            let margin: CGFloat = 8.0
+            let rect = CGRect(x: margin, y: 62.0, width: alertView.view.frame.width - margin * 2.0, height: 2.0)
+            let progressView = UIProgressView(frame: rect)
+            progressView.observedProgress = mainProgress
+            progressView.tintColor = UIColor.blue
+            alertView.view.addSubview(progressView)
+        })
+        
+        exportProgressBarTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressIndicator), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateProgressIndicator() {
+        for (key, session) in exportingVideoSessions {
+            progressItems[key]?.completedUnitCount = Int64(session.progress * 100.0)
         }
     }
 

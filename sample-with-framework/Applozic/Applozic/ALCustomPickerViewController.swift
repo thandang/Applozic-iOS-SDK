@@ -359,25 +359,28 @@ public class ALBaseNavigationViewController: UINavigationController {
             self?.exportProgressBarTimer?.invalidate()
             alertView.dismiss(animated: true)
         }))
-        
-        let mainProgress = Progress(totalUnitCount: 100)
-        for item in progressItems.values {
-            mainProgress.addChild(item, withPendingUnitCount: Int64(100.0/Double(progressItems.count)))
+        var mainProgress: Progress?
+        if #available(iOS 9.0, *) {
+            mainProgress = Progress(totalUnitCount: 100)
+            for item in progressItems.values {
+                mainProgress?.addChild(item, withPendingUnitCount: Int64(100.0/Double(progressItems.count)))
+            }
+            self.mainProgress = mainProgress
         }
-        self.mainProgress = mainProgress
         
-        //  Show it to your users
         present(alertView, animated: true, completion: {
-            //  Add your progressbar after alert is shown (and measured)
-            let margin: CGFloat = 8.0
-            let rect = CGRect(x: margin, y: 62.0, width: alertView.view.frame.width - margin * 2.0, height: 2.0)
-            let progressView = UIProgressView(frame: rect)
-            progressView.observedProgress = mainProgress
-            progressView.tintColor = UIColor.blue
-            alertView.view.addSubview(progressView)
+            if #available(iOS 9.0, *) {
+                let margin: CGFloat = 8.0
+                let rect = CGRect(x: margin, y: 62.0, width: alertView.view.frame.width - margin * 2.0, height: 2.0)
+                let progressView = UIProgressView(frame: rect)
+                progressView.observedProgress = mainProgress
+                progressView.tintColor = UIColor.blue
+                alertView.view.addSubview(progressView)
+            }
         })
-        
-        exportProgressBarTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressIndicator), userInfo: nil, repeats: true)
+        if #available(iOS 9.0, *) {
+            exportProgressBarTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressIndicator), userInfo: nil, repeats: true)
+        }
     }
     
     @objc func updateProgressIndicator() {

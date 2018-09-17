@@ -29,7 +29,7 @@
         defaultFont = [UIFont systemFontOfSize:size];
     }
 
-    if ([ALApplozicSettings getChatChannelCellFontTextStyle]) {
+    if ([ALApplozicSettings getChatChannelCellFontTextStyle] && [ALApplozicSettings isTextStyleInCellEnabled]) {
         if (@available(iOS 10.0, *)) {
             return [UIFont preferredFontForTextStyle:[ALApplozicSettings getChatChannelCellFontTextStyle]];
         }

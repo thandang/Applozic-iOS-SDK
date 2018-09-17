@@ -56,6 +56,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
 +(NSString *)getTitleForConversationScreen
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:CONVERSATION_TITLE];
@@ -1249,6 +1250,17 @@
 +(void)disableMultiSelectGalleryView:(BOOL)enabled
 {
     [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:ALDisableMultiSelectGalleryView];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)isTextStyleInCellEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:AL_TEXT_STYLE_FOR_CELL];
+}
+
++(void)enableTextStyleCell:(BOOL)flag
+{
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:AL_TEXT_STYLE_FOR_CELL];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

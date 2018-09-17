@@ -268,12 +268,15 @@
             NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
             //            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
             [ALUserDefaultsHandler clearAll];
+            [ALApplozicSettings clearAll];
+
             ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
             [messageDBService deleteAllObjectsInCoreData];
-            
             [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
         } else {
             [ALUserDefaultsHandler clearAll];
+            [ALApplozicSettings clearAll];
+            
             ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
             [messageDBService deleteAllObjectsInCoreData];
             [[UIApplication sharedApplication] unregisterForRemoteNotifications];

@@ -204,7 +204,14 @@ static NSString * const reuseIdentifier = @"collectionCell";
     
     if(indexPath.row == self.imageArray.count - 1)
     {
-        [cell.imageView setBackgroundColor: self.navigationController.navigationBar.barTintColor];
+        if([ALApplozicSettings getBackgroundColorForAttachmentPlusIcon])
+        {
+            [cell.imageView setBackgroundColor: [ALApplozicSettings getBackgroundColorForAttachmentPlusIcon]];
+        }
+        else
+        {
+            [cell.imageView setBackgroundColor: self.navigationController.navigationBar.barTintColor];
+        }
     }
     
     return cell;

@@ -592,6 +592,10 @@
 //    NSArray * attachmentOptionToHide = @[@":audio", @":video", @":location",@":shareContact"];
 //
 //    [ALApplozicSettings setHideAttachmentsOption:attachmentOptionToHide];
+    
+    /********************************************* Attachment Plus Icon background color
+     *****************************************************************/
+    [ALApplozicSettings setBackgroundColorForAttachmentPlusIcon:[UIColor colorWithRed:0.0/255 green:0.0/255 blue:0.0/255 alpha:1]];
 }
 
 -(void)getApplicationBaseURL

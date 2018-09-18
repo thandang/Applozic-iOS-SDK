@@ -867,6 +867,15 @@
     return NO;
 }
 
+-(BOOL)isAdminBroadcastChannel:(NSNumber *)groupId
+{
+    DB_CHANNEL *dbChannel = [self getChannelByKey:groupId];
+    ALChannel *channel = [ALChannel new];
+    NSMutableDictionary *metadata = [channel getMetaDataDictionary:dbChannel.metadata];
+    
+    return (metadata && [[metadata valueForKey:@"AL_ADMIN_BROADCAST"] isEqualToString:@"true"]);
+}
+
 
 -(void)createChannelsAndUpdateInfo:(NSMutableArray *)channelArray withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
    

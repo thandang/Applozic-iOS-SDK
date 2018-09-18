@@ -152,13 +152,17 @@
             ALSLog(ALLoggerSeverityInfo, @"..");
         }
         
-        completion(response,nil);
+        
         
         [self connect];
         ALMessageDBService * dbService = [[ALMessageDBService alloc] init];
         if(dbService.isMessageTableEmpty)
         {
-            [ALMessageService processLatestMessagesGroupByContact];
+            [ALMessageService processLatestMessagesGroupByContactWithCompletion:^{
+                completion(response,nil);
+            }];
+        } else {
+            completion(response,nil);
         }
         
     }];

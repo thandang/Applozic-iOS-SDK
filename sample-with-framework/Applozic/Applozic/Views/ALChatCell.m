@@ -174,11 +174,8 @@
         defaultFont = [UIFont systemFontOfSize:size];
     }
     
-    if ([ALApplozicSettings getChatCellFontTextStyle]) {
-        if (@available(iOS 11.0, *)) {
-            UIFontMetrics *fontMetrics = [UIFontMetrics metricsForTextStyle:[ALApplozicSettings getChatCellFontTextStyle]];
-            return [fontMetrics scaledFontForFont:defaultFont];
-        } else if (@available(iOS 10.0, *)) {
+    if ([ALApplozicSettings getChatCellFontTextStyle] && [ALApplozicSettings isTextStyleInCellEnabled]) {
+        if (@available(iOS 10.0, *)) {
             return [UIFont preferredFontForTextStyle:[ALApplozicSettings getChatCellFontTextStyle]];
         }
     }

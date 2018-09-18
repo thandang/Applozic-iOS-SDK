@@ -941,6 +941,16 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         [self freezeView:NO];
     }
 
+    if(self.channelKey){
+        ALChannelDBService *channelDBService = [[ALChannelDBService alloc]init];
+        
+        ALChannelUserX *alChannelUserXLoggedInUser = [channelDBService loadChannelUserXByUserId:self.channelKey andUserId:[ALUserDefaultsHandler getUserId]];
+        
+        if([channelDBService isAdminBroadcastChannel:self.channelKey] && !alChannelUserXLoggedInUser.isAdminUser){
+            self.typingMessageView.hidden = YES;
+        }
+        
+    }
 }
 
 //==============================================================================================================================================
@@ -2944,6 +2954,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     self.mImagePicker.allowsEditing = YES;
                     self.mImagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
                     self.mImagePicker.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *)kUTTypeMovie, nil];
+                    self.mImagePicker.videoQuality = UIImagePickerControllerQualityTypeHigh;
                     [self presentViewController:self.mImagePicker animated:YES completion:nil];
                 }
                 else

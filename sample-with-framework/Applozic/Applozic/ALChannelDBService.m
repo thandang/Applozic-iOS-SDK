@@ -873,10 +873,7 @@
     ALChannel *channel = [ALChannel new];
     NSMutableDictionary *metadata = [channel getMetaDataDictionary:dbChannel.metadata];
     
-    if( metadata && [metadata valueForKey:@"AL_ADMIN_BROADCAST"] ){
-        return ([[metadata valueForKey:@"AL_ADMIN_BROADCAST"] isEqualToString:@"true"]);
-    }
-    return NO;
+    return (metadata && [[metadata valueForKey:@"AL_ADMIN_BROADCAST"] isEqualToString:@"true"]);
 }
 
 

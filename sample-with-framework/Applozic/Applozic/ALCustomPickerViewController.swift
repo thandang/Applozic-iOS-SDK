@@ -111,8 +111,8 @@ public class ALBaseNavigationViewController: UINavigationController {
         self.navigationController?.navigationBar.barTintColor = ALApplozicSettings.getColorForNavigation()
         self.navigationController?.navigationBar.tintColor = ALApplozicSettings.getColorForNavigationItem()
         if let aSize = UIFont(name: "Helvetica-Bold", size: 18) {
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: ALApplozicSettings.getColorForNavigationItem(),
-                                                                            NSAttributedStringKey.font: aSize]
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ALApplozicSettings.getColorForNavigationItem(),
+                                                                            NSAttributedString.Key.font: aSize]
         }
     }
 

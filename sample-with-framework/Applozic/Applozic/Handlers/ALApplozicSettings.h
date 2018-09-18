@@ -103,9 +103,9 @@
 #define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
 #define AL_CONTACT_SEARCH @"com.applozic.AL_CONTACT_SEARCH"
 #define CHANNEL_MEMBER_INFO_IN_SUBTITLE @"com.applozic.CHANNEL_MEMBER_INFO_IN_SUBTITLE"
-#define BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON @"com.applozic.BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON"
 static NSString *const HIDE_MESSAGES_WITH_METADATA_KEYS = @"com.applozic.HIDE_MESSAGES_WITH_METADATA_KEYS";
 static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectGalleryView";
+static NSString *const BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON =  @"com.applozic.BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON";
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

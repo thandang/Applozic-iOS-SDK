@@ -447,4 +447,6 @@ static NSString *const BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON =  @"com.apploz
 
 +(void)setBackgroundColorForAttachmentPlusIcon:(UIColor *)backgroundColor;
 +(UIColor *)getBackgroundColorForAttachmentPlusIcon;
++(void) clearAll;
+
 @end

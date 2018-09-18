@@ -1042,14 +1042,14 @@
 }
 
 +(void) setTemplateMessages:(NSMutableDictionary*)dictionary{
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:TEMPLATE_MESSAGES];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
 +(NSMutableDictionary*) getTemplateMessages{
-    
+
     return [[NSUserDefaults standardUserDefaults] objectForKey:TEMPLATE_MESSAGES];
 }
 
@@ -1191,7 +1191,7 @@
 +(void)setCategoryName:(NSString*)categoryName{
     [[NSUserDefaults standardUserDefaults] setValue:categoryName forKey:AL_CATEGORY_NAME];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
 }
 
 +(NSString*)getCategoryName{
@@ -1264,6 +1264,20 @@
     NSData *backgroundColorData = [[NSUserDefaults standardUserDefaults] objectForKey:BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON];
     UIColor *backgroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:backgroundColorData];
     return backgroundColor;
+}
+
++(void) clearAll
+{
+    NSDictionary * dictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+    NSArray * keyArray = [dictionary allKeys];
+    for(NSString * defaultKeyString in keyArray)
+    {
+        if([defaultKeyString hasPrefix:@"com.applozic"] && ![defaultKeyString isEqualToString:APN_DEVICE_TOKEN])
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:defaultKeyString];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
 }
 
 @end

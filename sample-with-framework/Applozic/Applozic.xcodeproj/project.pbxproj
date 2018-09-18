@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04468CDB208F8385008DFEFA /* AppLozic.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DF1371BC5364C00EBA00F /* AppLozic.xcdatamodeld */; };
 		048E2F33209A04A300C40B8B /* ALChannelOfTwoMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 048E2F31209A04A300C40B8B /* ALChannelOfTwoMetaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		048E2F34209A04A300C40B8B /* ALChannelOfTwoMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 048E2F32209A04A300C40B8B /* ALChannelOfTwoMetaData.m */; };
 		105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 105F30BE1FFBAEEA00D60431 /* AlChannelFeedResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,6 +20,8 @@
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
 		181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12D1BC5364C00EBA00F /* UIImageView+WebCache.m */; };
+		1860E01C2151395600119CD7 /* ALAudioSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1860E01A2151395600119CD7 /* ALAudioSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1860E01D2151395600119CD7 /* ALAudioSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1860E01B2151395600119CD7 /* ALAudioSession.m */; };
 		1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584220E2470E00B75802 /* ALRealTimeUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1863584E20E2480800B75802 /* ApplozicClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584C20E2480800B75802 /* ApplozicClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1863584F20E2480800B75802 /* ApplozicClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863584D20E2480800B75802 /* ApplozicClient.m */; };
@@ -391,6 +392,8 @@
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
+		1860E01A2151395600119CD7 /* ALAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALAudioSession.h; path = Applozic/ALAudioSession.h; sourceTree = "<group>"; };
+		1860E01B2151395600119CD7 /* ALAudioSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALAudioSession.m; path = Applozic/ALAudioSession.m; sourceTree = "<group>"; };
 		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
 		1863584C20E2480800B75802 /* ApplozicClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplozicClient.h; path = Applozic/ApplozicClient.h; sourceTree = "<group>"; };
 		1863584D20E2480800B75802 /* ApplozicClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApplozicClient.m; path = Applozic/ApplozicClient.m; sourceTree = "<group>"; };
@@ -1135,6 +1138,8 @@
 		6D6DF1DC1BC5375700EBA00F /* ApplozicCommons */ = {
 			isa = PBXGroup;
 			children = (
+				1860E01A2151395600119CD7 /* ALAudioSession.h */,
+				1860E01B2151395600119CD7 /* ALAudioSession.m */,
 				6D6DF0CC1BC5364C00EBA00F /* ALJson.m */,
 				6D6DF0CB1BC5364C00EBA00F /* ALJson.h */,
 			);
@@ -1642,6 +1647,7 @@
 				1863584E20E2480800B75802 /* ApplozicClient.h in Headers */,
 				1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */,
 				105F30C41FFBAEEC00D60431 /* AlChannelFeedResponse.h in Headers */,
+				1860E01C2151395600119CD7 /* ALAudioSession.h in Headers */,
 				C76D31451F0AAFB30087291F /* ALVOIPCell.h in Headers */,
 				10B6DABC204E980400B6E024 /* ALGroupUser.h in Headers */,
 				C70983071E0177E900FC93A1 /* ALMessageServiceWrapper.h in Headers */,
@@ -1731,7 +1737,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04468CDB208F8385008DFEFA /* AppLozic.xcdatamodeld in Resources */,
 				4612E8F31E13882D0022DB23 /* Doxyfile in Resources */,
 				6D7757161D5B83660025560B /* TSMessagesDefaultDesign.json in Resources */,
 				4612E9191E13882D0022DB23 /* MQTTWebsocketTransport in Resources */,
@@ -1757,7 +1762,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1844,6 +1850,7 @@
 				4612E9081E13882D0022DB23 /* MQTTSession.m in Sources */,
 				6D7756901D5B7FBE0025560B /* ALTopicDetail.m in Sources */,
 				6D7756B81D5B80DF0025560B /* ALChannelSyncResponse.m in Sources */,
+				1860E01D2151395600119CD7 /* ALAudioSession.m in Sources */,
 				6D6DF1CA1BC5364C00EBA00F /* UIImage+MultiFormat.m in Sources */,
 				4612E8F71E13882D0022DB23 /* MQTTCFSocketEncoder.m in Sources */,
 				4612E90C1E13882D0022DB23 /* MQTTSessionManager.m in Sources */,
@@ -2077,7 +2084,7 @@
 		6D6DF0861BC535C800EBA00F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2103,8 +2110,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -2136,8 +2143,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

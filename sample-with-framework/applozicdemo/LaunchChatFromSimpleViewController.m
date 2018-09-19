@@ -23,6 +23,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Applozic/Applozic-Swift.h>
 #import <Applozic/ALChannelService.h>
+#import <Applozic/ALLogger.h>
 
 @interface LaunchChatFromSimpleViewController ()<MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sendLogsButton;
@@ -119,23 +120,25 @@
 - (IBAction)sendLogsAction:(id)sender {
     if ([MFMailComposeViewController canSendMail])
     {
+
+        [ALLogger saveLogArray];
+        NSDictionary *infoDictionary = [[NSBundle bundleForClass: [ALLogger class]] infoDictionary];
+        NSString *applozicVersion = [infoDictionary valueForKey:@"CFBundleShortVersionString"];
+
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-        
         mailer.mailComposeDelegate = self;
         
         [mailer setSubject:@"Applozic Logs File"];
-        
         NSArray *toRecipients = [NSArray arrayWithObjects:@"support@applozic.com", nil];
         [mailer setToRecipients:toRecipients];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *txtFilePath = [documentsDirectory stringByAppendingPathComponent:@"AllTheLogs.txt"];
-        NSData *noteData = [NSData dataWithContentsOfFile:txtFilePath];
-        [mailer setMessageBody:@"Hey there sending you the logs."
+
+        NSString *filePath = [ALLogger logArrayFilepath];
+        NSData *noteData = [NSData dataWithContentsOfFile:filePath];
+        NSString *body = [NSString stringWithFormat:@"Hey there sending you the logs. \n Applozic SDK version no.: %@", applozicVersion];
+        [mailer setMessageBody:body
                         isHTML:YES];
         [mailer setMailComposeDelegate:self];
-        [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"AllTheLogs.txt"];
+        [mailer addAttachmentData:noteData mimeType:@"text/plain" fileName:@"ApplozicLogs.txt"];
         
         [self presentViewController:mailer animated:YES completion:nil];
     }

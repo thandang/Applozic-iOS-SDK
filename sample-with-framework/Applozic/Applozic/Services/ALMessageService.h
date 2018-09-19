@@ -25,7 +25,11 @@
 
 +(ALMessageService *)sharedInstance;
 
+@property (nonatomic, weak) id<ApplozicUpdatesDelegate> delegate;
+
 +(void) processLatestMessagesGroupByContact;
+
++(void) processLatestMessagesGroupByContactWithCompletion:(void(^)(void))completion;
 
 -(void) getMessageListForUser:(MessageListRequest*)messageListRequest withCompletion:(void(^)(NSMutableArray * messages, NSError * error, NSMutableArray *userDetailArray)) completion;
 

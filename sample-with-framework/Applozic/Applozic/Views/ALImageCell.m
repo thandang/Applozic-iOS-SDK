@@ -27,6 +27,7 @@
 #import "ALMessageClientService.h"
 #import "ALConnection.h"
 #import "ALConnectionQueueHandler.h"
+#import "UIImage+animatedGIF.h"
 
 // Constants
 #define MT_INBOX_CONSTANT "4"
@@ -465,9 +466,13 @@ UIViewController * modalCon;
 }
 
 -(void) setInImageView:(NSURL*)url{
+    NSString *stringUrl = url.absoluteString;
+    if (stringUrl != nil && [stringUrl localizedCaseInsensitiveContainsString:@"gif"]) { 
+        UIImage *image = [UIImage animatedImageWithAnimatedGIFURL:url];
+        [self.mImageView setImage: image];
+        return;
+    }
     [self.mImageView sd_setImageWithURL:url placeholderImage:nil options:0];
-
-
 }
 
 #pragma mark - Menu option tap Method -

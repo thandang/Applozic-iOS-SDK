@@ -60,5 +60,6 @@
 -(NSNumber *)getOverallUnreadCountForContactsFromDB;
 -(BOOL)isUserDeleted:(NSString *)userId;
 -(void)addUserDetailsWithoutUnreadCount:(NSMutableArray *)userDetails;
-
+-(void)updateMuteAfterTime:(NSNumber*)notificationAfterTime andUserId:(NSString*)userId;
+-(NSMutableArray *)addMuteUserDetails:(NSDictionary *)jsonNSDictionary;
 @end

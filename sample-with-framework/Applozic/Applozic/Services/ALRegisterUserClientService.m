@@ -165,10 +165,15 @@
             completion(response,nil);
         }
         
+        ALUserService * alUserService = [ALUserService new];
+        [alUserService updateUserApplicationInfo];
+        
+        [alUserService getMutedUserListWithCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
+            
+        }];
+        
     }];
     
-    ALUserService * alUserService = [ALUserService new];
-    [alUserService updateUserApplicationInfo];
     
     
 }

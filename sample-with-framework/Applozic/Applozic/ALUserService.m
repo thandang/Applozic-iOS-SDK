@@ -561,4 +561,37 @@
 
 }
 
+-(void)getMutedUserListWithCompletion:(void(^)(NSMutableArray* userDetailArray, NSError * error))completion{
+    
+    ALUserClientService *userClientService = [[ALUserClientService alloc]init];
+    [userClientService getMutedUserListWithCompletion:^(id theJson, NSError *error) {
+        
+        NSArray * jsonArray = [NSArray arrayWithArray:(NSArray *)theJson];
+        NSMutableArray * userDetailArray = [NSMutableArray new];
+        
+        if(jsonArray.count)
+        {
+            NSDictionary * jsonDictionary = (NSDictionary *)theJson;
+            ALContactDBService *contactDataBase = [[ALContactDBService alloc] init];
+            userDetailArray = [contactDataBase addMuteUserDetails:jsonDictionary];
+        }
+        completion(userDetailArray,error);
+    }];
+}
+
+-(void) muteUser:(ALMuteRequest *)alMuteRequest withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion{
+
+    ALUserClientService *userClientService = [[ALUserClientService alloc] init];
+    [userClientService muteUser:alMuteRequest withCompletion:^(ALAPIResponse *response, NSError *error) {
+        
+        if(response && [response.status isEqualToString:@"success"]){
+            ALContactService *contactService = [[ALContactService alloc]init];
+            
+            [contactService updateMuteAfterTime:alMuteRequest.notificationAfterTime andUserId:alMuteRequest.userId];
+        }
+        completion(response,error);
+    }];
+    
+}
+
 @end

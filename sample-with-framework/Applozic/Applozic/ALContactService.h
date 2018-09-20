@@ -48,4 +48,5 @@
 
 -(BOOL)isUserDeleted:(NSString *)userId;
 
+-(void)updateMuteAfterTime:(NSNumber*)notificationAfterTime andUserId:(NSString*)userId;
 @end

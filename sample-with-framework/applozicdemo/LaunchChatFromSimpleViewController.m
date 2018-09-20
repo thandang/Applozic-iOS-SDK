@@ -112,7 +112,7 @@
     [user setEmail:[ALUserDefaultsHandler getEmailId]];
     
     ALChatManager * chatManager = [[ALChatManager alloc] init];
-    [chatManager registerUserAndLaunchChat:user andFromController:self forUser:nil withGroupId:nil];
+    [chatManager connectUserAndLaunchChat:user andFromController:self forUser:nil withGroupId:nil];
     
     //Adding sample contacts...
     [self insertInitialContacts];

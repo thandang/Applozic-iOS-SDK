@@ -561,7 +561,7 @@
 
 }
 
--(void)getMutedUserListWithCompletion:(void(^)(NSMutableArray* userDetailArray, NSError * error))completion{
+-(void)getMutedUserListWithDelegate:(id<ApplozicUpdatesDelegate>)delegate withCompletion:(void (^)(NSMutableArray *, NSError *))completion{
     
     ALUserClientService *userClientService = [[ALUserClientService alloc]init];
     [userClientService getMutedUserListWithCompletion:^(id theJson, NSError *error) {
@@ -573,7 +573,7 @@
         {
             NSDictionary * jsonDictionary = (NSDictionary *)theJson;
             ALContactDBService *contactDataBase = [[ALContactDBService alloc] init];
-            userDetailArray = [contactDataBase addMuteUserDetails:jsonDictionary];
+            userDetailArray = [contactDataBase addMuteUserDetailsWithDelegate:delegate withNSDictionary:jsonDictionary];
         }
         completion(userDetailArray,error);
     }];

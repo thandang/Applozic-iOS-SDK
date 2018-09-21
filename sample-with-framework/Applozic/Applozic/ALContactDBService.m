@@ -371,7 +371,7 @@
 }
 
 
--(NSMutableArray *)addMuteUserDetails:(NSDictionary *)jsonNSDictionary
+-(NSMutableArray *)addMuteUserDetailsWithDelegate:(id<ApplozicUpdatesDelegate>)delegate withNSDictionary:(NSDictionary *)jsonNSDictionary
 {
     NSMutableArray * userDetailArray = [NSMutableArray new];
 
@@ -381,6 +381,9 @@
         userDetail.unreadCount = 0;
         [self updateUserDetail:userDetail];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Update_user_mute_info" object:userDetail];
+        if(delegate){
+            [delegate onUserMuteStatus:userDetail];
+        }
         [userDetailArray addObject:userDetail];
     }
     
@@ -756,9 +759,8 @@
     return result;
 }
 
--(void)updateMuteAfterTime:(NSNumber*)notificationAfterTime andUserId:(NSString*)userId
+-(ALUserDetail *)updateMuteAfterTime:(NSNumber*)notificationAfterTime andUserId:(NSString*)userId
 {
-    
     ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
     
     DB_CONTACT* dbContact = [self getContactByKey:@"userId" value:userId];
@@ -767,6 +769,24 @@
         dbContact.notificationAfterTime = notificationAfterTime;
         [dbHandler.managedObjectContext save:nil];
     }
+    
+    return [self getUserDetailFromDbContact:dbContact];
+}
+
+-(ALUserDetail *)getUserDetailFromDbContact:(DB_CONTACT *)dbContact{
+    
+    ALUserDetail *userDetail = [[ALUserDetail alloc] init];
+    userDetail.userId = dbContact.userId;
+    userDetail.contactNumber = dbContact.contactNumber;
+    userDetail.imageLink = dbContact.contactImageUrl;
+    userDetail.displayName = dbContact.displayName;
+    userDetail.unreadCount = dbContact.unreadCount;
+    userDetail.userStatus = dbContact.userStatus;
+    userDetail.connected = dbContact.connected;
+    userDetail.deletedAtTime = dbContact.deletedAtTime;
+    userDetail.roleType = dbContact.roleType;
+    userDetail.notificationAfterTime =  dbContact.notificationAfterTime;
+    return userDetail;
 }
 
 

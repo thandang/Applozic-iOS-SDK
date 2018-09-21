@@ -303,10 +303,14 @@
             ALContactDBService *contactDataBaseService = [[ALContactDBService alloc] init];
             
             if([flag isEqualToString:@"0"]){
-                [contactDataBaseService updateMuteAfterTime:0 andUserId:userId];
+               ALUserDetail *userDetail =  [contactDataBaseService updateMuteAfterTime:0 andUserId:userId];
+                if(self.realTimeUpdate){
+                    [self.realTimeUpdate onUserMuteStatus:userDetail];
+                }
             }else if([flag isEqualToString:@"1"]) {
                 ALUserService *userService = [[ALUserService alloc]init];
-                [userService getMutedUserListWithCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
+                
+                [userService getMutedUserListWithDelegate:self.realTimeUpdate withCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
                     
                 }];
             }

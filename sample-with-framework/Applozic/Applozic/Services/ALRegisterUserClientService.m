@@ -168,10 +168,9 @@
         ALUserService * alUserService = [ALUserService new];
         [alUserService updateUserApplicationInfo];
         
-        [alUserService getMutedUserListWithCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
-            
+        [alUserService getMutedUserListWithDelegate:nil withCompletion:^(NSMutableArray *userDetailArray, NSError *error) {
+    
         }];
-        
     }];
     
     

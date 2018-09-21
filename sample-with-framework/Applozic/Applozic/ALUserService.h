@@ -79,7 +79,7 @@
  */
 -(void)updateConversationReadWithUserId:(NSString *)userId withDelegate: (id<ApplozicUpdatesDelegate>)delegate;
 
--(void)getMutedUserListWithCompletion:(void(^)(NSMutableArray* userDetailArray, NSError * error))completion;
+-(void)getMutedUserListWithDelegate: (id<ApplozicUpdatesDelegate>)delegate withCompletion:(void(^)(NSMutableArray* userDetailArray, NSError * error))completion;
 
 -(void) muteUser:(ALMuteRequest *)alMuteRequest withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion;
 

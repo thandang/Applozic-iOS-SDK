@@ -7,10 +7,12 @@
 //
 
 #import "ApplozicClient.h"
+#import "ALAttachmentService.h"
 
 @implementation ApplozicClient
 {
     ALMQTTConversationService *alMQTTConversationService;
+    ALAttachmentService *alAttachmentService;
     ALPushNotificationService *alPushNotificationService;
 }
 
@@ -64,6 +66,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
     _messageDbService = [ALMessageDBService new];
     _userService = [ALUserService sharedInstance];
     _channelService = [ALChannelService sharedInstance];
+    alAttachmentService = [ALAttachmentService sharedInstance];
 }
 
 //==============================================================================================================================================
@@ -322,67 +325,11 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
  */
 
 -(void)sendMessageWithAttachment:(ALMessage*) attachmentMessage{
-
+    
     if(!attachmentMessage || !attachmentMessage.imageFilePath){
-        return;
+                return;
     }
-
-    CFStringRef pathExtension = (__bridge_retained CFStringRef)[attachmentMessage.imageFilePath pathExtension];
-    CFStringRef type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension, NULL);
-    CFRelease(pathExtension);
-    NSString *mimeType = (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass(type, kUTTagClassMIMEType);
-
-    attachmentMessage.fileMeta.contentType = mimeType;
-    if( attachmentMessage.contentType == ALMESSAGE_CONTENT_VCARD){
-        attachmentMessage.fileMeta.contentType = @"text/x-vcard";
-    }
-    NSData *imageSize = [NSData dataWithContentsOfFile:attachmentMessage.imageFilePath];
-    attachmentMessage.fileMeta.size = [NSString stringWithFormat:@"%lu",(unsigned long)imageSize.length];
-
-    //DB Addition
-    ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];
-    ALMessageDBService* messageDBService = [[ALMessageDBService alloc] init];
-    DB_Message * theMessageEntity = [messageDBService createMessageEntityForDBInsertionWithMessage:attachmentMessage];;
-    [theDBHandler.managedObjectContext save:nil];
-    attachmentMessage.msgDBObjectId = [theMessageEntity objectID];
-    theMessageEntity.inProgress = [NSNumber numberWithBool:YES];
-    theMessageEntity.isUploadFailed = [NSNumber numberWithBool:NO];
-    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-
-    NSDictionary * userInfo = [attachmentMessage dictionary];
-
-    ALMessageClientService * clientService  = [[ALMessageClientService alloc]init];
-    [clientService sendPhotoForUserInfo:userInfo withCompletion:^(NSString *responseUrl, NSError *error) {
-
-        if (error)
-        {
-
-            [self.attachmentProgressDelegate onUploadFailed:attachmentMessage];
-            return;
-        }
-
-        [ALMessageService proessUploadImageForMessage:attachmentMessage databaseObj:theMessageEntity.fileMetaInfo uploadURL:responseUrl  withdelegate:self];
-
-    }];
-
-}
-
-
--(ALFileMetaInfo *)getFileMetaInfo
-{
-    ALFileMetaInfo *info = [ALFileMetaInfo new];
-
-    info.blobKey = nil;
-    info.contentType = @"";
-    info.createdAtTime = nil;
-    info.key = nil;
-    info.name = @"";
-    info.size = @"";
-    info.userKey = @"";
-    info.thumbnailUrl = @"";
-    info.progressValue = 0;
-
-    return info;
+    [alAttachmentService sendMessageWithAttachment:attachmentMessage withDelegate:self.delegate withAttachmentDelegate:self.attachmentProgressDelegate];
 }
 
 

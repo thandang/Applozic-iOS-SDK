@@ -2,7 +2,7 @@
 //  ALAttachmentService.m
 //  Applozic
 //
-//  Created by apple on 25/09/18.
+//  Created by Sunil on 25/09/18.
 //  Copyright © 2018 applozic Inc. All rights reserved.
 //
 
@@ -10,6 +10,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "ALMessageClientService.h"
 #import "ApplozicClient.h"
+#import "ALMessageService.h"
 
 @implementation ALAttachmentService
 
@@ -63,8 +64,8 @@
         if (error)
         {
             
-        [self.attachmentProgressDelegate onUploadFailed:attachmentMessage];
-          return;
+            [self.attachmentProgressDelegate onUploadFailed:[[ALMessageService sharedInstance] handleMessageFailedStatus:attachmentMessage]];
+            return;
         }
         
         [ALMessageService proessUploadImageForMessage:attachmentMessage databaseObj:theMessageEntity.fileMetaInfo uploadURL:responseUrl  withdelegate:self];
@@ -73,15 +74,32 @@
     
 }
 
+-(void) downloadMessageAttachment:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
+    
+    self.attachmentProgressDelegate = attachmentProgressDelegate;
+    
+    [ALMessageService processImageDownloadforMessage:alMessage withDelegate:self withCompletionHandler:^(NSError *error) {
+        if(error){
+            [attachmentProgressDelegate onDownloadFailed:alMessage];
+        }
+    }];
+}
 
 -(void)connectionDidFinishLoading:(ALConnection *)connection{
     
     [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:connection];
     ALMessageDBService * dbService = [[ALMessageDBService alloc] init];
+    
+    
     if ([connection.connectionType isEqualToString:@"Image Posting"])
     {
         DB_Message * dbMessage = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
         ALMessage * message = [dbService createMessageEntity:dbMessage];
+        if(!message)
+        {
+            DB_Message * dbMessage = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
+            message = [dbService createMessageEntity:dbMessage];
+        }
         NSError * theJsonError = nil;
         NSDictionary *theJson = [NSJSONSerialization JSONObjectWithData:connection.mData options:NSJSONReadingMutableLeaves error:&theJsonError];
         
@@ -92,14 +110,13 @@
             [message.fileMeta populate:fileInfo];
         }
         ALMessage * almessage =  [ALMessageService processFileUploadSucess:message];
-        ALMessageService *messageService = [[ALMessageService alloc] init];
-        [messageService sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
+        [[ALMessageService sharedInstance] sendMessages:almessage withCompletion:^(NSString *message, NSError *error) {
             
             if(error)
             {
                 NSLog(@"REACH_SEND_ERROR : %@",error);
                 if(self.attachmentProgressDelegate){
-                    [self.attachmentProgressDelegate onUploadFailed:almessage];
+                    [self.attachmentProgressDelegate onUploadFailed:[[ALMessageService sharedInstance] handleMessageFailedStatus:almessage]];
                 }
                 return;
             }else{
@@ -112,9 +129,29 @@
             }
         }];
         
-    } else {
+    }
+    else if ([connection.connectionType isEqualToString:@"Thumbnail Downloading"])
+    {
+        DB_Message * messageEntity = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
         
-        //This is download Sucessfull...
+        NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSArray *componentsArray = [messageEntity.fileMetaInfo.name componentsSeparatedByString:@"."];
+        NSString *fileExtension = [componentsArray lastObject];
+        NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension]];
+        [connection.mData writeToFile:filePath atomically:YES];
+        
+        // UPDATE DB
+        messageEntity.fileMetaInfo.thumbnailFilePath = [NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension];
+        
+        [[ALDBHandler sharedInstance].managedObjectContext save:nil];
+        
+        ALMessage * almessage = [[ALMessageDBService new ] createMessageEntity:messageEntity];
+        
+        if(self.attachmentProgressDelegate){
+            [self.attachmentProgressDelegate onDownloadCompleted:almessage];
+        }
+    }else{
+        
         DB_Message * messageEntity = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
         
         NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -123,15 +160,21 @@
         NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
         [connection.mData writeToFile:filePath atomically:YES];
         
+        // If 'save video to gallery' is enabled then save to gallery
+        if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
+            UISaveVideoAtPathToSavedPhotosAlbum(filePath, self, nil, nil);
+        }
         // UPDATE DB
         messageEntity.inProgress = [NSNumber numberWithBool:NO];
         messageEntity.isUploadFailed=[NSNumber numberWithBool:NO];
         messageEntity.filePath = [NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension];
         [[ALDBHandler sharedInstance].managedObjectContext save:nil];
+        
         ALMessage * almessage = [[ALMessageDBService new ] createMessageEntity:messageEntity];
         if(self.attachmentProgressDelegate){
             [self.attachmentProgressDelegate onDownloadCompleted:almessage];
         }
+        
     }
     
 }
@@ -146,7 +189,8 @@
         return;
     }
     if(self.attachmentProgressDelegate){
-        [self.attachmentProgressDelegate onUpdateBytesDownloaded:connection.mData.length];
+        ALMessage *message = [[ALMessageService sharedInstance]getMessageByKey:connection.keystring];
+        [self.attachmentProgressDelegate onUpdateBytesDownloaded:connection.mData.length withMessage:message];
     }
     
 }
@@ -157,10 +201,26 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     //upload percentage
     NSLog(@"didSendBodyData..upload is in process...");
     if(self.attachmentProgressDelegate){
-        [self.attachmentProgressDelegate onUpdateBytesUploaded:totalBytesWritten];
+        ALMessage *message = [[ALMessageService sharedInstance]getMessageByKey:connection.keystring];
+        [self.attachmentProgressDelegate onUpdateBytesUploaded:totalBytesWritten withMessage:message];
     }
 }
 
+//Error
+-(void)connection:(ALConnection *)connection didFailWithError:(NSError *)error
+{
+    if(self.attachmentProgressDelegate){
+        ALMessage *message = [[ALMessageService sharedInstance]getMessageByKey:connection.keystring];
+        [[ALMessageService sharedInstance] handleMessageFailedStatus:message];
+        if(message.imageFilePath){
+            [self.attachmentProgressDelegate onUploadFailed:message];
+        }else{
+            [self.attachmentProgressDelegate onDownloadFailed:message];
+        }
+    }
+    ALSLog(ALLoggerSeverityError, @"didFailWithError ::: %@",error);
+    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:connection];
+}
 
 
 @end

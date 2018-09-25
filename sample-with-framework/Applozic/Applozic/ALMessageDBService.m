@@ -1151,4 +1151,24 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     
 }
 
+-(ALMessage *)handleMessageFailedStatus:(ALMessage *)message
+{
+    if(!message.msgDBObjectId){
+        return nil;
+    }
+    message.inProgress = NO;
+    message.isUploadFailed = YES;
+    message.sentToServer = NO;
+    NSError *error = nil;
+    
+    DB_Message *dbMessage = (DB_Message*)[self getMeesageById:message.msgDBObjectId error:&error];
+    dbMessage.inProgress = [NSNumber numberWithBool:NO];
+    dbMessage.isUploadFailed = [NSNumber numberWithBool:YES];
+    dbMessage.sentToServer= [NSNumber numberWithBool:NO];;
+    
+    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
+    
+    return message;
+}
+
 @end

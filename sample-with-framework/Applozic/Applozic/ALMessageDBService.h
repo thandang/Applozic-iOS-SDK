@@ -97,4 +97,5 @@
 
 -(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion;
 
+-(ALMessage *)handleMessageFailedStatus:(ALMessage *)message;
 @end

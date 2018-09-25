@@ -91,7 +91,7 @@
     
     NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
     if([ALApplozicSettings isGoogleCloudServiceEnabled]){
-        NSString * theUrlString = [NSString stringWithFormat:@"%@files/url",KBASE_FILE_URL];
+        NSString * theUrlString = [NSString stringWithFormat:@"%@/files/url",KBASE_FILE_URL];
         NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",blobKey];
         urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
         completion(urlRequest, nil);
@@ -113,11 +113,13 @@
     }
 }
 
+
+
 -(void)getNSMutableURLRequestForThumbnail: (ALMessage *) message withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
     
     NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
     if([ALApplozicSettings isGoogleCloudServiceEnabled]){
-        NSString * theUrlString = [NSString stringWithFormat:@"%@files/url",KBASE_FILE_URL];
+        NSString * theUrlString = [NSString stringWithFormat:@"%@/files/url",KBASE_FILE_URL];
         NSString * blobParamString = [@"" stringByAppendingFormat:@"key=%@",message.fileMeta.thumbnailBlobKey];
         urlRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:blobParamString];
         completion(urlRequest,nil);
@@ -134,6 +136,8 @@
     }
     
 }
+
+
 
 -(void) downloadImageThumbnailUrl: (ALMessage *) message withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
     [self getNSMutableURLRequestForThumbnail:message withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
@@ -339,9 +343,8 @@
     }];
 }
 
-
 -(void) sendPhotoForUserInfo:(NSDictionary *)userInfo withCompletion:(void(^)(NSString * message, NSError *error)) completion {
-
+    
     if(ALApplozicSettings.isStorageServiceEnabled) {
         NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
@@ -349,21 +352,21 @@
         NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, CUSTOM_STORAGE_IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
     }else if(ALApplozicSettings.isGoogleCloudServiceEnabled){
-        NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, GOOGLE_CLOUD_STORAGE_IMAGE_UPLOAD_ENDPOINT];
-       completion(theUrlString, nil);
+        NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, IMAGE_UPLOAD_ENDPOINT];
+        completion(theUrlString, nil);
     }else {
         NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/aws/file/url",KBASE_FILE_URL];
-
+        
         NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:nil];
-
+        
         [ALResponseHandler processRequest:theRequest andTag:@"CREATE FILE URL" WithCompletionHandler:^(id theJson, NSError *theError) {
-
+            
             if (theError)
             {
                 completion(nil,theError);
                 return;
             }
-
+            
             NSString *imagePostingURL = (NSString *)theJson;
             ALSLog(ALLoggerSeverityInfo, @"RESPONSE_IMG_URL :: %@",imagePostingURL);
             completion(imagePostingURL, nil);
@@ -371,6 +374,7 @@
         }];
     }
 }
+
 
 -(void) getLatestMessageForUser:(NSString *)deviceKeyString withCompletion:(void (^)( ALSyncMessageFeed *, NSError *))completion
 {

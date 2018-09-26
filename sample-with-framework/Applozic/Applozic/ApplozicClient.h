@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, ApplozicClientError) {
 
 -(void) getMessages:(MessageListRequest *)messageListRequest withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion;
 
--(void)downloadMessageAttachment:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate;
+-(void)downloadMessageAttachment:(ALMessage*)alMessage;
 
 -(void)createChannelWithChannelInfo:(ALChannelInfo*)channelInfo withCompletion:(void(^)(ALChannelCreateResponse *response, NSError *error))completion;
 

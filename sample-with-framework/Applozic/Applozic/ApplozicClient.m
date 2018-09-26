@@ -243,8 +243,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
             }
             else
             {
-                ALUserService *userService = [[ALUserService alloc] init];
-                [userService processResettingUnreadCount];
+                [_userService processResettingUnreadCount];
                 completion(conversationResponse,nil);
             }
         }];
@@ -270,8 +269,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
             }
             else
             {
-                ALUserService *userService = [[ALUserService alloc] init];
-                [userService processResettingUnreadCount];
+                [_userService processResettingUnreadCount];
                 completion(conversationResponse,nil);
             }
         }];
@@ -339,14 +337,13 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
 /**
  downloadMessageAttachment  method is for downloading an Attachment in chat
  @param alMessage pass ALMessage object which you want to download the attachment from  server
- @param attachmentProgressDelegate is delegate for attachement callbacks.
  */
 
--(void)downloadMessageAttachment:(ALMessage*)alMessage withDelegate (id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
+-(void)downloadMessageAttachment:(ALMessage*)alMessage{
     if(!alMessage){
         return;
     }
-    [alAttachmentService downloadMessageAttachment:alMessage withDelegate:attachmentProgressDelegate];
+    [alAttachmentService downloadMessageAttachment:alMessage withDelegate:self.attachmentProgressDelegate];
 }
 
 //==============================================================================================================================================
@@ -480,8 +477,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
  */
 -(void)blockUserWithUserId:(NSString *)userId withCompletion:(void(^)(NSError *error, BOOL userBlock))completion{
 
-    ALUserService *userService = [ALUserService new];
-    [userService blockUser:userId withCompletionHandler:^(NSError *error, BOOL userBlock) {
+    [_userService blockUser:userId withCompletionHandler:^(NSError *error, BOOL userBlock) {
         completion(error,userBlock);
     }];
 }
@@ -495,8 +491,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
 
 -(void)unBlockUserWithUserId:(NSString *)userId withCompletion:(void(^)(NSError *error, BOOL userUnblock))completion{
 
-    ALUserService *userService = [ALUserService new];
-    [userService unblockUser:userId withCompletionHandler:^(NSError *error, BOOL userUnblock) {
+    [_userService unblockUser:userId withCompletionHandler:^(NSError *error, BOOL userUnblock) {
         completion(error,userUnblock);
     }];
 }

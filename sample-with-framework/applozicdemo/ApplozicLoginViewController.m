@@ -188,7 +188,7 @@
     [ALUserDefaultsHandler setEmailId:user.email];
     [ALUserDefaultsHandler setPassword:user.password];
     ALChatManager * chatManager = [[ALChatManager alloc] init];
-    [chatManager registerUserWithCompletion:user withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
+    [chatManager connectUserWithCompletion:user withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
         
         if (!error)
         {

@@ -43,7 +43,7 @@
 // This will register your User at applozic server.
 //==============================================================================================================================================
 
--(void)registerUser:(ALUser *)alUser
+-(void)connectUser:(ALUser *)alUser
 {
     self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:[self getApplicationKey]];
     
@@ -96,7 +96,7 @@
 // Example: If Chat is your first screen after launch,launch chat list on sucess of login.
 //==============================================================================================================================================
 
--(void)registerUserWithCompletion:(ALUser *)alUser withHandler:(void(^)(ALRegistrationResponse *rResponse, NSError *error))completion
+-(void)connectUserWithCompletion:(ALUser *)alUser withHandler:(void(^)(ALRegistrationResponse *rResponse, NSError *error))completion
 {
     self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:[self getApplicationKey]];
     
@@ -200,7 +200,7 @@
 
 -(void)launchChat: (UIViewController *)fromViewController
 {
-    [self registerUserAndLaunchChat:nil andFromController:fromViewController forUser:nil withGroupId:nil];
+    [self connectUserAndLaunchChat:nil andFromController:fromViewController forUser:nil withGroupId:nil];
 }
 
 //==============================================================================================================================================
@@ -210,7 +210,7 @@
 
 -(void)launchChatForUserWithDefaultText:(NSString *)userId andFromViewController:(UIViewController *)fromViewController
 {
-    [self registerUserAndLaunchChat:nil andFromController:fromViewController forUser:userId withGroupId:nil];
+    [self connectUserAndLaunchChat:nil andFromController:fromViewController forUser:userId withGroupId:nil];
 }
 
 //==============================================================================================================================================
@@ -218,7 +218,7 @@
 // If user information is not passed, it will try to get user information from getLoggedinUserInformation.
 //==============================================================================================================================================
 
--(void)registerUserAndLaunchChat:(ALUser *)alUser andFromController:(UIViewController *)viewController forUser:(NSString *)userId
+-(void)connectUserAndLaunchChat:(ALUser *)alUser andFromController:(UIViewController *)viewController forUser:(NSString *)userId
                      withGroupId:(NSNumber *)groupID
 {
     self.chatLauncher = [[ALChatLauncher alloc] initWithApplicationId:[self getApplicationKey]];
@@ -250,7 +250,7 @@
         return;
     }
     
-    [self registerUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
+    [self connectUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
         
         if (!error)
         {
@@ -307,7 +307,7 @@
     }
     
     ALUser *alUser = [ALChatManager getLoggedinUserInformation];
-    [self registerUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
+    [self connectUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
     
     }];
 }
@@ -649,7 +649,7 @@
         return;
     }
     
-    [self registerUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
+    [self connectUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
         
         if (!error)
         {
@@ -685,7 +685,7 @@
    
     [self ALDefaultChatViewSettings];
     ALUser *alUser = [ALChatManager getLoggedinUserInformation];
-    [self registerUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
+    [self connectUserWithCompletion:alUser withHandler:^(ALRegistrationResponse *rResponse, NSError *error) {
        
        if (!error)
        {

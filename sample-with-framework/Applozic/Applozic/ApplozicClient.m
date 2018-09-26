@@ -243,7 +243,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
             }
             else
             {
-                [_userService processResettingUnreadCount];
+                [self->_userService processResettingUnreadCount];
                 completion(conversationResponse,nil);
             }
         }];
@@ -269,7 +269,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
             }
             else
             {
-                [_userService processResettingUnreadCount];
+                [self->_userService processResettingUnreadCount];
                 completion(conversationResponse,nil);
             }
         }];

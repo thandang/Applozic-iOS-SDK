@@ -353,38 +353,27 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
 #pragma mark - Channel/Group methods
 //==============================================================================================================================================
 
-
 /**
- This method is for creating a group like public group,open group group,private group
-
- @param channelName Pass group name
- @param clientChannelKey if you your own client channelKey then you can pass it while creating a group/channel
- @param memberUserIdArray Pass members userId whom you want to be in group while creating
- @param imageLink image url link for group image
- @param type its type of group
+ createChannelWithChannelInfo  This method is for creating a group like public group,open group group,private group
 
  PRIVATE = 1,
  PUBLIC = 2,
  BROADCAST = 5,
  OPEN = 6,
  GROUP_OF_TWO = 7
-
- @param metaData meta data can be extra information you want to pass in group/channel and use it later when its required
- @param adminUserId You can pass admin userId whom you want to be admin of the group/channel during a group/channel create
- @param groupRoleUsers
- @param completion alChannel it will be having complete  deatils about group else NSError
+ 
+ @param channelInfo pass information about group deatils
+ @param completion  it will be having complete  deatils about channel and status, if its error or success else NSError
  */
 
--(void) creataChannelWithName:(NSString *)channelName orClientChannelKey:(NSString *)clientChannelKey
-         andMembersUserIdList:(NSMutableArray *)memberUserIdArray andImageLink:(NSString *)imageLink channelType:(short)type
-                  andMetaData:(NSMutableDictionary *)metaData adminUser:(NSString *)adminUserId withGroupUsers : (NSMutableArray*) groupRoleUsers withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion{
+-(void)createChannelWithChannelInfo:(ALChannelInfo*)channelInfo withCompletion:(void(^)(ALChannelCreateResponse *response, NSError *error))completion{
 
     ALChannelService *channelService = [[ALChannelService alloc] init];
-
-    [channelService createChannel:channelName orClientChannelKey:clientChannelKey andMembersList:memberUserIdArray andImageLink:imageLink channelType:type andMetaData:metaData adminUser:adminUserId withGroupUsers:groupRoleUsers withCompletion:^(ALChannel *alChannel, NSError *error) {
-        completion(alChannel,error);
+    [channelService createChannelWithChannelInfo:channelInfo withCompletion:^(ALChannelCreateResponse *response, NSError *error) {
+        completion(response,error);
     }];
 }
+
 
 /**
  This method is used for removing a member from group

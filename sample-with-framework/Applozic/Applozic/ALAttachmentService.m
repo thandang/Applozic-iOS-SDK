@@ -211,7 +211,7 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
 {
     if(self.attachmentProgressDelegate){
         ALMessage *message = [[ALMessageService sharedInstance]getMessageByKey:connection.keystring];
-        [[ALMessageService sharedInstance] handleMessageFailedStatus:message];
+        message = [[ALMessageService sharedInstance] handleMessageFailedStatus:message];
         if(message.imageFilePath){
             [self.attachmentProgressDelegate onUploadFailed:message];
         }else{

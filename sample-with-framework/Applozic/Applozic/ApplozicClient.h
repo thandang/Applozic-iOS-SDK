@@ -56,9 +56,8 @@ typedef NS_ENUM(NSInteger, ApplozicClientError) {
 
 -(void) downloadMessageAttachment:(ALMessage*)alMessage;
 
--(void) creataChannelWithName:(NSString *)channelName orClientChannelKey:(NSString *)clientChannelKey
-         andMembersUserIdList:(NSMutableArray *)memberUserIdArray andImageLink:(NSString *)imageLink channelType:(short)type
-                  andMetaData:(NSMutableDictionary *)metaData adminUser:(NSString *)adminUserId withGroupUsers : (NSMutableArray*) groupRoleUsers withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion;
+
+-(void)createChannelWithChannelInfo:(ALChannelInfo*)channelInfo withCompletion:(void(^)(ALChannelCreateResponse *response, NSError *error))completion;
 
 -(void) removeMemberFromChannelWithUserId:userId andChannelKey:(NSNumber *)channelKey orClientChannelKey:(NSString *)clientChannelKey withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion;
 

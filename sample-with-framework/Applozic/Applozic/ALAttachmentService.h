@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)sendMessageWithAttachment:(ALMessage*) attachmentMessage withDelegate:(id<ApplozicUpdatesDelegate>) delegate withAttachmentDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate;
 
+-(void) downloadMessageAttachment:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate;
+
 @end
 
 NS_ASSUME_NONNULL_END

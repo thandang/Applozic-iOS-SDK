@@ -337,16 +337,16 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
 //==============================================================================================================================================
 
 /**
- This method is fr downloading an Attachment in chat
-
+ downloadMessageAttachment  method is for downloading an Attachment in chat
  @param alMessage pass ALMessage object which you want to download the attachment from  server
+ @param attachmentProgressDelegate is delegate for attachement callbacks.
  */
 
--(void)downloadMessageAttachment:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
-    
-    
-//    [alAttachmentService sendMessageWithAttachment:attachmentMessage withDelegate:self.delegate withAttachmentDelegate:self.attachmentProgressDelegate];
-
+-(void)downloadMessageAttachment:(ALMessage*)alMessage withDelegate (id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
+    if(!alMessage){
+        return;
+    }
+    [alAttachmentService downloadMessageAttachment:alMessage withDelegate:attachmentProgressDelegate];
 }
 
 //==============================================================================================================================================

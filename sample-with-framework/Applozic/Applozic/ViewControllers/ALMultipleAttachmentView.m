@@ -36,26 +36,26 @@ static NSString * const reuseIdentifier = @"collectionCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.mImagePicker = [ALImagePickerController new];
     self.mImagePicker.delegate = self;
-    
+
     self.imageArray = [NSMutableArray new];
     self.mediaFileArray = [NSMutableArray new];
-    
+
     UIImage * addButtonImage = [ALUtilityClass getImageFromFramworkBundle:@"Plus_PNG.png"];
     [self.imageArray addObject: addButtonImage];
-    
+
     //    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
+
     [self setTitle: NSLocalizedStringWithDefaultValue(@"attachmentViewTitle", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Attachment", @"")];
-    
+
     self.sendButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringWithDefaultValue(@"sendText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Send" , @"")
                                                        style:UIBarButtonItemStylePlain
                                                       target:self
                                                       action:@selector(sendButtonAction)];
-    
-    
+
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,7 +66,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+
     [self.navigationItem setRightBarButtonItem:self.sendButton];
     [self navigationBarColor];
 }
@@ -103,7 +103,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
                                                                   NSFontAttributeName: [UIFont fontWithName:@"Helvetica-Bold"
                                                                                                        size:18]
                                                                   }];
-    
+
     [navigationController.navigationBar setBarTintColor: [ALApplozicSettings getColorForNavigation]];
     [navigationController.navigationBar setTintColor:[ALApplozicSettings getColorForNavigationItem]];
     [navigationController.navigationBar addSubview:[ALUtilityClass setStatusBarStyle]];
@@ -140,7 +140,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
 
 -(void)chosenImageFrom:(UIImagePickerController *)picker withInfo:(NSDictionary<NSString *,id> *)info
         withCompletion:(void(^)(UIImage * image, ALMultimediaData * multimediaData)) completion {
-    
+
     NSURL * refUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
     if (refUrl) {
         [self gifFromURL:refUrl withCompletion:^(NSData * imageData) {
@@ -159,7 +159,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
                     completion(image, object);
                     return;
                 }
-                
+
                 //Check whether chosen media is video.
                 NSString *mediaType = info[UIImagePickerControllerMediaType];
                 BOOL isMovie = UTTypeConformsTo((__bridge CFStringRef)mediaType, kUTTypeMovie) != 0;
@@ -210,9 +210,9 @@ static NSString * const reuseIdentifier = @"collectionCell";
 {
     AlMultipleAttachmentCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     [self setColorBorder:cell andColor:[UIColor lightGrayColor]];
-    
+
     [cell.imageView setBackgroundColor: [UIColor clearColor]];
-    
+
     if(self.mediaFileArray.count >= 1 && indexPath.row < self.imageArray.count - 1){
         ALMultimediaData * multimedia = (ALMultimediaData *)[self.mediaFileArray objectAtIndex:indexPath.row];
         if(multimedia.attachmentType == ALMultimediaTypeGif){
@@ -226,7 +226,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
         UIImage * image = (UIImage *)[self.imageArray objectAtIndex:indexPath.row];
         [cell.imageView setImage:image];
     }
-    
+
     if(indexPath.row == self.imageArray.count - 1)
     {
         if([ALApplozicSettings getBackgroundColorForAttachmentPlusIcon])
@@ -238,7 +238,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
             [cell.imageView setBackgroundColor: self.navigationController.navigationBar.barTintColor];
         }
     }
-    
+
     return cell;
 }
 
@@ -251,9 +251,9 @@ static NSString * const reuseIdentifier = @"collectionCell";
         [ALUtilityClass showAlertMessage:   NSLocalizedStringWithDefaultValue(@"attachmentLimitReachedText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Maximum attachment limit reached" , @"")  andTitle:   NSLocalizedStringWithDefaultValue(@"oppsText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OOPS!!!", @"")];
         return;
     }
-    
+
     [self pickImageFromGallery];
-    
+
 }
 
 -(void)sendButtonAction
@@ -294,10 +294,10 @@ static NSString * const reuseIdentifier = @"collectionCell";
         [self gestureAction];
         return;
     }
-    
+
     AlMultipleAttachmentCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     [self setColorBorder:cell andColor:[UIColor blueColor]];
-    
+
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -309,7 +309,7 @@ static NSString * const reuseIdentifier = @"collectionCell";
     }
     AlMultipleAttachmentCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     [self setColorBorder:cell andColor:[UIColor lightGrayColor]];
-    
+
 }
 
 -(void)setColorBorder:(AlMultipleAttachmentCell *)cell andColor:(UIColor *)color
@@ -322,20 +322,20 @@ static NSString * const reuseIdentifier = @"collectionCell";
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
           viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    
+
     if (kind == UICollectionElementKindSectionHeader)
     {
         headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"collectionHeaderView" forIndexPath:indexPath];
-        
+
         headerView.msgTextField.delegate = self;
         headerView.msgTextField.layer.masksToBounds = YES;
         headerView.msgTextField.layer.borderColor = [[UIColor brownColor] CGColor];
         headerView.msgTextField.layer.borderWidth = 1.0f;
         headerView.msgTextField.placeholder =  NSLocalizedStringWithDefaultValue(@"writeSomeTextHere", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Write Some Text..." , @"");
-        
+
         [headerView setBackgroundColor:[UIColor whiteColor]];
     }
-    
+
     return headerView;
 }
 
@@ -364,13 +364,13 @@ static NSString * const reuseIdentifier = @"collectionCell";
  - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
 	return NO;
  }
- 
+
  - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender{
  return NO;
  }
- 
+
  - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
+
  }
  */
 

@@ -267,22 +267,18 @@
 
         ALSLog(ALLoggerSeverityInfo, @"RESPONSE_USER_LOGOUT :: %@", (NSString *)theJson);
         ALAPIResponse *response = [[ALAPIResponse alloc] initWithJSONString:theJson];
-        if(!error && [response.status isEqualToString:@"success"])
-        {
-            NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
-            [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
 
-            [ALUserDefaultsHandler clearAll];
-            [ALApplozicSettings clearAll];
+        NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
+        [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
 
-            ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
-            [messageDBService deleteAllObjectsInCoreData];
-        } else {
-            [ALUserDefaultsHandler clearAll];
-            [ALApplozicSettings clearAll];
-            
-            ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
-            [messageDBService deleteAllObjectsInCoreData];
+        [ALUserDefaultsHandler clearAll];
+        [ALApplozicSettings clearAll];
+
+        ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
+        [messageDBService deleteAllObjectsInCoreData];
+
+        if(error) {
+            ALSLog(ALLoggerSeverityError, @"Error in logout: %@", error.description);
             [[UIApplication sharedApplication] unregisterForRemoteNotifications];
         }
         

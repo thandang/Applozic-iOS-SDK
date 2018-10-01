@@ -211,9 +211,21 @@ static NSString * const reuseIdentifier = @"collectionCell";
     AlMultipleAttachmentCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     [self setColorBorder:cell andColor:[UIColor lightGrayColor]];
     
-    UIImage * image = (UIImage *)[self.imageArray objectAtIndex:indexPath.row];
-    [cell.imageView setImage: image];
     [cell.imageView setBackgroundColor: [UIColor clearColor]];
+    
+    if(self.mediaFileArray.count >= 1 && indexPath.row < self.imageArray.count - 1){
+        ALMultimediaData * multimedia = (ALMultimediaData *)[self.mediaFileArray objectAtIndex:indexPath.row];
+        if(multimedia.attachmentType == ALMultimediaTypeGif){
+            UIImage * image = [UIImage animatedImageWithAnimatedGIFData:multimedia.dataGIF];
+            [cell.imageView setImage:image];
+        }else {
+            UIImage * image = (UIImage *)[self.imageArray objectAtIndex:indexPath.row];
+            [cell.imageView setImage:image];
+        }
+    }else {
+        UIImage * image = (UIImage *)[self.imageArray objectAtIndex:indexPath.row];
+        [cell.imageView setImage:image];
+    }
     
     if(indexPath.row == self.imageArray.count - 1)
     {

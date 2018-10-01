@@ -9,6 +9,7 @@
 ### Fixes
 
 -[AL-2934] Fixed bug where a deleted group reappears when group is deleted after leaving.
+-[AL-2910] Fixed bug where selecting a different gif after selecting 2 same gifs would make previous 2 appear as blank.
 
 __Version 3.8__
 * Group/Subgroup

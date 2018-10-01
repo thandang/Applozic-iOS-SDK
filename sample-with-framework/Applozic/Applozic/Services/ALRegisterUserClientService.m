@@ -270,13 +270,13 @@
         if(!error && [response.status isEqualToString:@"success"])
         {
             NSString *userKey = [ALUserDefaultsHandler getUserKeyString];
-            //            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+            [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
+
             [ALUserDefaultsHandler clearAll];
             [ALApplozicSettings clearAll];
 
             ALMessageDBService *messageDBService = [[ALMessageDBService alloc] init];
             [messageDBService deleteAllObjectsInCoreData];
-            [[ALMQTTConversationService sharedInstance] unsubscribeToConversation: userKey];
         } else {
             [ALUserDefaultsHandler clearAll];
             [ALApplozicSettings clearAll];

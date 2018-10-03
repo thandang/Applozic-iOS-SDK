@@ -47,15 +47,11 @@
     attachmentMessage.fileMeta.size = [NSString stringWithFormat:@"%lu",(unsigned long)imageSize.length];
     
     //DB Addition
-    ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];
-    ALMessageDBService* messageDBService = [[ALMessageDBService alloc] init];
-    DB_Message * theMessageEntity = [messageDBService createMessageEntityForDBInsertionWithMessage:attachmentMessage];;
-    [theDBHandler.managedObjectContext save:nil];
-    attachmentMessage.msgDBObjectId = [theMessageEntity objectID];
-    theMessageEntity.inProgress = [NSNumber numberWithBool:YES];
-    theMessageEntity.isUploadFailed = [NSNumber numberWithBool:NO];
-    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-    
+
+    ALMessageDBService *alMessageDbService = [[ALMessageDBService alloc]init];
+
+    DB_Message *dbMessage =   [alMessageDbService addAttachmentMessage:attachmentMessage];
+
     NSDictionary * userInfo = [attachmentMessage dictionary];
     
     ALMessageClientService * clientService  = [[ALMessageClientService alloc]init];
@@ -68,8 +64,7 @@
             return;
         }
         
-        [ALMessageService proessUploadImageForMessage:attachmentMessage databaseObj:theMessageEntity.fileMetaInfo uploadURL:responseUrl  withdelegate:self];
-        
+        [ALMessageService proessUploadImageForMessage:attachmentMessage databaseObj:dbMessage.fileMetaInfo uploadURL:responseUrl  withdelegate:self];
     }];
     
 }
@@ -114,7 +109,7 @@
             
             if(error)
             {
-                NSLog(@"REACH_SEND_ERROR : %@",error);
+                ALSLog(ALLoggerSeverityError, @"ERROR IN POSTING Data:: %@", error);
                 if(self.attachmentProgressDelegate){
                     [self.attachmentProgressDelegate onUploadFailed:[[ALMessageService sharedInstance] handleMessageFailedStatus:almessage]];
                 }
@@ -132,45 +127,15 @@
     }
     else if ([connection.connectionType isEqualToString:@"Thumbnail Downloading"])
     {
-        DB_Message * messageEntity = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
-        
-        NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSArray *componentsArray = [messageEntity.fileMetaInfo.name componentsSeparatedByString:@"."];
-        NSString *fileExtension = [componentsArray lastObject];
-        NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension]];
-        [connection.mData writeToFile:filePath atomically:YES];
-        
-        // UPDATE DB
-        messageEntity.fileMetaInfo.thumbnailFilePath = [NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension];
-        
-        [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-        
-        ALMessage * almessage = [[ALMessageDBService new ] createMessageEntity:messageEntity];
-        
+        ALMessage *almessage =  [dbService writeFileAndUpdateMessageInDb:connection withFileFlag:NO];
+
         if(self.attachmentProgressDelegate){
             [self.attachmentProgressDelegate onDownloadCompleted:almessage];
         }
     }else{
         
-        DB_Message * messageEntity = (DB_Message*)[dbService getMessageByKey:@"key" value:connection.keystring];
-        
-        NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSArray *componentsArray = [messageEntity.fileMetaInfo.name componentsSeparatedByString:@"."];
-        NSString *fileExtension = [componentsArray lastObject];
-        NSString * filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
-        [connection.mData writeToFile:filePath atomically:YES];
-        
-        // If 'save video to gallery' is enabled then save to gallery
-        if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
-            UISaveVideoAtPathToSavedPhotosAlbum(filePath, self, nil, nil);
-        }
-        // UPDATE DB
-        messageEntity.inProgress = [NSNumber numberWithBool:NO];
-        messageEntity.isUploadFailed=[NSNumber numberWithBool:NO];
-        messageEntity.filePath = [NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension];
-        [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-        
-        ALMessage * almessage = [[ALMessageDBService new ] createMessageEntity:messageEntity];
+       ALMessage *almessage =  [dbService writeFileAndUpdateMessageInDb:connection withFileFlag:YES];
+
         if(self.attachmentProgressDelegate){
             [self.attachmentProgressDelegate onDownloadCompleted:almessage];
         }
@@ -185,7 +150,7 @@
     
     if ([connection.connectionType isEqualToString:@"Image Posting"])
     {
-        NSLog(@" file posting done");
+        ALSLog(ALLoggerSeverityInfo, @"File posting done");
         return;
     }
     if(self.attachmentProgressDelegate){
@@ -199,7 +164,6 @@
 totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     //upload percentage
-    NSLog(@"didSendBodyData..upload is in process...");
     if(self.attachmentProgressDelegate){
         ALMessage *message = [[ALMessageService sharedInstance]getMessageByKey:connection.keystring];
         [self.attachmentProgressDelegate onUpdateBytesUploaded:totalBytesWritten withMessage:message];

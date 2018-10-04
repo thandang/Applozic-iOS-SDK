@@ -1,6 +1,16 @@
 ### Changelog
 
-5.13.0 (upcoming release)
+6.3.0
+---
+### Enhancements
+
+
+### Fixes
+
+-[AL-2910] Fixed bug where selecting a different gif after selecting 2 same gifs would make previous 2 appear as blank.
+
+
+5.13.0
 ---
 ### Enhancements
 

@@ -228,7 +228,7 @@ struct ProgressItem {
 
 
         let options = PHVideoRequestOptions()
-        options.deliveryMode = .highQualityFormat
+        options.deliveryMode = .mediumQualityFormat
         options.isNetworkAccessAllowed = true
 
         // remove any existing file at that location
@@ -316,13 +316,16 @@ struct ProgressItem {
         }
         
         if ALApplozicSettings.is5MinVideoLimitInGalleryEnabled(), videos.first(where: { $0.duration > 300 }) != nil {
-            
-            let message = NSLocalizedString("The video you’re attempting to send exceeds the 5 minutes limit. If you proceed, only a 5 minutes of the video will be selected and the rest will be trimmed out.", comment: "")
+
+            let message = NSLocalizedString("videoWarning", value: "The video you’re attempting to send exceeds the 5 minutes limit. If you proceed, only a 5 minutes of the video will be selected and the rest will be trimmed out.", comment: "")
+
             let alertView = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { _ in
+            alertView.addAction(UIAlertAction(title:NSLocalizedString("okText", value: "OK", comment: "")
+, style: .default, handler: { _ in
                 exportVideo()
             }))
-            alertView.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
+
+            alertView.addAction(UIAlertAction(title: NSLocalizedString("cancelOptionText", value: "Cancel", comment: ""), style: .cancel, handler: { _ in
                 isCanceled = true
                 dispatchGroup.leave()
             }))
@@ -367,8 +370,9 @@ struct ProgressItem {
     }
     
     func showProgressAlert() {
-        let alertView = UIAlertController(title: NSLocalizedString("Optimizing...", comment: ""), message: " ", preferredStyle: .alert)
-        alertView.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { [weak self] _ in
+
+        let alertView = UIAlertController(title: NSLocalizedString("optimizingText", value: "Optimizing...", comment: ""), message: " ", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title:  NSLocalizedString("cancelOptionText", value: "Cancel", comment: ""), style: .cancel, handler: { [weak self] _ in
             self?.exportingVideoSessions.forEach { $0.cancelWriting() }
             self?.progressItems.removeAll()
             alertView.dismiss(animated: true) {
@@ -606,7 +610,6 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
                     videoWriterInput.append(sampleBuffer)
                     let timeStamp = CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
                     progress.completedUnitCount = Int64(timeStamp)
-//                    NSLog("VIDEO: \(inputURL.lastPathComponent): \(Int(Double(timeStamp)*100/durationTime))")
                 } else {
                     videoWriterInput.markAsFinished()
                     if videoReader.status == .completed {
@@ -619,8 +622,6 @@ extension ALCustomPickerViewController: UICollectionViewDelegate, UICollectionVi
                                 
                                 if let sampleBuffer = audioReaderOutput.copyNextSampleBuffer(), audioReader.status == .reading {
                                     audioWriterInput.append(sampleBuffer)
-//                                    let timeStamp = Double(CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer)))
-//                                    NSLog("AUDIO: \(timeStamp/durationTime)")
                                 } else {
                                     audioWriterInput.markAsFinished()
                                     if audioReader.status == .completed {

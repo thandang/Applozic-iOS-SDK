@@ -28,7 +28,7 @@ extension PHAsset: AssetSource {
     
     func getAVAsset(_ handler: @escaping (AVAsset?) -> Void) {
         let options = PHVideoRequestOptions()
-        options.deliveryMode = .highQualityFormat
+        options.deliveryMode = .mediumQualityFormat
         options.isNetworkAccessAllowed = true
         
         PHImageManager.default().requestAVAsset(forVideo: self, options: options) { (asset, audioMix, info) in
@@ -83,12 +83,13 @@ extension AVAsset: AssetSource {
         
         if ALApplozicSettings.is5MinVideoLimitInGalleryEnabled(), videoAssets.first(where: { $0.durationSeconds > 300 }) != nil {
             
-            let message = NSLocalizedString("The video you’re attempting to send exceeds the 5 minutes limit. If you proceed, only a 5 minutes of the video will be selected and the rest will be trimmed out.", comment: "")
+            let message = NSLocalizedString("videoWarning", value: "The video you’re attempting to send exceeds the 5 minutes limit. If you proceed, only a 5 minutes of the video will be selected and the rest will be trimmed out.", comment: "")
+            
             let alertView = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { _ in
+            alertView.addAction(UIAlertAction(title:NSLocalizedString("okText", value: "OK", comment: ""), style: .default, handler: { _ in
                 exportVideo()
             }))
-            alertView.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
+            alertView.addAction(UIAlertAction(title: NSLocalizedString("cancelOptionText", value: "Cancel", comment: ""), style: .cancel, handler: { _ in
                 completion(nil)
             }))
             baseVC.present(alertView, animated: true)
@@ -102,8 +103,8 @@ extension AVAsset: AssetSource {
 extension ALVideoCoder {
     
     private func showProgressAlert(on vc: UIViewController) {
-        let alertView = UIAlertController(title: NSLocalizedString("Optimizing...", comment: ""), message: " ", preferredStyle: .alert)
-        alertView.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { [weak self] _ in
+        let alertView = UIAlertController(title: NSLocalizedString("optimizingText", value: "Optimizing...", comment: ""), message: " ", preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title:  NSLocalizedString("cancelOptionText", value: "Cancel", comment: ""), style: .cancel, handler: { [weak self] _ in
             self?.exportingVideoSessions.forEach { $0.cancelWriting() }
             self?.progressItems.forEach { $0.exportSession.cancelExport() }
             alertView.dismiss(animated: true) {

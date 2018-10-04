@@ -1292,4 +1292,28 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(void)setChatCellTextFontSize:(float)fontSize
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:fontSize forKey:AL_CHAT_CELL_FONT_SIZE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(float)getChatCellTextFontSize
+{
+    float size = [[NSUserDefaults standardUserDefaults] floatForKey:AL_CHAT_CELL_FONT_SIZE];
+    return size ? size : 14;
+}
+
++(void)setChannelCellTextFontSize:(float)fontSize
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:fontSize forKey:AL_CHANNEL_CELL_FONT_SIZE];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(float)getChannelCellTextFontSize
+{
+    float size = [[NSUserDefaults standardUserDefaults] floatForKey:AL_CHANNEL_CELL_FONT_SIZE];
+    return size ? size : 14;
+}
+
 @end

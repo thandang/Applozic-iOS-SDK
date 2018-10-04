@@ -426,7 +426,12 @@
     [ALApplozicSettings setTitleForBackButtonChatVC:@"Back"];               /*  SET BACK BUTTON FOR CHAT VC */
     [ALApplozicSettings setDropShadowInNavigationBar:YES];                    /*  ENABLE / DISABLE DROPS IN SHADOW IN NAVIGATION BAR */
     /****************************************************************************************************************/
-    
+
+    //Font size for cells
+    [ALApplozicSettings setChatCellTextFontSize:15];
+
+    [ALApplozicSettings setChannelCellTextFontSize:15];
+
     
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
     [ALApplozicSettings showChannelMembersInfoInNavigationBar:YES];

@@ -111,7 +111,7 @@
             fontName = DEFAULT_FONT_NAME;
         }
         
-        self.mMessageLabel.font = [self getDynamicFontWithDefaultSize:MESSAGE_TEXT_SIZE fontName:[ALApplozicSettings getFontFace]];
+        self.mMessageLabel.font = [self getDynamicFontWithDefaultSize:[ALApplozicSettings getChatCellTextFontSize] fontName:[ALApplozicSettings getFontFace]];
         self.mMessageLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.mMessageLabel];
         
@@ -459,7 +459,7 @@
     
     /*    ====================================== END =================================  */
     
-    self.mMessageLabel.font = [self getDynamicFontWithDefaultSize:MESSAGE_TEXT_SIZE fontName:[ALApplozicSettings getFontFace]];
+    self.mMessageLabel.font = [self getDynamicFontWithDefaultSize:[ALApplozicSettings getChatCellTextFontSize] fontName:[ALApplozicSettings getFontFace]];
     if(alMessage.contentType == ALMESSAGE_CONTENT_TEXT_HTML)
     {
         

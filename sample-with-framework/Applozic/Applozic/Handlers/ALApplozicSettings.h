@@ -107,6 +107,8 @@ static NSString *const HIDE_MESSAGES_WITH_METADATA_KEYS = @"com.applozic.HIDE_ME
 static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectGalleryView";
 static NSString *const BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON =  @"com.applozic.BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON";
 static NSString *const AL_TEXT_STYLE_FOR_CELL= @"com.applozic.AL_TEXT_STYLE_FOR_CELL";
+static NSString *const AL_CHAT_CELL_FONT_SIZE= @"com.applozic.AL_CHAT_CELL_FONT_SIZE";
+static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL_FONT_SIZE";
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -451,6 +453,12 @@ static NSString *const AL_TEXT_STYLE_FOR_CELL= @"com.applozic.AL_TEXT_STYLE_FOR_
 +(void) clearAll;
 
 +(BOOL)isTextStyleInCellEnabled;
-+(void)enableTextStyleInCell:(BOOL)enabled;
++(void)enableTextStyleCell:(BOOL)enabled;
+
++(void)setChatCellTextFontSize:(float)fontSize;
++(float)getChatCellTextFontSize;
+
++(void)setChannelCellTextFontSize:(float)fontSize;
++(float)getChannelCellTextFontSize;
 
 @end

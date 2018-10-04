@@ -67,15 +67,18 @@ extension AVAsset: AssetSource {
         convert(videoAssets: avAssets, range: range, baseVC: baseVC, completion: completion)
     }
     
-    func convert(videoAssets: [AssetSource], range: CMTimeRange, baseVC: UIViewController, completion: @escaping ([String]?) -> Void) {
+    private func convert(videoAssets: [AssetSource], range: CMTimeRange, baseVC: UIViewController, completion: @escaping ([String]?) -> Void) {
         
         let exportVideo = { [weak self] in
             self?.exportMultipleVideos(videoAssets, range: range, exportStarted: { [weak self] in
                 self?.showProgressAlert(on: baseVC)
             }, completion: { [weak vc = baseVC] paths in
-                // preventing crash for short video, with the controller that would attempt to dismiss while being presented
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
-                    vc?.dismiss(animated: true)
+                
+                if paths != nil {
+                    // preventing crash for short video, with the controller that would attempt to dismiss while being presented
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+                        vc?.dismiss(animated: true)
+                    }
                 }
                 completion(paths)
             })
@@ -107,11 +110,11 @@ extension ALVideoCoder {
         alertView.addAction(UIAlertAction(title:  NSLocalizedString("cancelOptionText", value: "Cancel", comment: ""), style: .cancel, handler: { [weak self] _ in
             self?.exportingVideoSessions.forEach { $0.cancelWriting() }
             self?.progressItems.forEach { $0.exportSession.cancelExport() }
-            alertView.dismiss(animated: true) {
+            DispatchQueue.main.asyncAfter(deadline:.now() + .milliseconds(400), execute: {
                 self?.exportingVideoSessions.removeAll()
                 self?.progressItems.removeAll()
                 self?.timer?.invalidate()
-            }
+            })
         }))
         var mainProgress: Progress?
         if #available(iOS 9.0, *) {
@@ -138,7 +141,7 @@ extension ALVideoCoder {
         })
     }
     
-    private func exportMultipleVideos(_ assets: [AssetSource], range: CMTimeRange, exportStarted: @escaping () -> Void, completion: @escaping ([String]) -> Void) {
+    private func exportMultipleVideos(_ assets: [AssetSource], range: CMTimeRange, exportStarted: @escaping () -> Void, completion: @escaping ([String]?) -> Void) {
         
         guard !assets.isEmpty else {
             completion([])
@@ -163,7 +166,7 @@ extension ALVideoCoder {
         
         dispatchExportStartedGroup.notify(queue: .main, execute: exportStarted)
         dispatchExportCompletedGroup.notify(queue: .main) {
-            completion(videoPaths)
+            completion(videoPaths.isEmpty ? nil : videoPaths)
         }
     }
     
@@ -197,7 +200,6 @@ extension ALVideoCoder {
             let session = strongSelf.trimVideo(videoAsset: urlAsset, range: range, atURL: trimmedURL) { trimmedAsset in
                 
                 guard let newAsset = trimmedAsset else {
-                    exportStarted()
                     completion(nil)
                     return
                 }

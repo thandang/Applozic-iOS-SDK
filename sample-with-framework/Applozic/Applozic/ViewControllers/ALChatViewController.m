@@ -2578,18 +2578,22 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     if(isMovie)
     {
-        PHAsset *asset;
-        if (@available(iOS 11.0, *)) {
-            asset = info[UIImagePickerControllerPHAsset];
-        } else {
-            NSURL *videoURL = info[UIImagePickerControllerReferenceURL];
-            asset = [[PHAsset fetchAssetsWithALAssetURLs:@[videoURL] options:nil] firstObject];
-        }
+        NSURL *videoURL = info[UIImagePickerControllerMediaURL];
+        AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:videoURL options:nil];
         
-        if (asset) {
+        if (avAsset) {
             self.videoCoder = [[ALVideoCoder alloc] init];
-            [self.videoCoder convertWithVideoAssets:@[asset] baseVC:self completion:^(NSArray<NSString *> * _Nullable paths) {
+            
+            double start = [info[@"_UIImagePickerControllerVideoEditingStart"] doubleValue];
+            double end = [info[@"_UIImagePickerControllerVideoEditingEnd"] doubleValue];
+            
+            double timescale = 600;
+            CMTimeRange range = CMTimeRangeMake(CMTimeMake(start*timescale, timescale), CMTimeMake((end-start)*timescale, timescale));
+            [self.videoCoder convertWithAvAssets:@[avAsset] range:range baseVC:self completion:^(NSArray<NSString *> * _Nullable paths) {
                 NSString *videoFilePath = [paths firstObject];
+                if (!videoFilePath) {
+                    return;
+                }
                 // If 'save video to gallery' is enabled then save to gallery
                 if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
                     UISaveVideoAtPathToSavedPhotosAlbum(videoFilePath, self, nil, nil);
@@ -2597,18 +2601,6 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
                 [self processAttachment:videoFilePath andMessageText:@"" andContentType:ALMESSAGE_CONTENT_CAMERA_RECORDING];
             }];
         }
-        
-//        NSURL *videoURL = info[UIImagePickerControllerMediaURL];
-//        [ALImagePickerHandler saveVideoToDocDirectory:videoURL handler:^(NSString * videoFilePath){
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                short contentType = ALMESSAGE_CONTENT_ATTACHMENT;
-//                if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-//                {
-//                    contentType = ALMESSAGE_CONTENT_CAMERA_RECORDING;
-//                }
-//                [self processAttachment:videoFilePath andMessageText:@"" andContentType:contentType];
-//            });
-//        }];
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

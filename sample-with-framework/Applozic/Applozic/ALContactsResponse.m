@@ -20,20 +20,22 @@
 
 -(void)parseJsonString:(NSString *)JSONString
 {
-    NSMutableArray * userDetailArray = [[NSMutableArray alloc] initWithArray:[JSONString valueForKey:@"users"]];
-    self.userDetailList = [NSMutableArray new];
-    
-    for(NSDictionary * userDictionary in userDetailArray)
-    {
-        ALUserDetail * userDetail = [[ALUserDetail alloc] initWithDictonary:userDictionary];
-        [self.userDetailList addObject:userDetail];
+    if(JSONString && JSONString.length){
+        NSMutableArray * userDetailArray = [[NSMutableArray alloc] initWithArray:[JSONString valueForKey:@"users"]];
+        self.userDetailList = [NSMutableArray new];
+
+        for(NSDictionary * userDictionary in userDetailArray)
+        {
+            ALUserDetail * userDetail = [[ALUserDetail alloc] initWithDictonary:userDictionary];
+            [self.userDetailList addObject:userDetail];
+        }
+
+        self.lastFetchTime =  [JSONString valueForKey:@"lastFetchTime"];
+        [ALApplozicSettings setStartTime:self.lastFetchTime];
+
+        self.totalUnreadCount = [JSONString valueForKey:@"totalUnreadCount"];
     }
-    
-    self.lastFetchTime =  [JSONString valueForKey:@"lastFetchTime"];
-    [ALApplozicSettings setStartTime:self.lastFetchTime];
-    
-    self.totalUnreadCount = [JSONString valueForKey:@"totalUnreadCount"];
-    
+
 }
 
 @end

@@ -24,7 +24,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
  @param applicationKey pass applicationKey you will get applicationKey from applozic.com
  @return return will be Class object
  */
--(instancetype)initWithApplicationKey:(NSString *)applicationKey;
+-(instancetype)initWithApplicationKey:(NSString *)applicationKey
 {
     self = [super init];
     if (self)
@@ -44,7 +44,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
  @return self
 
  */
--(instancetype)initWithApplicationKey:(NSString *)applicationKey withDelegate:(id<ApplozicUpdatesDelegate>) delegate;
+-(instancetype)initWithApplicationKey:(NSString *)applicationKey withDelegate:(id<ApplozicUpdatesDelegate>) delegate
 {
     self = [super init];
     if (self)

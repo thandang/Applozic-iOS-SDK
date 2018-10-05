@@ -72,15 +72,7 @@
         {
 
         }
-        
-        //        if(![ALUserDefaultsHandler getApnDeviceToken]){
-        //            [self.chatLauncher registerForNotification];
-        //        }
-        
-        if(![[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-        {
-            [self.chatLauncher registerForNotification];
-        }
+
     }];
 }
 
@@ -123,15 +115,6 @@
             NSError *passError = [NSError errorWithDomain:rResponse.message code:0 userInfo:nil];
             completion(nil, passError);
             return;
-        }
-        
-//        if(![ALUserDefaultsHandler getApnDeviceToken])
-//        {
-//            [self.chatLauncher registerForNotification];
-//        }
-        if(![[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-        {
-            [self.chatLauncher registerForNotification];
         }
         
         completion(rResponse, error);
@@ -536,7 +519,7 @@
     [ALApplozicSettings setCallOption:YES];                                 /*  IF CALL OPTION NEEDED   */
     /****************************************************************************************************************/
     
-    
+
     /********************************************* DEMAND/MISC SETTINGS  ********************************************/
     
     [ALApplozicSettings setUnreadCountLabelBGColor:[UIColor purpleColor]];

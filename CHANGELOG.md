@@ -8,17 +8,15 @@
 ### Fixes
 
 -[AL-2910] Fixed bug where selecting a different gif after selecting 2 same gifs would make previous 2 appear as blank.
-
+- Fixed gif rendering issue when using pods.
 
 5.13.0
 ---
 ### Enhancements
 
--[AL-2948] Add setting for background color in attachment plus icon.
-
 ### Fixes
 
--[AL-2934] Fixed bug where a deleted group reappears when group is deleted after leaving.
+- Fix gif rendering issue for SDWebImage.
 
 __Version 3.8__
 * Group/Subgroup

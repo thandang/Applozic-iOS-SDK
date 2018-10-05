@@ -396,6 +396,12 @@ public class ALBaseNavigationViewController: UINavigationController {
     func selectedMultimediaList(images: [UIImage], videos: [String], gifs: [Data]) -> [ALMultimediaData]{
         var multimediaList = [ALMultimediaData]()
 
+        for gifData in gifs
+        {
+            multimediaList.append(multimediaData.getOf(ALMultimediaTypeGif, with: UIImage.animatedImage(withAnimatedGIFData: gifData),
+                                                       withGif: gifData, withVideo: nil))
+        }
+
         for image in images
         {
             multimediaList.append(multimediaData.getOf(ALMultimediaTypeImage, with: image, withGif: nil, withVideo: nil))
@@ -404,12 +410,6 @@ public class ALBaseNavigationViewController: UINavigationController {
         for video in videos
         {
             multimediaList.append(multimediaData.getOf(ALMultimediaTypeVideo, with: nil, withGif: nil, withVideo: video))
-        }
-
-        for gifData in gifs
-        {
-            multimediaList.append(multimediaData.getOf(ALMultimediaTypeGif, with: UIImage.animatedImage(withAnimatedGIFData: gifData),
-                                                       withGif: gifData, withVideo: nil))
         }
 
         return multimediaList

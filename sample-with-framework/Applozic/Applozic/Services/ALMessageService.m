@@ -726,7 +726,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
 
         NSMutableURLRequest * theRequest;
-        if(ALApplozicSettings.isS3StorageServiceEnabled) {
+        if(ALApplozicSettings.isS3StorageServiceEnabled || ALApplozicSettings.isGoogleCloudServiceEnabled) {
             theRequest = [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:fileURL paramString:nil];
         }else{
             theRequest = [ALRequestHandler createGETRequestWithUrlString: fileURL paramString:nil];

@@ -332,7 +332,12 @@
 
 -(void)getMessageListForUser:(MessageListRequest *)messageListRequest withCompletion:(void (^)(NSMutableArray *, NSError *, NSMutableArray *))completion
 {
-    [self getMessageListForUser:messageListRequest withOpenGroup:NO withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+    ALChannel *channel = nil;
+    if(messageListRequest.channelKey){
+       channel =  [[ALChannelService sharedInstance] getChannelByKey:messageListRequest.channelKey];
+    }
+
+    [self getMessageListForUser:messageListRequest withOpenGroup:(channel != nil && channel.type == OPEN) withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
 
         completion(messages, error, userDetailArray);
 

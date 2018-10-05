@@ -13,6 +13,8 @@
 #import "ALHyperLabel.h"
 #import "MessageReplyView.h"
 #import "ALApplozicSettings.h"
+#import "ALChannel.h"
+#import "ALContact.h"
 
 @protocol ALChatCellDelegate <NSObject>
 
@@ -58,6 +60,10 @@
 @property (retain, nonatomic) MessageReplyView * replyUIView;
 
 @property (retain, nonatomic) UIView * replyParentView;
+
+@property (nonatomic, strong) ALChannel * channel;
+
+@property (nonatomic, strong) ALContact * contact;
 
 
 

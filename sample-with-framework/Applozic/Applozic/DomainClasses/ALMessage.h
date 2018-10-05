@@ -133,6 +133,7 @@ typedef enum {
 
 -(BOOL)isLocationMessage;
 -(BOOL)isContactMessage;
+-(BOOL)isChannelContentTypeMessage;
 -(BOOL)isDocumentMessage;
 -(BOOL)isSilentNotification;
 

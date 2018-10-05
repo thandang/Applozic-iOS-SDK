@@ -12,7 +12,7 @@
 #import "ALMessage.h"
 #import "ALHyperLabel.h"
 #import "MessageReplyView.h"
-
+#import "ALApplozicSettings.h"
 
 @protocol ALChatCellDelegate <NSObject>
 

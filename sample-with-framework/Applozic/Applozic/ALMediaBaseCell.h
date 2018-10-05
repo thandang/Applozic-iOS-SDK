@@ -27,6 +27,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "ALUIConstant.h"
 #import "MessageReplyView.h"
+#import "ALApplozicSettings.h"
+
 
 @protocol ALMediaBaseCellDelegate <NSObject>
 

@@ -1334,7 +1334,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         if(error)
         {
             ALSLog(ALLoggerSeverityError, @"SEND_MSG_ERROR :: %@", error.description);
-            [self handleErrorStatus:theMessage];
+            [[ALMessageService sharedInstance] handleMessageFailedStatus:theMessage];
             return;
         }
         completion(message, error);
@@ -2399,7 +2399,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     imageCell.downloadRetryView.alpha = 1;
     imageCell.sizeLabel.alpha = 1;
     message.inProgress = NO;
-    [self handleErrorStatus:message];
+    [[ALMessageService sharedInstance] handleMessageFailedStatus:message];
     [self releaseConnection:message.key];
 
 }
@@ -2533,7 +2533,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     imageCell.mDowloadRetryButton.alpha = 1;
     imageCell.downloadRetryView.alpha = 1;
     imageCell.sizeLabel.alpha = 1;
-    [self handleErrorStatus:imageCell.mMessage];
+    [[ALMessageService sharedInstance] handleMessageFailedStatus:imageCell.mMessage];
     ALSLog(ALLoggerSeverityError, @"didFailWithError ::: %@",error);
     [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:connection];
 }
@@ -2705,7 +2705,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
                 imageCell.mDowloadRetryButton.alpha = 1;
                 imageCell.downloadRetryView.alpha = 1;
                 imageCell.sizeLabel.alpha = 1;
-                [self handleErrorStatus:theMessage];
+                [[ALMessageService sharedInstance] handleMessageFailedStatus:theMessage];
                 return;
             }
             [ALMessageService proessUploadImageForMessage:theMessage databaseObj:dbMessage.fileMetaInfo uploadURL:message  withdelegate:self];
@@ -3113,27 +3113,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                            }];
 }
 
-//==============================================================================================================================================
-#pragma mark - HANDLE ERROR METHOD
-//==============================================================================================================================================
-
--(void)handleErrorStatus:(ALMessage *)message
-{
-    if(!message.msgDBObjectId){
-        return;
-    }
-    message.inProgress = NO;
-    message.isUploadFailed = YES;
-    NSError *error = nil;
-    dbService = [[ALMessageDBService alloc] init];
-
-    DB_Message *dbMessage = (DB_Message*)[dbService getMeesageById:message.msgDBObjectId error:&error];
-    dbMessage.inProgress = [NSNumber numberWithBool:NO];
-    dbMessage.isUploadFailed = [NSNumber numberWithBool:YES];
-    dbMessage.sentToServer= [NSNumber numberWithBool:NO];;
-
-    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-}
 
 -(ALMediaBaseCell *)getCell:(NSString *)key
 {
@@ -3171,7 +3150,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if(error)
         {
             ALSLog(ALLoggerSeverityError, @"SEND_MSG_ERROR :: %@",error.description);
-            [self handleErrorStatus:theMessage];
+            [[ALMessageService sharedInstance] handleMessageFailedStatus:theMessage];
             return;
         }
 

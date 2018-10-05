@@ -19,6 +19,8 @@
 		10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B6DABB204E980300B6E024 /* ALGroupUser.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
+		1810D124215A79F600557E22 /* ALAttachmentService.h in Headers */ = {isa = PBXBuildFile; fileRef = 1810D122215A79F600557E22 /* ALAttachmentService.h */; };
+		1810D125215A79F600557E22 /* ALAttachmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1810D123215A79F600557E22 /* ALAttachmentService.m */; };
 		181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12D1BC5364C00EBA00F /* UIImageView+WebCache.m */; };
 		1860E01C2151395600119CD7 /* ALAudioSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1860E01A2151395600119CD7 /* ALAudioSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1860E01D2151395600119CD7 /* ALAudioSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1860E01B2151395600119CD7 /* ALAudioSession.m */; };
@@ -392,6 +394,8 @@
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
+		1810D122215A79F600557E22 /* ALAttachmentService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALAttachmentService.h; path = Applozic/ALAttachmentService.h; sourceTree = "<group>"; };
+		1810D123215A79F600557E22 /* ALAttachmentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALAttachmentService.m; path = Applozic/ALAttachmentService.m; sourceTree = "<group>"; };
 		1860E01A2151395600119CD7 /* ALAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALAudioSession.h; path = Applozic/ALAudioSession.h; sourceTree = "<group>"; };
 		1860E01B2151395600119CD7 /* ALAudioSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALAudioSession.m; path = Applozic/ALAudioSession.m; sourceTree = "<group>"; };
 		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
@@ -783,6 +787,8 @@
 				1863584220E2470E00B75802 /* ALRealTimeUpdate.h */,
 				1868859F20ECC5FE00919802 /* ALMessageBuilder.h */,
 				186885A020ECC5FE00919802 /* ALMessageBuilder.m */,
+				1810D122215A79F600557E22 /* ALAttachmentService.h */,
+				1810D123215A79F600557E22 /* ALAttachmentService.m */,
 			);
 			name = applozickit;
 			sourceTree = "<group>";
@@ -1660,6 +1666,7 @@
 				6D6DF1CF1BC5364C00EBA00F /* UIImageView+WebCache.h in Headers */,
 				6D6DF1C01BC5364C00EBA00F /* SDWebImageManager.h in Headers */,
 				6D6DF1BA1BC5364C00EBA00F /* SDWebImageDecoder.h in Headers */,
+				1810D124215A79F600557E22 /* ALAttachmentService.h in Headers */,
 				6D6DF1B81BC5364C00EBA00F /* SDWebImageCompat.h in Headers */,
 				6D6DF1B61BC5364C00EBA00F /* SDImageCache.h in Headers */,
 				6D6DF1C21BC5364C00EBA00F /* SDWebImageOperation.h in Headers */,
@@ -1872,6 +1879,7 @@
 				105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */,
 				4612E8FE1E13882D0022DB23 /* MQTTCoreDataPersistence.m in Sources */,
 				293446141D4F426F007BD1B4 /* ALImageActivity.m in Sources */,
+				1810D125215A79F600557E22 /* ALAttachmentService.m in Sources */,
 				6D7756921D5B7FBE0025560B /* DB_ConversationProxy.m in Sources */,
 				463E49211DB7B45D00CDFFE6 /* ALVCardClass.m in Sources */,
 				6D6DF1D91BC5364C00EBA00F /* AppLozic.xcdatamodeld in Sources */,

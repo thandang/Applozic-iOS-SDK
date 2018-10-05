@@ -33,6 +33,7 @@
         [ALLogger setMinimumSeverity:ALLoggerSeverityInfo];
         // Assumption: This init will be called from AppDelegate and it won't be deallocated till the app closes otherwise log's will not be saved.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveLogs) name:UIApplicationWillTerminateNotification object:nil];
+        [self ALDefaultChatViewSettings];
     }
     
     return self;

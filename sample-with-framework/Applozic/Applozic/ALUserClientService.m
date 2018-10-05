@@ -561,7 +561,7 @@
         
         if (theError)
         {
-            ALSLog(ALLoggerSeverityInfo, @" mute user :: %@", theError);
+            ALSLog(ALLoggerSeverityError, @"Error in mute user  : %@", theError);
             completion(nil, theError);
             return;
         }

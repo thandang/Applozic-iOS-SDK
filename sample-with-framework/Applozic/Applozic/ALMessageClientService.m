@@ -113,8 +113,6 @@
     }
 }
 
-
-
 -(void)getNSMutableURLRequestForThumbnail: (ALMessage *) message withCompletion:(void(^)(NSMutableURLRequest * urlRequest, NSString *fileUrl)) completion{
     
     NSMutableURLRequest * urlRequest = [[NSMutableURLRequest alloc] init];
@@ -136,8 +134,6 @@
     }
     
 }
-
-
 
 -(void) downloadImageThumbnailUrl: (ALMessage *) message withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
     [self getNSMutableURLRequestForThumbnail:message withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
@@ -344,7 +340,6 @@
 }
 
 -(void) sendPhotoForUserInfo:(NSDictionary *)userInfo withCompletion:(void(^)(NSString * message, NSError *error)) completion {
-    
     if(ALApplozicSettings.isStorageServiceEnabled) {
         NSString * theUrlString = [NSString stringWithFormat:@"%@%@", KBASE_FILE_URL, IMAGE_UPLOAD_ENDPOINT];
         completion(theUrlString, nil);
@@ -360,21 +355,20 @@
         NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:nil];
         
         [ALResponseHandler processRequest:theRequest andTag:@"CREATE FILE URL" WithCompletionHandler:^(id theJson, NSError *theError) {
-            
+
             if (theError)
             {
                 completion(nil,theError);
                 return;
             }
-            
+
             NSString *imagePostingURL = (NSString *)theJson;
             ALSLog(ALLoggerSeverityInfo, @"RESPONSE_IMG_URL :: %@",imagePostingURL);
             completion(imagePostingURL, nil);
-            
+
         }];
     }
 }
-
 
 -(void) getLatestMessageForUser:(NSString *)deviceKeyString withCompletion:(void (^)( ALSyncMessageFeed *, NSError *))completion
 {

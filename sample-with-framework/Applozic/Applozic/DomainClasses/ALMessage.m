@@ -383,6 +383,11 @@
 
 }
 
+-(BOOL)isChannelContentTypeMessage
+{
+    return (self.contentType == ALMESSAGE_CHANNEL_NOTIFICATION);
+}
+
 -(BOOL)isDocumentMessage
 {
     return (self.contentType ==ALMESSAGE_CONTENT_ATTACHMENT) &&

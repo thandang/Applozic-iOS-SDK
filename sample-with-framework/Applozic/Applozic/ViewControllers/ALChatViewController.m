@@ -682,7 +682,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     // WHEN APP ENTERS FOREGROUND SYNC CHANNEL MSGS (CHANNEL_TYPE = OPEN) AND LOGIN USER ISN'T A MEMEBER OF CHANNEL
     ALChannelService *channelService = [[ALChannelService alloc] init];
     self.alChannel = [channelService getChannelByKey:self.channelKey];
-    if(self.alChannel.type == OPEN && ![channelService isLoginUserInChannel:self.channelKey])
+    if(self.alChannel.type == OPEN)
     {
         //FOR SYNC MESSAGES SEND LATEST MSG TIME STAMP
         MessageListRequest * messageListRequest = [MessageListRequest new];
@@ -757,9 +757,10 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
                                userID:self.contactIds
                         andChannelKey:self.channelKey
                                typing:NO];
-
-    [self.mqttObject unSubscribeToChannelConversation:self.channelKey];
-    [self.mqttObject unSubscribeToOpenChannel:self.channelKey];
+    if(self.channelKey){
+        [self.mqttObject unSubscribeToChannelConversation:self.channelKey];
+        [self.mqttObject unSubscribeToOpenChannel:self.channelKey];
+    }
 
 }
 
@@ -1632,6 +1633,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALLocationCell *theCell = (ALLocationCell *)[tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1641,6 +1644,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALImageCell *theCell = (ALImageCell *)[tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1650,6 +1655,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALVideoCell *theCell = (ALVideoCell *)[tableView dequeueReusableCellWithIdentifier:@"VideoCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1659,6 +1666,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALAudioCell *theCell = (ALAudioCell *)[tableView dequeueReusableCellWithIdentifier:@"AudioCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1689,6 +1698,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1698,6 +1709,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALChatCell *theCell = (ALChatCell *)[tableView dequeueReusableCellWithIdentifier:@"ChatCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1708,6 +1721,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALContactMessageCell *theCell = (ALContactMessageCell *)[tableView dequeueReusableCellWithIdentifier:@"ContactMessageCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -1717,6 +1732,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALDocumentsCell *theCell = (ALDocumentsCell *)[tableView dequeueReusableCellWithIdentifier:@"DocumentsCell"];
         theCell.tag = indexPath.row;
         theCell.delegate = self;
+        theCell.channel = self.alChannel;
+        theCell.contact = self.alContact;
         [theCell populateCell:theMessage viewSize:self.view.frame.size];
         [self.view layoutIfNeeded];
         return theCell;
@@ -3844,9 +3861,12 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     else
     {
         NSString * IDs = (self.channelKey ? [self.channelKey stringValue] : self.contactIds);
-        doneOtherwise = ([ALUserDefaultsHandler isShowLoadEarlierOption:IDs]
-                                 && [ALUserDefaultsHandler isServerCallDoneForMSGList:IDs]);
-
+        if(self.alChannel && self.alChannel.type == OPEN){
+            doneOtherwise = ([ALUserDefaultsHandler isShowLoadEarlierOption:IDs]);
+        }else{
+            doneOtherwise = ([ALUserDefaultsHandler isShowLoadEarlierOption:IDs]
+                             && [ALUserDefaultsHandler isServerCallDoneForMSGList:IDs]);
+        }
     }
 
     if(scrollOffset == 0 && (doneConversation || doneOtherwise))

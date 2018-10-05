@@ -171,13 +171,7 @@
 
 -(void)registerForNotification
 {
-    if(SYSTEM_VERSION_LESS_THAN(@"10.0"))
-    {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound |    UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    }
-    else
+    if(@available(iOS 10.0, *))
     {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         center.delegate = self;
@@ -189,7 +183,7 @@
                      [[UIApplication sharedApplication] registerForRemoteNotifications];  // required to get the app to do anything at all about push notifications
                      NSLog(@"Push registration success." );
                  });
-            }
+             }
              else
              {
                  NSLog(@"Push registration FAILED" );
@@ -198,7 +192,14 @@
              }
          }];
     }
+    else
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound |    UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
 }
+
 
 - (void)redirectLogToDocuments
 {

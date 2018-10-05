@@ -1,7 +1,7 @@
 /*
  Localizable.strings
  applozicdemo
- 
+
  Created by Nitin on 07/08/17.
  Copyright © 2017 applozic Inc. All rights reserved.
  */
@@ -293,3 +293,6 @@
 
 "moreMember" = "more";
 "userTyping" = "is typing ...";
+"optimizingText" = "Optimizing...";
+"unMuteUser" = "Unmute";
+"muteUser" = "Mute";

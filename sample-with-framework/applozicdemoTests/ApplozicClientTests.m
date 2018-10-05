@@ -27,7 +27,7 @@ NSError *testError;
     mockService = OCMClassMock([ALMessageService class]);
     client.messageService = mockService;
 
-    testMessage = [ALMessage build:^(ALMessgaeBuilder * alMessageBuilder) {
+    testMessage = [ALMessage build:^(ALMessageBuilder * alMessageBuilder) {
         alMessageBuilder.to = @"userId";
         alMessageBuilder.message = @"messageText";
     }];

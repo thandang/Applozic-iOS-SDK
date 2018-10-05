@@ -33,6 +33,7 @@
         [ALLogger setMinimumSeverity:ALLoggerSeverityInfo];
         // Assumption: This init will be called from AppDelegate and it won't be deallocated till the app closes otherwise log's will not be saved.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveLogs) name:UIApplicationWillTerminateNotification object:nil];
+        [self ALDefaultChatViewSettings];
     }
     
     return self;
@@ -72,15 +73,7 @@
         {
 
         }
-        
-        //        if(![ALUserDefaultsHandler getApnDeviceToken]){
-        //            [self.chatLauncher registerForNotification];
-        //        }
-        
-        if(![[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-        {
-            [self.chatLauncher registerForNotification];
-        }
+
     }];
 }
 
@@ -123,15 +116,6 @@
             NSError *passError = [NSError errorWithDomain:rResponse.message code:0 userInfo:nil];
             completion(nil, passError);
             return;
-        }
-        
-//        if(![ALUserDefaultsHandler getApnDeviceToken])
-//        {
-//            [self.chatLauncher registerForNotification];
-//        }
-        if(![[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-        {
-            [self.chatLauncher registerForNotification];
         }
         
         completion(rResponse, error);
@@ -426,7 +410,12 @@
     [ALApplozicSettings setTitleForBackButtonChatVC:@"Back"];               /*  SET BACK BUTTON FOR CHAT VC */
     [ALApplozicSettings setDropShadowInNavigationBar:YES];                    /*  ENABLE / DISABLE DROPS IN SHADOW IN NAVIGATION BAR */
     /****************************************************************************************************************/
-    
+
+    //Font size for cells
+    [ALApplozicSettings setChatCellTextFontSize:15];
+
+    [ALApplozicSettings setChannelCellTextFontSize:15];
+
     
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
     [ALApplozicSettings showChannelMembersInfoInNavigationBar:YES];
@@ -536,7 +525,7 @@
     [ALApplozicSettings setCallOption:YES];                                 /*  IF CALL OPTION NEEDED   */
     /****************************************************************************************************************/
     
-    
+
     /********************************************* DEMAND/MISC SETTINGS  ********************************************/
     
     [ALApplozicSettings setUnreadCountLabelBGColor:[UIColor purpleColor]];

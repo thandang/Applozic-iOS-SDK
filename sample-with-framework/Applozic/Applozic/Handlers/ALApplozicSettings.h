@@ -111,6 +111,11 @@ static NSString *const AL_TEXT_STYLE_FOR_CELL= @"com.applozic.AL_TEXT_STYLE_FOR_
 static NSString *const AL_CHAT_CELL_FONT_SIZE= @"com.applozic.AL_CHAT_CELL_FONT_SIZE";
 static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL_FONT_SIZE";
 
+//Audio Recording View
+static NSString *const AUDIO_RECORDING_VIEW_BACKGROUND_COLOR = @"com.applozic.AUDIO_RECORDING_VIEW_BACKGROUND_COLOR";
+static NSString *const SLIDE_TO_CANCEL_TEXT_COLOR = @"com.applozic.SLIDE_TO_CANCEL_TEXT_COLOR";
+static NSString *const AUDIO_RECORDING_TEXT_COLOR = @"com.applozic.AUDIO_RECORDING_TEXT_COLOR";
+static NSString *const AUDIO_RECORD_VIEW_FONT = @"com.applozic.AUDIO_VIEW_FONT";
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -465,5 +470,17 @@ static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL
 
 +(void)setChannelCellTextFontSize:(float)fontSize;
 +(float)getChannelCellTextFontSize;
+
++(void)setBackgroundColorForAudioRecordingView:(UIColor *)backgroundColor;
++(UIColor *)getBackgroundColorForAudioRecordingView;
+
++(void)setColorForSlideToCancelText:(UIColor *)color;
++(UIColor *)getColorForSlideToCancelText;
+
++(void)setColorForAudioRecordingText:(UIColor *)color;
++(UIColor *)getColorForAudioRecordingText;
+
++(void)setFontForAudioView:(NSString *)font;
++(NSString *)getFontForAudioView;
 
 @end

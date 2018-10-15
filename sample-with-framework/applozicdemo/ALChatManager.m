@@ -585,6 +585,12 @@
     /********************************************* Attachment Plus Icon background color
      *****************************************************************/
     [ALApplozicSettings setBackgroundColorForAttachmentPlusIcon:[UIColor colorWithRed:0.0/255 green:0.0/255 blue:0.0/255 alpha:1]];
+    
+    //Audio Recording View color
+    [ALApplozicSettings setBackgroundColorForAudioRecordingView:[UIColor lightGrayColor]];
+    [ALApplozicSettings setColorForAudioRecordingText:[UIColor redColor]];
+    [ALApplozicSettings setColorForSlideToCancelText:[UIColor darkGrayColor]];
+    [ALApplozicSettings setFontForAudioView:@"HelveticaNeue"];
 }
 
 -(void)getApplicationBaseURL

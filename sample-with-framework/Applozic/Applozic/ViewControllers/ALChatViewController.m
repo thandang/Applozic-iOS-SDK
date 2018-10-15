@@ -81,7 +81,7 @@ NSString * const ThirdPartyDetailVCNotificationALContact = @"ThirdPartyDetailVCN
 NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVCNotificationChannelKey";
 
 
-@interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate,
+@interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate, ALKAudioRecorderViewProtocol, ALKAudioRecorderProtocol,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
                                     ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol, ALCustomPickerDelegate>
@@ -144,9 +144,12 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     CGRect defaultTableRect;
     UIView * maskView;
     BOOL isPickerOpen;
+    ALKAudioRecorderView * soundRecordingView;
     ALSoundRecorderButton * soundRecording;
     ALTemplateMessagesView *templateMessageView;
     BOOL isMicButtonVisible;
+    AudioRecordButton * micButton;
+    BOOL isAudioRecordingEnabled;
 
     UIDocumentInteractionController * interaction;
 
@@ -182,6 +185,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     if([ALApplozicSettings isQuickAudioRecordingEnabled]) {
         [self setUpSoundRecordingView];
         [self showMicButton];
+        isAudioRecordingEnabled = YES;
     }
 
 
@@ -1524,7 +1528,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     self.startIndex = self.startIndex + 1;
     [self sendMessage:theMessage];
 
-    if(soundRecording) {
+    if(isAudioRecordingEnabled) {
         [self showMicButton];
     }
 
@@ -1546,15 +1550,27 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)setUpSoundRecordingView
 {
-    soundRecording = [[ALSoundRecorderButton alloc] initWithFrame:CGRectZero];
-    [soundRecording setSoundRecDelegateWithRecorderDelegate:self];
-    [self.view addSubview:soundRecording];
-    [soundRecording setHidden:YES];
-    soundRecording.translatesAutoresizingMaskIntoConstraints = false;
-    [soundRecording.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
-    [soundRecording.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
-    [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
-    [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
+    if (@available(iOS 9.0, *)) {
+        soundRecordingView = [[ALKAudioRecorderView alloc] initWithFrame:CGRectZero];
+        [soundRecordingView setAudioRecViewDelegateWithRecorderDelegate:self];
+        [self.view addSubview: soundRecordingView];
+        [soundRecordingView setHidden:YES];
+        soundRecordingView.translatesAutoresizingMaskIntoConstraints = false;
+        [soundRecordingView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = true;
+        [soundRecordingView.trailingAnchor constraintEqualToAnchor:self.sendMessageTextView.trailingAnchor].active = true;
+        [soundRecordingView.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor].active = true;
+        [soundRecordingView.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor].active = true;
+    }else {
+        soundRecording = [[ALSoundRecorderButton alloc] initWithFrame:CGRectZero];
+        [soundRecording setSoundRecDelegateWithRecorderDelegate:self];
+        [self.view addSubview:soundRecording];
+        [soundRecording setHidden:YES];
+        soundRecording.translatesAutoresizingMaskIntoConstraints = false;
+        [soundRecording.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:7].active = true;
+        [soundRecording.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-7].active = true;
+        [soundRecording.topAnchor constraintEqualToAnchor:self.sendMessageTextView.topAnchor constant:-5].active = true;
+        [soundRecording.bottomAnchor constraintEqualToAnchor:self.sendMessageTextView.bottomAnchor constant:5].active = true;
+    }
 }
 
 -(void)setUpTeamplateView
@@ -1596,13 +1612,49 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)showMicButton
 {
-    UIImage* micImage = [ALUtilityClass getImageFromFramworkBundle:@"mic_icon.png"];
-    [self.sendButton setImage:micImage forState:UIControlStateNormal];
-    isMicButtonVisible = YES;
+    if(@available(iOS 9.0, *)){
+        micButton = [[AudioRecordButton alloc] initWithFrame: CGRectZero];
+        [micButton setAudioRecDelegateWithRecorderDelegate:self];
+        [self.view addSubview: micButton];
+        [micButton setHidden:NO];
+        micButton.translatesAutoresizingMaskIntoConstraints = false;
+        [micButton.leadingAnchor constraintEqualToAnchor:self.sendButton.leadingAnchor].active = true;
+        [micButton.trailingAnchor constraintEqualToAnchor:self.sendButton.trailingAnchor].active = true;
+        [micButton.topAnchor constraintEqualToAnchor:self.sendButton.topAnchor].active = true;
+        [micButton.bottomAnchor constraintEqualToAnchor:self.sendButton.bottomAnchor].active = true;
+        [self.sendButton setHidden: YES];
+        isMicButtonVisible = YES;
+    }else {
+        UIImage* micImage = [ALUtilityClass getImageFromFramworkBundle:@"mic_icon.png"];
+        [self.sendButton setImage:micImage forState:UIControlStateNormal];
+        isMicButtonVisible = YES;
+    }
+}
+
+-(void)showSoundRecordingView
+{
+    if(@available(ios 9.0, *)) {
+        [soundRecordingView setHidden: NO];
+    }else {
+        [soundRecording show];
+    }
+}
+
+-(void)hideSoundRecordingView
+{
+    if(@available(ios 9.0, *)) {
+        [soundRecordingView setHidden: YES];
+    }else {
+        [soundRecording hide];
+    }
 }
 
 -(void)showSendButton
 {
+    if(@available(ios 9.0, *)) {
+        [micButton setHidden: YES];
+        [self.sendButton setHidden: NO];
+    }
     UIImage* sendImage = [ALUtilityClass getImageFromFramworkBundle:@"SendButton20.png"];
     [self.sendButton setImage:sendImage forState:UIControlStateNormal];
     isMicButtonVisible = NO;
@@ -3887,11 +3939,12 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self.mqttObject sendTypingStatus:self.alContact.applicationId userID:self.contactIds andChannelKey:self.channelKey typing:typingStat];
     }
 
-    if ([[textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0 && soundRecording) {
+    if ([[textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0 && isAudioRecordingEnabled) {
         [self showMicButton];
-    } else if(soundRecording) {
+    } else if(isAudioRecordingEnabled) {
         [self showSendButton];
-        [soundRecording hide];
+//        [soundRecording hide];
+        [self hideSoundRecordingView];
     }
 
     [self subProcessTextViewDidChange:textView];
@@ -4642,6 +4695,41 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 - (void)multimediaSelected:(NSArray<ALMultimediaData *> *)list{
     NSMutableArray * multimediaList = [[NSMutableArray alloc]initWithArray: list];
     [self multipleAttachmentProcess:multimediaList andText:@""];
+}
+
+#pragma mark - ALKAudioRecorderViewDelegate
+
+- (void)cancelAudioRecording {
+    [micButton cancelAudioRecord];
+    [self cancelAudioRecord];
+}
+
+#pragma mark - ALKAudioRecorderProtocol
+
+- (void)moveButtonWithLocation:(CGPoint)location{
+    [soundRecordingView moveViewWithLocation:location];
+}
+
+- (void)finishRecordingAudioWithFilePath:(NSString *)filePath {
+    if ([soundRecordingView isRecordingTimeSufficient]) {
+        [self processAttachment:filePath andMessageText:@"" andContentType:ALMESSAGE_CONTENT_AUDIO];
+    }
+    [soundRecordingView userDidStopRecording];
+    [soundRecordingView setHidden:YES];
+}
+
+- (void)startAudioRecord {
+    [soundRecordingView setHidden:NO];
+    [soundRecordingView userDidStartRecording];
+}
+
+- (void)cancelAudioRecord {
+    [soundRecordingView userDidStopRecording];
+    [soundRecordingView setHidden:YES];
+}
+
+- (void)permissionNotGranted {
+    [self hideSoundRecordingView];
 }
 
 @end

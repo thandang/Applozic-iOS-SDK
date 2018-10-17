@@ -14,7 +14,7 @@ import AVFoundation
 }
 
 @available(iOS 9.0, *)
-@objc open class ALKAudioRecorderView: UIView {
+@objc public class ALKAudioRecorderView: UIView {
     
     private var isTimerStart:Bool = false
     private var timer = Timer()
@@ -72,7 +72,7 @@ import AVFoundation
         let label = self.commonLabel()
         label.font = UIFont(name: ALApplozicSettings.getFontForAudioView(), size: 13)
         label.textColor = ALApplozicSettings.getColorForSlideToCancelText()
-        label.text = "00:00"
+        label.text = NSLocalizedString("initialRecordingMessage", value: "00:00", comment: "")
         return label
     }()
     
@@ -153,12 +153,32 @@ import AVFoundation
         slideToCancel.text = NSLocalizedString("SlideToCancel", value: "Slide to cancel", comment: "")
         recordingLabel.text = NSLocalizedString("Recording", value: "Recording", comment: "")
         redDot.backgroundColor = ALApplozicSettings.getColorForAudioRecordingText()
-        recordingValue.text = "00:00"
+        recordingValue.text = NSLocalizedString("initialRecordingMessage", value: "00:00", comment: "")
         previousGestureLocation = 0.0
         
         slideToCancelStartLocation = slideView.frame.origin.x - slideToCancel.intrinsicContentSize.width
         recordingViewStartLocation = recordingView.frame.origin.x + recordingLabel.intrinsicContentSize.width + 10.0
         redDotStartLocation = redDot.frame.origin.x + 5.0
+    }
+    
+    private func numberInCurrentLocale(_ number: Int) -> String{
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumIntegerDigits = 2
+        
+        // Getting current device language. Locale.current doesn't work.
+        // https://stackoverflow.com/questions/3910244/getting-current-device-language-in-ios
+        let currentLanguage = Locale.preferredLanguages[0]
+        formatter.locale = Locale(identifier: currentLanguage)
+        
+        // Return formatted number if possible otherwise return number as String
+        if let formattedNumber = formatter.string(for: number) {
+            return formattedNumber
+        } else if number < 10 {
+            return "0\(number)"
+        } else {
+            return String(number)
+        }
     }
     
     @objc private func updateCounter() {
@@ -167,10 +187,9 @@ import AVFoundation
         //min
         let min = (counter / 60) % 60
         let sec = (counter % 60)
-        var minStr = String(min)
-        var secStr = String(sec)
-        if sec < 10 {secStr = "0\(secStr)"}
-        if min < 10 {minStr = "0\(minStr)"}
+        var minStr = numberInCurrentLocale(min)
+        var secStr = numberInCurrentLocale(sec)
+        
         self.recordingValue.text = "\(minStr):\(secStr)"
     }
     

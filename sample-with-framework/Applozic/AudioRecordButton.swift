@@ -16,7 +16,7 @@ import Foundation
     func permissionNotGranted()
 }
 
-@objc open class AudioRecordButton: UIButton{
+@objc public class AudioRecordButton: UIButton{
     
     public enum ALKSoundRecorderState{
         case Recording
@@ -126,6 +126,7 @@ import Foundation
     
     @objc fileprivate func startAudioRecord()
     {
+        // Getting audio session from objective-c as setCategory is unavailable in swift
         recordingSession = ALAudioSession().getWithPlayback(false)
         audioFilename = URL(fileURLWithPath: NSTemporaryDirectory().appending("tempRecording.m4a"))
         let settings = [

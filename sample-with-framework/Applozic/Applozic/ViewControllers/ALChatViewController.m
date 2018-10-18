@@ -71,6 +71,7 @@
 #import <Applozic/Applozic-Swift.h>
 #import "UIImage+animatedGIF.h"
 #import <Photos/Photos.h>
+#import "ALImageViewController.h"
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -84,7 +85,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
-                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol, ALCustomPickerDelegate>
+                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol, ALCustomPickerDelegate,ALImageSendDelegate>
 
 @property (nonatomic, assign) NSInteger startIndex;
 @property (nonatomic, assign) int rp;
@@ -387,6 +388,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     [self subscrbingChannel];
 
     [self loadMessagesForOpenChannel];
+
+
 }
 
 -(void)setFreezeForAddingRemovingUser:(NSNotification *)notifyObject
@@ -2011,6 +2014,34 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     return 0;
 }
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    if (action == @selector(paste:) &&  [UIPasteboard generalPasteboard].image){
+        return YES;
+    }else{
+        return [super canPerformAction:action withSender:sender];
+    }
+}
+
+
+- (void)paste:(id)sender{
+
+    UIImage  *image = [UIPasteboard generalPasteboard].image;
+    if (image)
+    {
+        NSString *filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
+        ALImageViewController * imageViewController = [[ALImageViewController alloc]init];
+        imageViewController.imageFilePath = filePath;
+        imageViewController.image = image;
+        imageViewController.imageSelectDelegate = self;
+        [self.navigationController pushViewController:imageViewController animated:YES];
+
+    } else {
+        [super paste:sender];
+    }
+}
+
+
 //==============================================================================================================================================
 #pragma mark - PickerView Display Method
 //==============================================================================================================================================
@@ -3632,6 +3663,8 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             return;
         }
     }
+
+
     if(self.channelKey != nil)
     {
         ALChannelService * channelService = [[ALChannelService alloc] init];
@@ -4642,6 +4675,11 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 - (void)multimediaSelected:(NSArray<ALMultimediaData *> *)list{
     NSMutableArray * multimediaList = [[NSMutableArray alloc]initWithArray: list];
     [self multipleAttachmentProcess:multimediaList andText:@""];
+}
+
+- (void)onSendClick:(NSString * _Nullable)filePath {
+
+    [self processAttachment:filePath andMessageText:nil andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
 }
 
 @end

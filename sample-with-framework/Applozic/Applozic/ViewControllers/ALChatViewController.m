@@ -4677,7 +4677,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [self multipleAttachmentProcess:multimediaList andText:@""];
 }
 
-- (void)onSendClick:(NSString * _Nullable)filePath {
+- (void)onSendButtonClick:(NSString * _Nullable)filePath {
 
     [self processAttachment:filePath andMessageText:nil andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
 }

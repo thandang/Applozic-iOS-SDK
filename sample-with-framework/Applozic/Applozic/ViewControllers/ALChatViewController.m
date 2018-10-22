@@ -2029,13 +2029,20 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     UIImage  *image = [UIPasteboard generalPasteboard].image;
     if (image)
     {
-        NSString *filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
-        ALImageViewController * imageViewController = [[ALImageViewController alloc]init];
-        imageViewController.imageFilePath = filePath;
-        imageViewController.image = image;
-        imageViewController.imageSelectDelegate = self;
-        [self.navigationController pushViewController:imageViewController animated:YES];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+        dispatch_async(queue, ^{
+            NSString *filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
 
+            dispatch_async(dispatch_get_main_queue(), ^{
+                ALImageViewController * imageViewController = [[ALImageViewController alloc]init];
+                imageViewController.imageFilePath = filePath;
+                imageViewController.image = image;
+                imageViewController.imageSelectDelegate = self;
+                [self.navigationController pushViewController:imageViewController animated:YES];
+
+            });
+
+        });
     } else {
         [super paste:sender];
     }

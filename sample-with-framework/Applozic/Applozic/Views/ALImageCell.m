@@ -609,7 +609,7 @@ UIViewController * modalCon;
         return (self.mMessage.isDownloadRequired? (action == @selector(delete:) || action == @selector(msgInfo:)):(action == @selector(delete:)|| action == @selector(msgInfo:)|| action == @selector(messageForward:) || [self isMessageReplyMenuEnabled:action] || (action == @selector(copy:))));
     }
     
-    return (self.mMessage.isDownloadRequired? (action == @selector(delete:)):(action == @selector(delete:)|| [self isForwardMenuEnabled:action]|| [self isMessageReplyMenuEnabled:action] || (action == @selector(copy:))));
+    return (self.mMessage.isDownloadRequired? (action == @selector(delete:)):(action == @selector(delete:)|| [self isForwardMenuEnabled:action] || [self isMessageReplyMenuEnabled:action] || (action == @selector(copy:))));
 }
 
 
@@ -630,11 +630,10 @@ UIViewController * modalCon;
         BOOL isFileExist = [fileManager fileExistsAtPath: filePath];
         if (isFileExist) {
             UIImage  *image = [[UIImage alloc] initWithContentsOfFile:filePath];
-            appPasteBoard.image = image;
+            appPasteBoard.image = [image copy];
         }
 
     });
-
 
 }
 

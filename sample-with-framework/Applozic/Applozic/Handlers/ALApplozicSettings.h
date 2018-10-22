@@ -110,6 +110,7 @@ static NSString *const BACKGROUND_COLOR_FOR_ATTACHMENT_PLUS_ICON =  @"com.apploz
 static NSString *const AL_TEXT_STYLE_FOR_CELL= @"com.applozic.AL_TEXT_STYLE_FOR_CELL";
 static NSString *const AL_CHAT_CELL_FONT_SIZE= @"com.applozic.AL_CHAT_CELL_FONT_SIZE";
 static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL_FONT_SIZE";
+static NSString *const AL_BACKGROUND_COLOR_FOR_REPLY_VIEW= @"com.applozic.AL_BACKGROUND_COLOR_FOR_REPLY_VIEW";
 
 
 #import <Foundation/Foundation.h>
@@ -465,5 +466,8 @@ static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL
 
 +(void)setChannelCellTextFontSize:(float)fontSize;
 +(float)getChannelCellTextFontSize;
+
++(void)setBackgroundColorForReplyView:(UIColor *)backgroudColor;
++(UIColor *)getBackgroundColorForReplyView;
 
 @end

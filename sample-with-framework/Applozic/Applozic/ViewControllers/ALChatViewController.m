@@ -2037,6 +2037,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
                 ALImageViewController * imageViewController = [[ALImageViewController alloc]init];
                 imageViewController.imageFilePath = filePath;
                 imageViewController.image = image;
+                imageViewController.messageKey = self.messageReplyId;
                 imageViewController.imageSelectDelegate = self;
                 [self.navigationController pushViewController:imageViewController animated:YES];
 
@@ -4684,8 +4685,9 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     [self multipleAttachmentProcess:multimediaList andText:@""];
 }
 
-- (void)onSendButtonClick:(NSString * _Nullable)filePath {
+- (void)onSendButtonClick:(NSString * _Nullable)filePath withReplyMessageKey:(NSString *)messageKey{
 
+    self.messageReplyId = messageKey;
     [self processAttachment:filePath andMessageText:nil andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
 }
 

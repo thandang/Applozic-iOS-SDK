@@ -11,7 +11,8 @@
 
 @protocol ALImageSendDelegate <NSObject>
 
--(void)onSendButtonClick:(NSString*_Nullable) filePath;
+-(void)onSendButtonClick:(NSString*_Nullable) filePath withReplyMessageKey:(NSString*_Nullable)
+messageKey;
 
 @end
 
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id <ALImageSendDelegate> imageSelectDelegate;
 @property (nonatomic, strong) NSString * imageFilePath;
 @property (nonatomic, strong) UIImage * image;
+@property (nonatomic, strong) NSString * messageKey;
 
 @end
 

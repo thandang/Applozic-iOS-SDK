@@ -616,19 +616,26 @@ UIViewController * modalCon;
 
 - (void)copy:(id)sender {
 
-    UIPasteboard *appPasteBoard = UIPasteboard.generalPasteboard;
-    appPasteBoard.persistent = YES;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
 
-    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString * filePath = [docDir stringByAppendingPathComponent:self.mMessage.imageFilePath];
+        UIPasteboard *appPasteBoard = UIPasteboard.generalPasteboard;
+        appPasteBoard.persistent = YES;
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString * filePath = [docDir stringByAppendingPathComponent:self.mMessage.imageFilePath];
 
-    BOOL isFileExist = [fileManager fileExistsAtPath: filePath];
-    if (isFileExist) {
-        UIImage  *image = [[UIImage alloc] initWithContentsOfFile:filePath];
-        appPasteBoard.image = image;
-    }
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+
+        BOOL isFileExist = [fileManager fileExistsAtPath: filePath];
+        if (isFileExist) {
+            UIImage  *image = [[UIImage alloc] initWithContentsOfFile:filePath];
+            appPasteBoard.image = image;
+        }
+
+    });
+
+
 }
 
 -(void) delete:(id)sender

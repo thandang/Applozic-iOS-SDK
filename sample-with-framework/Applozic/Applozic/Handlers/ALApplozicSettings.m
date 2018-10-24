@@ -1368,5 +1368,13 @@
     return font ? font : @"Helvetica";
 }
 
++ (void)enableNewAudioDesign:(BOOL)enable {
+    [[NSUserDefaults standardUserDefaults] setBool:enable forKey:ENABLE_NEW_AUDIO_DESIGN];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++ (BOOL)isNewAudioDesignEnabled {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_NEW_AUDIO_DESIGN];
+}
+
 
 @end

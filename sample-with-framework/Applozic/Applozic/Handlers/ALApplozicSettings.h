@@ -112,6 +112,7 @@ static NSString *const AL_CHAT_CELL_FONT_SIZE= @"com.applozic.AL_CHAT_CELL_FONT_
 static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL_FONT_SIZE";
 
 //Audio Recording View
+static NSString *const ENABLE_NEW_AUDIO_DESIGN = @"com.applozic.ENABLE_NEW_AUDIO_DESIGN";
 static NSString *const AUDIO_RECORDING_VIEW_BACKGROUND_COLOR = @"com.applozic.AUDIO_RECORDING_VIEW_BACKGROUND_COLOR";
 static NSString *const SLIDE_TO_CANCEL_TEXT_COLOR = @"com.applozic.SLIDE_TO_CANCEL_TEXT_COLOR";
 static NSString *const AUDIO_RECORDING_TEXT_COLOR = @"com.applozic.AUDIO_RECORDING_TEXT_COLOR";
@@ -482,5 +483,8 @@ static NSString *const AUDIO_RECORD_VIEW_FONT = @"com.applozic.AUDIO_VIEW_FONT";
 
 +(void)setFontForAudioView:(NSString *)font;
 +(NSString *)getFontForAudioView;
+
++(void)enableNewAudioDesign:(BOOL)enable;
++(BOOL)isNewAudioDesignEnabled;
 
 @end

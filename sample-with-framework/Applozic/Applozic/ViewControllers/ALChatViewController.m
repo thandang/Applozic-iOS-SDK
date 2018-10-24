@@ -150,6 +150,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     BOOL isMicButtonVisible;
     AudioRecordButton * micButton;
     BOOL isAudioRecordingEnabled;
+    BOOL isNewAudioDesignEnabled;
 
     UIDocumentInteractionController * interaction;
 
@@ -183,6 +184,11 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     // Setup quick recording if it's enabled in the settings
     if([ALApplozicSettings isQuickAudioRecordingEnabled]) {
+        if (@available(iOS 9.0, *) && [ALApplozicSettings isNewAudioDesignEnabled]) {
+            isNewAudioDesignEnabled = YES;
+        } else {
+            isNewAudioDesignEnabled = NO;
+        }
         [self setUpSoundRecordingView];
         [self showMicButton];
         isAudioRecordingEnabled = YES;
@@ -1550,7 +1556,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)setUpSoundRecordingView
 {
-    if (@available(iOS 9.0, *)) {
+    if (isNewAudioDesignEnabled) {
         soundRecordingView = [[ALKAudioRecorderView alloc] initWithFrame:CGRectZero];
         [soundRecordingView setAudioRecViewDelegateWithRecorderDelegate:self];
         [self.view addSubview: soundRecordingView];
@@ -1612,7 +1618,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)showMicButton
 {
-    if(@available(iOS 9.0, *)){
+    if(isNewAudioDesignEnabled){
         micButton = [[AudioRecordButton alloc] initWithFrame: CGRectZero];
         [micButton setAudioRecDelegateWithRecorderDelegate:self];
         [self.view addSubview: micButton];
@@ -1633,7 +1639,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)showSoundRecordingView
 {
-    if(@available(ios 9.0, *)) {
+    if(isNewAudioDesignEnabled) {
         [soundRecordingView setHidden: NO];
     }else {
         [soundRecording show];
@@ -1642,7 +1648,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)hideSoundRecordingView
 {
-    if(@available(ios 9.0, *)) {
+    if(isNewAudioDesignEnabled) {
         [soundRecordingView setHidden: YES];
     }else {
         [soundRecording hide];

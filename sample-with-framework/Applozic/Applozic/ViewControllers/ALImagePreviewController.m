@@ -6,13 +6,13 @@
 //  Copyright © 2018 applozic Inc. All rights reserved.
 //
 
-#import "ALImageViewController.h"
+#import "ALImagePreviewController.h"
 #import "ALApplozicSettings.h"
-@interface ALImageViewController ()
+@interface ALImagePreviewController ()
 
 @end
 
-@implementation ALImageViewController
+@implementation ALImagePreviewController
 
 - (void)viewWillAppear:(BOOL)animated{
 

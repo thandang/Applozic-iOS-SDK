@@ -18,7 +18,7 @@ messageKey;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ALImageViewController : UIViewController
+@interface ALImagePreviewController : UIViewController
 
 @property (weak, nonatomic) id <ALImageSendDelegate> imageSelectDelegate;
 @property (nonatomic, strong) NSString * imageFilePath;

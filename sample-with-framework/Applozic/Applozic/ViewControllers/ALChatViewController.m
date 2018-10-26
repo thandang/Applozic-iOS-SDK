@@ -71,7 +71,7 @@
 #import <Applozic/Applozic-Swift.h>
 #import "UIImage+animatedGIF.h"
 #import <Photos/Photos.h>
-#import "ALImageViewController.h"
+#import "ALImagePreviewController.h"
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -2092,7 +2092,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
             NSString *filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
 
             dispatch_async(dispatch_get_main_queue(), ^{
-                ALImageViewController * imageViewController = [[ALImageViewController alloc]init];
+                ALImagePreviewController * imageViewController = [[ALImagePreviewController alloc]init];
                 imageViewController.imageFilePath = filePath;
                 imageViewController.image = image;
                 imageViewController.messageKey = self.messageReplyId;

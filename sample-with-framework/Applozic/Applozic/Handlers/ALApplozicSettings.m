@@ -1372,9 +1372,28 @@
     [[NSUserDefaults standardUserDefaults] setBool:enable forKey:ENABLE_NEW_AUDIO_DESIGN];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 + (BOOL)isNewAudioDesignEnabled {
     return [[NSUserDefaults standardUserDefaults] boolForKey:ENABLE_NEW_AUDIO_DESIGN];
 }
 
++(void)setBackgroundColorForReplyView:(UIColor *)backgroudColor
+{
+    NSData *receiveColorData = [NSKeyedArchiver archivedDataWithRootObject:backgroudColor];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveColorData forKey:AL_BACKGROUND_COLOR_FOR_REPLY_VIEW];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getBackgroundColorForReplyView
+{
+    NSData *sendColorData = [[NSUserDefaults standardUserDefaults] objectForKey:AL_BACKGROUND_COLOR_FOR_REPLY_VIEW];
+    UIColor *backgroundColor = [NSKeyedUnarchiver unarchiveObjectWithData:sendColorData];
+    if(backgroundColor)
+    {
+        return backgroundColor;
+    }
+    return [UIColor grayColor];
+  
+}
 
 @end

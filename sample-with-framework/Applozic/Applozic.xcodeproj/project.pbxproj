@@ -22,6 +22,8 @@
 		1810D124215A79F600557E22 /* ALAttachmentService.h in Headers */ = {isa = PBXBuildFile; fileRef = 1810D122215A79F600557E22 /* ALAttachmentService.h */; };
 		1810D125215A79F600557E22 /* ALAttachmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1810D123215A79F600557E22 /* ALAttachmentService.m */; };
 		181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12D1BC5364C00EBA00F /* UIImageView+WebCache.m */; };
+		18587A7C2177A81E006AA149 /* ALImagePreviewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18587A7A2177A81E006AA149 /* ALImagePreviewController.h */; };
+		18587A7D2177A81E006AA149 /* ALImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18587A7B2177A81E006AA149 /* ALImagePreviewController.m */; };
 		1860E01C2151395600119CD7 /* ALAudioSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1860E01A2151395600119CD7 /* ALAudioSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1860E01D2151395600119CD7 /* ALAudioSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1860E01B2151395600119CD7 /* ALAudioSession.m */; };
 		1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584220E2470E00B75802 /* ALRealTimeUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -400,6 +402,8 @@
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
 		1810D122215A79F600557E22 /* ALAttachmentService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALAttachmentService.h; path = Applozic/ALAttachmentService.h; sourceTree = "<group>"; };
 		1810D123215A79F600557E22 /* ALAttachmentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALAttachmentService.m; path = Applozic/ALAttachmentService.m; sourceTree = "<group>"; };
+		18587A7A2177A81E006AA149 /* ALImagePreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALImagePreviewController.h; sourceTree = "<group>"; };
+		18587A7B2177A81E006AA149 /* ALImagePreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALImagePreviewController.m; sourceTree = "<group>"; };
 		1860E01A2151395600119CD7 /* ALAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALAudioSession.h; path = Applozic/ALAudioSession.h; sourceTree = "<group>"; };
 		1860E01B2151395600119CD7 /* ALAudioSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALAudioSession.m; path = Applozic/ALAudioSession.m; sourceTree = "<group>"; };
 		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
@@ -1033,6 +1037,8 @@
 				6D0D10791D4CD7B6009853FB /* ALImagePickerController.m */,
 				C76366061DF82B500087221C /* ALNavigationController.h */,
 				C76366071DF82B500087221C /* ALNavigationController.m */,
+				18587A7A2177A81E006AA149 /* ALImagePreviewController.h */,
+				18587A7B2177A81E006AA149 /* ALImagePreviewController.m */,
 			);
 			name = ViewControllers;
 			path = Applozic/ViewControllers;
@@ -1516,6 +1522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */,
+				18587A7C2177A81E006AA149 /* ALImagePreviewController.h in Headers */,
 				C75576EE1E27A5B300358D9B /* ALMuteRequest.h in Headers */,
 				29C849A21CC932050042643C /* NSString+Encode.h in Headers */,
 				6D0877081D01B0F900DB491A /* UIView+Toast.h in Headers */,
@@ -1920,6 +1927,7 @@
 				6D6DF1411BC5364C00EBA00F /* ALConnectionQueueHandler.m in Sources */,
 				6D6DF1BB1BC5364C00EBA00F /* SDWebImageDecoder.m in Sources */,
 				29CBF2031C0303A700BE6A20 /* ALColorUtility.m in Sources */,
+				18587A7D2177A81E006AA149 /* ALImagePreviewController.m in Sources */,
 				6D6DF1451BC5364C00EBA00F /* ALImagePickerHandler.m in Sources */,
 				6D7756B21D5B80DF0025560B /* ALChannelFeed.m in Sources */,
 				6D6DF1CE1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.m in Sources */,

@@ -72,6 +72,7 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="103" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9sE-W8-i33">
                                                     <rect key="frame" x="26" y="16" width="55" height="49.5"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Muserlabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4M-aZ-RgP">
                                                     <rect key="frame" x="99" y="18" width="209" height="21"/>
@@ -738,6 +739,7 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SYV-N5-4VE">
                                             <rect key="frame" x="8" y="28" width="319" height="7"/>
+                                            <color key="tintColor" red="0.46666666670000001" green="0.77647058820000003" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                     </subviews>
                                 </view>
@@ -1572,6 +1574,8 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
                         <outlet property="notificationTitle" destination="1ch-V6-7WF" id="2cZ-DU-bdN"/>
                         <outlet property="notificationToggle" destination="ssR-vs-NN9" id="O2Q-uB-zDa"/>
                         <outlet property="profileImage" destination="fEQ-TE-P0v" id="SpR-ah-6UK"/>
+						<outlet property="profileMainImage" destination="Ky4-is-ZmF" id="tNY-hX-U5r"/>
+						<outlet property="profileMainView" destination="izp-vg-4yT" id="qHu-GC-kbL"/>
                         <outlet property="profileStatus" destination="uPH-8k-6t7" id="cqF-cb-mUT"/>
                         <outlet property="uploadImageButton" destination="nY9-bD-W8V" id="I1R-Xc-UBx"/>
                         <outlet property="userDesignationLabel" destination="d2x-8G-9aN" id="wUS-5t-Hbs"/>
@@ -1728,7 +1732,7 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Npf-hG-Fxp">
                                 <rect key="frame" x="0.0" y="544" width="600" height="56"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XL-ms-PBf">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XL-ms-PBf">
                                         <rect key="frame" x="552" y="8" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" identifier="sendButtonHeight" id="3Xa-rx-R9F"/>
@@ -1754,11 +1758,15 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" identifier="textView-Height" id="ZEF-sY-zaa"/>
                                         </constraints>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoT-HK-LWd">
+                                    <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoT-HK-LWd">
                                         <rect key="frame" x="6" y="8" width="40" height="40"/>
+										<accessibility key="accessibilityConfiguration">
+										    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>												
+									    </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="oOD-ac-EA7"/>
                                         </constraints>
@@ -1957,4 +1965,5 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
         <image name="ic_phone_gray" width="30" height="32"/>
         <image name="online_show" width="200" height="200"/>
     </resources>
+    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -28,6 +28,7 @@
 #define FILTER_CONTACT_START_TIME @"com.applozic.userdefault.FILTER_CONTACT_START_TIME"
 #define WALLPAPER_IMAGE @"com.applozic.userdefault.WALLPAPER_IMAGE"
 #define CUSTOM_MSG_BACKGROUND_COLOR @"com.applozic.userdefault.CUSTOM_MSG_BACKGROUND_COLOR"
+#define CUSTOM_MSG_TEXT_COLOR @"com.applozic.userdefault.CUSTOM_MSG_TEXT_COLOR"
 #define ONLINE_CONTACT_LIMIT @"com.applozic.userdefault.ONLINE_CONTACT_LIMIT"
 #define GROUP_EXIT_BUTTON @"com.applozic.userdefault.GROUP_EXIT_BUTTON"
 #define GROUP_MEMBER_ADD_OPTION @"com.applozic.userdefault.GROUP_MEMBER_ADD_OPTION"
@@ -103,6 +104,20 @@
 #define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
 #define AL_CONTACT_SEARCH @"com.applozic.AL_CONTACT_SEARCH"
 #define CHANNEL_MEMBER_INFO_IN_SUBTITLE @"com.applozic.CHANNEL_MEMBER_INFO_IN_SUBTITLE"
+#define TABBAR_BACKGROUND_COLOUR @"com.applozic.userdefault.TABBAR_BACKGROUND_COLOUR"
+#define TABBAR_SELECTED_ITEM_COLOUR @"com.applozic.userdefault.TABBAR_SELECTED_ITEM_COLOUR"
+#define TABBAR_UNSELECTED_ITEM_COLOUR @"com.applozic.userdefault.TABBAR_UNSELECTED_ITEM_COLOUR"
+#define ATTACHMENT_ITEM_COLOUR @"com.applozic.userdefault.ATTACHMENT_ITEM_COLOUR"
+#define SEND_ITEM_COLOUR @"com.applozic.userdefault.SEND_ITEM_COLOUR"
+#define MESSAGE_SUBTEXT_COLOUR @"com.applozic.userdefault.MESSAGE_SUBTEXT_COLOUR"
+#define MESSAGE_TEXT_COLOUR @"com.applozic.userdefault.MESSAGE_TEXT_COLOUR"
+#define PROFILE_MAIN_COLOUR @"com.applozic.userdefault.PROFILE_MAIN_COLOUR"
+#define PROFILE_SUB_COLOUR @"com.applozic.userdefault.PROFILE_SUB_COLOUR"
+#define NEW_CONTACT_SUB_COLOUR @"com.applozic.userdefault.NEW_CONTACT_SUB_COLOUR"
+#define NEW_CONTACT_MAIN_COLOUR @"com.applozic.userdefault.NEW_CONTACT_MAIN_COLOUR"
+#define NEW_CONTACT_TEXT_COLOUR @"com.applozic.userdefault.NEW_CONTACT_TEXT_COLOUR"
+#define CONTACTLIST_BG_COLOUR @"com.applozic.userdefault.CONTACTLIST_BG_COLOUR"
+#define SEARCHBAR_TINT_COLOUR @"com.applozic.userdefault.SEARCHBAR_TINT_COLOUR"
 static NSString *const HIDE_MESSAGES_WITH_METADATA_KEYS = @"com.applozic.HIDE_MESSAGES_WITH_METADATA_KEYS";
 static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectGalleryView";
 static NSString *const AL_5MIN_VIDEO_LIMIT_IN_GALLERY= @"com.applozic.AL_5MIN_VIDEO_LIMIT_IN_GALLERY";
@@ -205,6 +220,9 @@ static NSString *const MEDIA_SELECT_OPTIONS = @"com.applozic.MEDIA_SELECT_OPTION
 +(void)setCustomMessageBackgroundColor:(UIColor *)color;
 
 +(UIColor *)getCustomMessageBackgroundColor;
+
++(void)setCustomMessageTextColor:(UIColor *)color;
++(UIColor *)getCustomMessageTextColor;
 
 +(void)setGroupExitOption:(BOOL)option;
 +(BOOL)getGroupExitOption;
@@ -451,6 +469,35 @@ static NSString *const MEDIA_SELECT_OPTIONS = @"com.applozic.MEDIA_SELECT_OPTION
 
 +(BOOL)isChannelMembersInfoInNavigationBarEnabled;
 +(void)showChannelMembersInfoInNavigationBar:(BOOL)flag;
+
++(UIColor *) getTabBarBackgroundColour;
++(void) setTabBarBackgroundColour:(UIColor *)color;
++(UIColor *) getTabBarSelectedItemColour;
++(void) setTabBarSelectedItemColour:(UIColor *)color;
++(UIColor *) getTabBarUnSelectedItemColour;
++(void) setTabBarUnSelectedItemColour:(UIColor *)color;
++(UIColor *) getAttachmentIconColour;
++(void) setAttachmentIconColour:(UIColor *)color;
++(UIColor *) getSendIconColour;
++(void) setSendIconColour:(UIColor *)color;
++(UIColor *) getMessageSubtextColour;
++(void) setMessageSubtextColour:(UIColor *)color;
++(UIColor *) getProfileMainColour;
++(void) setProfileMainColour:(UIColor *)color;
++(UIColor *) getProfileSubColour;
++(void) setProfileSubColour:(UIColor *)color;
++(UIColor *) getNewContactMainColour;
++(void) setNewContactMainColour:(UIColor *)color;
++(UIColor *) getNewContactSubColour;
++(void) setNewContactSubColour:(UIColor *)color;
++(UIColor *) getNewContactTextColour;
++(void) setNewContactTextColour:(UIColor *)color;
++(UIColor *) getMessageListTextColor;
++(void) setMessageListTextColor:(UIColor *)color;
++(UIColor *) getContactListBackgroundColour;
++(void) setContactListBackgroundColour:(UIColor *)color;
++(UIColor *) getSearchBarTintColour;
++(void) setSearchBarTintColour:(UIColor *)color;
 
 +(NSArray *) metadataKeysToHideMessages;
 +(void) hideMessagesWithMetadataKeys:(NSArray *)keys;

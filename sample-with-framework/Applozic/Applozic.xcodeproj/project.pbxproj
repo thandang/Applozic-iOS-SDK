@@ -22,6 +22,8 @@
 		1810D124215A79F600557E22 /* ALAttachmentService.h in Headers */ = {isa = PBXBuildFile; fileRef = 1810D122215A79F600557E22 /* ALAttachmentService.h */; };
 		1810D125215A79F600557E22 /* ALAttachmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1810D123215A79F600557E22 /* ALAttachmentService.m */; };
 		181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF12D1BC5364C00EBA00F /* UIImageView+WebCache.m */; };
+		18587A7C2177A81E006AA149 /* ALImagePreviewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18587A7A2177A81E006AA149 /* ALImagePreviewController.h */; };
+		18587A7D2177A81E006AA149 /* ALImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18587A7B2177A81E006AA149 /* ALImagePreviewController.m */; };
 		1860E01C2151395600119CD7 /* ALAudioSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1860E01A2151395600119CD7 /* ALAudioSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1860E01D2151395600119CD7 /* ALAudioSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1860E01B2151395600119CD7 /* ALAudioSession.m */; };
 		1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584220E2470E00B75802 /* ALRealTimeUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,6 +39,9 @@
 		1A637E5E2125729B00E62537 /* UIImage+animatedGIF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9CB20E211D8E7C00B19EC2 /* ALMultimediaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9CB20F211D8E7C00B19EC2 /* ALMultimediaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */; };
+		1AFDE93E21707C1400194355 /* AudioRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFDE93D21707C1400194355 /* AudioRecordingView.swift */; };
+		1AFDE94021707C3800194355 /* AudioRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFDE93F21707C3800194355 /* AudioRecordButton.swift */; };
+		1AFDE94221707CA700194355 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFDE94121707CA700194355 /* UIColor+Extension.swift */; };
 		2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2932B9F21C7C875F0017911D /* ALGroupDetailViewController.m */; };
 		293446131D4F426F007BD1B4 /* ALImageActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 2934460F1D4F426F007BD1B4 /* ALImageActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -397,6 +402,8 @@
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
 		1810D122215A79F600557E22 /* ALAttachmentService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALAttachmentService.h; path = Applozic/ALAttachmentService.h; sourceTree = "<group>"; };
 		1810D123215A79F600557E22 /* ALAttachmentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALAttachmentService.m; path = Applozic/ALAttachmentService.m; sourceTree = "<group>"; };
+		18587A7A2177A81E006AA149 /* ALImagePreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALImagePreviewController.h; sourceTree = "<group>"; };
+		18587A7B2177A81E006AA149 /* ALImagePreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALImagePreviewController.m; sourceTree = "<group>"; };
 		1860E01A2151395600119CD7 /* ALAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALAudioSession.h; path = Applozic/ALAudioSession.h; sourceTree = "<group>"; };
 		1860E01B2151395600119CD7 /* ALAudioSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALAudioSession.m; path = Applozic/ALAudioSession.m; sourceTree = "<group>"; };
 		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
@@ -413,6 +420,9 @@
 		1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALMultimediaData.h; sourceTree = "<group>"; };
 		1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALMultimediaData.m; sourceTree = "<group>"; };
+		1AFDE93D21707C1400194355 /* AudioRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingView.swift; sourceTree = "<group>"; };
+		1AFDE93F21707C3800194355 /* AudioRecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordButton.swift; sourceTree = "<group>"; };
+		1AFDE94121707CA700194355 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALGroupDetailViewController.h; sourceTree = "<group>"; };
 		2932B9F21C7C875F0017911D /* ALGroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALGroupDetailViewController.m; sourceTree = "<group>"; };
 		2934460F1D4F426F007BD1B4 /* ALImageActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALImageActivity.h; sourceTree = "<group>"; };
@@ -982,6 +992,7 @@
 				1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */,
 				1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */,
 				1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */,
+				1AFDE94121707CA700194355 /* UIColor+Extension.swift */,
 			);
 			name = Utilities;
 			path = Applozic/Utilities;
@@ -1026,6 +1037,8 @@
 				6D0D10791D4CD7B6009853FB /* ALImagePickerController.m */,
 				C76366061DF82B500087221C /* ALNavigationController.h */,
 				C76366071DF82B500087221C /* ALNavigationController.m */,
+				18587A7A2177A81E006AA149 /* ALImagePreviewController.h */,
+				18587A7B2177A81E006AA149 /* ALImagePreviewController.m */,
 			);
 			name = ViewControllers;
 			path = Applozic/ViewControllers;
@@ -1141,6 +1154,8 @@
 				6D6DF1E51BC5389B00EBA00F /* notification */,
 				8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */,
 				18A2BA2320C44E5E00AD47A2 /* ViewModel */,
+				1AFDE93D21707C1400194355 /* AudioRecordingView.swift */,
+				1AFDE93F21707C3800194355 /* AudioRecordButton.swift */,
 			);
 			name = ApplozicUIWidget;
 			sourceTree = "<group>";
@@ -1507,6 +1522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */,
+				18587A7C2177A81E006AA149 /* ALImagePreviewController.h in Headers */,
 				C75576EE1E27A5B300358D9B /* ALMuteRequest.h in Headers */,
 				29C849A21CC932050042643C /* NSString+Encode.h in Headers */,
 				6D0877081D01B0F900DB491A /* UIView+Toast.h in Headers */,
@@ -1830,6 +1846,7 @@
 				6D81979B1CC55B5700E53EC3 /* ALCollectionReusableView.m in Sources */,
 				6D6DF1D21BC5364C00EBA00F /* UIView+WebCacheOperation.m in Sources */,
 				6D6DF15F1BC5364C00EBA00F /* ALChatCell.m in Sources */,
+				1AFDE94021707C3800194355 /* AudioRecordButton.swift in Sources */,
 				C76D31461F0AAFB40087291F /* ALVOIPCell.m in Sources */,
 				6D6DF1611BC5364C00EBA00F /* ALImageCell.m in Sources */,
 				6D7756E61D5B821F0025560B /* ALSyncCallService.m in Sources */,
@@ -1840,6 +1857,7 @@
 				6D6DF1511BC5364C00EBA00F /* ALRegisterUserClientService.m in Sources */,
 				29C849A31CC932050042643C /* NSString+Encode.m in Sources */,
 				6D7756EE1D5B82560025560B /* ALReachability.m in Sources */,
+				1AFDE94221707CA700194355 /* UIColor+Extension.swift in Sources */,
 				C76D314E1F0AAFCF0087291F /* ALVOIPNotificationHandler.m in Sources */,
 				6D7756AC1D5B80DF0025560B /* ALChannelClientService.m in Sources */,
 				6D6DF1751BC5364C00EBA00F /* ALJson.m in Sources */,
@@ -1899,6 +1917,7 @@
 				10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */,
 				2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */,
 				4612E8F91E13882D0022DB23 /* MQTTCFSocketTransport.m in Sources */,
+				1AFDE93E21707C1400194355 /* AudioRecordingView.swift in Sources */,
 				6D6DF14B1BC5364C00EBA00F /* ALResponseHandler.m in Sources */,
 				6D6DF1B31BC5364C00EBA00F /* MKAnnotationView+WebCache.m in Sources */,
 				6D6DF1431BC5364C00EBA00F /* ALDBHandler.m in Sources */,
@@ -1908,6 +1927,7 @@
 				6D6DF1411BC5364C00EBA00F /* ALConnectionQueueHandler.m in Sources */,
 				6D6DF1BB1BC5364C00EBA00F /* SDWebImageDecoder.m in Sources */,
 				29CBF2031C0303A700BE6A20 /* ALColorUtility.m in Sources */,
+				18587A7D2177A81E006AA149 /* ALImagePreviewController.m in Sources */,
 				6D6DF1451BC5364C00EBA00F /* ALImagePickerHandler.m in Sources */,
 				6D7756B21D5B80DF0025560B /* ALChannelFeed.m in Sources */,
 				6D6DF1CE1BC5364C00EBA00F /* UIImageView+HighlightedWebCache.m in Sources */,

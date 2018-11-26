@@ -90,6 +90,28 @@
     return HEIGHT;
 }
 
+
++(CGFloat)getLinkCelllHeight:(ALMessage *)alMessage andCellFrame:(CGRect)cellFrame
+{
+    CGFloat HEIGHT = cellFrame.size.width - 70;
+    NSString *linkText = nil;
+
+    if([alMessage.metadata valueForKey:@"text"]){
+        linkText = [alMessage.metadata valueForKey:@"text"];
+    }else{
+        linkText = [alMessage.metadata valueForKey:@"linkURL"];
+    }
+
+    if(linkText)
+    {
+        CGSize theTextSize = [self textSize:alMessage andCellFrame:cellFrame];
+        HEIGHT = theTextSize.height + HEIGHT;
+    }
+
+    return HEIGHT;
+}
+
+
 +(CGFloat)getChatCellHeight:(ALMessage *)alMessage andCellFrame:(CGRect)cellFrame  // NEED CHECK AGAIN TEXT CELL
 {
     CGSize theTextSize = [self textSize:alMessage andCellFrame:cellFrame];
@@ -142,6 +164,10 @@
     if(alMessage.contentType == ALMESSAGE_CONTENT_LOCATION)
     {
         heightOfCell = [self getLocationCellHeight:cellFrame];
+    }
+    else if([alMessage isLinkMessage])
+    {
+        heightOfCell = [self getLinkCelllHeight:alMessage andCellFrame:cellFrame] ;
     }
     else if([alMessage.type isEqualToString:@"100"])
     {

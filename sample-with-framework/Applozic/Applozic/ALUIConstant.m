@@ -93,7 +93,11 @@
 
 +(CGFloat)getLinkCelllHeight:(ALMessage *)alMessage andCellFrame:(CGRect)cellFrame
 {
-    CGFloat HEIGHT = cellFrame.size.width - 70;
+
+    CGFloat cellPadding = 70;
+    CGFloat widthPadding = 115;
+
+    CGFloat HEIGHT = cellFrame.size.width - cellPadding;
     NSString *linkText = nil;
 
     if([alMessage.metadata valueForKey:@"text"]){
@@ -104,7 +108,12 @@
 
     if(linkText)
     {
-        CGSize theTextSize = [self textSize:alMessage andCellFrame:cellFrame];
+
+        CGSize theTextSize =   [ALUtilityClass getSizeForText:linkText
+                                                     maxWidth:cellFrame.size.width - widthPadding
+                                                         font:[ALApplozicSettings getFontFace]
+                                                     fontSize:[ALApplozicSettings getChatCellTextFontSize]];
+
         HEIGHT = theTextSize.height + HEIGHT;
     }
 

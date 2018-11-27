@@ -35,6 +35,8 @@
 		18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */; };
 		18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */; };
 		18A2BA2720C44E9200AD47A2 /* ALTemplateMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */; };
+		18BDB35E21A7080A003B405D /* ALLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18BDB35C21A7080A003B405D /* ALLinkCell.h */; };
+		18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB35D21A7080A003B405D /* ALLinkCell.m */; };
 		1A3264D2211C116700737C79 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */; };
 		1A637E5E2125729B00E62537 /* UIImage+animatedGIF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9CB20E211D8E7C00B19EC2 /* ALMultimediaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -416,6 +418,8 @@
 		18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesView.swift; path = Applozic/ALTemplateMessagesView.swift; sourceTree = "<group>"; };
 		18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesViewModel.swift; path = Applozic/ALTemplateMessagesViewModel.swift; sourceTree = "<group>"; };
 		18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageModel.swift; path = Applozic/ALTemplateMessageModel.swift; sourceTree = "<group>"; };
+		18BDB35C21A7080A003B405D /* ALLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALLinkCell.h; path = Applozic/Views/ALLinkCell.h; sourceTree = "<group>"; };
+		18BDB35D21A7080A003B405D /* ALLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALLinkCell.m; path = Applozic/Views/ALLinkCell.m; sourceTree = "<group>"; };
 		1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALMultimediaData.h; sourceTree = "<group>"; };
@@ -843,6 +847,8 @@
 				6D6DF0B41BC5364C00EBA00F /* ALImageCell.m */,
 				6DBA7D0B1C943BFF001263F4 /* ALContactMessageCell.h */,
 				6DBA7D0C1C943BFF001263F4 /* ALContactMessageCell.m */,
+				18BDB35C21A7080A003B405D /* ALLinkCell.h */,
+				18BDB35D21A7080A003B405D /* ALLinkCell.m */,
 			);
 			name = "Media Base Cells";
 			sourceTree = "<group>";
@@ -1586,6 +1592,7 @@
 				6D7757271D5B841B0025560B /* ALMessageInfoViewController.h in Headers */,
 				6D7756DB1D5B82000025560B /* ALUserBlockResponse.h in Headers */,
 				6D7756E91D5B823B0025560B /* ALMQTTConversationService.h in Headers */,
+				18BDB35E21A7080A003B405D /* ALLinkCell.h in Headers */,
 				6D7756CF1D5B82000025560B /* ALAPIResponse.h in Headers */,
 				6D7756AF1D5B80DF0025560B /* ALChannelDBService.h in Headers */,
 				6D7756B31D5B80DF0025560B /* ALChannelInfo.h in Headers */,
@@ -1970,6 +1977,7 @@
 				6D6DF1531BC5364C00EBA00F /* ALUtilityClass.m in Sources */,
 				294637B71C6F16050025ED76 /* ALGroupCreationViewController.m in Sources */,
 				6D95476C1BE38DFF00776652 /* ALContactService.m in Sources */,
+				18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */,
 				6D7756961D5B80110025560B /* ALMediaPlayer.m in Sources */,
 				6D6DF1591BC5364C00EBA00F /* ALChatViewController.m in Sources */,
 				464F7D1A1E1D345300B68DCC /* ALChannelUser.m in Sources */,

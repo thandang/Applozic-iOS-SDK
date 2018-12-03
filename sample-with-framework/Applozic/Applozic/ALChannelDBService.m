@@ -1074,4 +1074,33 @@
     [dbHandler.managedObjectContext save:nil];
 }
 
+-(NSMutableArray *) getGroupUsersInChannel:(NSNumber *)key {
+    NSMutableArray *memberList = [[NSMutableArray alloc] init];
+    ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DB_CHANNEL_USER_X"
+                                              inManagedObjectContext:dbHandler.managedObjectContext];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelKey = %@",key];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:predicate];
+
+    NSError *fetchError = nil;
+    NSArray *resultArray = [dbHandler.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
+
+    if (resultArray.count)
+    {
+        for(DB_CHANNEL_USER_X *dbChannelUserX in resultArray)
+        {
+            [memberList addObject:dbChannelUserX];
+        }
+
+        return memberList;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 @end

@@ -1765,7 +1765,7 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
                                     <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoT-HK-LWd">
                                         <rect key="frame" x="6" y="8" width="40" height="40"/>
 										<accessibility key="accessibilityConfiguration">
-										    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>												
+										    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
 									    </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="oOD-ac-EA7"/>
@@ -1959,11 +1959,11 @@ Upload Image Button.centerX = scd_profile_BG.centerX + 50</string>
         <image name="applozic_edit" width="18" height="18"/>
         <image name="applozic_group_icon" width="100" height="100"/>
         <image name="applozic_uploadCamera" width="20" height="16"/>
-        <image name="attachments" width="28" height="13"/>
+        <image name="attachments" width="56" height="26"/>
         <image name="audio_mic" width="462" height="726"/>
         <image name="ic_action_camera" width="64" height="64"/>
         <image name="ic_phone_gray" width="30" height="32"/>
-        <image name="online_show" width="200" height="200"/>
+        <image name="online_show" width="100" height="100"/>
     </resources>
     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

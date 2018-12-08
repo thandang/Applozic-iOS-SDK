@@ -128,7 +128,11 @@
     theChannelEntity.adminId = channel.adminKey;
     theChannelEntity.unreadCount = channel.unreadCount;
     theChannelEntity.metadata = channel.metadata.description;
-    
+    if (channel.conversationStatus) {
+        theChannelEntity.conversationStatus = [NSNumber numberWithInt:channel.conversationStatus];
+    } else {
+        theChannelEntity.conversationStatus = [NSNumber numberWithInt:ALL_CONVERSATION];
+    }
     return theChannelEntity;
 }
 
@@ -259,6 +263,11 @@
     alChannel.deletedAtTime = dbChannel.deletedAtTime;
     alChannel.metadata = [alChannel getMetaDataDictionary:dbChannel.metadata];
     alChannel.userCount = dbChannel.userCount;
+    if (dbChannel.conversationStatus) {
+        alChannel.conversationStatus = dbChannel.conversationStatus;
+    } else {
+        alChannel.conversationStatus = ALL_CONVERSATION;
+    }
     return alChannel;
 }
 
@@ -555,6 +564,11 @@
         channel.deletedAtTime = dbChannel.deletedAtTime;
         channel.metadata = [channel getMetaDataDictionary:dbChannel.metadata];
         channel.userCount = dbChannel.userCount;
+        if (dbChannel.conversationStatus) {
+            channel.conversationStatus = dbChannel.conversationStatus;
+        } else {
+            channel.conversationStatus = ALL_CONVERSATION;
+        }
         return channel;
     }
     else
@@ -658,6 +672,11 @@
             channel.deletedAtTime = dbChannel.deletedAtTime;
             channel.metadata = [channel getMetaDataDictionary:dbChannel.metadata];
             channel.userCount = dbChannel.userCount;
+            if (dbChannel.conversationStatus) {
+                channel.conversationStatus = dbChannel.conversationStatus;
+            } else {
+                channel.conversationStatus = ALL_CONVERSATION;
+            }
             [alChannels addObject:channel];
         }
     }
@@ -752,6 +771,15 @@
         DB_CHANNEL *dbChannel = [result objectAtIndex:0];
         if(newMetaData!=nil) {
             dbChannel.metadata = newMetaData.description;
+            
+            // Update conversation status from metadata
+            if ([newMetaData objectForKey:@"CONVERSATION_ASSIGNEE"] != nil && ([[newMetaData valueForKey:@"CONVERSATION_ASSIGNEE"] isEqualToString:[ALUserDefaultsHandler getUserId]])) {
+                dbChannel.conversationStatus = [NSNumber numberWithInt:ASSIGNED_CONVERSATION];
+            } else if ([newMetaData objectForKey:@"CONVERSATION_STATUS"] != nil && ([[newMetaData valueForKey:@"CONVERSATION_STATUS"] isEqualToString:@"2"])) {
+                dbChannel.conversationStatus = [NSNumber numberWithInt:CLOSED_CONVERSATION];
+            } else {
+                dbChannel.conversationStatus = [NSNumber numberWithInt:ALL_CONVERSATION];
+            }
         }
         
         [dbHandler.managedObjectContext save:nil];
@@ -1021,6 +1049,11 @@
     alChannel.deletedAtTime = dbChannel.deletedAtTime;
     alChannel.metadata = [alChannel getMetaDataDictionary:dbChannel.metadata];
     alChannel.userCount = dbChannel.userCount;
+    if (dbChannel.conversationStatus) {
+        alChannel.conversationStatus = dbChannel.conversationStatus;
+    } else {
+        alChannel.conversationStatus = ALL_CONVERSATION;
+    }
     return alChannel;
 }
 
@@ -1058,7 +1091,11 @@
         alChannel.deletedAtTime = dbChannel.deletedAtTime;
         alChannel.metadata = [alChannel getMetaDataDictionary:dbChannel.metadata];
         alChannel.userCount = dbChannel.userCount;
-        
+        if (dbChannel.conversationStatus) {
+            alChannel.conversationStatus = dbChannel.conversationStatus;
+        } else {
+            alChannel.conversationStatus = ALL_CONVERSATION;
+        }
         [childArray addObject:alChannel];
     }
     

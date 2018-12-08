@@ -420,6 +420,7 @@
 		18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageModel.swift; path = Applozic/ALTemplateMessageModel.swift; sourceTree = "<group>"; };
 		18BDB35C21A7080A003B405D /* ALLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALLinkCell.h; path = Applozic/Views/ALLinkCell.h; sourceTree = "<group>"; };
 		18BDB35D21A7080A003B405D /* ALLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALLinkCell.m; path = Applozic/Views/ALLinkCell.m; sourceTree = "<group>"; };
+		1A113EDC21BBA77D0000A7CC /* AppLozic 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 10.xcdatamodel"; sourceTree = "<group>"; };
 		1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALMultimediaData.h; sourceTree = "<group>"; };
@@ -2227,6 +2228,7 @@
 		6D6DF1371BC5364C00EBA00F /* AppLozic.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1A113EDC21BBA77D0000A7CC /* AppLozic 10.xcdatamodel */,
 				187E3E562152BCB7002B2459 /* AppLozic 9.xcdatamodel */,
 				04468CDA208F7C35008DFEFA /* AppLozic 8.xcdatamodel */,
 				10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */,
@@ -2237,7 +2239,7 @@
 				C7EF19C71DF2FDB600529704 /* AppLozic 2.xcdatamodel */,
 				6D6DF1381BC5364C00EBA00F /* AppLozic.xcdatamodel */,
 			);
-			currentVersion = 187E3E562152BCB7002B2459 /* AppLozic 9.xcdatamodel */;
+			currentVersion = 1A113EDC21BBA77D0000A7CC /* AppLozic 10.xcdatamodel */;
 			name = AppLozic.xcdatamodeld;
 			path = Applozic/AppLozic.xcdatamodeld;
 			sourceTree = "<group>";

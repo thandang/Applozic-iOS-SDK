@@ -36,6 +36,12 @@ typedef enum
     BROADCAST_ONE_BY_ONE = 106
 } CHANNEL_TYPE;
 
+typedef enum {
+    ALL_CONVERSATION = 0,
+    ASSIGNED_CONVERSATION = 1,
+    CLOSED_CONVERSATION = 3
+} CONVERSATION_STATUS;
+
 @interface ALChannel : ALJson
 
 @property (nonatomic, strong) NSNumber *key;
@@ -58,6 +64,7 @@ typedef enum
 @property (nonatomic, strong) NSNumber * notificationAfterTime;
 @property (nonatomic, strong) NSNumber * deletedAtTime;
 @property (nonatomic, strong) NSMutableDictionary * metadata;
+@property (nonatomic) short conversationStatus;
 
 -(id)initWithDictonary:(NSDictionary *)messageDictonary;
 -(void)parseMessage:(id) messageJson;

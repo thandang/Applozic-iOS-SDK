@@ -24,6 +24,6 @@
 @dynamic notificationAfterTime;
 @dynamic deletedAtTime;
 @dynamic metadata;
-@dynamic conversationStatus;
+@dynamic category;
 
 @end

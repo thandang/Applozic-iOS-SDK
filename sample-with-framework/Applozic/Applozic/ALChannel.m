@@ -63,15 +63,15 @@
     
     // Channel conversation status
     if (self.metadata) {
-        if ([self.metadata objectForKey:@"CONVERSATION_ASSIGNEE"] != nil && ([[self.metadata valueForKey:@"CONVERSATION_ASSIGNEE"] isEqualToString:[ALUserDefaultsHandler getUserId]])) {
-            self.conversationStatus = ASSIGNED_CONVERSATION;
-        } else if ([self.metadata objectForKey:@"CONVERSATION_STATUS"] != nil && ([[self.metadata valueForKey:@"CONVERSATION_STATUS"] isEqualToString:@"2"])) {
-            self.conversationStatus = CLOSED_CONVERSATION;
+        if ([self.metadata objectForKey:CONVERSATION_ASSIGNEE] != nil && ([[self.metadata valueForKey:CONVERSATION_ASSIGNEE] isEqualToString:[ALUserDefaultsHandler getUserId]])) {
+            self.category = ASSIGNED_CONVERSATION;
+        } else if ([self.metadata objectForKey:CHANNEL_CONVERSATION_STATUS] != nil && ([[self.metadata valueForKey:CHANNEL_CONVERSATION_STATUS] isEqualToString:@"2"])) {
+            self.category = CLOSED_CONVERSATION;
         } else {
-            self.conversationStatus = ALL_CONVERSATION;
+            self.category = ALL_CONVERSATION;
         }
     } else {
-        self.conversationStatus = ALL_CONVERSATION;
+        self.category = ALL_CONVERSATION;
     }
 }
 

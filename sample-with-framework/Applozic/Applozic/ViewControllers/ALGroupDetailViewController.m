@@ -645,7 +645,7 @@
 //========================
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALGroupDetailsMemberCell *memberCell = (ALGroupDetailsMemberCell*)[tableView dequeueReusableCellWithIdentifier:@"memberCell" forIndexPath:indexPath];
+    ALGroupDetailsMemberCell *memberCell = (ALGroupDetailsMemberCell*)[tableView dequeueReusableCellWithIdentifier:@"GroupMemberCell" forIndexPath:indexPath];
 
     [memberCell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
@@ -664,7 +664,7 @@
         {
             case 0:
             {
-                memberCell.nameNSLayoutConstraint.constant = 0;
+                memberCell.nameLeftConstraint.constant = 0;
                 if(indexPath.row == 0)
                 {
                     [memberCell.nameLabel setFont:[UIFont boldSystemFontOfSize:18]];
@@ -763,11 +763,11 @@
 
 -(void)setupCellItems:(ALGroupDetailsMemberCell*)memberCell
 {
-     memberCell.profileImageView.clipsToBounds = YES;
-     memberCell.profileImageView.layer.cornerRadius =  memberCell.profileImageView.frame.size.width/2;
+    memberCell.profileImageView.clipsToBounds = YES;
+    memberCell.profileImageView.layer.cornerRadius =  memberCell.profileImageView.frame.size.width/2;
     memberCell.alphabeticLabel.textColor = [UIColor whiteColor];
     [memberCell.adminLabel setText:NSLocalizedStringWithDefaultValue(@"adminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Admin", @"")];
-   memberCell.adminLabel.textColor = [UIColor blackColor];
+    memberCell.adminLabel.textColor = [UIColor blackColor];
 
 }
 

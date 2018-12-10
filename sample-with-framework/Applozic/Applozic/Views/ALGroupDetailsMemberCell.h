@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface ALGroupDetailsMemberCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *alphabeticLabel;
@@ -18,8 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *adminLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastSeenTimeLabel;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameNSLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeftConstraint;
 
 @end
 
-NS_ASSUME_NONNULL_END

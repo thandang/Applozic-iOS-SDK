@@ -39,12 +39,12 @@
 		18A2BA2720C44E9200AD47A2 /* ALTemplateMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */; };
 		18BDB35E21A7080A003B405D /* ALLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18BDB35C21A7080A003B405D /* ALLinkCell.h */; };
 		18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB35D21A7080A003B405D /* ALLinkCell.m */; };
+		1A113EFC21C006230000A7CC /* ALAudioRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A113EFA21C006230000A7CC /* ALAudioRecordButton.swift */; };
+		1A113EFD21C006230000A7CC /* ALAudioRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A113EFB21C006230000A7CC /* ALAudioRecordingView.swift */; };
 		1A3264D2211C116700737C79 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */; };
 		1A637E5E2125729B00E62537 /* UIImage+animatedGIF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9CB20E211D8E7C00B19EC2 /* ALMultimediaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9CB20F211D8E7C00B19EC2 /* ALMultimediaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */; };
-		1AFDE93E21707C1400194355 /* ALAudioRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFDE93D21707C1400194355 /* ALAudioRecordingView.swift */; };
-		1AFDE94021707C3800194355 /* ALAudioRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFDE93F21707C3800194355 /* ALAudioRecordButton.swift */; };
 		1AFDE94221707CA700194355 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFDE94121707CA700194355 /* UIColor+Extension.swift */; };
 		2932B9F31C7C875F0017911D /* ALGroupDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2932B9F21C7C875F0017911D /* ALGroupDetailViewController.m */; };
@@ -425,12 +425,12 @@
 		18BDB35C21A7080A003B405D /* ALLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALLinkCell.h; path = Applozic/Views/ALLinkCell.h; sourceTree = "<group>"; };
 		18BDB35D21A7080A003B405D /* ALLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALLinkCell.m; path = Applozic/Views/ALLinkCell.m; sourceTree = "<group>"; };
 		1A113EDC21BBA77D0000A7CC /* AppLozic 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 10.xcdatamodel"; sourceTree = "<group>"; };
+		1A113EFA21C006230000A7CC /* ALAudioRecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALAudioRecordButton.swift; path = Applozic/ALAudioRecordButton.swift; sourceTree = "<group>"; };
+		1A113EFB21C006230000A7CC /* ALAudioRecordingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALAudioRecordingView.swift; path = Applozic/ALAudioRecordingView.swift; sourceTree = "<group>"; };
 		1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALMultimediaData.h; sourceTree = "<group>"; };
 		1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALMultimediaData.m; sourceTree = "<group>"; };
-		1AFDE93D21707C1400194355 /* ALAudioRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALAudioRecordingView.swift; sourceTree = "<group>"; };
-		1AFDE93F21707C3800194355 /* ALAudioRecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALAudioRecordButton.swift; sourceTree = "<group>"; };
 		1AFDE94121707CA700194355 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		2932B9F11C7C875F0017911D /* ALGroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALGroupDetailViewController.h; sourceTree = "<group>"; };
 		2932B9F21C7C875F0017911D /* ALGroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALGroupDetailViewController.m; sourceTree = "<group>"; };
@@ -1146,6 +1146,8 @@
 		6D6DF1DB1BC5371200EBA00F /* ApplozicUIWidget */ = {
 			isa = PBXGroup;
 			children = (
+				1A113EFA21C006230000A7CC /* ALAudioRecordButton.swift */,
+				1A113EFB21C006230000A7CC /* ALAudioRecordingView.swift */,
 				1868F12D21B57C2200B237B3 /* ALGroupDetailsMemberCell.h */,
 				6D9547631BE38DFF00776652 /* ALContactDBService.h */,
 				6D9547641BE38DFF00776652 /* ALContactDBService.m */,
@@ -1166,8 +1168,6 @@
 				6D6DF1E51BC5389B00EBA00F /* notification */,
 				8B6C119E1FC2D9AF007CFB54 /* SoundRecordingView.swift */,
 				18A2BA2320C44E5E00AD47A2 /* ViewModel */,
-				1AFDE93D21707C1400194355 /* ALAudioRecordingView.swift */,
-				1AFDE93F21707C3800194355 /* ALAudioRecordButton.swift */,
 				1868F12A21B570ED00B237B3 /* ALGroupDetailsMemberCell.m */,
 			);
 			name = ApplozicUIWidget;
@@ -1861,7 +1861,7 @@
 				6D81979B1CC55B5700E53EC3 /* ALCollectionReusableView.m in Sources */,
 				6D6DF1D21BC5364C00EBA00F /* UIView+WebCacheOperation.m in Sources */,
 				6D6DF15F1BC5364C00EBA00F /* ALChatCell.m in Sources */,
-				1AFDE94021707C3800194355 /* ALAudioRecordButton.swift in Sources */,
+				1A113EFC21C006230000A7CC /* ALAudioRecordButton.swift in Sources */,
 				C76D31461F0AAFB40087291F /* ALVOIPCell.m in Sources */,
 				6D6DF1611BC5364C00EBA00F /* ALImageCell.m in Sources */,
 				6D7756E61D5B821F0025560B /* ALSyncCallService.m in Sources */,
@@ -1932,7 +1932,6 @@
 				10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */,
 				2932B9F41C7C875F0017911D /* ALGroupDetailViewController.m in Sources */,
 				4612E8F91E13882D0022DB23 /* MQTTCFSocketTransport.m in Sources */,
-				1AFDE93E21707C1400194355 /* ALAudioRecordingView.swift in Sources */,
 				6D6DF14B1BC5364C00EBA00F /* ALResponseHandler.m in Sources */,
 				6D6DF1B31BC5364C00EBA00F /* MKAnnotationView+WebCache.m in Sources */,
 				6D6DF1431BC5364C00EBA00F /* ALDBHandler.m in Sources */,
@@ -1995,6 +1994,7 @@
 				6D6DF17B1BC5364C00EBA00F /* ALRegistrationResponse.m in Sources */,
 				6D77568B1D5B7FBE0025560B /* ALConversationDBService.m in Sources */,
 				6D7756F61D5B82B50025560B /* ALAppLocalNotifications.m in Sources */,
+				1A113EFD21C006230000A7CC /* ALAudioRecordingView.swift in Sources */,
 				6D77570F1D5B83660025560B /* ALPushAssist.m in Sources */,
 				6DBA7D0E1C943BFF001263F4 /* ALContactMessageCell.m in Sources */,
 				4612E9121E13882D0022DB23 /* MQTTSSLSecurityPolicyDecoder.m in Sources */,

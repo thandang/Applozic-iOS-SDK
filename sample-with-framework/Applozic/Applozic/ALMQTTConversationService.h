@@ -45,8 +45,10 @@
 @property (nonatomic, readwrite) MQTTSession *session;
 
 -(void) subscribeToConversation;
+-(void) subscribeToConversationWithTopic:(NSString *) topic;
 
 -(void) unsubscribeToConversation;
+-(void) unsubscribeToConversationWithTopic:(NSString *) topic;
 
 -(BOOL) unsubscribeToConversation: (NSString *)userKey;
 

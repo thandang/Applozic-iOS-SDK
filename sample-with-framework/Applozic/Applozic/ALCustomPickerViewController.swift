@@ -157,10 +157,10 @@ public class ALBaseNavigationViewController: UINavigationController {
         allPhotosOptions.includeHiddenAssets = false
 
 
-        if(ALApplozicSettings.isImageSelectHidden()){
+        if(ALApplozicSettings.imagesHiddenInGallery()){
             let videoNSPredicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.video.rawValue)
             allPhotosOptions.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [videoNSPredicate])
-        }else if (ALApplozicSettings.isVideoSelectHidden()){
+        }else if (ALApplozicSettings.videosHiddenInGallery()){
             let imageNSPredicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
             allPhotosOptions.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [imageNSPredicate])
         }else{

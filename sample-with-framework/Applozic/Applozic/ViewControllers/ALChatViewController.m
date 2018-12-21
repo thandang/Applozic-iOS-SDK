@@ -2997,11 +2997,11 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     if(![ALApplozicSettings isPhotoGalleryOptionHidden]){
         NSString *attachmentMenuDefaultText = nil;
-        if([ALApplozicSettings isVideoSelectHidden] && [ALApplozicSettings isImageSelectHidden]){
+        if([ALApplozicSettings videosHiddenInGallery] && [ALApplozicSettings imagesHiddenInGallery]){
             attachmentMenuDefaultText = @"Photos/Videos";
-        }else if([ALApplozicSettings isVideoSelectHidden]){
+        }else if([ALApplozicSettings videosHiddenInGallery]){
             attachmentMenuDefaultText = @"Photos";
-        }else if([ALApplozicSettings isImageSelectHidden]) {
+        }else if([ALApplozicSettings imagesHiddenInGallery]) {
             attachmentMenuDefaultText = @"Videos";
         }else {
             attachmentMenuDefaultText = @"Photos/Videos";

@@ -495,7 +495,7 @@ static NSString *const MEDIA_SELECT_OPTIONS = @"com.applozic.MEDIA_SELECT_OPTION
 +(void) setHideMediaSelectOption:(NSMutableArray*)array;
 +(NSArray*) getHideMediaSelectOption;
 
-+(BOOL) isImageSelectHidden;
-+(BOOL) isVideoSelectHidden;
++(BOOL) imagesHiddenInGallery;
++(BOOL) videosHiddenInGallery;
 
 @end

@@ -1406,12 +1406,12 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:MEDIA_SELECT_OPTIONS];
 }
 
-+(BOOL) isImageSelectHidden{
-    return ([[self getHideMediaSelectOption] containsObject:@":image"]);
++(BOOL) imagesHiddenInGallery{
+    return [self getHideMediaSelectOption] && [[self getHideMediaSelectOption] containsObject:@":image"];
 }
 
-+(BOOL) isVideoSelectHidden{
-    return ([[self getHideMediaSelectOption] containsObject:@":video"]);
++(BOOL) videosHiddenInGallery{
+    return [self getHideMediaSelectOption] && [[self getHideMediaSelectOption] containsObject:@":video"];
 }
 
 @end

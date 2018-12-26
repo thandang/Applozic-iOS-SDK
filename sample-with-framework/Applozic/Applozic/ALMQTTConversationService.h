@@ -38,9 +38,9 @@
 
 @property (nonatomic, strong) ALSyncCallService *alSyncCallService;
 
-@property (nonatomic, strong) id<ALMQTTConversationDelegate>mqttConversationDelegate;
+@property (nonatomic, weak) id<ALMQTTConversationDelegate>mqttConversationDelegate;
 
-@property (nonatomic, strong) id<ApplozicUpdatesDelegate>realTimeUpdate;
+@property (nonatomic, weak) id<ApplozicUpdatesDelegate>realTimeUpdate;
 
 @property (nonatomic, readwrite) MQTTSession *session;
 

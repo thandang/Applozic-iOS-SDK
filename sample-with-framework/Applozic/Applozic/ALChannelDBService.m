@@ -20,48 +20,49 @@
 
 @implementation ALChannelDBService
 
-
 -(void)createChannel:(ALChannel *)channel
 {
     ALDBHandler *theDBHandler = [ALDBHandler sharedInstance];
     [self createChannelEntity:channel];
     [theDBHandler.managedObjectContext save:nil];
-    
-    NSMutableArray * memberArray = [NSMutableArray new];
-    
+
     if(channel.membersName == nil){
         channel.membersName = channel.membersId;
     }
-    
-    for(NSString *member in channel.membersName)
-    {
-        ALChannelUserX *newChannelUserX = [[ALChannelUserX alloc] init];
-        newChannelUserX.key = channel.key;
-        newChannelUserX.userKey = member;
-        newChannelUserX.parentKey = channel.parentKey;
-        [memberArray addObject:newChannelUserX];
-    }
-    
-    [self insertChannelUserX:memberArray];
-    
-    
-    [self addedMembersArray:channel.membersName andChannelKey:channel.key];
-    [self removedMembersArray:channel.removeMembers andChannelKey:channel.key];
-    
-    for(ALChannelUser * channelUser  in channel.groupUsers)
-    {
-        if(channelUser.parentGroupKey)
+
+    [self deleteMembers:channel.key];
+    [self saveDataInBackgroundWithContext:theDBHandler.temporaryWorkerContext completion:^{
+        for(ALChannelUser * channelUser  in channel.groupUsers)
         {
-            [self updateParentKeyInChannelUserX:channel.key andWithParentKey:channelUser.parentGroupKey addUserId:channelUser.userId];
+            ALChannelUserX *newChannelUserX = [[ALChannelUserX alloc] init];
+            newChannelUserX.key = channel.key;
+            if(channelUser.userId != nil){
+                newChannelUserX.userKey = channelUser.userId;
+            }
+            if(channelUser.parentGroupKey != nil){
+                newChannelUserX.parentKey = channelUser.parentGroupKey;
+            }
+            [self createChannelUserXEntity:newChannelUserX];
+
         }
-        
-        if(channelUser.role)
-        {
-            [self updateRoleInChannelUserX:channel.key  andUserId:channelUser.userId withRoleType:channelUser.role];
-        }
-        
-    }
-    
+        [self addedMembersArray:channel.membersName andChannelKey:channel.key];
+        [self removedMembersArray:channel.removeMembers andChannelKey:channel.key];
+    }];
+
+}
+
+
+- (void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext completion:(void(^)(void))completion
+{
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        ALDBHandler *theDBHandler = [ALDBHandler sharedInstance];
+        [theDBHandler saveTempContext:nsContext];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            completion();
+        });
+    });
+
 }
 
 

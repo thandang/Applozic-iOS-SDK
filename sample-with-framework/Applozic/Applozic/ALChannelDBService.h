@@ -88,8 +88,6 @@
 
 -(void)updateMuteAfterTime:(NSNumber*)notificationAfterTime andChnnelKey:(NSNumber*)channelKey;
 
--(ALUserDetail *)updateMuteAfterTime:(NSNumber*)notificationAfterTime andUserId:(NSString*)userId;
-
 -(DB_CHANNEL_USER_X *)getChannelUserX:(NSNumber *)channelKey;
 
 -(ALChannelUserX *)loadChannelUserX:(NSNumber *)channelKey;
@@ -106,5 +104,7 @@
 
 -(DB_CHANNEL *)getContactsGroupChannelByName:(NSString *)channelName;
 -(NSMutableArray *) getGroupUsersInChannel:(NSNumber *)key;
+
+- (void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext completion:(void(^)(void))completion;
 
 @end

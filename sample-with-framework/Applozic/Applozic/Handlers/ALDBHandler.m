@@ -442,5 +442,46 @@
 }
 
 
+- (void)saveTempContext:(NSManagedObjectContext *)context {
+    NSError *error;
+    [context save:&error];
+    if (!error) {
+        [self saveMainContext];
+    }
+}
+
+- (void)saveMainContext {
+    [self.mainManagedObjectContext performBlock:^{
+        NSError *error = nil;
+        [self.mainManagedObjectContext save:&error];
+        if(!error){
+        }
+    }];
+}
+
+
+- (NSManagedObjectContext *)mainManagedObjectContext {
+
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+
+        self.mainManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [_mainManagedObjectContext setPersistentStoreCoordinator:coordinator];
+        [_mainManagedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+
+    }
+    return _mainManagedObjectContext;
+}
+
+- (NSManagedObjectContext *)temporaryWorkerContext {
+
+    NSManagedObjectContext *tempMOContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    if(self.mainManagedObjectContext != nil){
+        tempMOContext.parentContext = self.mainManagedObjectContext;
+    }
+    return tempMOContext;
+}
+
+
 
 @end

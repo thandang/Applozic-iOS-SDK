@@ -1100,6 +1100,11 @@
     return ([[self getHideAttachmentsOption] containsObject:@":attachmentbutton"]);
 }
 
++(BOOL) isDocumentOptionHidden{
+
+    return ([[self getHideAttachmentsOption] containsObject:@":document"]);
+}
+
 +(BOOL)isS3StorageServiceEnabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:S3_STORAGE_SERVICE];

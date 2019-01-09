@@ -35,24 +35,18 @@
     [alChannelDBService insertChannel:alChannelFeed.channelFeedsList];
 
     ALDBHandler *theDBHandler = [ALDBHandler sharedInstance];
+
     for(ALChannel *channel in alChannelFeed.channelFeedsList)
     {
 
+        if(channel.membersName == nil){
+            channel.membersName = channel.membersId;
+        }
         [alChannelDBService saveDataInBackgroundWithContext:theDBHandler.temporaryWorkerContext completion:^{
-            for(ALChannelUser * channelUser  in channel.groupUsers)
-            {
-                ALChannelUserX *newChannelUserX = [[ALChannelUserX alloc] init];
-                newChannelUserX.key = channel.key;
-                if(channelUser.userId != nil){
-                    newChannelUserX.userKey = channelUser.userId;
-                }
-                if(channelUser.parentGroupKey != nil){
-                    newChannelUserX.parentKey = channelUser.parentGroupKey;
-                }
-                [alChannelDBService createChannelUserXEntity:newChannelUserX];
-            }
+            [alChannelDBService buildChannelUsersWithChannel:channel];
         }];
 
+        [self processChildGroups:channel];
         [alChannelDBService addedMembersArray:channel.membersName andChannelKey:channel.key];
         [alChannelDBService removedMembersArray:channel.removeMembers andChannelKey:channel.key];
 
@@ -65,15 +59,14 @@
 }
 
 
-
 -(void)processChildGroups:(ALChannel *)alChannel {
     //Get INFO of Child
     for(NSNumber *channelKey in alChannel.childKeys){
         [self getChannelInformation:channelKey orClientChannelKey:nil withCompletion:^(ALChannel *alChannel3) {
-            
+
         }];
     }
-    
+
 }
 
 
@@ -91,7 +84,7 @@
     }else{
         alChannel1 = [self getChannelByKey:channelKey];
     }
-    
+
     if(alChannel1)
     {
         completion (alChannel1);
@@ -99,7 +92,7 @@
     else
     {
         [ALChannelClientService getChannelInfo:channelKey orClientChannelKey:clientChannelKey withCompletion:^(NSError *error, ALChannel *alChannel2) {
-            
+
             if(!error)
             {
                 ALChannelDBService *dbService = [[ALChannelDBService alloc] init];
@@ -185,15 +178,15 @@
 
     NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
     [metadata setObject:@"CLOSE" forKey:CHANNEL_CONVERSATION_STATUS];
-    
+
     ALChannelService *channelService = [ALChannelService new];
     [channelService updateChannel:groupId andNewName:nil
                       andImageURL:nil orClientChannelKey:nil isUpdatingMetaData:YES
                          metadata:metadata orChildKeys:nil orChannelUsers:nil  withCompletion:^(NSError *error) {
                              completion(error);
                          }];
-    
-    
+
+
 }
 
 
@@ -213,7 +206,7 @@
     if(parentKey)
     {
         [ALChannelClientService addChildKeyList:childKeyList andParentKey:parentKey withCompletion:^(id json, NSError *error) {
-            
+
             if(!error)
             {
                 ALChannelDBService * channelDB = [[ALChannelDBService alloc] init];
@@ -223,7 +216,7 @@
                 }
             }
             completion(json, error);
-            
+
         }];
     }
 }
@@ -234,7 +227,7 @@
     if(parentKey)
     {
         [ALChannelClientService removeChildKeyList:childKeyList andParentKey:parentKey withCompletion:^(id json, NSError *error) {
-            
+
             if(!error)
             {
                 ALChannelDBService * channelDB = [[ALChannelDBService alloc] init];
@@ -244,7 +237,7 @@
                 }
             }
             completion(json, error);
-            
+
         }];
     }
 }
@@ -260,7 +253,7 @@
     if(clientParentKey)
     {
         [ALChannelClientService addClientChildKeyList:clientChildKeyList andClientParentKey:clientParentKey withCompletion:^(id json, NSError *error) {
-            
+
             if(!error)
             {
                 ALChannelDBService * channelDB = [[ALChannelDBService alloc] init];
@@ -270,7 +263,7 @@
                 }
             }
             completion(json, error);
-            
+
         }];
     }
 }
@@ -282,7 +275,7 @@
     if(clientParentKey)
     {
         [ALChannelClientService removeClientChildKeyList:clientChildKeyList andClientParentKey:clientParentKey withCompletion:^(id json, NSError *error) {
-            
+
             if(!error)
             {
                 ALChannelDBService * channelDB = [[ALChannelDBService alloc] init];
@@ -292,7 +285,7 @@
                 }
             }
             completion(json, error);
-            
+
         }];
     }
 }
@@ -310,17 +303,17 @@
       andMembersList:(NSMutableArray *)memberArray andImageLink:(NSString *)imageLink
       withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion
 {
-    
+
     /* GROUP META DATA DICTIONARY
-     
+
      NSMutableDictionary *metaData = [self getChannelMetaData];
-     
+
      NOTE : IF GROUP META DATA REQUIRE THEN REPLACE nil BY metaData
      */
-    
+
     [self createChannel:channelName orClientChannelKey:clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:PUBLIC
             andMetaData:nil withCompletion:^(ALChannel *alChannel, NSError *error) {
-                
+
                 completion(alChannel, error);
             }];
 }
@@ -329,12 +322,12 @@
       andMembersList:(NSMutableArray *)memberArray andImageLink:(NSString *)imageLink channelType:(short)type
          andMetaData:(NSMutableDictionary *)metaData withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion
 {
-    
+
     [self createChannel:channelName orClientChannelKey:clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:type andMetaData:metaData adminUser:nil withCompletion:^(ALChannel *alChannel, NSError *error) {
         completion(alChannel, error);
     }];
-    
-    
+
+
 }
 
 
@@ -364,7 +357,7 @@
     {
         [ALChannelClientService createChannel:channelName andParentChannelKey:nil orClientChannelKey:(NSString *)clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:(short)type
                                   andMetaData:metaData adminUser:adminUserId withGroupUsers:groupRoleUsers withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
-                                      
+
                                       if(!error)
                                       {
                                           response.alChannel.adminKey = [ALUserDefaultsHandler getUserId];
@@ -390,12 +383,12 @@
 -(void)createBroadcastChannelWithMembersList:(NSMutableArray *)memberArray
                                  andMetaData:(NSMutableDictionary *)metaData
                               withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion {
-    
+
     if (memberArray.count)
     {
         NSMutableArray * nameArray = [NSMutableArray new];
         ALContactService *cnService = [ALContactService new];
-        
+
         for (NSString *userId in memberArray)
         {
             ALContact *alContact = [cnService loadContactByKey:@"userId" value:userId];
@@ -411,7 +404,7 @@
         {
             broadcastName = [nameArray componentsJoinedByString:@","];
         }
-        
+
         [self createChannel:broadcastName orClientChannelKey:nil andMembersList:memberArray
                andImageLink:nil
                 channelType:BROADCAST
@@ -431,7 +424,7 @@
 -(NSMutableDictionary *)getChannelMetaData
 {
     NSMutableDictionary *grpMetaData = [NSMutableDictionary new];
-    
+
     [grpMetaData setObject:@":adminName created group" forKey:AL_CREATE_GROUP_MESSAGE];
     [grpMetaData setObject:@":userName removed" forKey:AL_REMOVE_MEMBER_MESSAGE];
     [grpMetaData setObject:@":userName added" forKey:AL_ADD_MEMBER_MESSAGE];
@@ -441,7 +434,7 @@
     [grpMetaData setObject:@":userName left" forKey:AL_GROUP_LEFT_MESSAGE];
     [grpMetaData setObject:@":groupName deleted" forKey:AL_DELETED_GROUP_MESSAGE];
     [grpMetaData setObject:@(NO) forKey:@"HIDE"];
-    
+
     return grpMetaData;
 }
 
@@ -452,12 +445,12 @@
       andMembersList:(NSMutableArray *)memberArray andImageLink:(NSString *)imageLink channelType:(short)type
          andMetaData:(NSMutableDictionary *)metaData withCompletion:(void(^)(ALChannel *alChannel, NSError *error))completion
 {
-    
+
     [self createChannel:channelName andParentChannelKey:parentChannelKey orClientChannelKey:clientChannelKey andMembersList:memberArray andImageLink:imageLink channelType:type andMetaData:metaData adminUser:nil withCompletion:^(ALChannel *alChannel, NSError *error) {
-        
+
         completion(alChannel, error);
     }];
-    
+
 }
 
 
@@ -470,7 +463,7 @@
         [ALChannelClientService createChannel:channelName andParentChannelKey:parentChannelKey orClientChannelKey:clientChannelKey
                                andMembersList:memberArray andImageLink:imageLink channelType:(short)type
                                   andMetaData:metaData adminUser:adminUserId withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
-                                      
+
                                       if(!error)
                                       {
                                           response.alChannel.adminKey = [ALUserDefaultsHandler getUserId];
@@ -503,7 +496,7 @@
     {
         [ALChannelClientService addMemberToChannel:userId orClientChannelKey:clientChannelKey
                                      andChannelKey:channelKey withCompletion:^(NSError *error, ALAPIResponse *response) {
-                                         
+
                                          if([response.status isEqualToString:@"success"])
                                          {
                                              ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
@@ -533,7 +526,7 @@
     {
         [ALChannelClientService removeMemberFromChannel:userId orClientChannelKey:clientChannelKey
                                           andChannelKey:channelKey withCompletion:^(NSError *error, ALAPIResponse *response) {
-                                              
+
                                               if([response.status isEqualToString:@"success"])
                                               {
                                                   ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
@@ -563,7 +556,7 @@
     {
         [ALChannelClientService deleteChannel:channelKey orClientChannelKey:clientChannelKey
                                withCompletion:^(NSError *error, ALAPIResponse *response) {
-                                   
+
                                    if([response.status isEqualToString:@"success"])
                                    {
                                        ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
@@ -586,7 +579,7 @@
 {
     ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
     ALChannel *channel = [channelDBService loadChannelByKey:channelKey];
-    
+
     return [channel.adminKey isEqualToString:[ALUserDefaultsHandler getUserId]];
 }
 
@@ -608,7 +601,7 @@
 }
 
 -(void) proccessLeaveResponse:(NSNumber *)channelKey andUserId:(NSString *)userId orClientChannelKey:(NSString *)clientChannelKey withResponse:(ALAPIResponse *) response  withError:(NSError*)error{
-    
+
     if([response.status isEqualToString:@"success"])
     {
         ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
@@ -623,7 +616,7 @@
             [channelDBService removeMemberFromChannel:userId andChannelKey:channelKey];
             [channelDBService setLeaveFlag:YES forChannel:channelKey];
         }
-        
+
     }
 }
 
@@ -638,9 +631,9 @@
                                       completion(error,response);
                                   }];
     }
-    
+
 }
-    
+
 
 //===========================================================================================================================
 #pragma mark UPDATE CHANNEL (FROM DEVICE SIDE)
@@ -668,7 +661,7 @@
     if(channelKey != nil || clientChannelKey != nil)
     {
         [ALChannelClientService updateChannel:channelKey orClientChannelKey:clientChannelKey andNewName:newName andImageURL:imageURL metadata:metaData orChildKeys:childKeysList  orChannelUsers:(NSMutableArray *)channelUsers andCompletion:^(NSError *error, ALAPIResponse *response) {
-            
+
             [self proccessUpdateChannelResponse:channelKey andNewName:newName andImageURL:imageURL orClientChannelKey:clientChannelKey isUpdatingMetaData:flag metadata:metaData orChildKeys:childKeysList orChannelUsers:channelUsers withResponse:response];
             completion(error);
         }];
@@ -676,12 +669,12 @@
 }
 
 -(void)updateChannelWithChannelKey:(NSNumber *)channelKey andNewName:(NSString *)newName andImageURL:(NSString *)imageURL orClientChannelKey:(NSString *)clientChannelKey
-  isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion
+                isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withCompletion:(void(^)(NSError *error, ALAPIResponse *response))completion
 {
     if(channelKey != nil || clientChannelKey != nil)
     {
         [ALChannelClientService updateChannel:channelKey orClientChannelKey:clientChannelKey andNewName:newName andImageURL:imageURL metadata:metaData orChildKeys:childKeysList  orChannelUsers:(NSMutableArray *)channelUsers andCompletion:^(NSError *error, ALAPIResponse *response) {
-            
+
             [self proccessUpdateChannelResponse:channelKey andNewName:newName andImageURL:imageURL orClientChannelKey:clientChannelKey isUpdatingMetaData:flag metadata:metaData orChildKeys:childKeysList orChannelUsers:channelUsers withResponse:response];
             completion(error,response);
         }];
@@ -689,7 +682,7 @@
 }
 
 -(void)proccessUpdateChannelResponse:(NSNumber *)channelKey andNewName:(NSString *)newName andImageURL:(NSString *)imageURL orClientChannelKey:(NSString *)clientChannelKey isUpdatingMetaData:(BOOL)flag metadata:(NSMutableDictionary *)metaData orChildKeys:(NSMutableArray *)childKeysList orChannelUsers:(NSMutableArray *)channelUsers withResponse :(ALAPIResponse *) response{
-    
+
     if([response.status isEqualToString:@"success"])
     {
         ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
@@ -703,7 +696,7 @@
             ALChannel *alChannel = [channelDBService loadChannelByKey:channelKey];
             [channelDBService updateChannel:alChannel.key andNewName:newName orImageURL:imageURL orChildKeys:childKeysList isUpdatingMetaData:flag orChannelUsers:channelUsers];
         }
-        
+
     }
 }
 
@@ -712,7 +705,7 @@
           orClientChannelKey:(NSString *)clientChannelKey
                     metadata:(NSMutableDictionary *)metaData
               withCompletion:(void(^)(NSError *error))completion{
-    
+
     if(channelKey != nil || clientChannelKey != nil){
         [ALChannelClientService updateChannelMetaData:channelKey orClientChannelKey:clientChannelKey metadata:metaData andCompletion:^(NSError *error, ALAPIResponse *response){
             if([response.status isEqualToString:@"success"]){
@@ -739,11 +732,11 @@
 }
 
 -(void)syncCallForChannelWithDelegate:(id<ApplozicUpdatesDelegate>)delegate{
-    
+
     NSNumber *updateAt = [ALUserDefaultsHandler getLastSyncChannelTime];
-    
+
     [ALChannelClientService syncCallForChannel:updateAt andCompletion:^(NSError *error, ALChannelSyncResponse *response) {
-        
+
         if([response.status isEqualToString:@"success"])
         {
             ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
@@ -755,7 +748,7 @@
             [ALUserDefaultsHandler setLastSyncChannelTime:response.generatedAt];
         }
     }];
-    
+
 }
 
 //===========================================================================================================================
@@ -765,27 +758,27 @@
 -(void)markConversationAsRead:(NSNumber *)channelKey withCompletion:(void (^)(NSString *, NSError *))completion
 {
     [ALChannelService setUnreadCountZeroForGroupID:channelKey];
-    
+
     ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
     NSUInteger count = [channelDBService markConversationAsRead:channelKey];
     ALSLog(ALLoggerSeverityInfo, @"Found %ld messages for marking as read.", (unsigned long)count);
-    
+
     if(count == 0){
         return;
     }
-    
+
     ALChannelClientService * clientService = [[ALChannelClientService alloc] init];
     [clientService markConversationAsRead:channelKey withCompletion:^(NSString *response, NSError * error) {
         completion(response,error);
     }];
-    
+
 }
 
 +(void)setUnreadCountZeroForGroupID:(NSNumber *)channelKey
 {
     ALChannelDBService *channelDBService = [ALChannelDBService new];
     [channelDBService  updateUnreadCountChannel:channelKey unreadCount:[NSNumber numberWithInt:0]];
-    
+
     ALChannel * channel = [channelDBService loadChannelByKey:channelKey];
     channel.unreadCount = [NSNumber numberWithInt:0];
 }
@@ -797,7 +790,7 @@
         ALChannelDBService * dbService = [ALChannelDBService new];
         [dbService updateMuteAfterTime:muteRequest.notificationAfterTime andChnnelKey:muteRequest.id];
         completion(response,error);
-        
+
     }];
 }
 
@@ -807,15 +800,15 @@
                    orClinetChannelIds:(NSMutableArray*) clientChannelIds
                        withCompletion:(void(^)(NSMutableArray* channelInfoList, NSError *error))completion
 {
-    
-    
+
+
     ALChannelClientService * clientService = [[ALChannelClientService alloc] init];
-    
+
     [clientService getChannelInfoByIdsOrClientIds:channelIds orClinetChannelIds:clientChannelIds
-     
+
                                    withCompletion:^( NSMutableArray *channelInfoList, NSError *error)
      {
-         
+
          ALChannelDBService * dbService = [ALChannelDBService new];
          for(ALChannel * channel in channelInfoList )
          {
@@ -823,7 +816,7 @@
          }
          completion(channelInfoList,error);
      }];
-    
+
 }
 
 -(void)getChannelListForCategory:(NSString*)category
@@ -831,10 +824,10 @@
 
 {
     ALChannelClientService * clientService = [[ALChannelClientService alloc] init];
-    
+
     [clientService getChannelListForCategory:category                           withCompletion:^( NSMutableArray *channelInfoList, NSError *error)
      {
-         
+
          ALChannelDBService * dbService = [ALChannelDBService new];
          for(ALChannel * channel in channelInfoList )
          {
@@ -845,12 +838,12 @@
 }
 
 -(void)getAllChannelsForApplications:(NSNumber*)endTime withCompletion:(void(^)(NSMutableArray * channelInfoList, NSError * error))completion{
-    
-    
+
+
     ALChannelClientService * clientService = [[ALChannelClientService alloc] init];
-    
+
     [clientService getAllChannelsForApplications:endTime withCompletion:^(NSMutableArray *channelInfoList, NSError *error) {
-        
+
         ALChannelDBService * dbService = [ALChannelDBService new];
         for(ALChannel * channel in channelInfoList )
         {
@@ -863,32 +856,32 @@
 
 +(void) addMemberToContactGroupOfType:(NSString*) contactsGroupId withMembers: (NSMutableArray *)membersArray withGroupType :(short) groupType withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion
 {
-    
+
     [ALChannelClientService addMemberToContactGroupOfType:contactsGroupId withMembers:membersArray withGroupType:groupType withCompletion:^(ALAPIResponse *response, NSError *error) {
-        
+
         completion(response, error);
-        
+
     }];
-    
+
 }
 
 
 +(void) addMemberToContactGroup:(NSString*) contactsGroupId withMembers:(NSMutableArray *)membersArray  withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion
 {
     [ALChannelClientService addMemberToContactGroup:contactsGroupId withMembers:membersArray withCompletion:^(ALAPIResponse *response, NSError *error) {
-        
+
         completion(response, error);
     }];
-    
+
 }
 
 
 +(void) getMembersFromContactGroupOfType:(NSString *)contactsGroupId  withGroupType :(short) groupType withCompletion:(void(^)(NSError *error, ALChannel *channel)) completion
 {
-    
+
     if(contactsGroupId){
         [ALChannelClientService getMembersFromContactGroupOfType: contactsGroupId  withGroupType:groupType withCompletion:^(NSError *error, ALChannel *channel) {
-            
+
             if(!error && channel)
             {
                 ALChannelDBService * dbService = [ALChannelDBService new];
@@ -903,7 +896,7 @@
 
 
 -(NSMutableArray *)getListOfAllUsersInChannelByNameForContactsGroup:(NSString *)channelName{
-    
+
     if(channelName == nil){
         return nil;
     }
@@ -914,48 +907,48 @@
 
 +(void) removeMemberFromContactGroup:(NSString*) contactsGroupId withUserId :(NSString*) userId  withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion
 {
-    
+
     [ALChannelClientService removeMemberFromContactGroup:contactsGroupId withUserId:userId withCompletion:^(ALAPIResponse *response, NSError *error) {
-        
+
         completion(response, error);
-        
+
     }];
-    
+
 }
 
 
 +(void) removeMemberFromContactGroupOfType:(NSString*) contactsGroupId  withGroupType:(short) groupType withUserId :(NSString*) userId  withCompletion:(void(^)(ALAPIResponse * response, NSError * error))completion
 {
-    
+
     [ALChannelClientService removeMemberFromContactGroupOfType:contactsGroupId withGroupType:groupType withUserId:userId withCompletion:^(ALAPIResponse *response, NSError *error) {
-        
+
         if(!error && response && [response.status isEqualToString:@"success"])
         {
             ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
-            
+
             DB_CHANNEL *dbChannel = [channelDBService getContactsGroupChannelByName:contactsGroupId];
-            
+
             if(dbChannel != nil){
                 [channelDBService removeMemberFromChannel:userId andChannelKey:dbChannel.channelKey];
             }
-            
+
         }
         completion(response, error);
-        
+
     }];
-    
+
 }
 
 +(void)getMembersIdsForContactGroups:(NSArray*)contactGroupIds withCompletion:(void(^)(NSError *error, NSArray *membersArray)) completion
 {
     NSMutableArray * memberUserIds = [NSMutableArray new];
-    
+
     if(contactGroupIds )
     {
         ALChannelClientService* channelService = [ALChannelClientService new];
-        
+
         [channelService getMultipleContactGroup:contactGroupIds withCompletion:^(NSError *error, NSArray *channels) {
-            
+
             if(channels)
             {
                 for (ALChannel * channel in channels)
@@ -964,8 +957,8 @@
                     [dbService createChannel:channel];
                     [memberUserIds addObjectsFromArray:channel.membersId];
                 }
-                
-                
+
+
                 completion(nil,memberUserIds);
             }
             else
@@ -973,9 +966,9 @@
                 completion(error,nil);
             }
         }];
-        
+
     }
-    
+
 }
 
 -(void)getChannelInformationByResponse:(NSNumber *)channelKey orClientChannelKey:(NSString *)clientChannelKey withCompletion:(void (^)(NSError *error,ALChannel *alChannel3,AlChannelFeedResponse *channelResponse)) completion
@@ -986,16 +979,16 @@
     }else{
         alChannel1 = [self getChannelByKey:channelKey];
     }
-    
+
     if(alChannel1)
     {
         completion (nil,alChannel1,nil);
     }
     else
     {
-        
+
         [ALChannelClientService getChannelInformationResponse:channelKey orClientChannelKey:clientChannelKey withCompletion:^(NSError *error, AlChannelFeedResponse *response) {
-            
+
             if(!error && [response.status isEqualToString: RESPONSE_SUCCESS] )
             {
                 ALChannelDBService *dbService = [[ALChannelDBService alloc] init];
@@ -1005,7 +998,7 @@
                 completion (error,nil,response);
             }
         }];
-        
+
     }
 }
 
@@ -1024,14 +1017,14 @@
         return @{@"Alert":@"false"};
     }
     NSDictionary *basicMetadata = @{@"CREATE_GROUP_MESSAGE":@"",
-                               @"REMOVE_MEMBER_MESSAGE":@"",
-                               @"ADD_MEMBER_MESSAGE":@"",
-                               @"JOIN_MEMBER_MESSAGE":@"",
-                               @"GROUP_NAME_CHANGE_MESSAGE":@"",
-                               @"GROUP_ICON_CHANGE_MESSAGE":@"",
-                               @"GROUP_LEFT_MESSAGE":@"",
-                               @"DELETED_GROUP_MESSAGE":@"",
-                               };
+                                    @"REMOVE_MEMBER_MESSAGE":@"",
+                                    @"ADD_MEMBER_MESSAGE":@"",
+                                    @"JOIN_MEMBER_MESSAGE":@"",
+                                    @"GROUP_NAME_CHANGE_MESSAGE":@"",
+                                    @"GROUP_ICON_CHANGE_MESSAGE":@"",
+                                    @"GROUP_LEFT_MESSAGE":@"",
+                                    @"DELETED_GROUP_MESSAGE":@"",
+                                    };
     NSMutableDictionary *metadata = [[NSMutableDictionary alloc] initWithDictionary:basicMetadata];
     metadata[@"hide"] = @"true";
     metadata[@"Alert"] = @"false";
@@ -1039,23 +1032,23 @@
 }
 
 -(void)createChannelWithChannelInfo:(ALChannelInfo*)channelInfo withCompletion:(void(^)(ALChannelCreateResponse *response, NSError *error))completion {
-    
+
     if(!channelInfo.type){
         channelInfo.type = PUBLIC;
     }
-    
+
     if(!channelInfo.groupMemberList){
         NSError *memberError = [NSError errorWithDomain:@"ALChannelService"
-                                                    code:2
-                                                userInfo:@{NSLocalizedDescriptionKey : @"Nil in member list"}];
-        
+                                                   code:2
+                                               userInfo:@{NSLocalizedDescriptionKey : @"Nil in member list"}];
+
         completion(nil,memberError);
         return;
     }
-    
+
     [ALChannelClientService createChannel:channelInfo.groupName andParentChannelKey:nil orClientChannelKey:channelInfo.clientGroupId andMembersList:channelInfo.groupMemberList andImageLink:channelInfo.imageUrl channelType:channelInfo.type
                               andMetaData:channelInfo.metadata adminUser:channelInfo.admin withGroupUsers:channelInfo.groupRoleUsers withCompletion:^(NSError *error, ALChannelCreateResponse *response) {
-                                  
+
                                   if(!error)
                                   {
                                       response.alChannel.adminKey = [ALUserDefaultsHandler getUserId];
@@ -1069,12 +1062,12 @@
                                       completion(nil, error);
                                   }
                               }];
-    
+
 }
 
 
 -(void)updateConversationReadWithGroupId:(NSNumber *)channelKey withDelegate: (id<ApplozicUpdatesDelegate>)delegate{
-    
+
     [ALChannelService setUnreadCountZeroForGroupID:channelKey];
     if(delegate){
         [delegate conversationReadByCurrentUser:nil withGroupId:channelKey];

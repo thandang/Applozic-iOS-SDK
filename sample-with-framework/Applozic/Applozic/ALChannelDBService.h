@@ -74,7 +74,7 @@
               andWithParentKey:(NSNumber *)channelParentKey isAdding:(BOOL)flag;
 
 -(void)updateClientChannelParentKey:(NSString *)clientChildKey
-                   andWithClientParentKey:(NSString *)clientParentKey isAdding:(BOOL)flag;
+             andWithClientParentKey:(NSString *)clientParentKey isAdding:(BOOL)flag;
 
 -(NSNumber *)getOverallUnreadCountForChannelFromDB;
 
@@ -106,5 +106,7 @@
 -(NSMutableArray *) getGroupUsersInChannel:(NSNumber *)key;
 
 - (void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext completion:(void(^)(void))completion;
+
+-(void)buildChannelUsersWithChannel:(ALChannel *)channel;
 
 @end

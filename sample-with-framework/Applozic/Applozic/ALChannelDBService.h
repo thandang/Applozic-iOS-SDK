@@ -27,10 +27,6 @@
 
 -(DB_CHANNEL *) createChannelEntity:(ALChannel *)channel;
 
--(void)insertChannelUserX:(NSMutableArray *)channelUserX;
-
--(DB_CHANNEL_USER_X *)createChannelUserXEntity:(ALChannelUserX *)channelUserXList;
-
 -(NSMutableArray *)getChannelMembersList:(NSNumber *)channelKey;
 
 -(ALChannel *)loadChannelByKey:(NSNumber *)key;

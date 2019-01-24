@@ -417,7 +417,6 @@
 
 -(BOOL)isUserPresentInChannel:(NSNumber *)channelKey andUserId:(NSString *) userId withContext:(NSManagedObjectContext *) context
 {
-    ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"DB_CHANNEL_USER_X" inManagedObjectContext:context];
@@ -432,7 +431,8 @@
     return result.count >0;
 }
 
--(DB_CHANNEL_USER_X *)getChannelUserX:channelKey{
+-(DB_CHANNEL_USER_X *)getChannelUserX:(NSNumber *)channelKey {
+
     ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"DB_CHANNEL_USER_X" inManagedObjectContext:dbHandler.managedObjectContext];

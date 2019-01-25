@@ -73,6 +73,7 @@
 #import <Photos/Photos.h>
 #import "ALImagePreviewController.h"
 #import "ALLinkCell.h"
+#import "ALDocumentPickerHandler.h"
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -86,7 +87,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate, ALAudioRecorderViewProtocol, ALAudioRecorderProtocol,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
-                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol, ALCustomPickerDelegate,ALImageSendDelegate>
+                                    ABPeoplePickerNavigationControllerDelegate, ALSoundRecorderProtocol, ALCustomPickerDelegate,ALImageSendDelegate,UIDocumentPickerDelegate>
 
 @property (nonatomic, assign) NSInteger startIndex;
 @property (nonatomic, assign) int rp;
@@ -2934,6 +2935,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     [theController addAction:[UIAlertAction actionWithTitle: NSLocalizedStringWithDefaultValue(@"cancelOptionText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
     if(![ALApplozicSettings isCameraOptionHidden]){
+
         [theController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringWithDefaultValue(@"takePhotoText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Take photo", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
             [self openCamera];
@@ -2957,6 +2959,13 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         [theController addAction:[UIAlertAction actionWithTitle: NSLocalizedStringWithDefaultValue(@"sendVideoOption", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],  @"Send Video", @"")  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
             [self openVideoCamera];
+        }]];
+    }
+
+    if(![ALApplozicSettings isDocumentOptionHidden]){
+        [theController addAction:[UIAlertAction actionWithTitle: NSLocalizedStringWithDefaultValue(@"DocumentText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle],  @"Document", @"")  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            ALDocumentPickerHandler *documentPickerHandler = [[ALDocumentPickerHandler alloc]init];
+            [documentPickerHandler showDocumentPickerViewController:self];
         }]];
     }
 
@@ -2994,6 +3003,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
             [self openContactsView];
         }]];
     }
+    
+
 
     if(![ALApplozicSettings isPhotoGalleryOptionHidden]){
         NSString *attachmentMenuDefaultText = nil;
@@ -4810,6 +4821,15 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
     self.messageReplyId = messageKey;
     [self processAttachment:filePath andMessageText:nil andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls{
+
+    if(urls != nil && urls.count){
+        NSURL *filePath =  urls.firstObject;
+        NSString *filePathString = [ALDocumentPickerHandler saveFile:filePath];
+        [self processAttachment:filePathString andMessageText:@"" andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
+    }
 }
 
 @end

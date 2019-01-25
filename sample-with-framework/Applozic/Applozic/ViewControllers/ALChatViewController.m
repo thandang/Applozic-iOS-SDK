@@ -257,9 +257,6 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     typingStat = NO;
 
-    if (ALApplozicSettings.isAttachmentButtonHidden) {
-        _attachmentButton.hidden = YES;
-    }
     if([self isReloadRequired])
     {
         [self reloadView];
@@ -343,23 +340,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         }
     }
 
-    if(![self isGroup])
-    {
-        self.nsLayoutconstraintAttachmentWidth.constant = 40;
-        self.attachmentOutlet.hidden = NO;
-        [self serverCallForLastSeen];
-    }else{
-        ALChannelService * alChannelService  = [[ALChannelService alloc] init];
-        ALChannel *alChannel = [alChannelService getChannelByKey:self.channelKey];
-        if(alChannel && alChannel.type == OPEN){
-            self.attachmentOutlet.hidden = YES;
-            self.nsLayoutconstraintAttachmentWidth.constant = 0;
-        }else{
-            self.attachmentOutlet.hidden = NO;
-            self.nsLayoutconstraintAttachmentWidth.constant = 40;
-
-        }
-    }
+    [self serverCallForLastSeen];
+    [self handleAttachmentButtonVisibility];
 
     [self setTitle];
 
@@ -403,6 +385,22 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     [self loadMessagesForOpenChannel];
 
 
+}
+
+-(void) handleAttachmentButtonVisibility
+{
+    BOOL hidden = NO; // Default don't hide.
+    if (ALApplozicSettings.isAttachmentButtonHidden) { // Hide if setting is present
+        hidden = YES;
+    } else if (![self isGroup]) { // Else show for one-to-one chat
+        hidden = NO;
+    } else {
+        ALChannelService * alChannelService  = [[ALChannelService alloc] init];
+        ALChannel *alChannel = [alChannelService getChannelByKey:self.channelKey];
+        hidden = (alChannel && alChannel.type == OPEN); // Else hide for open group only.
+    }
+    self.attachmentOutlet.hidden = hidden;
+    self.nsLayoutconstraintAttachmentWidth.constant = hidden ? 0 : 40;
 }
 
 -(void)setFreezeForAddingRemovingUser:(NSNotification *)notifyObject

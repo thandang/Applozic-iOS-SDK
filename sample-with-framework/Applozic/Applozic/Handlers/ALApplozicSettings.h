@@ -104,20 +104,22 @@
 #define TEMPLATE_MESSAGE_VIEW @"com.applozic.TEMPLATE_MESSAGE_VIEW"
 #define AL_CONTACT_SEARCH @"com.applozic.AL_CONTACT_SEARCH"
 #define CHANNEL_MEMBER_INFO_IN_SUBTITLE @"com.applozic.CHANNEL_MEMBER_INFO_IN_SUBTITLE"
-#define TABBAR_BACKGROUND_COLOUR @"com.applozic.userdefault.TABBAR_BACKGROUND_COLOUR"
-#define TABBAR_SELECTED_ITEM_COLOUR @"com.applozic.userdefault.TABBAR_SELECTED_ITEM_COLOUR"
-#define TABBAR_UNSELECTED_ITEM_COLOUR @"com.applozic.userdefault.TABBAR_UNSELECTED_ITEM_COLOUR"
-#define ATTACHMENT_ITEM_COLOUR @"com.applozic.userdefault.ATTACHMENT_ITEM_COLOUR"
-#define SEND_ITEM_COLOUR @"com.applozic.userdefault.SEND_ITEM_COLOUR"
-#define MESSAGE_SUBTEXT_COLOUR @"com.applozic.userdefault.MESSAGE_SUBTEXT_COLOUR"
-#define MESSAGE_TEXT_COLOUR @"com.applozic.userdefault.MESSAGE_TEXT_COLOUR"
-#define PROFILE_MAIN_COLOUR @"com.applozic.userdefault.PROFILE_MAIN_COLOUR"
-#define PROFILE_SUB_COLOUR @"com.applozic.userdefault.PROFILE_SUB_COLOUR"
-#define NEW_CONTACT_SUB_COLOUR @"com.applozic.userdefault.NEW_CONTACT_SUB_COLOUR"
-#define NEW_CONTACT_MAIN_COLOUR @"com.applozic.userdefault.NEW_CONTACT_MAIN_COLOUR"
-#define NEW_CONTACT_TEXT_COLOUR @"com.applozic.userdefault.NEW_CONTACT_TEXT_COLOUR"
-#define CONTACTLIST_BG_COLOUR @"com.applozic.userdefault.CONTACTLIST_BG_COLOUR"
-#define SEARCHBAR_TINT_COLOUR @"com.applozic.userdefault.SEARCHBAR_TINT_COLOUR"
+
+static NSString *const TABBAR_BACKGROUND_COLOUR = @"com.applozic.TABBAR_BACKGROUND_COLOUR";
+static NSString *const TABBAR_SELECTED_ITEM_COLOUR = @"com.applozic.TABBAR_SELECTED_ITEM_COLOUR";
+static NSString *const TABBAR_UNSELECTED_ITEM_COLOUR = @"com.applozic.TABBAR_UNSELECTED_ITEM_COLOUR";
+static NSString *const ATTACHMENT_ITEM_COLOUR = @"com.applozic.ATTACHMENT_ITEM_COLOUR";
+static NSString *const SEND_ITEM_COLOUR = @"com.applozic.SEND_ITEM_COLOUR";
+static NSString *const MESSAGE_SUBTEXT_COLOUR = @"com.applozic.MESSAGE_SUBTEXT_COLOUR";
+static NSString *const MESSAGE_TEXT_COLOUR = @"com.applozic.MESSAGE_TEXT_COLOUR";
+static NSString *const PROFILE_MAIN_COLOUR = @"com.applozic.PROFILE_MAIN_COLOUR";
+static NSString *const PROFILE_SUB_COLOUR = @"com.applozic.PROFILE_SUB_COLOUR";
+static NSString *const NEW_CONTACT_SUB_COLOUR = @"com.applozic.NEW_CONTACT_SUB_COLOUR";
+static NSString *const NEW_CONTACT_MAIN_COLOUR = @"com.applozic.NEW_CONTACT_MAIN_COLOUR";
+static NSString *const NEW_CONTACT_TEXT_COLOUR = @"com.applozic.NEW_CONTACT_TEXT_COLOUR";
+static NSString *const MESSAGES_VIEW_BG_COLOUR = @"com.applozic.MESSAGES_VIEW_BG_COLOUR";
+static NSString *const CHAT_VIEW_BG_COLOUR = @"com.applozic.CHAT_VIEW_BG_COLOUR";
+static NSString *const SEARCHBAR_TINT_COLOUR = @"com.applozic.SEARCHBAR_TINT_COLOUR";
 static NSString *const HIDE_MESSAGES_WITH_METADATA_KEYS = @"com.applozic.HIDE_MESSAGES_WITH_METADATA_KEYS";
 static NSString *const ALDisableMultiSelectGalleryView = @"ALDisableMultiSelectGalleryView";
 static NSString *const AL_5MIN_VIDEO_LIMIT_IN_GALLERY= @"com.applozic.AL_5MIN_VIDEO_LIMIT_IN_GALLERY";
@@ -494,8 +496,10 @@ static NSString *const MEDIA_SELECT_OPTIONS = @"com.applozic.MEDIA_SELECT_OPTION
 +(void) setNewContactTextColour:(UIColor *)color;
 +(UIColor *) getMessageListTextColor;
 +(void) setMessageListTextColor:(UIColor *)color;
-+(UIColor *) getContactListBackgroundColour;
-+(void) setContactListBackgroundColour:(UIColor *)color;
++(UIColor *) getMessagesViewBackgroundColour;
++(void) setMessagesViewBackgroundColour:(UIColor *)color;
++(UIColor *) getChatViewControllerBackgroundColor;
++(void) setChatViewControllerBackgroundColor:(UIColor *)color;
 +(UIColor *) getSearchBarTintColour;
 +(void) setSearchBarTintColour:(UIColor *)color;
 

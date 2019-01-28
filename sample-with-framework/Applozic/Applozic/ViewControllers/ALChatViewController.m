@@ -2427,8 +2427,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         return;
     }
 
-    [self.mTableView setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
-    [self.mTableView.superview setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
+    [self.mTableView setBackgroundColor:[ALApplozicSettings getChatViewControllerBackgroundColor]];
+    [self.mTableView.superview setBackgroundColor:[ALApplozicSettings getMessagesViewBackgroundColour]];
 }
 
 //==============================================================================================================================================

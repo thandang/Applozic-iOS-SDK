@@ -137,7 +137,7 @@
     if((self.channelKey || self.userIdToLaunch)){
         [self createAndLaunchChatView ];
     }
-    [_mTableView setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
+    [_mTableView setBackgroundColor:[ALApplozicSettings getMessagesViewBackgroundColour]];
     [_navigationRightButton setTintColor:[ALApplozicSettings getColorForNavigationItem]];
 }
 
@@ -697,15 +697,17 @@
              });
 
             [contactCell.onlineImageMarker setBackgroundColor:[UIColor clearColor]];
-            
-            UILabel* nameIcon = (UILabel*)[contactCell viewWithTag:102];
-            nameIcon.textColor = [UIColor whiteColor];
 
             ALMessage *message = (ALMessage *)self.mContactsMessageListArray[indexPath.row];
             
             ALContactDBService *contactDBService = [[ALContactDBService alloc] init];
             ALContact *alContact = [contactDBService loadContactByKey:@"userId" value: message.to];
-            
+
+            contactCell.mUserNameLabel.text = [alContact getDisplayName];
+            contactCell.mUserNameLabel.textColor = [ALApplozicSettings getMessageListTextColor];
+            contactCell.mTimeLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
+            contactCell.mMessageLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
+
             if([message.groupId intValue])
             {
                 ALChannelService *channelService = [[ALChannelService alloc] init];
@@ -716,11 +718,7 @@
             }
             else
             {
-                contactCell.mUserNameLabel.text = [alContact getDisplayName];
-                contactCell.mUserNameLabel.textColor = [ALApplozicSettings getMessageListTextColor];
-                contactCell.mTimeLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
-                contactCell.mMessageLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
-                [self updateProfileImageAndUnreadCount:contactCell WithChannel:nil orChannelId:alContact];
+                 [self updateProfileImageAndUnreadCount:contactCell WithChannel:nil orChannelId:alContact];
 
             }
 
@@ -743,7 +741,7 @@
         default:
             break;
     }
-    [contactCell setBackgroundColor:[ALApplozicSettings getContactListBackgroundColour]];
+    [contactCell setBackgroundColor:[ALApplozicSettings getMessagesViewBackgroundColour]];
     return contactCell;
 }
 

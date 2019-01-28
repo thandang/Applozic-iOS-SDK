@@ -1271,7 +1271,7 @@
 +(UIColor *) getTabBarUnSelectedItemColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:TABBAR_UNSELECTED_ITEM_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
-    return color ? color : [UIColor whiteColor];
+    return color ? color : [UIColor grayColor];
 }
 +(void) setTabBarUnSelectedItemColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
@@ -1281,7 +1281,7 @@
 +(UIColor *) getAttachmentIconColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:ATTACHMENT_ITEM_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
-    return color ? color : [UIColor whiteColor];
+    return color ? color : [UIColor grayColor];
 }
 +(void) setAttachmentIconColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
@@ -1301,7 +1301,7 @@
 +(UIColor *) getMessageSubtextColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_SUBTEXT_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
-    return color ? color : [UIColor blackColor];
+    return color ? color : [UIColor colorWithRed:144.0/255 green:144.0/255 blue:144.00/255 alpha:1.0];
 }
 +(void) setMessageSubtextColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
@@ -1311,7 +1311,7 @@
 +(UIColor *) getMessageListTextColor{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_TEXT_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
-    return color ? color : [UIColor blackColor];
+    return color ? color : [UIColor colorWithRed:107.0/255 green:107.0/255 blue:107.0/255 alpha:1.0];
 }
 +(void) setMessageListTextColor:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
@@ -1321,7 +1321,7 @@
 +(UIColor *) getProfileMainColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_MAIN_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
-    return color ? color : [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];;
+    return color ? color : [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];
 }
 +(void) setProfileMainColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
@@ -1331,7 +1331,7 @@
 +(UIColor *) getProfileSubColour{
     NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:PROFILE_SUB_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
-    return color ? color : [UIColor colorWithRed:0.93 green:0.98 blue:1.00 alpha:1.0];;
+    return color ? color : [UIColor colorWithRed:0.93 green:0.98 blue:1.00 alpha:1.0];
 }
 +(void) setProfileSubColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
@@ -1378,14 +1378,25 @@
     [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:SEARCHBAR_TINT_COLOUR];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-+(UIColor *) getContactListBackgroundColour{
-    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:CONTACTLIST_BG_COLOUR];
++(UIColor *) getMessagesViewBackgroundColour{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGES_VIEW_BG_COLOUR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
     return color ? color : [UIColor whiteColor];
 }
-+(void) setContactListBackgroundColour:(UIColor *)color{
++(void) setMessagesViewBackgroundColour:(UIColor *)color{
     NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
-    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:CONTACTLIST_BG_COLOUR];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:MESSAGES_VIEW_BG_COLOUR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *) getChatViewControllerBackgroundColor{
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:CHAT_VIEW_BG_COLOUR];
+    UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData:colorData];
+    return color ? color : [UIColor colorWithRed:242.0/255 green:242.0/255 blue:242.0/255 alpha:1.0];
+}
++(void) setChatViewControllerBackgroundColor:(UIColor *)color{
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:CHAT_VIEW_BG_COLOUR];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

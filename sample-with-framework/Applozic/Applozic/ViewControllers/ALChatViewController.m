@@ -350,7 +350,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     if(self.text && !self.alMessageWrapper.getUpdatedMessageArray.count)
     {
-        [self.sendMessageTextView setTextColor:[ALApplozicSettings getTextColorForTypingLabel]];
+        [self.sendMessageTextView setTextColor:[ALApplozicSettings getTextColorForMessageTextView]];
         self.sendMessageTextView.text = self.text;
     }
     else if ([self.sendMessageTextView.text isEqualToString:@""])
@@ -3947,7 +3947,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
     if ([textView.text isEqualToString:self.placeHolderTxt])
     {
-        [self placeHolder:@"" andTextColor:[ALApplozicSettings getTextColorForTypingLabel]];
+        [self placeHolder:@"" andTextColor:[ALApplozicSettings getTextColorForMessageTextView]];
     }
 }
 

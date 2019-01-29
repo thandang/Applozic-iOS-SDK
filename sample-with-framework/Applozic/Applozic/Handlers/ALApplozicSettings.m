@@ -461,6 +461,21 @@
     return txtColor ? txtColor : [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:0.5];
 }
 
++(void)setTextColorForMessageTextView:(UIColor *)txtColor
+{
+    NSData * txtColorData = [NSKeyedArchiver archivedDataWithRootObject:txtColor];
+    [[NSUserDefaults standardUserDefaults] setObject:txtColorData forKey:MESSAGE_TEXT_VIEW_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getTextColorForMessageTextView
+{
+    NSData * txtColorData = [[NSUserDefaults standardUserDefaults] objectForKey:MESSAGE_TEXT_VIEW_COLOR];
+    UIColor * txtColor = [NSKeyedUnarchiver unarchiveObjectWithData:txtColorData];
+    return txtColor ? txtColor : [UIColor blackColor];
+}
+
+
 +(void)setEmptyConversationText:(NSString *)text
 {
     [[NSUserDefaults standardUserDefaults] setValue:text forKey:EMPTY_CONVERSATION_TEXT];

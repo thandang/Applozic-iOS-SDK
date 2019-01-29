@@ -128,6 +128,7 @@ static NSString *const AL_TEXT_STYLE_FOR_CELL= @"com.applozic.AL_TEXT_STYLE_FOR_
 static NSString *const AL_CHAT_CELL_FONT_SIZE= @"com.applozic.AL_CHAT_CELL_FONT_SIZE";
 static NSString *const AL_CHANNEL_CELL_FONT_SIZE= @"com.applozic.AL_CHANNEL_CELL_FONT_SIZE";
 static NSString *const AL_BACKGROUND_COLOR_FOR_REPLY_VIEW= @"com.applozic.AL_BACKGROUND_COLOR_FOR_REPLY_VIEW";
+static NSString *const MESSAGE_TEXT_VIEW_COLOR = @"com.applozic.MESSAGE_TEXT_VIEW_COLOR";
 
 //Audio Recording View
 static NSString *const ENABLE_NEW_AUDIO_DESIGN = @"com.applozic.ENABLE_NEW_AUDIO_DESIGN";
@@ -548,5 +549,8 @@ static NSString *const MEDIA_SELECT_OPTIONS = @"com.applozic.MEDIA_SELECT_OPTION
 
 +(BOOL) imagesHiddenInGallery;
 +(BOOL) videosHiddenInGallery;
+
++(void)setTextColorForMessageTextView:(UIColor *)txtColor;
++(UIColor *)getTextColorForMessageTextView;
 
 @end

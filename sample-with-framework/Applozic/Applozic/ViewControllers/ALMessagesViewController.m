@@ -703,7 +703,6 @@
             ALContactDBService *contactDBService = [[ALContactDBService alloc] init];
             ALContact *alContact = [contactDBService loadContactByKey:@"userId" value: message.to];
 
-            contactCell.mUserNameLabel.text = [alContact getDisplayName];
             contactCell.mUserNameLabel.textColor = [ALApplozicSettings getMessageListTextColor];
             contactCell.mTimeLabel.textColor = [ALApplozicSettings getMessageSubtextColour];
             contactCell.mMessageLabel.textColor = [ALApplozicSettings getMessageSubtextColour];

@@ -37,6 +37,8 @@
 		18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */; };
 		18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */; };
 		18A2BA2720C44E9200AD47A2 /* ALTemplateMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */; };
+		18BC191621E4F3B8002B33C9 /* ALDocumentPickerHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 18BC191421E4F3B8002B33C9 /* ALDocumentPickerHandler.h */; };
+		18BC191721E4F3B8002B33C9 /* ALDocumentPickerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BC191521E4F3B8002B33C9 /* ALDocumentPickerHandler.m */; };
 		18BDB35E21A7080A003B405D /* ALLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18BDB35C21A7080A003B405D /* ALLinkCell.h */; };
 		18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB35D21A7080A003B405D /* ALLinkCell.m */; };
 		1A113EFC21C006230000A7CC /* ALAudioRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A113EFA21C006230000A7CC /* ALAudioRecordButton.swift */; };
@@ -421,6 +423,8 @@
 		18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesView.swift; path = Applozic/ALTemplateMessagesView.swift; sourceTree = "<group>"; };
 		18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesViewModel.swift; path = Applozic/ALTemplateMessagesViewModel.swift; sourceTree = "<group>"; };
 		18A2BA2520C44E9200AD47A2 /* ALTemplateMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageModel.swift; path = Applozic/ALTemplateMessageModel.swift; sourceTree = "<group>"; };
+		18BC191421E4F3B8002B33C9 /* ALDocumentPickerHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALDocumentPickerHandler.h; sourceTree = "<group>"; };
+		18BC191521E4F3B8002B33C9 /* ALDocumentPickerHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALDocumentPickerHandler.m; sourceTree = "<group>"; };
 		18BDB35C21A7080A003B405D /* ALLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALLinkCell.h; path = Applozic/Views/ALLinkCell.h; sourceTree = "<group>"; };
 		18BDB35D21A7080A003B405D /* ALLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALLinkCell.m; path = Applozic/Views/ALLinkCell.m; sourceTree = "<group>"; };
 		1A113EDC21BBA77D0000A7CC /* AppLozic 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 10.xcdatamodel"; sourceTree = "<group>"; };
@@ -1301,6 +1305,8 @@
 				6D7757321D5B84BE0025560B /* ALUIConstant.m */,
 				6D6DF0941BC5364C00EBA00F /* ALImagePickerHandler.m */,
 				6D6DF0931BC5364C00EBA00F /* ALImagePickerHandler.h */,
+				18BC191421E4F3B8002B33C9 /* ALDocumentPickerHandler.h */,
+				18BC191521E4F3B8002B33C9 /* ALDocumentPickerHandler.m */,
 			);
 			name = message;
 			sourceTree = "<group>";
@@ -1632,6 +1638,7 @@
 				6D6DF13E1BC5364C00EBA00F /* ALConnection.h in Headers */,
 				6D3A4E051C76ED6C0067A4C8 /* ALAudioAttachmentViewController.h in Headers */,
 				6D77572A1D5B845C0025560B /* Applozic_Prefix.pch in Headers */,
+				18BC191621E4F3B8002B33C9 /* ALDocumentPickerHandler.h in Headers */,
 				6DBA7D0D1C943BFF001263F4 /* ALContactMessageCell.h in Headers */,
 				6D1385781CA9B83C009E6F50 /* AlMultipleAttachmentCell.h in Headers */,
 				6D7757141D5B83660025560B /* TSMessage.h in Headers */,
@@ -1823,6 +1830,7 @@
 				6D7756AE1D5B80DF0025560B /* ALChannelCreateResponse.m in Sources */,
 				6D08770A1D01B0FE00DB491A /* UIView+Toast.m in Sources */,
 				6D6DF1651BC5364C00EBA00F /* ALNewContactCell.m in Sources */,
+				18BC191721E4F3B8002B33C9 /* ALDocumentPickerHandler.m in Sources */,
 				6D7756BA1D5B80DF0025560B /* ALChannelUserX.m in Sources */,
 				6D6DF14D1BC5364C00EBA00F /* ALUserDefaultsHandler.m in Sources */,
 				8B00F0E120C65A9A00ADBFC9 /* ALApplicationInfo.m in Sources */,

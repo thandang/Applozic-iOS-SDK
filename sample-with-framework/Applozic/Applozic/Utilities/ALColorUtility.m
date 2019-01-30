@@ -40,38 +40,11 @@
     return colorFromHex;
 }
 
-+ (UIColor *)getColorForAlphabet:(NSString *)alphabet
++ (UIColor *)getColorForAlphabet:(NSString *)alphabet withDictionary:(NSMutableDictionary *)dictionary
 {
-    
-    NSMutableDictionary *colourDictionary = [[NSMutableDictionary alloc] init];
-    
-    [colourDictionary setObject:@"#4FC3F7" forKey:@"A"];
-    [colourDictionary setObject:@"#F06292" forKey:@"B"];
-    [colourDictionary setObject:@"#BA68C8" forKey:@"C"];
-    [colourDictionary setObject:@"#9575CD" forKey:@"D"];
-    [colourDictionary setObject:@"#7986CB" forKey:@"E"];
-    [colourDictionary setObject:@"#4FC3F7" forKey:@"F"];
-    [colourDictionary setObject:@"#E06055" forKey:@"G"];
-    [colourDictionary setObject:@"#4DD0E1" forKey:@"H"];
-    [colourDictionary setObject:@"#4DB6AC" forKey:@"I"];
-    [colourDictionary setObject:@"#57BB8A" forKey:@"J"];
-    [colourDictionary setObject:@"#9CCC65" forKey:@"K"];
-    [colourDictionary setObject:@"#D4E157" forKey:@"L"];
-    [colourDictionary setObject:@"#FDD835" forKey:@"M"];
-    [colourDictionary setObject:@"#F6BF26" forKey:@"N"];
-    [colourDictionary setObject:@"#FFA726" forKey:@"O"];
-    [colourDictionary setObject:@"#FF8A65" forKey:@"P"];
-    [colourDictionary setObject:@"#C2C2C2" forKey:@"Q"];
-    [colourDictionary setObject:@"#90A4AE" forKey:@"R"];
-    [colourDictionary setObject:@"#A1887F" forKey:@"S"];
-    [colourDictionary setObject:@"#A3A3A3" forKey:@"T"];
-    [colourDictionary setObject:@"#AFB6E0" forKey:@"U"];
-    [colourDictionary setObject:@"#B39DDB" forKey:@"V"];
-    [colourDictionary setObject:@"#C2C2C2" forKey:@"W"];
-    [colourDictionary setObject:@"#80DEEA" forKey:@"X"];
-    [colourDictionary setObject:@"#BCAAA4" forKey:@"Y"];
-    [colourDictionary setObject:@"#AED581" forKey:@"Z"];
-    
+
+    NSMutableDictionary *colourDictionary = [self getColorCodeWithDictionary:dictionary];
+
     if(!alphabet || [alphabet isEqualToString:@""])
     {
         return [UIColor lightGrayColor];
@@ -99,6 +72,47 @@
     
     return colour;
 }
+
+
++ (NSMutableDictionary *)getColorCodeWithDictionary:(NSMutableDictionary *)dictionary
+{
+    if(dictionary){
+        return dictionary;
+    }
+
+    NSMutableDictionary *colourDictionary = [[NSMutableDictionary alloc] init];
+
+    [colourDictionary setObject:@"#4FC3F7" forKey:@"A"];
+    [colourDictionary setObject:@"#F06292" forKey:@"B"];
+    [colourDictionary setObject:@"#BA68C8" forKey:@"C"];
+    [colourDictionary setObject:@"#9575CD" forKey:@"D"];
+    [colourDictionary setObject:@"#7986CB" forKey:@"E"];
+    [colourDictionary setObject:@"#4FC3F7" forKey:@"F"];
+    [colourDictionary setObject:@"#E06055" forKey:@"G"];
+    [colourDictionary setObject:@"#4DD0E1" forKey:@"H"];
+    [colourDictionary setObject:@"#4DB6AC" forKey:@"I"];
+    [colourDictionary setObject:@"#57BB8A" forKey:@"J"];
+    [colourDictionary setObject:@"#9CCC65" forKey:@"K"];
+    [colourDictionary setObject:@"#D4E157" forKey:@"L"];
+    [colourDictionary setObject:@"#FDD835" forKey:@"M"];
+    [colourDictionary setObject:@"#F6BF26" forKey:@"N"];
+    [colourDictionary setObject:@"#FFA726" forKey:@"O"];
+    [colourDictionary setObject:@"#FF8A65" forKey:@"P"];
+    [colourDictionary setObject:@"#C2C2C2" forKey:@"Q"];
+    [colourDictionary setObject:@"#90A4AE" forKey:@"R"];
+    [colourDictionary setObject:@"#A1887F" forKey:@"S"];
+    [colourDictionary setObject:@"#A3A3A3" forKey:@"T"];
+    [colourDictionary setObject:@"#AFB6E0" forKey:@"U"];
+    [colourDictionary setObject:@"#B39DDB" forKey:@"V"];
+    [colourDictionary setObject:@"#C2C2C2" forKey:@"W"];
+    [colourDictionary setObject:@"#80DEEA" forKey:@"X"];
+    [colourDictionary setObject:@"#BCAAA4" forKey:@"Y"];
+    [colourDictionary setObject:@"#AED581" forKey:@"Z"];
+
+    return colourDictionary;
+
+}
+
 
 +(NSString *)getAlphabetForProfileImage:(NSString *)actualName
 {

@@ -283,7 +283,7 @@
 }
 
 +(void)setCustomMessageTextColor:(UIColor *)color{
-    
+
     NSData * recievedCustomBackgroundColorData = [NSKeyedArchiver archivedDataWithRootObject:color];
     [[NSUserDefaults standardUserDefaults] setValue:recievedCustomBackgroundColorData
                                              forKey:CUSTOM_MSG_TEXT_COLOR];
@@ -1582,7 +1582,7 @@
         return backgroundColor;
     }
     return [UIColor grayColor];
-  
+
 }
 
 +(void) setHideMediaSelectOption:(NSMutableArray*)array{
@@ -1631,5 +1631,14 @@
     return txtColor ? txtColor : [UIColor blackColor];
 }
 
++(void)setAlphabetAndHexColorsCodes:(NSMutableDictionary*)nsMutableDictionary{
+
+    [[NSUserDefaults standardUserDefaults] setObject:nsMutableDictionary forKey:AL_ALPHABETIC_COLOR_CODES];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray*) getAlphabetAndHexColorsCodes{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:AL_ALPHABETIC_COLOR_CODES];
+}
 
 @end

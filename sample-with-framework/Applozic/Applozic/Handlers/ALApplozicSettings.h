@@ -562,7 +562,8 @@ static NSString *const AL_ALPHABETIC_COLOR_CODES = @"com.applozic.AL_ALPHABETIC_
 +(void)setChannelActionMessageTextColor:(UIColor *)txtColor;
 +(UIColor *)getChannelActionMessageTextColor;
 
-+(void)setAlphabetAndHexColorsCodes:(NSMutableDictionary*)nsMutableDictionary;
-+(NSMutableDictionary*) getAlphabetAndHexColorsCodes;
++(void)setUserIconFirstNameColorCodes:(NSMutableDictionary*)nsMutableDictionary;
++(NSMutableDictionary*) getUserIconFirstNameColorCodes;
+
 
 @end

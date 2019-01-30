@@ -37,7 +37,7 @@
     self.alTableView.dataSource = self;
     [self.view bringSubviewToFront:self.activityIndicator];
     [self.activityIndicator startAnimating];
-    self.colourDictionary = [ALApplozicSettings getAlphabetAndHexColorsCodes];
+    self.colourDictionary = [ALApplozicSettings getUserIconFirstNameColorCodes];
 }
 
 - (void)didReceiveMemoryWarning
@@ -262,7 +262,7 @@
     if(!alContact.contactImageUrl)
     {
         [self.firstAlphabet setHidden:NO];
-        [self.userImage setBackgroundColor:[ALColorUtility getColorForAlphabet:[alContact getDisplayName] withDictionary:self.colourDictionary]];
+        [self.userImage setBackgroundColor:[ALColorUtility getColorForAlphabet:[alContact getDisplayName] colorCodes:self.colourDictionary]];
         [self.firstAlphabet setText:[ALColorUtility getAlphabetForProfileImage:[alContact getDisplayName]]];
     }
     

@@ -1631,13 +1631,12 @@
     return txtColor ? txtColor : [UIColor blackColor];
 }
 
-+(void)setAlphabetAndHexColorsCodes:(NSMutableDictionary*)nsMutableDictionary{
-
++(void)setUserIconFirstNameColorCodes:(NSMutableDictionary*)nsMutableDictionary{
     [[NSUserDefaults standardUserDefaults] setObject:nsMutableDictionary forKey:AL_ALPHABETIC_COLOR_CODES];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSArray*) getAlphabetAndHexColorsCodes{
++(NSArray*) getUserIconFirstNameColorCodes{
     return [[NSUserDefaults standardUserDefaults] objectForKey:AL_ALPHABETIC_COLOR_CODES];
 }
 

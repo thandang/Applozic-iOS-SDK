@@ -40,7 +40,7 @@
     return colorFromHex;
 }
 
-+ (UIColor *)getColorForAlphabet:(NSString *)alphabet withDictionary:(NSMutableDictionary *)dictionary
++ (UIColor *)getColorForAlphabet:(NSString *)alphabet colorCodes:(NSMutableDictionary *)dictionary
 {
 
     NSMutableDictionary *colourDictionary = [self getColorCodeWithDictionary:dictionary];

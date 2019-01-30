@@ -139,7 +139,7 @@
     }
     [_mTableView setBackgroundColor:[ALApplozicSettings getMessagesViewBackgroundColour]];
     [_navigationRightButton setTintColor:[ALApplozicSettings getColorForNavigationItem]];
-    self.colourDictionary = [ALApplozicSettings getAlphabetAndHexColorsCodes];
+    self.colourDictionary = [ALApplozicSettings getUserIconFirstNameColorCodes];
 }
 
 -(void)loadMessages:(NSNotification *)notification
@@ -777,7 +777,7 @@
             {
                 nameIcon.hidden = NO;
                 [contactCell.mUserImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:nil options:SDWebImageRefreshCached];
-                contactCell.mUserImageView.backgroundColor = [ALColorUtility getColorForAlphabet:[grpContact getDisplayName] withDictionary: self.colourDictionary];
+                contactCell.mUserImageView.backgroundColor = [ALColorUtility getColorForAlphabet:[grpContact getDisplayName] colorCodes: self.colourDictionary];
                 [nameIcon setText:[ALColorUtility getAlphabetForProfileImage:[grpContact getDisplayName]]];
             }
             
@@ -819,7 +819,7 @@
         {
             nameIcon.hidden = NO;
             [contactCell.mUserImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:nil options:SDWebImageRefreshCached];
-            contactCell.mUserImageView.backgroundColor = [ALColorUtility getColorForAlphabet:[contact getDisplayName] withDictionary:self.colourDictionary];
+            contactCell.mUserImageView.backgroundColor = [ALColorUtility getColorForAlphabet:[contact getDisplayName] colorCodes:self.colourDictionary];
             [nameIcon setText:[ALColorUtility getAlphabetForProfileImage:[contact getDisplayName]]];
         }
     }
@@ -1177,7 +1177,7 @@
             {
                 nameIcon.hidden = NO;
                 [contactCell.mUserImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:nil options:SDWebImageRefreshCached];
-                contactCell.mUserImageView.backgroundColor = [ALColorUtility getColorForAlphabet:[userDetail getDisplayName] withDictionary:self.colourDictionary];
+                contactCell.mUserImageView.backgroundColor = [ALColorUtility getColorForAlphabet:[userDetail getDisplayName] colorCodes:self.colourDictionary];
             }
             [self.detailChatViewController setRefresh:YES];
         }

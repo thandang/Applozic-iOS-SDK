@@ -105,6 +105,4 @@
 
 -(DB_CHANNEL_USER_X *)getChannelUserXByUserId:(NSNumber *)channelKey andUserId:(NSString *) userId;
 
--(void)buildChannelUsersWithChannel:(ALChannel *)channel;
-
 @end

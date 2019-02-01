@@ -20,6 +20,9 @@
 
 @implementation ALChannelDBService
 
+dispatch_queue_t syncSerialBackgroundQueue;
+
+
 -(void)createChannel:(ALChannel *)channel
 {
     ALDBHandler *theDBHandler = [ALDBHandler sharedInstance];

@@ -48,7 +48,7 @@ dispatch_queue_t syncSerialBackgroundQueue;
     if (syncSerialBackgroundQueue == NULL) {
         syncSerialBackgroundQueue = dispatch_queue_create("ApplozicSyncSerialBackgroundQueue", 0);
     }
-
+  // As saveGroupUsersOfChannel:channel withContext:nsContext is running in a background thread it's important to check if the user is loggedIn otherwise it will continue the operation even after logout
     if(!ALUserDefaultsHandler.isLoggedIn){
         return;
     }

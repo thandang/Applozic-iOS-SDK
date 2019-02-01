@@ -442,11 +442,13 @@
 }
 
 
-- (void)saveTempContext:(NSManagedObjectContext *)context {
+- (void)savePrivateAndMainContext:(NSManagedObjectContext *)context {
     NSError *error;
     [context save:&error];
     if (!error) {
         [self saveMainContext];
+    }else{
+        ALSLog(ALLoggerSeverityError, @"DB ERROR in savePrivateAndMainContext :%@",error);
     }
 }
 
@@ -454,7 +456,8 @@
     [self.mainManagedObjectContext performBlock:^{
         NSError *error = nil;
         [self.mainManagedObjectContext save:&error];
-        if(!error){
+        if(error){
+            ALSLog(ALLoggerSeverityError, @"DB ERROR in saveMainContext :%@",error);
         }
     }];
 }

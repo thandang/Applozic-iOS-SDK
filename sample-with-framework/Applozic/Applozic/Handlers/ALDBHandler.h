@@ -24,7 +24,7 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *mainManagedObjectContext;
 
-- (void)saveTempContext:(NSManagedObjectContext *)context ;
+- (void)savePrivateAndMainContext:(NSManagedObjectContext *)context ;
 
 - (NSManagedObjectContext *)mainManagedObjectContext;
 

@@ -32,29 +32,32 @@
 
     [self deleteMembers:channel.key];
 
-    [self saveDataInBackgroundWithContext:theDBHandler.temporaryWorkerContext withChannel:channel completion:^{
-    }];
-
+    [self saveDataInBackgroundWithContext:theDBHandler.temporaryWorkerContext withChannel:channel];
     [self addedMembersArray:channel.membersName andChannelKey:channel.key];
     [self removedMembersArray:channel.removeMembers andChannelKey:channel.key];
 
 }
 
 
-- (void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext completion:(void(^)(void))completion
+- (void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext withChannel:(ALChannel *)channel
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [[ALDBHandler sharedInstance] saveTempContext:nsContext];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            completion();
-        });
+
+    if (syncSerialBackgroundQueue == NULL) {
+        syncSerialBackgroundQueue = dispatch_queue_create("ApplozicSyncSerialBackgroundQueue", 0);
+    }
+
+    if(!ALUserDefaultsHandler.isLoggedIn){
+        return;
+    }
+
+    dispatch_async(syncSerialBackgroundQueue, ^{
+        [self saveGroupUsersOfChannel:channel withContext:nsContext];
     });
 
 }
 
 
--(void)buildChannelUsersWithChannel:(ALChannel *)channel{
-
+-(void)saveGroupUsersOfChannel:(ALChannel *)channel withContext:(NSManagedObjectContext *)context {
 
     for(ALChannelUser * channelUser  in  channel.groupUsers)
     {
@@ -71,7 +74,7 @@
         }
         if(ALUserDefaultsHandler.isLoggedIn){
             [self createChannelUserXEntity:newChannelUserX  withContext:context];
-            [[ALDBHandler sharedInstance] saveTempContext:context];
+            [[ALDBHandler sharedInstance] savePrivateAndMainContext:context];
         }
     }
 }

@@ -101,7 +101,9 @@
 -(DB_CHANNEL *)getContactsGroupChannelByName:(NSString *)channelName;
 -(NSMutableArray *) getGroupUsersInChannel:(NSNumber *)key;
 
-- (void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext completion:(void(^)(void))completion;
+-(void)saveDataInBackgroundWithContext:(NSManagedObjectContext *) nsContext withChannel:(ALChannel *)channel;
+
+-(DB_CHANNEL_USER_X *)getChannelUserXByUserId:(NSNumber *)channelKey andUserId:(NSString *) userId;
 
 -(void)buildChannelUsersWithChannel:(ALChannel *)channel;
 

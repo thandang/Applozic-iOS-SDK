@@ -42,9 +42,7 @@
         if(channel.membersName == nil){
             channel.membersName = channel.membersId;
         }
-        [alChannelDBService saveDataInBackgroundWithContext:theDBHandler.temporaryWorkerContext completion:^{
-            [alChannelDBService buildChannelUsersWithChannel:channel];
-        }];
+        [alChannelDBService saveDataInBackgroundWithContext:theDBHandler.temporaryWorkerContext withChannel: channel];
 
         [self processChildGroups:channel];
         [alChannelDBService addedMembersArray:channel.membersName andChannelKey:channel.key];

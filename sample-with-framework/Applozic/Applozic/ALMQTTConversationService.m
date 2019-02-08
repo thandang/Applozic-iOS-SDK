@@ -21,6 +21,7 @@
 
 #define MQTT_TOPIC_STATUS @"status-v2"
 #define MQTT_ENCRYPTION_SUB_KEY @"encr-"
+static NSString * const observeSupportGroupMessage = @"observeSupportGroupMessage";
 
 @implementation ALMQTTConversationService
 
@@ -272,6 +273,8 @@
                 ALSLog(ALLoggerSeverityInfo, @"MQTT : RETURNING, SENT_BY_SELF_DEVICE");
                 return;
             }
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:observeSupportGroupMessage object:alMessage];
 
             [ALMessageService getMessageSENT:alMessage withDelegate: self.realTimeUpdate withCompletion:^(NSMutableArray * messageArray, NSError *error) {
 

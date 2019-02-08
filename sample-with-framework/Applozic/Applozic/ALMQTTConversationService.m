@@ -273,6 +273,8 @@
                 return;
             }
 
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"observeSupportGroupMessage" object:alMessage];
+
             [ALMessageService getMessageSENT:alMessage withDelegate: self.realTimeUpdate withCompletion:^(NSMutableArray * messageArray, NSError *error) {
 
                 if(messageArray.count > 0)

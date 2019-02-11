@@ -1227,4 +1227,25 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     return theMessageEntity;
 }
 
+- (void)updateMessageMetadataOfKey:(NSString *)messageKey withMetadata:(NSMutableDictionary *)metadata
+{
+    ALSLog(ALLoggerSeverityInfo, @"Updating message metadata in local db for key : %@", messageKey);
+    ALDBHandler * dbHandler = [ALDBHandler sharedInstance];
+
+    DB_Message * dbMessage = (DB_Message *)[self getMessageByKey:@"key" value:messageKey];
+    dbMessage.metadata = metadata.description;
+    if(metadata != nil && [metadata objectForKey:@"hiddenStatus"] != nil){
+        dbMessage.msgHidden = [NSNumber numberWithBool: [[metadata objectForKey:@"hiddenStatus"] isEqualToString:@"true"]];
+    }
+
+    NSError *error = nil;
+    BOOL success = [dbHandler.managedObjectContext save:&error];
+
+    if (!success) {
+        ALSLog(ALLoggerSeverityError, @"Unable to save metadata in local db : %@", error);
+    } else {
+        ALSLog(ALLoggerSeverityInfo, @"Message metadata has been updated successfully in local db");
+    }
+}
+
 @end

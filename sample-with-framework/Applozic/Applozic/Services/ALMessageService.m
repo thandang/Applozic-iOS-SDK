@@ -1063,4 +1063,19 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     ALMessageDBService *messageDBServce = [[ALMessageDBService alloc]init];
     return [messageDBServce getMessageByKey:messageKey];
 }
+
+- (void)updateMessageMetadataOfKey:(NSString *)messageKey withMetadata:(NSMutableDictionary *)metadata withCompletion:(void (^)(ALAPIResponse *, NSError *))completion
+{
+    ALMessageClientService *messageService = [[ALMessageClientService alloc] init];
+    [messageService updateMessageMetadataOfKey:messageKey withMetadata:metadata withCompletion:^(id theJson, NSError *theError) {
+        ALAPIResponse * alAPIResponse;
+        if(!theError) {
+            ALMessageDBService *messagedb = [[ALMessageDBService alloc] init];
+            [messagedb updateMessageMetadataOfKey:messageKey withMetadata:metadata];
+            alAPIResponse = [[ALAPIResponse alloc] initWithJSONString:theJson];
+        }
+        completion(alAPIResponse,theError);
+    }];
+}
+
 @end

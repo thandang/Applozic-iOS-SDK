@@ -101,4 +101,6 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 -(ALMessage *)handleMessageFailedStatus:(ALMessage *)message;
 
 -(ALMessage*) getMessageByKey:(NSString*)messageKey;
+
+-(void)updateMessageMetadataOfKey:(NSString*) messageKey withMetadata: (NSMutableDictionary *) metadata withCompletion:(void(^)(ALAPIResponse* theJson, NSError *theError)) completion;
 @end

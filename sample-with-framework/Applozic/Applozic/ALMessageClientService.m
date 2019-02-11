@@ -503,4 +503,29 @@
 
 }
 
+- (void)updateMessageMetadataOfKey:(NSString *)messageKey withMetadata:(NSMutableDictionary *)metadata withCompletion:(void (^)(id, NSError *))completion
+{
+    ALSLog(ALLoggerSeverityInfo, @"Updating message metadata for message : %@", messageKey);
+    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/message/update/metadata",KBASE_URL];
+    NSMutableDictionary *messageMetadata = [NSMutableDictionary new];
+
+    [messageMetadata setObject:messageKey forKey:@"key"];
+    [messageMetadata setObject:metadata forKey:@"metadata"];
+
+    NSError *error;
+    NSData *postdata = [NSJSONSerialization dataWithJSONObject:messageMetadata options:0 error:&error];
+    NSString *theParamString = [[NSString alloc] initWithData:postdata encoding: NSUTF8StringEncoding];
+    NSMutableURLRequest * theRequest = [ALRequestHandler createPOSTRequestWithUrlString:theUrlString paramString:theParamString];
+
+    [ALResponseHandler processRequest:theRequest andTag:@"UPDATE_MESSAGE_METADATA" WithCompletionHandler:^(id theJson, NSError *theError) {
+        if (theError) {
+            ALSLog(ALLoggerSeverityError, @"Error while updating message metadata: %@", theError);
+            completion(nil,theError);
+            return;
+        }
+        ALSLog(ALLoggerSeverityInfo, @"Message metadata updated successfully with result : %@", theJson);
+        completion(theJson,nil);
+    }];
+}
+
 @end

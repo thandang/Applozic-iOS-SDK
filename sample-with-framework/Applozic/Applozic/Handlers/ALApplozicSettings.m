@@ -1603,4 +1603,33 @@
     return [self getHideMediaSelectOption] && [[self getHideMediaSelectOption] containsObject:@":video"];
 }
 
++(void)setChannelActionMessageBgColor:(UIColor *)bgColor
+{
+    NSData * bgColorData = [NSKeyedArchiver archivedDataWithRootObject:bgColor];
+    [[NSUserDefaults standardUserDefaults] setObject:bgColorData forKey:AL_CHANNEL_ACTION_MESSAGE_BG_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getChannelActionMessageBgColor
+{
+    NSData * bgColorData = [[NSUserDefaults standardUserDefaults] objectForKey:AL_CHANNEL_ACTION_MESSAGE_BG_COLOR];
+    UIColor * bgColor = [NSKeyedUnarchiver unarchiveObjectWithData:bgColorData];
+    return bgColor ? bgColor : [UIColor lightGrayColor];
+}
+
++(void)setChannelActionMessageTextColor:(UIColor *)textColor
+{
+    NSData * txtColorData = [NSKeyedArchiver archivedDataWithRootObject:textColor];
+    [[NSUserDefaults standardUserDefaults] setObject:txtColorData forKey:AL_CHANNEL_ACTION_MESSAGE_TEXT_COLOR];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(UIColor *)getChannelActionMessageTextColor
+{
+    NSData * textColorData = [[NSUserDefaults standardUserDefaults] objectForKey:AL_CHANNEL_ACTION_MESSAGE_TEXT_COLOR];
+    UIColor * txtColor = [NSKeyedUnarchiver unarchiveObjectWithData:textColorData];
+    return txtColor ? txtColor : [UIColor blackColor];
+}
+
+
 @end

@@ -130,7 +130,7 @@
     ALConversationProxy *alConversationProxy = [self getConversationByKey:alConversationProxyID];
 
     if (alConversationProxy != nil){
-        ALSLog(ALLoggerSeverityWarn, @"Conversation/Topic Alerady exists");
+        ALSLog(ALLoggerSeverityInfo, @"Conversation/Topic Alerady exists");
         completion(nil,alConversationProxy);
         return;
     }

@@ -1078,15 +1078,15 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALTopicDetail * topicDetail = [[ALTopicDetail alloc] init];   //WithDictonary:conversation.topicDetailJson];
         topicDetail = conversation.getTopicDetail;
 
-        if(topicDetail.title != nil)
-        {
-            [self.conversationTitleList addObject:topicDetail.title];
-            [self.pickerConvIdsArray addObject:conversation.Id];
-        }
-        else
-        {
-            ALSLog(ALLoggerSeverityError, @"<< ERROR: Topic Detail NILL >>");
-        }
+            if(conversation.getTopicDetail != nil && topicDetail.title != nil)
+            {
+                [self.conversationTitleList addObject:topicDetail.title];
+                [self.pickerConvIdsArray addObject:conversation.Id];
+            }
+            else
+            {
+                ALSLog(ALLoggerSeverityError, @"<< ERROR: Topic Detail NILL >>");
+            }
     }
 
     [self.pickerView setHidden:YES];
@@ -1979,6 +1979,9 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     ALTopicDetail * topicDetail = [[ALTopicDetail alloc] init];//WithJSONString:alConversationProxy.topicDetailJson];
     topicDetail = alConversationProxy.getTopicDetail;
+    if(topicDetail == nil){
+        return  [[UIView alloc]init];
+    }
 
     // Image View ....
     UIImageView *imageView = [[UIImageView alloc] init];

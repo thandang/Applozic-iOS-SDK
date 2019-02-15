@@ -254,6 +254,8 @@
             [conversationService fetchTopicDetails:conversationId withCompletion:^(NSError *error, ALConversationProxy *proxy) {
                 if(error == nil){
                     [self thirdPartyNotificationTap1:self.contactId withGroupId:groupId withConversationId: conversationId]; //
+                }else{
+                    ALSLog(ALLoggerSeverityInfo, @"Error in fetching conversation :: %@",error);
                 }
             }];
         }else{
@@ -285,6 +287,8 @@
                         if(error == nil){
                             [ALUtilityClass thirdDisplayNotificationTS:alertValue andForContactId:self.contactId withGroupId:groupId withConversationId:conversationId delegate:self];
 
+                        }else{
+                            ALSLog(ALLoggerSeverityInfo, @"Error in fetching conversation :: %@",error);
                         }
                     }];
 

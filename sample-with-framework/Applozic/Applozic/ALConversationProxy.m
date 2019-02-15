@@ -48,7 +48,7 @@
 
 -(ALTopicDetail*)getTopicDetail {
     if(!self.topicDetailJson){
-        return nil
+        return nil;
     }
 
     NSError *jsonError;

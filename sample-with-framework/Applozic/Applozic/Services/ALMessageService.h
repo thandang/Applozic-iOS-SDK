@@ -17,6 +17,7 @@
 #import "ALMessageInfoResponse.h"
 #import "ALMQTTConversationService.h"
 #import "ALRealTimeUpdate.h"
+#import "ALConversationProxy.h"
 
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
 #define CONVERSATION_CALL_COMPLETED @"conversationCallCompleted"

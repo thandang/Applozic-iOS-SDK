@@ -600,7 +600,6 @@
     theMessage.msgHidden = [theEntity.msgHidden boolValue];
     theMessage.source = [theEntity source];
 
-
     // file meta info
     if(theEntity.fileMetaInfo){
         ALFileMetaInfo * theFileMeta = [ALFileMetaInfo new];

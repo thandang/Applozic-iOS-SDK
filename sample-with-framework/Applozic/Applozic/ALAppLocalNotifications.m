@@ -249,7 +249,7 @@
     {
         ALSLog(ALLoggerSeverityInfo, @"App launched from Background....Directly opening view from %@",self.dict);
 
-        if(conversationId != 0){
+        if(conversationId != nil){
             ALConversationService * conversationService = [[ALConversationService alloc]init];
             [conversationService fetchTopicDetails:conversationId withCompletion:^(NSError *error, ALConversationProxy *proxy) {
                 if(error == nil){
@@ -281,7 +281,7 @@
 
                 }];
             }else{
-                if(conversationId != 0){
+                if(conversationId != nil){
                     ALConversationService * conversationService = [[ALConversationService alloc]init];
                     [conversationService fetchTopicDetails:conversationId withCompletion:^(NSError *error, ALConversationProxy *proxy) {
                         if(error == nil){

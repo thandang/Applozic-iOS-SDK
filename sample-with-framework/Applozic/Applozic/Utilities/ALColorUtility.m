@@ -108,6 +108,16 @@
     [colourDictionary setObject:@"#80DEEA" forKey:@"X"];
     [colourDictionary setObject:@"#BCAAA4" forKey:@"Y"];
     [colourDictionary setObject:@"#AED581" forKey:@"Z"];
+    [colourDictionary setObject:@"#E6B0AA" forKey:@"0"];
+    [colourDictionary setObject:@"#F1948A" forKey:@"1"];
+    [colourDictionary setObject:@"#C39BD3" forKey:@"2"];
+    [colourDictionary setObject:@"#7FB3D5" forKey:@"3"];
+    [colourDictionary setObject:@"#5DADE2" forKey:@"4"];
+    [colourDictionary setObject:@"#76D7C4" forKey:@"5"];
+    [colourDictionary setObject:@"#7DCEA0" forKey:@"6"];
+    [colourDictionary setObject:@"#73C6B6" forKey:@"7"];
+    [colourDictionary setObject:@"#7DCEA0" forKey:@"8"];
+    [colourDictionary setObject:@"#F9E79F" forKey:@"9"];
 
     return colourDictionary;
 

@@ -517,7 +517,9 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     }
 
     if(message.conversationId){
-        [self fetchTopicDetails:message.conversationId];
+        ALConversationService * alConversationService = [[ALConversationService alloc] init];
+        [alConversationService fetchTopicDetails:message.conversationId withCompletion:^(NSError *error, ALConversationProxy *proxy) {
+        }];
     }
 
     return YES;
@@ -538,14 +540,7 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
         return YES;
     }
 }
-+(void)fetchTopicDetails :(NSNumber *)conversationId
-{
-    if(conversationId)
-    {
-        ALConversationService * alConversationService = [[ALConversationService alloc] init];
-        [alConversationService fetchTopicDetails:conversationId];
-    }
-}
+
 
 +(void) updateDeliveredReport: (NSArray *) deliveredMessageKeys withStatus:(int)status
 {

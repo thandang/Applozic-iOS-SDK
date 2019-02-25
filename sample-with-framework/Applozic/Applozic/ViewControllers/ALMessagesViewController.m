@@ -989,10 +989,7 @@
     }
     
     self.detailChatViewController.chatViewDelegate = self;
-    ALPushAssist * alPushAssist = [[ALPushAssist alloc] init];
-    if(!alPushAssist.isChatViewOnTop) {
-        [self.navigationController pushViewController:self.detailChatViewController animated:YES];
-    }
+    [self.navigationController pushViewController:self.detailChatViewController animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

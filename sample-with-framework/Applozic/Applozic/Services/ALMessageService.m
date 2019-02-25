@@ -58,6 +58,8 @@ static ALMessageClientService *alMsgClientService;
         {
             ALMessageDBService *alMessageDBService = [[ALMessageDBService alloc] init];
             [alMessageDBService addMessageList:alMessageListResponse.messageList];
+            ALContactDBService *alContactDBService = [[ALContactDBService alloc] init];
+            [alContactDBService addUserDetails:alMessageListResponse.userDetailsList];
             [ALUserDefaultsHandler setBoolForKey_isConversationDbSynced:YES];
 
             [self getMessageListForUserIfLastIsHiddenMessageinMessageList:alMessageListResponse withCompletion:^(NSMutableArray * messages, NSError *error, NSMutableArray *userDetailArray) {

@@ -535,6 +535,7 @@
     theMessageEntity.metadata = theMessage.metadata.description;
     theMessageEntity.msgHidden = [NSNumber numberWithBool:[theMessage isHiddenMessage]];
     theMessageEntity.replyMessageType = theMessage.messageReplyType;
+    theMessageEntity.source = theMessage.source;
 
     if(theMessage.getGroupId)
     {
@@ -597,6 +598,7 @@
     theMessage.pairedMessageKey = theEntity.pairedMessageKey;
     theMessage.metadata = [theMessage getMetaDataDictionary:theEntity.metadata];
     theMessage.msgHidden = [theEntity.msgHidden boolValue];
+    theMessage.source = [theEntity source];
 
     // file meta info
     if(theEntity.fileMetaInfo){

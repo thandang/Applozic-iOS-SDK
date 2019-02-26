@@ -1085,12 +1085,9 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
                         [messageDatabase updateMessageMetadataOfKey:message.key withMetadata:message.metadata];
                         [[NSNotificationCenter defaultCenter] postNotificationName:MESSAGE_META_DATA_UPDATE object:message userInfo:nil];
                     }
-                    completion(syncResponse.messagesList,error);
-                }else
-                {
-                    completion(syncResponse.messagesList,error);
                 }
                 [ALUserDefaultsHandler setLastSyncTimeForMetaData:syncResponse.lastSyncTime];
+                completion(syncResponse.messagesList,error);
             }
             else
             {

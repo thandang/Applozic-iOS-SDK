@@ -134,7 +134,6 @@ static NSString * const observeSupportGroupMessage = @"observeSupportGroupMessag
                     }else{
                         [self.session subscribeToTopic: topic atLevel:MQTTQosLevelAtMostOnce];
                     }
-                    [self.session subscribeToTopic:[NSString stringWithFormat:@"typing-%@-%@", [ALUserDefaultsHandler getApplicationKey], [ALUserDefaultsHandler getUserId]] atLevel:MQTTQosLevelAtMostOnce];
                     [ALUserDefaultsHandler setLoggedInUserSubscribedMQTT:YES];
                     [self.mqttConversationDelegate mqttDidConnected];
                     if(self.realTimeUpdate){
@@ -579,7 +578,6 @@ static NSString * const observeSupportGroupMessage = @"observeSupportGroupMessag
     }else{
         [self.session unsubscribeTopic: topic];
     }
-    [self.session unsubscribeTopic:[NSString stringWithFormat:@"typing-%@-%@", [ALUserDefaultsHandler getApplicationKey], [ALUserDefaultsHandler getUserId]]];
     [self.session close];
     ALSLog(ALLoggerSeverityInfo, @"MQTT : DISCONNECTED FROM MQTT");
     return YES;

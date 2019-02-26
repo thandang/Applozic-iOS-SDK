@@ -1063,4 +1063,52 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     ALMessageDBService *messageDBServce = [[ALMessageDBService alloc]init];
     return [messageDBServce getMessageByKey:messageKey];
 }
+
++ (void) syncMessageMetaData:(NSString *)deviceKeyString withCompletion:(void (^)( NSMutableArray *, NSError *))completion
+{
+    if(!alMsgClientService)
+    {
+        alMsgClientService = [[ALMessageClientService alloc] init];
+    }
+    @synchronized(alMsgClientService) {
+        [alMsgClientService getLatestMessageForUser:deviceKeyString withMetaDataSync:YES withCompletion:^(ALSyncMessageFeed * syncResponse , NSError *error) {
+            NSMutableArray *messageArray = nil;
+
+            if(!error)
+            {
+                if(syncResponse.messagesList.count > 0)
+                {
+                    messageArray = [[NSMutableArray alloc] init];
+                    ALMessageDBService *messageDatabase  = [[ALMessageDBService alloc]init];
+                    for(ALMessage * message in syncResponse.messagesList)
+                    {
+                        [messageDatabase updateMessageMetadataOfKey:message.key withMetadata:message.metadata];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:MESSAGE_META_DATA_UPDATE object:message userInfo:nil];
+                    }
+                }
+                [ALUserDefaultsHandler setLastSyncTimeForMetaData:syncResponse.lastSyncTime];
+                completion(syncResponse.messagesList,error);
+            }
+            else
+            {
+                completion(messageArray,error);
+            }
+        }];
+    }
+}
+
+- (void)updateMessageMetadataOfKey:(NSString *)messageKey withMetadata:(NSMutableDictionary *)metadata withCompletion:(void (^)(ALAPIResponse *, NSError *))completion
+{
+    ALMessageClientService *messageService = [[ALMessageClientService alloc] init];
+    [messageService updateMessageMetadataOfKey:messageKey withMetadata:metadata withCompletion:^(id theJson, NSError *theError) {
+        ALAPIResponse * alAPIResponse;
+        if(!theError) {
+            ALMessageDBService *messagedb = [[ALMessageDBService alloc] init];
+            [messagedb updateMessageMetadataOfKey:messageKey withMetadata:metadata];
+            alAPIResponse = [[ALAPIResponse alloc] initWithJSONString:theJson];
+        }
+        completion(alAPIResponse,theError);
+    }];
+}
+
 @end

@@ -139,6 +139,7 @@ static NSString *const AUDIO_RECORD_VIEW_FONT = @"com.applozic.AUDIO_VIEW_FONT";
 static NSString *const MEDIA_SELECT_OPTIONS = @"com.applozic.MEDIA_SELECT_OPTIONS";
 static NSString *const AL_CHANNEL_ACTION_MESSAGE_BG_COLOR = @"com.applozic.AL_CHANNEL_ACTION_MESSAGE_BG_COLOR";
 static NSString *const AL_CHANNEL_ACTION_MESSAGE_TEXT_COLOR = @"com.applozic.AL_CHANNEL_ACTION_MESSAGE_TEXT_COLOR";
+static NSString *const AL_ALPHABETIC_COLOR_CODES = @"com.applozic.AL_ALPHABETIC_COLOR_CODES";
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -560,5 +561,9 @@ static NSString *const AL_CHANNEL_ACTION_MESSAGE_TEXT_COLOR = @"com.applozic.AL_
 
 +(void)setChannelActionMessageTextColor:(UIColor *)txtColor;
 +(UIColor *)getChannelActionMessageTextColor;
+
++(void)setUserIconFirstNameColorCodes:(NSMutableDictionary*)nsMutableDictionary;
++(NSMutableDictionary*) getUserIconFirstNameColorCodes;
+
 
 @end

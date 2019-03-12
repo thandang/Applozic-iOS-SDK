@@ -403,7 +403,7 @@
     [ALApplozicSettings setColorForNavigationItem:[UIColor whiteColor]];
     [ALApplozicSettings hideRefreshButton:NO];
     [ALUserDefaultsHandler setNavigationRightButtonHidden:NO];
-    [ALUserDefaultsHandler setBottomTabBarHidden:NO];
+    [ALUserDefaultsHandler setBottomTabBarHidden:YES];
     [ALApplozicSettings setTitleForConversationScreen:@"Chats"];
     [ALApplozicSettings setCustomNavRightButtonMsgVC:NO];                   /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
     [ALApplozicSettings setTitleForBackButtonMsgVC:@"Back"];                /*  SET BACK BUTTON FOR MSG VC  */

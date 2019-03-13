@@ -389,7 +389,12 @@
 
 -(BOOL)isNotificationDisabled:(NSDictionary*)messageMetaData{
 
-    return (messageMetaData && [messageMetaData objectForKey:@"show"] && [[messageMetaData objectForKey:@"show"] isEqualToString:@"false"]);
+    if(!messageMetaData){
+        return NO;
+    }
+
+    NSString * notificationFlag = [messageMetaData objectForKey:@"show"];
+    return (messageMetaData && notificationFlag && [notificationFlag isEqualToString:@"false"]);
 }
 
 -(BOOL)processMetaData:(NSDictionary*)dict withAlert:alertValue withUpdateUI:(NSNumber *)updateUI

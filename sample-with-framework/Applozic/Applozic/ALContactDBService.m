@@ -113,11 +113,9 @@
     for (ALContact *contact in contacts) {
         
         result = [self updateContact:contact];
-        
+
         if (!result) {
-            
-            ALSLog(ALLoggerSeverityInfo, @"Failure to update the contacts");
-            break;
+            ALSLog(ALLoggerSeverityInfo, @"Failure to update the contacts %@",contact.userId);
         }
     }
     

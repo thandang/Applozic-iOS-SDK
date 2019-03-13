@@ -235,7 +235,7 @@
         result = [self addContact:contact];
 
         if (!result) {
-            break;
+            ALSLog(ALLoggerSeverityInfo, @"Failure to add/update the contacts %@",contact.userId);
         }
     }
 

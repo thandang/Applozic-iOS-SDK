@@ -173,19 +173,25 @@
     {
         NSError *error = (__bridge NSError *)CFError;
         ALSLog(ALLoggerSeverityError, @"ERROR_IN_SAVE_CONTACT : %@",error.description);
-        
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Application Settings"
-                                                             message:@"Enable Contacts Permission"
+
+        NSString * alertTitle = NSLocalizedStringWithDefaultValue(@"applicationSettings", [ALApplozicSettings getLocalizableName],[NSBundle mainBundle], @"Application Settings", @"");
+        NSString * alertMessage = NSLocalizedStringWithDefaultValue(@"permissionPopMessageForContacts", [ALApplozicSettings getLocalizableName],[NSBundle mainBundle], @"Enable Contacts Permission", @"");
+        NSString * cancelTitle = NSLocalizedStringWithDefaultValue(@"cancel", [ALApplozicSettings getLocalizableName],[NSBundle mainBundle], @"Cancel", @"");
+        NSString * settingTitle = NSLocalizedStringWithDefaultValue(@"settings", [ALApplozicSettings getLocalizableName],[NSBundle mainBundle], @"Settings", @"");
+
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                             message:alertMessage
                                                             delegate:self
-                                                   cancelButtonTitle:@"Cancel"
-                                                   otherButtonTitles:@"Settings", nil];
+                                                   cancelButtonTitle:cancelTitle
+                                                   otherButtonTitles:settingTitle, nil];
         
         [alertView show];
         
         return;
     }
-    
-    [ALUtilityClass showAlertMessage:@"Contact Saved Successfully" andTitle:@"Contact"];
+    NSString * saveContactMessage = NSLocalizedStringWithDefaultValue(@"ContactSaveMessage", [ALApplozicSettings getLocalizableName],[NSBundle mainBundle], @"Contact Saved Successfully", @"");
+    NSString * contactTitle = NSLocalizedStringWithDefaultValue(@"contactsTitle", [ALApplozicSettings getLocalizableName],[NSBundle mainBundle], @"Contact", @"");
+    [ALUtilityClass showAlertMessage:saveContactMessage andTitle:contactTitle];
 }
 
 @end

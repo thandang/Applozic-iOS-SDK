@@ -16,7 +16,7 @@
 +(void)processRequest:(NSMutableURLRequest *)theRequest andTag:(NSString *)tag WithCompletionHandler:(void (^)(id, NSError *))reponseCompletion
 {
 
-    [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData * data, NSURLResponse *  response, NSError *  connectionError) {
+    NSURLSessionDataTask * nsurlSessionDataTask  =  [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData * data, NSURLResponse *  response, NSError *  connectionError) {
 
         NSHTTPURLResponse * theHttpResponse = (NSHTTPURLResponse *) response;
 
@@ -149,7 +149,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             reponseCompletion(theJson,nil);
         });
-    }].resume;
+    }];
+    nsurlSessionDataTask.resume;
 }
 
 

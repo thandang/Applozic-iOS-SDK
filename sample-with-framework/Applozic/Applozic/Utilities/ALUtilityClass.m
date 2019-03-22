@@ -432,13 +432,24 @@
 
 +(void)showAlertMessage:(NSString *)text andTitle:(NSString *)title
 {
-    
-    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title
-                                                         message:text
-                                                       delegate:self
-                                                     cancelButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedStringWithDefaultValue(@"okText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OK" , @""), nil];
-      [alertView show];
+
+    UIAlertController * uiAlertController = [UIAlertController
+                                 alertControllerWithTitle:title
+                                 message:text
+                                 preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction* okButton = [UIAlertAction
+                                actionWithTitle:NSLocalizedStringWithDefaultValue(@"okText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"OK" , @"")
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+
+                                }];
+
+    [uiAlertController addAction:okButton];
+    ALPushAssist *pushAssist = [[ALPushAssist alloc]init];
+    [pushAssist.topViewController.navigationController presentViewController:uiAlertController animated:NO completion:nil];
+
+
 }
 
 +(UIView *)setStatusBarStyle

@@ -455,8 +455,6 @@
 +(UIView *)setStatusBarStyle
 {
     UIApplication * app = [UIApplication sharedApplication];
-    [app setStatusBarHidden:NO];
-    [app setStatusBarStyle:[ALApplozicSettings getStatusBarStyle]];
     CGFloat height = app.statusBarFrame.size.height;
     CGFloat width = app.statusBarFrame.size.width;
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -height, width, height)];

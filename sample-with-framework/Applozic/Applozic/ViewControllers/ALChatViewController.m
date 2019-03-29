@@ -2109,8 +2109,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
-    if (action == @selector(paste:) &&  [UIPasteboard generalPasteboard].image){
-        return YES;
+    if (action == @selector(paste:)){
+        return [UIPasteboard generalPasteboard].image ? YES : NO;
     }else{
         return [super canPerformAction:action withSender:sender];
     }

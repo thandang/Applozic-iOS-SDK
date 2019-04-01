@@ -628,7 +628,6 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
 
 +(void) proessUploadImageForMessage:(ALMessage *)message databaseObj:(DB_FileMetaInfo *)fileMetaInfo uploadURL:(NSString *)uploadURL withdelegate:(id)delegate{
 
-
     NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * timestamp = message.imageFilePath;
     NSString * filePath = [docDirPath stringByAppendingPathComponent:timestamp];
@@ -743,6 +742,8 @@ withAttachmentAtLocation:(NSString *)attachmentLocalPath
     dbMessage.fileMetaInfo.size = message.fileMeta.size;
     dbMessage.fileMetaInfo.suUserKeyString = message.fileMeta.userKey;
     message.fileMetaKey = message.fileMeta.key;
+    message.msgDBObjectId = [dbMessage objectID];
+
     [[ALDBHandler sharedInstance].managedObjectContext save:nil];
     return message;
 }

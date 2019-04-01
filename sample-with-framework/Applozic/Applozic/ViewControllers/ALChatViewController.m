@@ -73,6 +73,10 @@
 #import "ALImagePreviewController.h"
 #import "ALLinkCell.h"
 #import "ALDocumentPickerHandler.h"
+#import "ALHTTPManager.h"
+#import "ALUploadTask.h"
+#import "ALDownloadTask.h"
+
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -86,7 +90,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate, ALAudioRecorderViewProtocol, ALAudioRecorderProtocol,
                                     ALMQTTConversationDelegate, ALAudioAttachmentDelegate, UIPickerViewDelegate, UIPickerViewDataSource,
                                     UIAlertViewDelegate, ALMUltipleAttachmentDelegate, UIDocumentInteractionControllerDelegate,
-                                     ALSoundRecorderProtocol, ALCustomPickerDelegate,ALImageSendDelegate,UIDocumentPickerDelegate>
+                                     ALSoundRecorderProtocol, ALCustomPickerDelegate,ALImageSendDelegate,UIDocumentPickerDelegate,ApplozicAttachmentDelegate>
 
 @property (nonatomic, assign) NSInteger startIndex;
 @property (nonatomic, assign) int rp;
@@ -2494,33 +2498,45 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     message.inProgress = YES;
 
     NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
-    NSArray * theFiletredArray = [theCurrentConnectionsArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"keystring == %@", message.key]];
 
-    if (theFiletredArray.count == 0)
-    {
-        message.isUploadFailed = NO;
-        message.inProgress=YES;
-
-        NSError *error = nil;
-        DB_Message *dbMessage = (DB_Message*)[dbService getMeesageById:message.msgDBObjectId error:&error];
-        dbMessage.inProgress = [NSNumber numberWithBool:YES];
-        dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
-
-        [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-        if ([message.type isEqualToString:@"5"]&& !message.fileMeta.key) // upload
-        {
-            [self uploadImage:message];
+    for(NSURLSession *session in theCurrentConnectionsArray ){
+        NSURLSessionConfiguration *config =  session.configuration;
+        NSArray *array =  [config.identifier componentsSeparatedByString:@","];
+        if([array[0]  isEqual: @"THUMBNAIL"]){
+            break;
         }
-        else    //download
-        {
-            [ALMessageService processImageDownloadforMessage:message withdelegate:self];
+        if(array[1] == message.key){
+            ALSLog(ALLoggerSeverityInfo, @"Already present do nothing###");
+            return;
         }
-        ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
     }
-    else
+
+    message.isUploadFailed = NO;
+
+    NSError *error = nil;
+    DB_Message *dbMessage = (DB_Message*)[dbService getMeesageById:message.msgDBObjectId error:&error];
+    dbMessage.inProgress = [NSNumber numberWithBool:YES];
+    dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
+
+    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
+    if ([message.type isEqualToString:@"5"]&& !message.fileMeta.key) // upload
     {
-        ALSLog(ALLoggerSeverityInfo, @"connection already present do nothing###");
+        [self uploadImage:message];
     }
+    else    //download
+    {
+
+        ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
+        downloadTask.identifier = message.key;
+        downloadTask.isThumbnail = NO;
+
+        ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
+        manager.downloadTask = downloadTask;
+        manager.attachmentProgressDelegate = self;
+        [manager processDownloadforMessage:message];
+
+    }
+    ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
 
 }
 
@@ -2535,8 +2551,18 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     imageCell.sizeLabel.alpha = 1;
     message.inProgress = NO;
     [[ALMessageService sharedInstance] handleMessageFailedStatus:message];
-    [self releaseConnection:message.key];
 
+    NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+
+    for(NSURLSession *session in theCurrentConnectionsArray){
+        NSURLSessionConfiguration *config =  session.configuration;
+        NSArray *array =  [config.identifier componentsSeparatedByString:@","];
+        if(array[1] == message.key){
+            session.invalidateAndCancel;
+            [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:session];
+            break;
+        }
+    }
 }
 
 -(void)showFullScreen:(UIViewController*)uiController
@@ -2648,14 +2674,22 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     }
 }
 
--(void) thumbnailDownload:(NSString *) key withThumbnailUrl:(NSString *) thumbnailUrl{
+-(void) thumbnailDownload:(NSString *) key{
 
-    NSString * theUrlString = [NSString stringWithFormat:@"%@",thumbnailUrl];
-    NSMutableURLRequest * urlRequest =  [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:theUrlString paramString:nil];
-    ALConnection * connection = [[ALConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
-    connection.keystring = key;
-    connection.connectionType = @"Thumbnail Downloading";
-    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:connection];
+    ALMessageDBService * messageDBService = [[ALMessageDBService alloc]init];
+
+     // ALUploadTask * uploadTask = [[ALUploadTask alloc]init];
+     ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
+    downloadTask.identifier = key;
+    downloadTask.isThumbnail = YES;
+
+    ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
+    manager.downloadTask = downloadTask;
+
+    manager.attachmentProgressDelegate = self;
+
+    [manager processImageThumbnailDownloadforMessage:[messageDBService getMessageByKey:key]];
+
 }
 
 //Error
@@ -2797,6 +2831,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     [self uploadImage:theMessage];
 }
 
+
 -(NSManagedObjectID *) saveMessageToDatabase: (ALMessage *) message{
     [self.alMessageWrapper addALMessageToMessageArray:message];
     ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];
@@ -2843,7 +2878,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
         // post image
         ALMessageClientService * clientService  = [[ALMessageClientService alloc]init];
-        [clientService sendPhotoForUserInfo:userInfo withCompletion:^(NSString *message, NSError *error) {
+        [clientService sendPhotoForUserInfo:userInfo withCompletion:^(NSString *url, NSError *error) {
 
             if (error)
             {
@@ -2855,7 +2890,13 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
                 [[ALMessageService sharedInstance] handleMessageFailedStatus:theMessage];
                 return;
             }
-            [ALMessageService proessUploadImageForMessage:theMessage databaseObj:dbMessage.fileMetaInfo uploadURL:message  withdelegate:self];
+
+            ALHTTPManager *httpManager = [[ALHTTPManager alloc]init];
+            httpManager.attachmentProgressDelegate = self;
+            ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
+            alUploadTask.identifier = dbMessage.key;
+            httpManager.uploadTask = alUploadTask;
+            [httpManager proessUploadFileForMessage:theMessage uploadURL:url];
 
         }];
     }
@@ -4800,6 +4841,71 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString *filePathString = [ALDocumentPickerHandler saveFile:filePath];
         [self processAttachment:filePathString andMessageText:@"" andContentType:ALMESSAGE_CONTENT_ATTACHMENT];
     }
+}
+
+
+- (void)onDownloadCompleted:(ALMessage *)alMessage {
+
+    if(alMessage)
+    {
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSIndexPath * path = [self getIndexPathForMessage:alMessage.key];
+            [self.alMessageWrapper getUpdatedMessageArray][path.row] = alMessage;
+            [self.mTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+
+        });
+    }
+}
+
+- (void)onDownloadFailed:(ALMessage *)alMessage {
+    ALMediaBaseCell * imageCell=  [self getCell:alMessage.key];
+    imageCell.progresLabel.alpha = 0;
+    imageCell.mDowloadRetryButton.alpha = 1;
+    imageCell.downloadRetryView.alpha = 1;
+    imageCell.sizeLabel.alpha = 1;
+}
+
+- (void)onUpdateBytesDownloaded:(int64_t)bytesReceived withMessage:(ALMessage *)alMessage {
+
+    ALMediaBaseCell*  cell=  [self getCell:alMessage.key];
+    cell.progresLabel.endDegree = [self bytesConvertsToDegree:[alMessage.fileMeta.size floatValue] comingBytes:(CGFloat)bytesReceived];
+
+}
+
+- (void)onUpdateBytesUploaded:(int64_t)bytesSent withMessage:(ALMessage *)alMessage {
+
+    ALMediaBaseCell*  cell =  [self getCell:alMessage.key];
+
+    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+     NSString * filePath = [docDir  stringByAppendingPathComponent:alMessage.imageFilePath];
+
+      unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
+     cell.progresLabel.endDegree = [self bytesConvertsToDegree:(CGFloat)fileSize comingBytes:(CGFloat)bytesSent];
+
+}
+
+- (void)onUploadCompleted:(ALMessage *)alMessage withOldMessageKey:(NSString *)oldMessageKey{
+
+    if(alMessage != nil){
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+           NSIndexPath * path = [self getIndexPathForMessage:oldMessageKey];
+
+            [self.alMessageWrapper getUpdatedMessageArray][path.row] = alMessage;
+            [self.mTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+
+        });
+    }
+}
+
+- (void)onUploadFailed:(ALMessage *)alMessage {
+    ALMediaBaseCell * imageCell=  [self getCell:alMessage.key];
+    imageCell.progresLabel.alpha = 0;
+    imageCell.mDowloadRetryButton.alpha = 1;
+    imageCell.downloadRetryView.alpha = 1;
+    imageCell.sizeLabel.alpha = 1;
 }
 
 @end

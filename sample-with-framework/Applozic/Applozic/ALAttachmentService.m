@@ -116,7 +116,7 @@
                 return;
             }else{
                 if(self.attachmentProgressDelegate){
-                    [self.attachmentProgressDelegate onUploadCompleted:almessage];
+                     [self.attachmentProgressDelegate onUploadCompleted:almessage withOldMessageKey:dbMessage.key];
                 }
                 if(self.delegate){
                     [self.delegate onMessageSent:almessage];
@@ -128,7 +128,6 @@
     else if ([connection.connectionType isEqualToString:@"Thumbnail Downloading"])
     {
         ALMessage *almessage =  [dbService writeFileAndUpdateMessageInDb:connection withFileFlag:NO];
-
         if(self.attachmentProgressDelegate){
             [self.attachmentProgressDelegate onDownloadCompleted:almessage];
         }

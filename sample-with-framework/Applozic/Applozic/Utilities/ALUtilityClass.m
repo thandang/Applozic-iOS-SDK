@@ -658,6 +658,13 @@
     return coordinate;
 }
 
++(NSString *)getFileExtensionWithFileName:(NSString *)fileName{
+    NSArray *componentsArray = [fileName componentsSeparatedByString:@"."];
+    return componentsArray.count  > 0 ? [componentsArray lastObject]:nil;
+}
 
++(NSString *)getDocumentDirectory{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) objectAtIndex:0];
+}
 
 @end

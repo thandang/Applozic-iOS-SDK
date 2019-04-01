@@ -27,25 +27,25 @@
 
 
 -(void)sendMessageWithAttachment:(ALMessage*) attachmentMessage withDelegate:(id<ApplozicUpdatesDelegate>) delegate withAttachmentDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
-    
+
     if(!attachmentMessage || !attachmentMessage.imageFilePath){
         return;
     }
     self.delegate = delegate;
     self.attachmentProgressDelegate = attachmentProgressDelegate;
-    
+
     CFStringRef pathExtension = (__bridge_retained CFStringRef)[attachmentMessage.imageFilePath pathExtension];
     CFStringRef type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension, NULL);
     CFRelease(pathExtension);
     NSString *mimeType = (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass(type, kUTTagClassMIMEType);
-    
+
     attachmentMessage.fileMeta.contentType = mimeType;
     if( attachmentMessage.contentType == ALMESSAGE_CONTENT_VCARD){
         attachmentMessage.fileMeta.contentType = @"text/x-vcard";
     }
     NSData *imageSize = [NSData dataWithContentsOfFile:attachmentMessage.imageFilePath];
     attachmentMessage.fileMeta.size = [NSString stringWithFormat:@"%lu",(unsigned long)imageSize.length];
-    
+
     //DB Addition
 
     ALMessageDBService *alMessageDbService = [[ALMessageDBService alloc]init];
@@ -53,13 +53,13 @@
     DB_Message *dbMessage =   [alMessageDbService addAttachmentMessage:attachmentMessage];
 
     NSDictionary * userInfo = [attachmentMessage dictionary];
-    
+
     ALMessageClientService * clientService  = [[ALMessageClientService alloc]init];
     [clientService sendPhotoForUserInfo:userInfo withCompletion:^(NSString *responseUrl, NSError *error) {
-        
+
         if (error)
         {
-            
+
             [self.attachmentProgressDelegate onUploadFailed:[[ALMessageService sharedInstance] handleMessageFailedStatus:attachmentMessage]];
             return;
         }
@@ -69,11 +69,11 @@
         httpManager.delegate = self.delegate;
         [httpManager processUploadFileForMessage:[alMessageDbService createMessageEntity:dbMessage] uploadURL:responseUrl];
     }];
-    
+
 }
 
 -(void) downloadMessageAttachment:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
-    
+
     self.attachmentProgressDelegate = attachmentProgressDelegate;
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
     manager.attachmentProgressDelegate = self.attachmentProgressDelegate;

@@ -23,7 +23,7 @@
 #define CONVERSATION_CALL_COMPLETED @"conversationCallCompleted"
 #define MESSAGE_META_DATA_UPDATE @"messageMetaDataUpdateNotification"
 
-@interface ALMessageService : NSObject <NSURLConnectionDataDelegate>
+@interface ALMessageService : NSObject 
 
 +(ALMessageService *)sharedInstance;
 

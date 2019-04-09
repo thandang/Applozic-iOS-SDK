@@ -32,4 +32,6 @@
 
 -(void) processImageThumbnailDownloadforMessage:(ALMessage *) message;
 
+-(void)uploadProfileImage:(UIImage *)profileImage withFilePath:(NSString *)filePath uploadURL:(NSString *)uploadURL withCompletion:(void(^)(NSData * _Nullable data,NSError *error)) completion;
+
 @end

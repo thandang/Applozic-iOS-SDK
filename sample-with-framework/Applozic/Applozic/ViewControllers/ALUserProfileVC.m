@@ -29,6 +29,7 @@
 #import "ALUserDefaultsHandler.h"
 #import "ALUserService.h"
 #import "ALUserDetail.h"
+#import "ALHTTPManager.h"
 
 @interface ALUserProfileVC () <NSURLConnectionDataDelegate>
 
@@ -470,21 +471,7 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     {
         imageLinkFromServer = [[NSString alloc] initWithData:connection.mData encoding:NSUTF8StringEncoding];
         ALSLog(ALLoggerSeverityInfo, @"IMAGE_LINK :: %@",imageLinkFromServer);
-        ALUserService *userService = [ALUserService new];
-        [userService updateUserDisplayName:@"" andUserImage:imageLinkFromServer userStatus:@"" withCompletion:^(id theJson, NSError *error) {
-            
-            ALSLog(ALLoggerSeverityInfo, @"SERVER_RESPONSE_IMAGE_UPDATE :: %@",(NSString *)theJson);
-            ALSLog(ALLoggerSeverityError, @"ERROR :: %@",error.description);
-            if(!error)
-            {
-                ALSLog(ALLoggerSeverityInfo, @"IMAGE_UPDATED_SUCCESSFULLY");
-                
-                
-                [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"imageUpdateText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Image Updated Successfully!!!" , @"")  andTitle:NSLocalizedStringWithDefaultValue(@"alertText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Alert" , @"") ];
-                [ALUserDefaultsHandler setProfileImageLinkFromServer:self->imageLinkFromServer];
-                
-            }
-        }];
+      
     }
     [self.activityIndicator stopAnimating];
 }
@@ -517,9 +504,40 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
         }
         
         NSString * uploadUrl = [KBASE_URL stringByAppendingString:IMAGE_UPLOAD_URL];
-        [self proessUploadImage:image uploadURL:uploadUrl withdelegate:self];
-        
+
+        ALHTTPManager * manager = [[ALHTTPManager alloc]init];
+        [manager uploadProfileImage:image withFilePath:self->mainFilePath uploadURL:uploadUrl withCompletion:^(NSData * _Nullable data, NSError *error) {
+
+            if(error == nil){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSString *imageLinkFromServer = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    ALSLog(ALLoggerSeverityInfo, @"PROFILE IMAGE URL :: %@",imageLinkFromServer);
+                    self->imageLinkFromServer = imageLinkFromServer;
+                    ALUserService *userService = [ALUserService new];
+                    [userService updateUserDisplayName:@"" andUserImage:imageLinkFromServer userStatus:@"" withCompletion:^(id theJson, NSError *error) {
+
+                        ALSLog(ALLoggerSeverityInfo, @"SERVER_RESPONSE_IMAGE_UPDATE :: %@",(NSString *)theJson);
+                        ALSLog(ALLoggerSeverityError, @"ERROR :: %@",error.description);
+                        if(!error)
+                        {
+                            ALSLog(ALLoggerSeverityInfo, @"IMAGE_UPDATED_SUCCESSFULLY");
+
+
+                            [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"imageUpdateText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Image Updated Successfully!!!" , @"")  andTitle:NSLocalizedStringWithDefaultValue(@"alertText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Alert" , @"") ];
+                            [ALUserDefaultsHandler setProfileImageLinkFromServer:self->imageLinkFromServer];
+
+                        }
+                    }];
+                });
+            }
+
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [self.activityIndicator stopAnimating];
+            });
+        }];
+
     }];
+
     
     [alert addAction:cancel];
     [alert addAction:upload];

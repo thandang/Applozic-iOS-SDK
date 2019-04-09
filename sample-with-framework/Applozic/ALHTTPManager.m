@@ -338,6 +338,51 @@
 }
 
 
+
+-(void)uploadProfileImage:(UIImage *)profileImage withFilePath:(NSString *)filePath uploadURL:(NSString *)uploadURL withCompletion:(void(^)(NSData * _Nullable data,NSError *error)) completion{
+
+    NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        //Create boundary, it can be anything
+        NSString *boundary = @"------ApplogicBoundary4QuqLuM1cE5lMwCy";
+        // set Content-Type in HTTP header
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+        // post body
+        NSMutableData *body = [NSMutableData data];
+        NSString *FileParamConstant = @"file";
+        NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
+        ALSLog(ALLoggerSeverityInfo, @"IMAGE_DATA :: %f",imageData.length/1024.0);
+
+        //Assuming data is not nil we add this to the multipart form
+        if (imageData)
+        {
+
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", FileParamConstant, @"imge_123_profile"] dataUsingEncoding:NSUTF8StringEncoding]];
+
+            [body appendData:[[NSString stringWithFormat:@"Content-Type:%@\r\n\r\n", @"image/jpeg"] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:imageData];
+            [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        //Close off the request with the boundary
+        [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        // setting the body of the post to the request
+        [request setHTTPBody:body];
+        // set URL
+        [request setURL:[NSURL URLWithString:uploadURL]];
+
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        
+        NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            completion(data,error);
+        }];
+        [nsurlSessionDataTask resume];
+    }
+}
+
 @end
 
 

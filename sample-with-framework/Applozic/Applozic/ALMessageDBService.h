@@ -99,8 +99,6 @@
 
 -(ALMessage *)handleMessageFailedStatus:(ALMessage *)message;
 
--(ALMessage*)writeFileAndUpdateMessageInDb:(ALConnection*)connection withFileFlag:(BOOL)isFile;
-
 -(DB_Message*)addAttachmentMessage:(ALMessage*)message;
 
 -(void) updateMessageMetadataOfKey:(NSString*)messageKey withMetadata:(NSMutableDictionary*) metadata ;

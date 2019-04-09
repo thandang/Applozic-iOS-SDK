@@ -1177,44 +1177,6 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     return message;
 }
 
--(ALMessage*)writeFileAndUpdateMessageInDb:(ALConnection*)connection withFileFlag:(BOOL)isFile{
-
-    DB_Message * messageEntity = (DB_Message*)[self getMessageByKey:@"key" value:connection.keystring];
-
-    NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSArray *componentsArray = [messageEntity.fileMetaInfo.name componentsSeparatedByString:@"."];
-    NSString *fileExtension = [componentsArray lastObject];
-
-    NSString * filePath;
-
-    if(isFile){
-
-        filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
-
-        // If 'save video to gallery' is enabled then save to gallery
-        if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
-            UISaveVideoAtPathToSavedPhotosAlbum(filePath, self, nil, nil);
-        }
-
-        messageEntity.inProgress = [NSNumber numberWithBool:NO];
-        messageEntity.isUploadFailed=[NSNumber numberWithBool:NO];
-        messageEntity.filePath = [NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension];
-    }else{
-        filePath  = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension]];
-
-        messageEntity.fileMetaInfo.thumbnailFilePath = [NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension];
-    }
-
-    [connection.mData writeToFile:filePath atomically:YES];
-
-    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-
-    ALMessage * almessage = [[ALMessageDBService new ] createMessageEntity:messageEntity];
-
-    return almessage;
-}
-
-
 -(ALMessage*)writeDataAndUpdateMessageInDb:(NSData*)data withMessageKey:(NSString *)messageKey withFileFlag:(BOOL)isFile{
 
     DB_Message * messageEntity = (DB_Message*)[self getMessageByKey:@"key" value:messageKey];

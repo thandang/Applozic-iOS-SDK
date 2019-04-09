@@ -444,13 +444,11 @@ UIViewController * modalCon;
     {
         if(alMessage.fileMeta.thumbnailFilePath == nil){
             ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
-            [messageClientService downloadImageThumbnailUrl:alMessage withCompletion:^(NSString *fileURL, NSError *error) {
-             
+            [messageClientService downloadImageThumbnailUrl:alMessage.fileMeta.url blobKey:alMessage.fileMeta.blobKey completion:^(NSString *fileURL, NSError *error) {
                 ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
                 if(error == nil){
                     [self.delegate thumbnailDownload:alMessage.key withThumbnailUrl:fileURL];
                 }
-            
             }];
         }else{
             

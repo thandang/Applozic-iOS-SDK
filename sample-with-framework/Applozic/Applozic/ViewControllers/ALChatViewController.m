@@ -24,7 +24,6 @@
 #import "ALFileMetaInfo.h"
 #import "DB_FileMetaInfo.h"
 #import "UIImageView+WebCache.h"
-#import "ALConnection.h"
 #import "ALConnectionQueueHandler.h"
 #import "ALRequestHandler.h"
 #import "ALUserDefaultsHandler.h"
@@ -2760,7 +2759,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
             ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
             alUploadTask.identifier = dbMessage.key;
             httpManager.uploadTask = alUploadTask;
-            [httpManager proessUploadFileForMessage:theMessage uploadURL:url];
+            [httpManager processUploadFileForMessage:theMessage uploadURL:url];
 
         }];
     }

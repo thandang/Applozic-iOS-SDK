@@ -11,7 +11,6 @@
 #import "ALUserProfileVC.h"
 #import "ALApplozicSettings.h"
 #import "ALUtilityClass.h"
-#import "ALConnection.h"
 #import "ALConnectionQueueHandler.h"
 #import "ALUserDefaultsHandler.h"
 #import "ALImagePickerHandler.h"
@@ -31,10 +30,9 @@
 #import "ALUserDetail.h"
 #import "ALHTTPManager.h"
 
-@interface ALUserProfileVC () <NSURLConnectionDataDelegate>
+@interface ALUserProfileVC ()
 
 @property (nonatomic, retain) UIImagePickerController * mImagePicker;
-@property (nonatomic, strong) ALConnection * alConnection;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UISwitch *notificationToggle;
 @property (strong, nonatomic) IBOutlet UILabel *userStatusLabel;
@@ -447,39 +445,6 @@
     [self confirmUserForProfileImage:normalImage];
 }
 
-//==============================================================================================================================
-#pragma NSURL CONNECTION DELEGATES + HELPER METHODS
-//==============================================================================================================================
-
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    ALSLog(ALLoggerSeverityError, @"PROFILE_IMAGE_UPLOAD_ERROR :: %@",error.description);
-    [self.activityIndicator stopAnimating];
-}
-
--(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten
-totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
-{
-    ALSLog(ALLoggerSeverityInfo, @"TOTAL_BYTES_WRITTEN :: %ld",(long)totalBytesWritten);
-}
-
--(void)connectionDidFinishLoading:(ALConnection *)connection
-{
-    ALSLog(ALLoggerSeverityInfo, @"CONNNECTION_FINISHED");
-    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:connection];
-    if([connection.connectionType isEqualToString:CONNECTION_TYPE_USER_IMG_UPLOAD])
-    {
-        imageLinkFromServer = [[NSString alloc] initWithData:connection.mData encoding:NSUTF8StringEncoding];
-        ALSLog(ALLoggerSeverityInfo, @"IMAGE_LINK :: %@",imageLinkFromServer);
-      
-    }
-    [self.activityIndicator stopAnimating];
-}
-
--(void)connection:(ALConnection *)connection didReceiveData:(NSData *)data
-{
-    [connection.mData appendData:data];
-}
 
 -(void)confirmUserForProfileImage:(UIImage *)image
 {
@@ -522,7 +487,6 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
                         {
                             ALSLog(ALLoggerSeverityInfo, @"IMAGE_UPDATED_SUCCESSFULLY");
 
-
                             [ALUtilityClass showAlertMessage:NSLocalizedStringWithDefaultValue(@"imageUpdateText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Image Updated Successfully!!!" , @"")  andTitle:NSLocalizedStringWithDefaultValue(@"alertText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Alert" , @"") ];
                             [ALUserDefaultsHandler setProfileImageLinkFromServer:self->imageLinkFromServer];
 
@@ -556,52 +520,6 @@ totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInte
     NSString *filePath = [ALImagePickerHandler saveImageToDocDirectory:image];
     [ALUserDefaultsHandler setProfileImageLink:filePath];
     return filePath;
-}
-
--(void)proessUploadImage:(UIImage *)profileImage uploadURL:(NSString *)uploadURL withdelegate:(id)delegate
-{
-    [self.activityIndicator startAnimating];
-    NSString *filePath = mainFilePath;
-    NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        //Create boundary, it can be anything
-        NSString *boundary = @"------ApplogicBoundary4QuqLuM1cE5lMwCy";
-        // set Content-Type in HTTP header
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-        [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-        // post body
-        NSMutableData *body = [NSMutableData data];
-        NSString *FileParamConstant = @"file";
-        NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
-        ALSLog(ALLoggerSeverityInfo, @"IMAGE_DATA :: %f",imageData.length/1024.0);
-        
-        //Assuming data is not nil we add this to the multipart form
-        if (imageData)
-        {
-            
-            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", FileParamConstant, @"imge_123_profile"] dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            [body appendData:[[NSString stringWithFormat:@"Content-Type:%@\r\n\r\n", @"image/jpeg"] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:imageData];
-            [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        }
-        //Close off the request with the boundary
-        [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        // setting the body of the post to the request
-        [request setHTTPBody:body];
-        // set URL
-        [request setURL:[NSURL URLWithString:uploadURL]];
-        
-        ALConnection * connection = [[ALConnection alloc] initWithRequest:request delegate:delegate startImmediately:YES];
-        connection.connectionType = CONNECTION_TYPE_USER_IMG_UPLOAD;
-        
-        [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:connection];
-        
-    }
-    
 }
 
 -(IBAction)editButtonAction:(id)sender

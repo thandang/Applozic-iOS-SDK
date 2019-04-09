@@ -131,7 +131,7 @@
 
 }
 
--(void) proessUploadFileForMessage:(ALMessage *)message uploadURL:(NSString *)uploadURL{
+-(void) processUploadFileForMessage:(ALMessage *)message uploadURL:(NSString *)uploadURL{
 
     NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * timestamp = message.imageFilePath;
@@ -339,7 +339,7 @@
 
 
 
--(void)uploadProfileImage:(UIImage *)profileImage withFilePath:(NSString *)filePath uploadURL:(NSString *)uploadURL withCompletion:(void(^)(NSData * _Nullable data,NSError *error)) completion{
+-(void)uploadProfileImage:(UIImage *)profileImage withFilePath:(NSString *)filePath uploadURL:(NSString *)uploadURL withCompletion:(void(^)(NSData * data,NSError *error)) completion{
 
     NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
 

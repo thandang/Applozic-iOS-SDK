@@ -24,7 +24,6 @@
 #import "NSString+Encode.h"
 #import "ALApplozicSettings.h"
 #import "UIImageView+WebCache.h"
-#import "ALConnection.h"
 #import "ALConnectionQueueHandler.h"
 #import "ALApplozicSettings.h"
 

@@ -11,7 +11,6 @@
 #import "DB_Message.h"
 #import "ALMessage.h"
 #import "ALFileMetaInfo.h"
-#import "ALConnection.h"
 
 @protocol ALMessagesDelegate <NSObject>
 

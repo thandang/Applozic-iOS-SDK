@@ -70,7 +70,7 @@
         ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
         alUploadTask.identifier = dbMessage.key;
         httpManager.uploadTask = alUploadTask;
-        [httpManager proessUploadFileForMessage:[alMessageDbService createMessageEntity:dbMessage] uploadURL:responseUrl];
+        [httpManager processUploadFileForMessage:[alMessageDbService createMessageEntity:dbMessage] uploadURL:responseUrl];
     }];
     
 }

@@ -25,7 +25,6 @@
 #import "UIImage+MultiFormat.h"
 #import "ALShowImageViewController.h"
 #import "ALMessageClientService.h"
-#import "ALConnection.h"
 #import "ALConnectionQueueHandler.h"
 #import "UIImage+animatedGIF.h"
 

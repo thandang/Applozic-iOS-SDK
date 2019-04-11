@@ -67,9 +67,6 @@
         ALHTTPManager *httpManager = [[ALHTTPManager alloc]init];
         httpManager.attachmentProgressDelegate = self.attachmentProgressDelegate;
         httpManager.delegate = self.delegate;
-        ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
-        alUploadTask.identifier = dbMessage.key;
-        httpManager.uploadTask = alUploadTask;
         [httpManager processUploadFileForMessage:[alMessageDbService createMessageEntity:dbMessage] uploadURL:responseUrl];
     }];
     
@@ -78,28 +75,17 @@
 -(void) downloadMessageAttachment:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
     
     self.attachmentProgressDelegate = attachmentProgressDelegate;
-    ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
-    downloadTask.identifier = alMessage.key;
-    downloadTask.isThumbnail = NO;
-
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-    manager.downloadTask = downloadTask;
     manager.attachmentProgressDelegate = self.attachmentProgressDelegate;
-    [manager processDownloadForMessage:alMessage];
-
+    [manager processDownloadForMessage:alMessage isAttachmentDownload:YES];
 }
 
 -(void) downloadImageThumbnail:(ALMessage*)alMessage withDelegate:(id<ApplozicAttachmentDelegate>)attachmentProgressDelegate{
 
     self.attachmentProgressDelegate = attachmentProgressDelegate;
-    ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
-    downloadTask.identifier = alMessage.key;
-    downloadTask.isThumbnail = YES;
-
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-    manager.downloadTask = downloadTask;
     manager.attachmentProgressDelegate = self.attachmentProgressDelegate;
-    [manager processDownloadForMessage:alMessage];
+    [manager processDownloadForMessage:alMessage isAttachmentDownload:NO];
 }
 
 

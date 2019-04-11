@@ -2524,16 +2524,9 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     }
     else    //download
     {
-
-        ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
-        downloadTask.identifier = message.key;
-        downloadTask.isThumbnail = NO;
-
         ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-        manager.downloadTask = downloadTask;
         manager.attachmentProgressDelegate = self;
-        [manager processDownloadForMessage:message];
-
+        [manager processDownloadForMessage:message isAttachmentDownload:YES];
     }
     ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
 
@@ -2572,19 +2565,9 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 -(void) thumbnailDownload:(NSString *) key{
 
     ALMessageDBService * messageDBService = [[ALMessageDBService alloc]init];
-
-     // ALUploadTask * uploadTask = [[ALUploadTask alloc]init];
-     ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
-    downloadTask.identifier = key;
-    downloadTask.isThumbnail = YES;
-
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-    manager.downloadTask = downloadTask;
-
     manager.attachmentProgressDelegate = self;
-
-    [manager processImageThumbnailDownloadforMessage:[messageDBService getMessageByKey:key]];
-
+    [manager processDownloadForMessage:[messageDBService getMessageByKey:key] isAttachmentDownload:NO];
 }
 
 -(CGFloat)bytesConvertsToDegree:(CGFloat)totalBytesExpectedToWrite comingBytes:(CGFloat)totalBytesWritten

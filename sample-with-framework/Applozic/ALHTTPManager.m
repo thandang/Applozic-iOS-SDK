@@ -141,6 +141,10 @@
 
 -(void) processUploadFileForMessage:(ALMessage *)message uploadURL:(NSString *)uploadURL{
 
+    ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
+    alUploadTask.identifier = message.key;
+    self.uploadTask = alUploadTask;
+
     NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * timestamp = message.imageFilePath;
     NSString * filePath = [docDirPath stringByAppendingPathComponent:timestamp];
@@ -204,15 +208,21 @@
         [nsurlSessionDataTask resume];
 
         [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
-    }
-    else{
+    }else{
         ALSLog(ALLoggerSeverityError, @"<<< ERROR >>> :: FILE DO NOT EXIT AT GIVEN PATH");
+        if(self.attachmentProgressDelegate){
+            [self.attachmentProgressDelegate onUploadFailed:message];
+        }
     }
 
 }
 
+-(void) processDownloadForMessage:(ALMessage *) alMessage isAttachmentDownload:(BOOL) attachmentDownloadFlag {
 
--(void) processImageThumbnailDownloadforMessage:(ALMessage *) alMessage{
+    ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
+    downloadTask.identifier = alMessage.key;
+    downloadTask.isThumbnail = !attachmentDownloadFlag;
+    self.downloadTask = downloadTask;
 
     ALMessageDBService *messageDatabase = [[ALMessageDBService alloc]init];
 
@@ -222,126 +232,96 @@
         NSURLSessionConfiguration *config = session.configuration;
         NSArray *array =  [config.identifier componentsSeparatedByString:@","];
         if(array[0] == alMessage.key){
-            ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing");
+            if(attachmentDownloadFlag){
+                ALSLog(ALLoggerSeverityInfo, @"Already present in Download attachment Queue returing");
+            }else{
+                ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing");
+            }
             return;
         }
     }
 
     NSString * fileExtension = [ALUtilityClass getFileExtensionWithFileName:alMessage.fileMeta.name];
 
-    NSString* fileName  =  [NSString stringWithFormat:@"%@_thumbnail_local.%@",alMessage.key,fileExtension];
+    NSString* fileName  = [NSString stringWithFormat:attachmentDownloadFlag? @"%@_local.%@": @"%@_thumbnail_local.%@",alMessage.key,fileExtension];
 
     NSString * filePath  = [ [ALUtilityClass getDocumentDirectory] stringByAppendingPathComponent:fileName];
 
     NSData * data =  [[NSData alloc] initWithContentsOfFile:filePath];
-
+    ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
     if(data){
-
         DB_Message * messageEntity = (DB_Message*)[messageDatabase getMessageByKey:@"key" value:alMessage.key];
-        messageEntity.fileMetaInfo.thumbnailFilePath = fileName;
+        if(attachmentDownloadFlag){
+            messageEntity.inProgress = [NSNumber numberWithBool:NO];
+            messageEntity.isUploadFailed = [NSNumber numberWithBool:NO];
+            messageEntity.filePath = fileName;
+        }else{
+            messageEntity.fileMetaInfo.thumbnailFilePath = fileName;
+        }
+
         [[ALDBHandler sharedInstance].managedObjectContext save:nil];
         alMessage =  [messageDatabase createMessageEntity:messageEntity];
         if(self.attachmentProgressDelegate){
             [self.attachmentProgressDelegate onDownloadCompleted:alMessage];
         }
-
     }else{
-        ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
-        [messageClientService downloadImageThumbnailUrl:alMessage withCompletion:^(NSString *fileURL, NSError *error) {
 
-            ALSLog(ALLoggerSeverityInfo, @"Thumbnail DOWNLOAD URL : %@", fileURL);
-            if(error == nil){
+        if(attachmentDownloadFlag){
+            [messageClientService downloadImageUrl:alMessage.fileMeta.blobKey withCompletion:^(NSString *fileURL, NSError *error) {
+                if(error)
+                {
+                    ALSLog(ALLoggerSeverityError, @"ERROR GETTING DOWNLOAD URL : %@", error);
+                    if(self.attachmentProgressDelegate){
+                        [self.attachmentProgressDelegate onDownloadFailed:alMessage];
+                    }
+                    return;
+                }
+                ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
 
-                NSString * theUrlString = [NSString stringWithFormat:@"%@",fileURL];
-                NSMutableURLRequest * urlRequest =  [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:theUrlString paramString:nil];
+                NSMutableURLRequest * theRequest;
+                if(ALApplozicSettings.isS3StorageServiceEnabled || ALApplozicSettings.isGoogleCloudServiceEnabled) {
+                    theRequest = [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:fileURL paramString:nil];
+                }else{
+                    theRequest = [ALRequestHandler createGETRequestWithUrlString: fileURL paramString:nil];
+                }
 
-                NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"THUMBNAIL,%@", alMessage.key]];
+                NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"FILE,%@",alMessage.key]];
 
                 NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
 
-                NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:urlRequest];
+                NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:theRequest];
                 [nsurlSessionDataTask resume];
 
                 [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
-            }else{
-                ALSLog(ALLoggerSeverityError, @"ERROR  DOWNLOAD Thumbnail : %@", error.description);
-                if(self.attachmentProgressDelegate){
-                    [self.attachmentProgressDelegate onDownloadFailed:alMessage];
+
+            }];
+
+        }else{
+            [messageClientService downloadImageThumbnailUrl:alMessage withCompletion:^(NSString *fileURL, NSError *error) {
+
+                ALSLog(ALLoggerSeverityInfo, @"Thumbnail DOWNLOAD URL : %@", fileURL);
+                if(error == nil){
+
+                    NSString * theUrlString = [NSString stringWithFormat:@"%@",fileURL];
+                    NSMutableURLRequest * urlRequest =  [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:theUrlString paramString:nil];
+
+                    NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"THUMBNAIL,%@", alMessage.key]];
+
+                    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+
+                    NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:urlRequest];
+                    [nsurlSessionDataTask resume];
+
+                    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
+                }else{
+                    ALSLog(ALLoggerSeverityError, @"ERROR  DOWNLOAD Thumbnail : %@", error.description);
+                    if(self.attachmentProgressDelegate){
+                        [self.attachmentProgressDelegate onDownloadFailed:alMessage];
+                    }
                 }
-            }
 
-        }];
-    }
-
-}
-
-
--(void) processDownloadForMessage:(ALMessage *) alMessage{
-
-    ALMessageDBService *messageDatabase = [[ALMessageDBService alloc]init];
-
-    NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
-
-    for(NSURLSession *session in theCurrentConnectionsArray ){
-        NSURLSessionConfiguration *config = session.configuration;
-        NSArray *array =  [config.identifier componentsSeparatedByString:@","];
-        if(array[0] == alMessage.key){
-            ALSLog(ALLoggerSeverityInfo, @"Already present in Download attachment Queue returing");
-            return;
+            }];
         }
-    }
-
-    NSString * fileExtension = [ALUtilityClass getFileExtensionWithFileName:alMessage.fileMeta.name];
-
-    NSString* fileName  =  [NSString stringWithFormat:@"%@_local.%@",alMessage.key,fileExtension];
-
-    NSString * filePath  = [ [ALUtilityClass getDocumentDirectory] stringByAppendingPathComponent:fileName];
-
-    NSData * data =  [[NSData alloc] initWithContentsOfFile:filePath];
-
-    if(data){
-
-        DB_Message * messageEntity = (DB_Message*)[messageDatabase getMessageByKey:@"key" value:alMessage.key];
-        messageEntity.inProgress = [NSNumber numberWithBool:NO];
-        messageEntity.isUploadFailed = [NSNumber numberWithBool:NO];
-        messageEntity.filePath = fileName;
-        [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-        alMessage =  [messageDatabase createMessageEntity:messageEntity];
-        if(self.attachmentProgressDelegate){
-            [self.attachmentProgressDelegate onDownloadCompleted:alMessage];
-        }
-    }else{
-
-        ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
-        [messageClientService downloadImageUrl:alMessage.fileMeta.blobKey withCompletion:^(NSString *fileURL, NSError *error) {
-            if(error)
-            {
-                ALSLog(ALLoggerSeverityError, @"ERROR GETTING DOWNLOAD URL : %@", error);
-                if(self.attachmentProgressDelegate){
-                    [self.attachmentProgressDelegate onDownloadCompleted:alMessage];
-                }
-                return;
-            }
-            ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
-
-            NSMutableURLRequest * theRequest;
-            if(ALApplozicSettings.isS3StorageServiceEnabled || ALApplozicSettings.isGoogleCloudServiceEnabled) {
-                theRequest = [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:fileURL paramString:nil];
-            }else{
-                theRequest = [ALRequestHandler createGETRequestWithUrlString: fileURL paramString:nil];
-            }
-
-            NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"FILE,%@",alMessage.key]];
-
-            NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-
-            NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:theRequest];
-            [nsurlSessionDataTask resume];
-
-            [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
-
-        }];
-
     }
 }
 

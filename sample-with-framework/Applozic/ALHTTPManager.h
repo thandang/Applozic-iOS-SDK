@@ -22,16 +22,13 @@
 
 @property (nonatomic) NSUInteger *length;
 
-@property (nonatomic, copy) NSURLSession *urlSesssion;
-
 @property (nonatomic) ALUploadTask * uploadTask;
+
 @property (nonatomic) ALDownloadTask * downloadTask;
 
--(void) processDownloadForMessage:(ALMessage *) message;
+-(void) processDownloadForMessage:(ALMessage *) alMessage isAttachmentDownload:(BOOL) attachmentDownloadFlag ;
 
 -(void) processUploadFileForMessage:(ALMessage *)message uploadURL:(NSString *)uploadURL;
-
--(void) processImageThumbnailDownloadforMessage:(ALMessage *) message;
 
 -(void)uploadProfileImage:(UIImage *)profileImage withFilePath:(NSString *)filePath uploadURL:(NSString *)uploadURL withCompletion:(void(^)(NSData * data,NSError *error)) completion;
 

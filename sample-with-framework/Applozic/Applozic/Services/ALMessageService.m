@@ -637,9 +637,7 @@ static ALMessageClientService *alMsgClientService;
                 if(!error)
                 {
 
-                    ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
-                    alUploadTask.identifier = dbMessage.key;
-                    httpManager.uploadTask = alUploadTask;
+                    ALHTTPManager *httpManager = [[ALHTTPManager alloc]init];
                     [httpManager processUploadFileForMessage:[dbService createMessageEntity:dbMessage] uploadURL:responseUrl];
 
                 }

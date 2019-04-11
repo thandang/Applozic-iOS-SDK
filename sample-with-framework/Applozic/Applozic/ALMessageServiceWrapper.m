@@ -105,15 +105,9 @@ andWithStatusDelegate:(id)statusDelegate
             [self.messageServiceDelegate uploadDownloadFailed:alMessage];
             return;
         }
-
-        ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
-        downloadTask.identifier = alMessage.key;
-        downloadTask.isThumbnail = NO;
-
-        ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-        manager.downloadTask = downloadTask;
-        manager.attachmentProgressDelegate = self;
-        [manager processDownloadForMessage:alMessage];
+        ALHTTPManager *httpManager = [[ALHTTPManager alloc]init];
+        httpManager.attachmentProgressDelegate = self;
+        [httpManager processUploadFileForMessage:[messageDBService createMessageEntity:theMessageEntity] uploadURL:message];
     }];
     
 }
@@ -163,14 +157,11 @@ andWithStatusDelegate:(id)statusDelegate
 
 
 -(void) downloadMessageAttachment:(ALMessage*)alMessage{
-    ALDownloadTask * downloadTask = [[ALDownloadTask alloc]init];
-    downloadTask.identifier = alMessage.key;
-    downloadTask.isThumbnail = NO;
 
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-    manager.downloadTask = downloadTask;
     manager.attachmentProgressDelegate = self;
-    [manager processDownloadForMessage:alMessage];
+    [manager processDownloadForMessage:alMessage isAttachmentDownload:YES];
+
 }
 
 - (void)onDownloadCompleted:(ALMessage *)alMessage {

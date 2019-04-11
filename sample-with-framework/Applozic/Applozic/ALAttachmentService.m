@@ -85,7 +85,7 @@
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
     manager.downloadTask = downloadTask;
     manager.attachmentProgressDelegate = self.attachmentProgressDelegate;
-    [manager processDownloadforMessage:alMessage];
+    [manager processDownloadForMessage:alMessage];
 
 }
 
@@ -99,7 +99,7 @@
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
     manager.downloadTask = downloadTask;
     manager.attachmentProgressDelegate = self.attachmentProgressDelegate;
-    [manager processDownloadforMessage:alMessage];
+    [manager processDownloadForMessage:alMessage];
 }
 
 

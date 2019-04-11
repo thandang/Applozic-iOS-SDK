@@ -113,7 +113,7 @@ andWithStatusDelegate:(id)statusDelegate
         ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
         manager.downloadTask = downloadTask;
         manager.attachmentProgressDelegate = self;
-        [manager processDownloadforMessage:alMessage];
+        [manager processDownloadForMessage:alMessage];
     }];
     
 }
@@ -170,7 +170,7 @@ andWithStatusDelegate:(id)statusDelegate
     ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
     manager.downloadTask = downloadTask;
     manager.attachmentProgressDelegate = self;
-    [manager processDownloadforMessage:alMessage];
+    [manager processDownloadForMessage:alMessage];
 }
 
 - (void)onDownloadCompleted:(ALMessage *)alMessage {

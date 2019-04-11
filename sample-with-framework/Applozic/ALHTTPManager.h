@@ -27,7 +27,7 @@
 @property (nonatomic) ALUploadTask * uploadTask;
 @property (nonatomic) ALDownloadTask * downloadTask;
 
--(void) processDownloadforMessage:(ALMessage *) message;
+-(void) processDownloadForMessage:(ALMessage *) message;
 
 -(void) processUploadFileForMessage:(ALMessage *)message uploadURL:(NSString *)uploadURL;
 

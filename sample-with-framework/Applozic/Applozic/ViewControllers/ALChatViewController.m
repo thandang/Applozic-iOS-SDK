@@ -2532,7 +2532,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
         manager.downloadTask = downloadTask;
         manager.attachmentProgressDelegate = self;
-        [manager processDownloadforMessage:message];
+        [manager processDownloadForMessage:message];
 
     }
     ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);

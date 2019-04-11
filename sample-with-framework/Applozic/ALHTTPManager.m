@@ -29,26 +29,22 @@
 
         ALMessageDBService *messageDatabaseService = [[ALMessageDBService alloc]init];
 
-        if( self->_downloadTask != nil){
+        if(self->_downloadTask != nil){
             [self->_buffer appendData:data];
-            dispatch_async(dispatch_get_main_queue(), ^{
 
-                if(!self->_downloadTask.isThumbnail){
-                    [self.attachmentProgressDelegate onUpdateBytesDownloaded:self->_buffer.length withMessage:[messageDatabaseService getMessageByKey:self->_downloadTask.identifier]];
-                }
-
-            });
+            if(!self->_downloadTask.isThumbnail){
+                [self.attachmentProgressDelegate onUpdateBytesDownloaded:self->_buffer.length withMessage:[messageDatabaseService getMessageByKey:self->_downloadTask.identifier]];
+            }
 
         }else if(self->_uploadTask != nil){
 
-            dispatch_async(dispatch_get_main_queue(), ^{
+            DB_Message * dbMessage = (DB_Message*)[messageDatabaseService getMessageByKey:@"key" value:self->_uploadTask.identifier];
+            ALMessage * message = [messageDatabaseService createMessageEntity:dbMessage];
 
-                DB_Message * dbMessage = (DB_Message*)[messageDatabaseService getMessageByKey:@"key" value:self->_uploadTask.identifier];
-                ALMessage * message = [messageDatabaseService createMessageEntity:dbMessage];
+            NSError * theJsonError = nil;
+            NSDictionary *theJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&theJsonError];
 
-                NSError * theJsonError = nil;
-                NSDictionary *theJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&theJsonError];
-
+            if(theJsonError == nil){
                 if(ALApplozicSettings.isS3StorageServiceEnabled){
                     [message.fileMeta populate:theJson];
                 }else{
@@ -64,7 +60,6 @@
                         if(self.attachmentProgressDelegate){
                             [self.attachmentProgressDelegate onUploadFailed:[[ALMessageService sharedInstance] handleMessageFailedStatus:almessage]];
                         }
-                        return;
                     }else{
                         if(self.attachmentProgressDelegate){
                             [self.attachmentProgressDelegate onUploadCompleted:almessage withOldMessageKey:self->_uploadTask.identifier];
@@ -74,22 +69,27 @@
                         }
                     }
                 }];
+            }else{
+                ALSLog(ALLoggerSeverityError, @"ERROR In Uploading file:: %@", theJsonError);
 
-            });
+                if(self.attachmentProgressDelegate){
+                    [self.attachmentProgressDelegate onUploadFailed:message];
+                }
+            }
         }
     });
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
 
+    ALMessageDBService *messageDatabaseService = [[ALMessageDBService alloc]init];
 
-    if(error == nil){
+    if(error == nil && [task.response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse *)task.response statusCode] == 200){
 
         dispatch_async(dispatch_get_main_queue(), ^{
 
             if( self->_downloadTask != nil){
 
-                ALMessageDBService *messageDatabaseService = [[ALMessageDBService alloc]init];
                 if(self->_downloadTask.isThumbnail){
                     ALMessage *almessage =  [messageDatabaseService  writeDataAndUpdateMessageInDb:self.buffer withMessageKey:self->_downloadTask.identifier withFileFlag:NO];
 
@@ -108,7 +108,15 @@
         });
     }else{
         [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:session];
-        NSLog(@"Got some error in downloding this %@",error.description);
+        if(error){
+            ALSLog(ALLoggerSeverityError, @"Error while downloading  %@", error.localizedDescription);
+        }else{
+            ALSLog(ALLoggerSeverityError, @"Got some error while downloading");
+        }
+
+        if(self->_downloadTask != nil && self.attachmentProgressDelegate){
+            [self.attachmentProgressDelegate onDownloadFailed:[messageDatabaseService getMessageByKey:self->_downloadTask.identifier]];
+        }
     }
 
 }
@@ -258,7 +266,7 @@
             }else{
                 ALSLog(ALLoggerSeverityError, @"ERROR  DOWNLOAD Thumbnail : %@", error.description);
                 if(self.attachmentProgressDelegate){
-                    [self.attachmentProgressDelegate onDownloadCompleted:alMessage];
+                    [self.attachmentProgressDelegate onDownloadFailed:alMessage];
                 }
             }
 
@@ -268,7 +276,7 @@
 }
 
 
--(void) processDownloadforMessage:(ALMessage *) alMessage{
+-(void) processDownloadForMessage:(ALMessage *) alMessage{
 
     ALMessageDBService *messageDatabase = [[ALMessageDBService alloc]init];
 

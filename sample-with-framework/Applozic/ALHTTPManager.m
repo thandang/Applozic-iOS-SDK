@@ -191,13 +191,18 @@
         [request setHTTPBody:body];
         // set URL
         [request setURL:[NSURL URLWithString:uploadURL]];
-        NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
 
-        for(NSURLSession *session in theCurrentConnectionsArray ){
+        NSMutableArray * nsURLSessionArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+
+        for(NSURLSession *session in nsURLSessionArray ){
             NSURLSessionConfiguration *config = session.configuration;
-            if(config.identifier == message.key){
-                ALSLog(ALLoggerSeverityInfo, @"Already present in upload file Queue returing");
-                return;
+            NSArray *array =  [config.identifier componentsSeparatedByString:@","];
+            if(array && array.count>1){
+                //Check if message key are same and first argumnent is not THUMBNAIL
+                if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
+                    ALSLog(ALLoggerSeverityInfo, @"Already present in upload file Queue returing for key %@",message.key);
+                    return;
+                }
             }
         }
 
@@ -226,18 +231,20 @@
 
     ALMessageDBService *messageDatabase = [[ALMessageDBService alloc]init];
 
-    NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+    NSMutableArray * nsURLSessionArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
 
-    for(NSURLSession *session in theCurrentConnectionsArray ){
+    for(NSURLSession *session in nsURLSessionArray){
         NSURLSessionConfiguration *config = session.configuration;
         NSArray *array =  [config.identifier componentsSeparatedByString:@","];
-        if(array[0] == alMessage.key){
-            if(attachmentDownloadFlag){
-                ALSLog(ALLoggerSeverityInfo, @"Already present in Download attachment Queue returing");
-            }else{
-                ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing");
+        if(array && array.count>1){
+            //Check if the currently  its called for file download or THUMBNAIL with messageKey
+            if(attachmentDownloadFlag && [array[0] isEqualToString:@"FILE"] && array[1] == alMessage.key){
+                ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing for  key %@",alMessage.key);
+                return;
+            }else if (!attachmentDownloadFlag &&  [array[0] isEqualToString:@"THUMBNAIL"] && array[1] == alMessage.key){
+                ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing for  key %@",alMessage.key);
+                return;
             }
-            return;
         }
     }
 

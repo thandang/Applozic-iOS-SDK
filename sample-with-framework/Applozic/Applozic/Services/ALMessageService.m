@@ -638,7 +638,7 @@ static ALMessageClientService *alMsgClientService;
                 {
 
                     ALHTTPManager *httpManager = [[ALHTTPManager alloc]init];
-                    httpManager.attachmentProgressDelegate = self
+                    httpManager.attachmentProgressDelegate = self;
                     [httpManager processUploadFileForMessage:[dbService createMessageEntity:dbMessage] uploadURL:responseUrl];
 
                 }

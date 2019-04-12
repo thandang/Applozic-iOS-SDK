@@ -2504,7 +2504,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         if(array && array.count>1){
             //Check if message key are same and first argumnent is not THUMBNAIL
             if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
-                ALSLog(ALLoggerSeverityInfo, @"Already task in proccess ignoring download retry");
+                ALSLog(ALLoggerSeverityInfo, @"Already task in proccess ignoring download retry for the key %@",message.key);
                 return;
             }
         }
@@ -2544,15 +2544,20 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     message.inProgress = NO;
     [[ALMessageService sharedInstance] handleMessageFailedStatus:message];
 
-    NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+    NSMutableArray * nsURLSessionArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
 
-    for(NSURLSession *session in theCurrentConnectionsArray){
+    for(NSURLSession *session in nsURLSessionArray){
         NSURLSessionConfiguration *config =  session.configuration;
         NSArray *array =  [config.identifier componentsSeparatedByString:@","];
-        if(array[1] == message.key){
-            session.invalidateAndCancel;
-            [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:session];
-            break;
+
+        if(array && array.count>1){
+            //Check if message key are same and first argumnent is not THUMBNAIL
+            if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
+                ALSLog(ALLoggerSeverityInfo, @"Already task in proccess cancel current task with key %@",message.key);
+                session.invalidateAndCancel;
+                [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:session];
+                break;
+            }
         }
     }
 }
@@ -2739,9 +2744,6 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
             ALHTTPManager *httpManager = [[ALHTTPManager alloc]init];
             httpManager.attachmentProgressDelegate = self;
-            ALUploadTask * alUploadTask = [[ALUploadTask alloc]init];
-            alUploadTask.identifier = dbMessage.key;
-            httpManager.uploadTask = alUploadTask;
             [httpManager processUploadFileForMessage:theMessage uploadURL:url];
 
         }];

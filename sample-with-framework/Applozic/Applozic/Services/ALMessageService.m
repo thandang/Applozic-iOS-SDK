@@ -347,7 +347,7 @@ static ALMessageClientService *alMsgClientService;
                 alMessage.status = [NSNumber numberWithInt:SENT];
 
             }
-            
+
             if(self.delegate){
                 [self.delegate onMessageSent:alMessage];
             }
@@ -410,17 +410,17 @@ static ALMessageClientService *alMsgClientService;
                                 }
                             }
                         }
-                        
+
                         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_MESSAGE_NOTIFICATION object:messageArray userInfo:nil];
-                        
+
                     }];
 
                 }
-                
+
                 [ALUserDefaultsHandler setLastSyncTime:syncResponse.lastSyncTime];
                 ALMessageClientService *messageClientService = [[ALMessageClientService alloc] init];
                 [messageClientService updateDeliveryReports:syncResponse.messagesList];
-                
+
                 completion(messageArray,error);
 
             }
@@ -807,11 +807,11 @@ static ALMessageClientService *alMsgClientService;
 
 +(void)addOpenGroupMessage:(ALMessage*)alMessage withDelegate:(id<ApplozicUpdatesDelegate>)delegate{
     {
-        
+
         if(!alMessage){
             return;
         }
-        
+
         NSMutableArray * singlemessageArray = [[NSMutableArray alloc] init];
         [singlemessageArray addObject:alMessage];
         for (int i=0; i<singlemessageArray.count; i++) {
@@ -831,24 +831,24 @@ static ALMessageClientService *alMsgClientService;
                 }
             }
         }
-        
+
         [ALUserService processContactFromMessages:singlemessageArray withCompletion:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:NEW_MESSAGE_NOTIFICATION object:singlemessageArray userInfo:nil];
-            
+
         }];
-        
+
     }
 }
 
 -(void) getLatestMessages:(BOOL)isNextPage withOnlyGroups:(BOOL)isGroup withCompletionHandler: (void(^)(NSMutableArray * messageList, NSError *error)) completion{
-    
+
     ALMessageDBService *messageDbService = [[ALMessageDBService alloc] init];
-    
+
     [messageDbService getLatestMessages:isNextPage withOnlyGroups:isGroup withCompletionHandler:^(NSMutableArray *messageList, NSError *error) {
-        
-        
+
+
         completion(messageList,error);
-        
+
     }];
 }
 
@@ -861,7 +861,7 @@ static ALMessageClientService *alMsgClientService;
     if(!messageKey){
         return nil;
     }
-    
+
     ALMessageDBService *messageDBServce = [[ALMessageDBService alloc]init];
     return [messageDBServce getMessageByKey:messageKey];
 }

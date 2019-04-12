@@ -1214,6 +1214,7 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     return almessage;
 }
 
+
 -(DB_Message*)addAttachmentMessage:(ALMessage*)message{
 
     ALDBHandler * theDBHandler = [ALDBHandler sharedInstance];

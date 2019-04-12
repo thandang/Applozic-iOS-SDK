@@ -987,6 +987,7 @@
     }
     else
     {
+        self.detailChatViewController.channelKey = nil;
         self.detailChatViewController.contactIds = message.contactIds;
     }
     

@@ -1177,9 +1177,9 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     return message;
 }
 
--(ALMessage*)writeFileAndUpdateMessageInDb:(ALConnection*)connection withFileFlag:(BOOL)isFile{
+-(ALMessage*)writeDataAndUpdateMessageInDb:(NSData*)data withMessageKey:(NSString *)messageKey withFileFlag:(BOOL)isFile{
 
-    DB_Message * messageEntity = (DB_Message*)[self getMessageByKey:@"key" value:connection.keystring];
+    DB_Message * messageEntity = (DB_Message*)[self getMessageByKey:@"key" value:messageKey];
 
     NSString * docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSArray *componentsArray = [messageEntity.fileMetaInfo.name componentsSeparatedByString:@"."];
@@ -1189,7 +1189,7 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
 
     if(isFile){
 
-        filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension]];
+        filePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_local.%@",messageKey,fileExtension]];
 
         // If 'save video to gallery' is enabled then save to gallery
         if([ALApplozicSettings isSaveVideoToGalleryEnabled]) {
@@ -1198,14 +1198,14 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
 
         messageEntity.inProgress = [NSNumber numberWithBool:NO];
         messageEntity.isUploadFailed=[NSNumber numberWithBool:NO];
-        messageEntity.filePath = [NSString stringWithFormat:@"%@_local.%@",connection.keystring,fileExtension];
+        messageEntity.filePath = [NSString stringWithFormat:@"%@_local.%@",messageKey,fileExtension];
     }else{
-        filePath  = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension]];
+        filePath  = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_thumbnail_local.%@",messageKey,fileExtension]];
 
-        messageEntity.fileMetaInfo.thumbnailFilePath = [NSString stringWithFormat:@"%@_thumbnail_local.%@",connection.keystring,fileExtension];
+        messageEntity.fileMetaInfo.thumbnailFilePath = [NSString stringWithFormat:@"%@_thumbnail_local.%@",messageKey,fileExtension];
     }
 
-    [connection.mData writeToFile:filePath atomically:YES];
+    [data writeToFile:filePath atomically:YES];
 
     [[ALDBHandler sharedInstance].managedObjectContext save:nil];
 

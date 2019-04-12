@@ -29,6 +29,12 @@
 		1863584820E2470F00B75802 /* ALRealTimeUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584220E2470E00B75802 /* ALRealTimeUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1863584E20E2480800B75802 /* ApplozicClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863584C20E2480800B75802 /* ApplozicClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1863584F20E2480800B75802 /* ApplozicClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863584D20E2480800B75802 /* ApplozicClient.m */; };
+		1863F3ED224911E500196A5B /* ALHTTPManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863F3EB224911E500196A5B /* ALHTTPManager.h */; };
+		1863F3EE224911E500196A5B /* ALHTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863F3EC224911E500196A5B /* ALHTTPManager.m */; };
+		1863F3F12249162900196A5B /* ALUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863F3EF2249162900196A5B /* ALUploadTask.h */; };
+		1863F3F22249162900196A5B /* ALUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863F3F02249162900196A5B /* ALUploadTask.m */; };
+		1863F3F52249279500196A5B /* ALDownloadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 1863F3F32249279500196A5B /* ALDownloadTask.h */; };
+		1863F3F62249279500196A5B /* ALDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863F3F42249279500196A5B /* ALDownloadTask.m */; };
 		186885A120ECC5FE00919802 /* ALMessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1868859F20ECC5FE00919802 /* ALMessageBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		186885A220ECC5FE00919802 /* ALMessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 186885A020ECC5FE00919802 /* ALMessageBuilder.m */; };
 		1868F12C21B570ED00B237B3 /* ALGroupDetailsMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868F12A21B570ED00B237B3 /* ALGroupDetailsMemberCell.m */; };
@@ -135,8 +141,6 @@
 		6D6DF0811BC535C800EBA00F /* Applozic.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF0801BC535C800EBA00F /* Applozic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D6DF13B1BC5364C00EBA00F /* ALMessageDBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF0891BC5364C00EBA00F /* ALMessageDBService.m */; };
 		6D6DF13C1BC5364C00EBA00F /* ALPushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF08A1BC5364C00EBA00F /* ALPushNotificationService.m */; };
-		6D6DF13E1BC5364C00EBA00F /* ALConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF08D1BC5364C00EBA00F /* ALConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D6DF13F1BC5364C00EBA00F /* ALConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF08E1BC5364C00EBA00F /* ALConnection.m */; };
 		6D6DF1401BC5364C00EBA00F /* ALConnectionQueueHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF08F1BC5364C00EBA00F /* ALConnectionQueueHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D6DF1411BC5364C00EBA00F /* ALConnectionQueueHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DF0901BC5364C00EBA00F /* ALConnectionQueueHandler.m */; };
 		6D6DF1421BC5364C00EBA00F /* ALDBHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D6DF0911BC5364C00EBA00F /* ALDBHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -248,8 +252,6 @@
 		6D73B2FE1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73B2FC1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.m */; };
 		6D7756711D5B7EEC0025560B /* ALChatLauncher.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D77566F1D5B7EEC0025560B /* ALChatLauncher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D7756721D5B7EEC0025560B /* ALChatLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7756701D5B7EEC0025560B /* ALChatLauncher.m */; };
-		6D7756751D5B7F150025560B /* ALVCFClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D7756731D5B7F150025560B /* ALVCFClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D7756761D5B7F150025560B /* ALVCFClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7756741D5B7F150025560B /* ALVCFClass.m */; };
 		6D7756851D5B7FBE0025560B /* ALConversationProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D7756771D5B7FBE0025560B /* ALConversationProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D7756861D5B7FBE0025560B /* ALConversationClientService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D7756781D5B7FBE0025560B /* ALConversationClientService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D7756871D5B7FBE0025560B /* ALConversationClientService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7756791D5B7FBE0025560B /* ALConversationClientService.m */; };
@@ -417,6 +419,12 @@
 		1863584220E2470E00B75802 /* ALRealTimeUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALRealTimeUpdate.h; path = Applozic/ALRealTimeUpdate.h; sourceTree = "<group>"; };
 		1863584C20E2480800B75802 /* ApplozicClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplozicClient.h; path = Applozic/ApplozicClient.h; sourceTree = "<group>"; };
 		1863584D20E2480800B75802 /* ApplozicClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApplozicClient.m; path = Applozic/ApplozicClient.m; sourceTree = "<group>"; };
+		1863F3EB224911E500196A5B /* ALHTTPManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALHTTPManager.h; sourceTree = "<group>"; };
+		1863F3EC224911E500196A5B /* ALHTTPManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALHTTPManager.m; sourceTree = "<group>"; };
+		1863F3EF2249162900196A5B /* ALUploadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALUploadTask.h; sourceTree = "<group>"; };
+		1863F3F02249162900196A5B /* ALUploadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALUploadTask.m; sourceTree = "<group>"; };
+		1863F3F32249279500196A5B /* ALDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALDownloadTask.h; sourceTree = "<group>"; };
+		1863F3F42249279500196A5B /* ALDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALDownloadTask.m; sourceTree = "<group>"; };
 		1868859F20ECC5FE00919802 /* ALMessageBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALMessageBuilder.h; path = Applozic/ALMessageBuilder.h; sourceTree = "<group>"; };
 		186885A020ECC5FE00919802 /* ALMessageBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALMessageBuilder.m; path = Applozic/ALMessageBuilder.m; sourceTree = "<group>"; };
 		1868F12A21B570ED00B237B3 /* ALGroupDetailsMemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALGroupDetailsMemberCell.m; path = Applozic/Views/ALGroupDetailsMemberCell.m; sourceTree = "<group>"; };
@@ -528,8 +536,6 @@
 		6D6DF0801BC535C800EBA00F /* Applozic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Applozic.h; sourceTree = "<group>"; };
 		6D6DF0891BC5364C00EBA00F /* ALMessageDBService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALMessageDBService.m; path = Applozic/ALMessageDBService.m; sourceTree = "<group>"; };
 		6D6DF08A1BC5364C00EBA00F /* ALPushNotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALPushNotificationService.m; path = Applozic/ALPushNotificationService.m; sourceTree = "<group>"; };
-		6D6DF08D1BC5364C00EBA00F /* ALConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALConnection.h; path = Applozic/Handlers/ALConnection.h; sourceTree = "<group>"; };
-		6D6DF08E1BC5364C00EBA00F /* ALConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALConnection.m; path = Applozic/Handlers/ALConnection.m; sourceTree = "<group>"; };
 		6D6DF08F1BC5364C00EBA00F /* ALConnectionQueueHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALConnectionQueueHandler.h; path = Applozic/Handlers/ALConnectionQueueHandler.h; sourceTree = "<group>"; };
 		6D6DF0901BC5364C00EBA00F /* ALConnectionQueueHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALConnectionQueueHandler.m; path = Applozic/Handlers/ALConnectionQueueHandler.m; sourceTree = "<group>"; };
 		6D6DF0911BC5364C00EBA00F /* ALDBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALDBHandler.h; path = Applozic/Handlers/ALDBHandler.h; sourceTree = "<group>"; };
@@ -642,8 +648,6 @@
 		6D73B2FC1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALReceiverUserProfileVC.m; sourceTree = "<group>"; };
 		6D77566F1D5B7EEC0025560B /* ALChatLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALChatLauncher.h; path = Applozic/ALChatLauncher.h; sourceTree = "<group>"; };
 		6D7756701D5B7EEC0025560B /* ALChatLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALChatLauncher.m; path = Applozic/ALChatLauncher.m; sourceTree = "<group>"; };
-		6D7756731D5B7F150025560B /* ALVCFClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALVCFClass.h; path = Applozic/ALVCFClass.h; sourceTree = "<group>"; };
-		6D7756741D5B7F150025560B /* ALVCFClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALVCFClass.m; path = Applozic/ALVCFClass.m; sourceTree = "<group>"; };
 		6D7756771D5B7FBE0025560B /* ALConversationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALConversationProxy.h; path = Applozic/ALConversationProxy.h; sourceTree = "<group>"; };
 		6D7756781D5B7FBE0025560B /* ALConversationClientService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALConversationClientService.h; path = Applozic/ALConversationClientService.h; sourceTree = "<group>"; };
 		6D7756791D5B7FBE0025560B /* ALConversationClientService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALConversationClientService.m; path = Applozic/ALConversationClientService.m; sourceTree = "<group>"; };
@@ -818,6 +822,10 @@
 				186885A020ECC5FE00919802 /* ALMessageBuilder.m */,
 				1810D122215A79F600557E22 /* ALAttachmentService.h */,
 				1810D123215A79F600557E22 /* ALAttachmentService.m */,
+				1863F3EF2249162900196A5B /* ALUploadTask.h */,
+				1863F3F02249162900196A5B /* ALUploadTask.m */,
+				1863F3F32249279500196A5B /* ALDownloadTask.h */,
+				1863F3F42249279500196A5B /* ALDownloadTask.m */,
 			);
 			name = applozickit;
 			sourceTree = "<group>";
@@ -910,8 +918,6 @@
 			children = (
 				463E491E1DB7B45D00CDFFE6 /* ALVCardClass.h */,
 				463E491F1DB7B45D00CDFFE6 /* ALVCardClass.m */,
-				6D7756731D5B7F150025560B /* ALVCFClass.h */,
-				6D7756741D5B7F150025560B /* ALVCFClass.m */,
 			);
 			name = contact;
 			sourceTree = "<group>";
@@ -1366,8 +1372,8 @@
 				6D6DF0981BC5364C00EBA00F /* ALRequestHandler.m */,
 				6D6DF0971BC5364C00EBA00F /* ALRequestHandler.h */,
 				6D6DF09A1BC5364C00EBA00F /* ALResponseHandler.m */,
-				6D6DF08E1BC5364C00EBA00F /* ALConnection.m */,
-				6D6DF08D1BC5364C00EBA00F /* ALConnection.h */,
+				1863F3EB224911E500196A5B /* ALHTTPManager.h */,
+				1863F3EC224911E500196A5B /* ALHTTPManager.m */,
 			);
 			name = networkcommunication;
 			sourceTree = "<group>";
@@ -1574,6 +1580,7 @@
 				6D6DF1481BC5364C00EBA00F /* ALRequestHandler.h in Headers */,
 				6D7756B11D5B80DF0025560B /* ALChannelFeed.h in Headers */,
 				6D7756711D5B7EEC0025560B /* ALChatLauncher.h in Headers */,
+				1863F3F52249279500196A5B /* ALDownloadTask.h in Headers */,
 				6D77570E1D5B83660025560B /* ALPushAssist.h in Headers */,
 				6D7756A91D5B80DF0025560B /* ALChannel.h in Headers */,
 				6D7756F51D5B82B50025560B /* ALAppLocalNotifications.h in Headers */,
@@ -1607,6 +1614,7 @@
 				6D77571F1D5B838A0025560B /* MessageListRequest.h in Headers */,
 				6D7756D11D5B82000025560B /* ALContactsResponse.h in Headers */,
 				6D7757231D5B83AA0025560B /* ALHyperLabel.h in Headers */,
+				1863F3F12249162900196A5B /* ALUploadTask.h in Headers */,
 				6D7757271D5B841B0025560B /* ALMessageInfoViewController.h in Headers */,
 				6D7756DB1D5B82000025560B /* ALUserBlockResponse.h in Headers */,
 				6D7756E91D5B823B0025560B /* ALMQTTConversationService.h in Headers */,
@@ -1640,10 +1648,8 @@
 				6D7756ED1D5B82560025560B /* ALReachability.h in Headers */,
 				6D7756D71D5B82000025560B /* ALMessageInfoResponse.h in Headers */,
 				6D4FE48F1D7411F70044A7E6 /* NSData+AES.h in Headers */,
-				6D7756751D5B7F150025560B /* ALVCFClass.h in Headers */,
 				6D7756AB1D5B80DF0025560B /* ALChannelClientService.h in Headers */,
 				29CBF2021C0303A700BE6A20 /* ALColorUtility.h in Headers */,
-				6D6DF13E1BC5364C00EBA00F /* ALConnection.h in Headers */,
 				6D3A4E051C76ED6C0067A4C8 /* ALAudioAttachmentViewController.h in Headers */,
 				6D77572A1D5B845C0025560B /* Applozic_Prefix.pch in Headers */,
 				18BC191621E4F3B8002B33C9 /* ALDocumentPickerHandler.h in Headers */,
@@ -1675,6 +1681,7 @@
 				6D7757101D5B83660025560B /* HexColors.h in Headers */,
 				6D7757121D5B83660025560B /* TSBlurView.h in Headers */,
 				6D7757171D5B83660025560B /* TSMessageView.h in Headers */,
+				1863F3ED224911E500196A5B /* ALHTTPManager.h in Headers */,
 				6D1385741CA9B80D009E6F50 /* ALMultipleAttachmentView.h in Headers */,
 				6D81979A1CC55B5700E53EC3 /* ALCollectionReusableView.h in Headers */,
 				6D73B2FD1D4F0FF0007D3D72 /* ALReceiverUserProfileVC.h in Headers */,
@@ -1829,6 +1836,7 @@
 				181BEC3E20E4E5F200179F63 /* UIImageView+WebCache.m in Sources */,
 				6D7756B41D5B80DF0025560B /* ALChannelInfo.m in Sources */,
 				6D1385751CA9B80D009E6F50 /* ALMultipleAttachmentView.m in Sources */,
+				1863F3F62249279500196A5B /* ALDownloadTask.m in Sources */,
 				6D6DF1671BC5364C00EBA00F /* ALNotificationView.m in Sources */,
 				6D6DF1851BC5364C00EBA00F /* DB_Message.m in Sources */,
 				29D6F86C1D193D9D00A75369 /* PSPDFTextView.m in Sources */,
@@ -1847,7 +1855,6 @@
 				1863584F20E2480800B75802 /* ApplozicClient.m in Sources */,
 				4612E9021E13882D0022DB23 /* MQTTInMemoryPersistence.m in Sources */,
 				6D6DF1C81BC5364C00EBA00F /* UIImage+GIF.m in Sources */,
-				6D7756761D5B7F150025560B /* ALVCFClass.m in Sources */,
 				6D36F2091BFF3EE3003D46D3 /* ALApplozicSettings.m in Sources */,
 				322B304B1EF9537600DB01FC /* AlApplicationInfoFeed.m in Sources */,
 				8B170C212122CEFF003A14B3 /* ALCustomPickerViewController.swift in Sources */,
@@ -1918,6 +1925,7 @@
 				6D7757021D5B82ED0025560B /* DB_CHANNEL.m in Sources */,
 				4612E9051E13882D0022DB23 /* MQTTMessage.m in Sources */,
 				18A2BA2720C44E9200AD47A2 /* ALTemplateMessageModel.swift in Sources */,
+				1863F3EE224911E500196A5B /* ALHTTPManager.m in Sources */,
 				6D6DF1CC1BC5364C00EBA00F /* UIImage+WebP.m in Sources */,
 				105F30C51FFBAEEC00D60431 /* AlChannelFeedResponse.m in Sources */,
 				6D6DF1C11BC5364C00EBA00F /* SDWebImageManager.m in Sources */,
@@ -1926,6 +1934,7 @@
 				4612E90A1E13882D0022DB23 /* MQTTSessionLegacy.m in Sources */,
 				6D7757111D5B83660025560B /* HexColors.m in Sources */,
 				6D7756AA1D5B80DF0025560B /* ALChannel.m in Sources */,
+				1863F3F22249162900196A5B /* ALUploadTask.m in Sources */,
 				105F30C91FFBAEEC00D60431 /* AlChannelResponse.m in Sources */,
 				4612E8FE1E13882D0022DB23 /* MQTTCoreDataPersistence.m in Sources */,
 				293446141D4F426F007BD1B4 /* ALImageActivity.m in Sources */,
@@ -1977,7 +1986,6 @@
 				6D7756D81D5B82000025560B /* ALMessageInfoResponse.m in Sources */,
 				18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */,
 				6D7757361D5B84BE0025560B /* ALUIConstant.m in Sources */,
-				6D6DF13F1BC5364C00EBA00F /* ALConnection.m in Sources */,
 				C70273CC1DED445E00BA2C8A /* ALUserDetailListFeed.m in Sources */,
 				6D6DF1BD1BC5364C00EBA00F /* SDWebImageDownloader.m in Sources */,
 				6D7757461D5B85100025560B /* ALDocumentsCell.m in Sources */,
@@ -2164,7 +2172,7 @@
 				GCC_PREFIX_HEADER = Applozic/Applozic_Prefix.pch;
 				INFOPLIST_FILE = Applozic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;
@@ -2198,7 +2206,7 @@
 				GCC_PREFIX_HEADER = Applozic/Applozic_Prefix.pch;
 				INFOPLIST_FILE = Applozic/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.framework;

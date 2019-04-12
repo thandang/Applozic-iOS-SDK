@@ -373,7 +373,10 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     if (self.channelKey) {
         [self checkIfChannelLeft];
+    }else{
+        self.typingMessageView.hidden = NO;
     }
+    
     [self setCallButtonInNavigationBar];
     [self checkUserBlockStatus];
     if(self.contactIds ){
@@ -967,15 +970,10 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         [self freezeView:NO];
     }
 
-    if(self.channelKey){
-        ALChannelDBService *channelDBService = [[ALChannelDBService alloc]init];
-
-        ALChannelUserX *alChannelUserXLoggedInUser = [channelDBService loadChannelUserXByUserId:self.channelKey andUserId:[ALUserDefaultsHandler getUserId]];
-
-        if([channelDBService isAdminBroadcastChannel:self.channelKey] && !alChannelUserXLoggedInUser.isAdminUser){
-            self.typingMessageView.hidden = YES;
-        }
-
+    if(self.alChannel.metadata != nil && [[self.alChannel.metadata valueForKey:@"AL_ADMIN_BROADCAST"] isEqualToString:@"true"] && ![[self.alChannel.metadata  valueForKey:@"AL_ADMIN_USERID"] isEqualToString:[ALUserDefaultsHandler getUserId]]){
+        self.typingMessageView.hidden = YES;
+    }else{
+        self.typingMessageView.hidden = NO;
     }
 }
 

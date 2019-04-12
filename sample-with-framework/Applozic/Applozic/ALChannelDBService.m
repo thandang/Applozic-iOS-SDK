@@ -126,7 +126,9 @@
     theChannelEntity.channelImageURL = channel.channelImageURL;
     theChannelEntity.type = channel.type;
     theChannelEntity.adminId = channel.adminKey;
-    theChannelEntity.unreadCount = channel.unreadCount;
+    if(channel.unreadCount != nil && [channel.unreadCount  compare:[NSNumber numberWithInt:0]] != NSOrderedSame){
+        theChannelEntity.unreadCount = channel.unreadCount;
+    }
     theChannelEntity.metadata = channel.metadata.description;
     theChannelEntity.category = channel.category;
     return theChannelEntity;

@@ -247,6 +247,8 @@
 // Channel details update notification
 -(void)updateChannelSync:(NSNotification*)notification {
     ALChannel *channel =  notification.object;
+    ALChannelService * channelService = [[ALChannelService alloc]init];
+    channel =  [channelService getChannelByKey:channel.key];
     if(channel){
         ALContactCell *contactCell = [self getCellForGroup:channel.key];
         if(contactCell){

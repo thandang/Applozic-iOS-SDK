@@ -99,7 +99,7 @@ static NSString * const observeSupportGroupMessage = @"observeSupportGroupMessag
             if (![ALUserDefaultsHandler isLoggedIn]) {
                 return;
             }
-            if(self.session && (self.session.status == MQTTSessionEventConnected || self.session.status == MQTTSessionStatusConnecting)) {
+            if(self.session && (self.session.status == MQTTSessionEventConnected || self.session.status == MQTTSessionStatusConnecting || self.session.status == MQTTSessionStatusConnected)) {
                 ALSLog(ALLoggerSeverityInfo, @"MQTT : IGNORING REQUEST, ALREADY CONNECTED");
                 return;
             }

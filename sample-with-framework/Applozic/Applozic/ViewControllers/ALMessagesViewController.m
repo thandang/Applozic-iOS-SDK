@@ -279,10 +279,9 @@
 {
     [super viewDidAppear:animated];
     
-    self.detailChatViewController.contactIds = nil;
-    self.detailChatViewController.channelKey = nil;
-    self.detailChatViewController.conversationId = nil;
-    
+    self.userIdToLaunch = nil;
+    self.channelKey = nil;
+
     if([self.mActivityIndicator isAnimating])
     {
         [self.emptyConversationText setHidden:YES];

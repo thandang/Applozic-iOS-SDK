@@ -3628,7 +3628,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
     if(self.channelKey != nil)
     {
-        ALChannelService * channelService = [[ALChannelService alloc] init];
         if(self.alChannel.type == GROUP_OF_TWO )
         {
             if(value > 0)
@@ -3642,11 +3641,13 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }
         else if (self.alChannel.type != GROUP_OF_TWO)
         {
-            if([ALApplozicSettings isChannelMembersInfoInNavigationBarEnabled]){
-                [self.label setText:[channelService stringFromChannelUserList:self.channelKey]];
-            }else{
-                [self.label setText:@""];
-            }
+            [self.label setText:@""];
+
+//            if([ALApplozicSettings isChannelMembersInfoInNavigationBarEnabled]){
+//                [self.label setText:[channelService stringFromChannelUserList:self.channelKey]];
+//            }else{
+//                [self.label setText:@""];
+//            }
         }
     }
     else if (value > 0)

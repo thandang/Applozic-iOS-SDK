@@ -503,6 +503,7 @@
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
+		1808CE562260B251006BAEA3 /* AppLozic 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 12.xcdatamodel"; sourceTree = "<group>"; };
 		1810D122215A79F600557E22 /* ALAttachmentService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALAttachmentService.h; path = Applozic/ALAttachmentService.h; sourceTree = "<group>"; };
 		1810D123215A79F600557E22 /* ALAttachmentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALAttachmentService.m; path = Applozic/ALAttachmentService.m; sourceTree = "<group>"; };
 		185430DF2224384B00D55795 /* AppLozic 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 11.xcdatamodel"; sourceTree = "<group>"; };
@@ -2340,7 +2341,6 @@
 				18BD2EEA225E15AD00B180A9 /* SDImageCoder.m in Sources */,
 				6D7757151D5B83660025560B /* TSMessage.m in Sources */,
 				18BD2D81225D142400B180A9 /* ForegroundReconnection.m in Sources */,
-				6D6DF1C61BC5364C00EBA00F /* UIButton+WebCache.m in Sources */,
 				6D6DF1791BC5364C00EBA00F /* ALMessageList.m in Sources */,
 				048E2F34209A04A300C40B8B /* ALChannelOfTwoMetaData.m in Sources */,
 				18BD2F28225E15D000B180A9 /* SDAsyncBlockOperation.m in Sources */,
@@ -2634,6 +2634,7 @@
 		6D6DF1371BC5364C00EBA00F /* AppLozic.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1808CE562260B251006BAEA3 /* AppLozic 12.xcdatamodel */,
 				185430DF2224384B00D55795 /* AppLozic 11.xcdatamodel */,
 				1A113EDC21BBA77D0000A7CC /* AppLozic 10.xcdatamodel */,
 				187E3E562152BCB7002B2459 /* AppLozic 9.xcdatamodel */,
@@ -2646,7 +2647,7 @@
 				C7EF19C71DF2FDB600529704 /* AppLozic 2.xcdatamodel */,
 				6D6DF1381BC5364C00EBA00F /* AppLozic.xcdatamodel */,
 			);
-			currentVersion = 185430DF2224384B00D55795 /* AppLozic 11.xcdatamodel */;
+			currentVersion = 1808CE562260B251006BAEA3 /* AppLozic 12.xcdatamodel */;
 			name = AppLozic.xcdatamodeld;
 			path = Applozic/AppLozic.xcdatamodeld;
 			sourceTree = "<group>";

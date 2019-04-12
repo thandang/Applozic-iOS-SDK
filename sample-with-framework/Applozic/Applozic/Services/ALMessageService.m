@@ -74,34 +74,34 @@ static ALMessageClientService *alMsgClientService;
 
             [[NSNotificationCenter defaultCenter] postNotificationName:CONVERSATION_CALL_COMPLETED object:nil userInfo:nil];
 
-            if(alMessageListResponse.messageList.count){
-
-                 for(ALMessage *message in [alMessageListResponse.messageList subarrayWithRange:NSMakeRange(0, MIN(6, alMessageListResponse.messageList.count))] ){
-
-                    if(message.groupId != nil && message.groupId != 0){
-
-                        MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
-                        messageListRequest.userId = nil;
-                        messageListRequest.channelKey = message.groupId;
-                        messageListRequest.skipRead = YES;
-
-                        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
-
-                        }];
-                    }else{
-
-                        MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
-                        messageListRequest.userId = message.contactIds;
-                        messageListRequest.channelKey = nil;
-                        messageListRequest.skipRead = YES;
-
-                        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
-
-                        }];
-
-                    }
-                }
-            }
+//            if(alMessageListResponse.messageList.count){
+//
+//                 for(ALMessage *message in [alMessageListResponse.messageList subarrayWithRange:NSMakeRange(0, MIN(6, alMessageListResponse.messageList.count))] ){
+//
+//                    if(message.groupId != nil && message.groupId != 0){
+//
+//                        MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
+//                        messageListRequest.userId = nil;
+//                        messageListRequest.channelKey = message.groupId;
+//                        messageListRequest.skipRead = YES;
+//
+//                        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+//
+//                        }];
+//                    }else{
+//
+//                        MessageListRequest * messageListRequest = [[MessageListRequest alloc] init];
+//                        messageListRequest.userId = message.contactIds;
+//                        messageListRequest.channelKey = nil;
+//                        messageListRequest.skipRead = YES;
+//
+//                        [[ALMessageService sharedInstance] getMessageListForUser:messageListRequest withCompletion:^(NSMutableArray *messages, NSError *error, NSMutableArray *userDetailArray) {
+//
+//                        }];
+//
+//                    }
+//                }
+//            }
         }
         else{
             ALSLog(ALLoggerSeverityInfo, @"Message List Response Nil");

@@ -45,7 +45,6 @@
         }
     }
     NSError * error;
-    [theDBHandler.managedObjectContext save:&error];
     if(![theDBHandler.managedObjectContext save:&error]){
         ALSLog(ALLoggerSeverityError, @"Unable to save error :%@",error);
 

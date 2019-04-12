@@ -2496,17 +2496,17 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     imageCell.sizeLabel.alpha = 0;
     message.inProgress = YES;
 
-    NSMutableArray * theCurrentConnectionsArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+    NSMutableArray * sessionArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
 
-    for(NSURLSession *session in theCurrentConnectionsArray ){
+    for(NSURLSession *session in sessionArray){
         NSURLSessionConfiguration *config =  session.configuration;
         NSArray *array =  [config.identifier componentsSeparatedByString:@","];
-        if([array[0]  isEqual: @"THUMBNAIL"]){
-            break;
-        }
-        if(array[1] == message.key){
-            ALSLog(ALLoggerSeverityInfo, @"Already present do nothing###");
-            return;
+        if(array && array.count>1){
+            //Check if message key are same and first argumnent is not THUMBNAIL
+            if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
+                ALSLog(ALLoggerSeverityInfo, @"Already task in proccess ignoring download retry");
+                return;
+            }
         }
     }
 

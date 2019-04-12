@@ -23,8 +23,6 @@
 @interface ALGroupDetailViewController () <ALGroupInfoDelegate>
 {
     NSMutableOrderedSet *memberIds;
-    NSMutableArray *memberNames;
-    BOOL isAdmin;
     CGFloat screenWidth;
     NSArray * colors;
     ALChannel *alchannel;
@@ -37,14 +35,13 @@
 
 @end
 
+static NSString *const updateGroupMembersNotification = @"Updated_Group_Members";
+
 @implementation ALGroupDetailViewController
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupDetailsSyncCall) name:@"GroupDetailTableReload" object:nil];
-    self.lastSeenMembersArray = [[NSMutableArray alloc] init];
     self.alChannel =[[ALChannelService new] getChannelByKey:self.channelKeyID];
     ALSLog(ALLoggerSeverityInfo, @"## self.alChannel :: %@", self.alChannel);
 }
@@ -54,6 +51,7 @@
     [super viewWillAppear:animated];
     [self setupView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUser:) name:@"USER_DETAIL_OTHER_VC" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupDetailsSyncCall:) name:updateGroupMembersNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAPNS:) name:@"pushNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMQTTNotification:) name:@"MQTT_APPLOZIC_01" object:nil];
 }
@@ -62,6 +60,7 @@
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"USER_DETAIL_OTHER_VC" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:updateGroupMembersNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"pushNotification" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MQTT_APPLOZIC_01" object:nil];
 }
@@ -183,15 +182,13 @@
 {
 
     [self.tabBarController.tabBar setHidden:YES];
+    [self.tableView setHidden:YES];
     [self setNavigationColor];
     [self setTitle: NSLocalizedStringWithDefaultValue(@"groupDetailsTitle", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Group Details", @"")];
 
     ALChannelService * channnelService = [[ALChannelService alloc] init];
     self.alChannel = [channnelService getChannelByKey:self.channelKeyID];
     self.groupName = self.alChannel.name;
-    isAdmin = [channnelService checkAdmin:self.channelKeyID];
-
-    memberNames = [[NSMutableArray alloc] init];
     colors = [[NSArray alloc] initWithObjects:@"#617D8A",@"#628B70",@"#8C8863",@"8B627D",@"8B6F62", nil];
 
     screenWidth = [UIScreen mainScreen].bounds.size.width;
@@ -199,38 +196,34 @@
     self.tableView.tableFooterView.backgroundColor = [UIColor lightGrayColor];
 
     [self getChannelMembers];
-    [self getDisplayNamesAndLastSeen];
 
 }
 
 -(void)getChannelMembers
 {
-    ALChannelDBService * channelDBService = [[ALChannelDBService alloc] init];
-    NSArray *memberIdArray = [NSArray arrayWithArray:[channelDBService getListOfAllUsersInChannel:self.channelKeyID]];
-    memberIds = [NSMutableOrderedSet orderedSetWithArray:memberIdArray];
+    [[self activityIndicator] startAnimating];
+    ALChannelDBService * channelDatabaseService = [[ALChannelDBService alloc ]init];
+    [channelDatabaseService fetchChannelMembersAsyncWithChannelKey:self.channelKeyID witCompletion:^(NSMutableArray *membersArray) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self->memberIds = [NSMutableOrderedSet orderedSetWithArray:membersArray];
+            self.memberCount = self->memberIds.count;
+            [self.tableView setHidden:NO];
+            [self.tableView reloadData];
+            [[self activityIndicator] stopAnimating];
+        });
+    }];
 }
 
--(void)getDisplayNamesAndLastSeen
+-(void)groupDetailsSyncCall:(NSNotification *) notification
 {
-    ALContactDBService * contactDb=[[ALContactDBService alloc] init];
-    for(NSString * userID in memberIds)
-    {
-        ALContact * contact = [contactDb loadContactByKey:@"userId" value:userID];
-        if([contact.userId isEqualToString:[ALUserDefaultsHandler getUserId]]){
-            contact.displayName = NSLocalizedStringWithDefaultValue(@"youText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"You", @"");
-        }
-        [self.lastSeenMembersArray addObject:[self getLastSeenForMember:userID]];
-        [memberNames addObject:[contact getDisplayName]];
+    ALChannel *channel = notification.object;
+    if(channel != nil && self.channelKeyID == channel.key){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setupView];
+        });
     }
-    self.memberCount = memberIds.count;
-    ALSLog(ALLoggerSeverityInfo, @"Member Count :%ld",(long)self.memberCount);
 }
 
--(void)groupDetailsSyncCall
-{
-    [self setupView];
-    [self.tableView reloadData];
-}
 
 //------------------------------------------------------------------------------------------------------------------
 #pragma mark - Table View DataSource Methods
@@ -399,23 +392,21 @@
                         }];
 }
 
--(NSString *)getLastSeenForMember:(NSString*)userID
+-(NSString *)getLastSeenForMember:(NSString*)userID withLastSeenAtTime:(NSNumber*) lastSeenAtTime
 {
-    ALContactDBService * contactDBService = [[ALContactDBService alloc] init];
-    ALContact * contact = [contactDBService loadContactByKey:@"userId" value:userID];
 
     ALUserDetail * userDetails = [[ALUserDetail alloc] init];
     userDetails.userId = userID;
-    userDetails.lastSeenAtTime = contact.lastSeenAt;
+    userDetails.lastSeenAtTime = lastSeenAtTime;
 
-    double value = contact.lastSeenAt.doubleValue;
+    double value = userDetails.lastSeenAtTime.doubleValue;
     NSString * lastSeen;
-    if(contact.lastSeenAt == NULL){
+    if(lastSeenAtTime == NULL){
         lastSeen = @" ";
-    }
-    else{
+    }else{
         lastSeen = [(ALChatViewController*)self.alChatViewController formatDateTime:userDetails andValue:value];
     }
+
     return lastSeen;
 }
 
@@ -525,6 +516,10 @@
     else
     {
 
+        ALContactDBService *alContactDBService = [[ALContactDBService alloc]init];
+        ALContact * alContact = [alContactDBService loadContactByKey:@"userId" value:removeMemberID];
+
+
         UIAlertController * theController = [UIAlertController alertControllerWithTitle:nil
                                                                                 message:nil
                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
@@ -535,7 +530,7 @@
 
         if ([ALApplozicSettings isChatOnTapUserProfile])
         {
-            [theController addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"messageText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Message", @"") stringByAppendingString: @" %@"], memberNames[row]]
+            [theController addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"messageText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Message", @"") stringByAppendingString: @" %@"], [alContact getDisplayName]]
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction *action) {
 
@@ -552,7 +547,7 @@
 
         if(alChannelUserXLoggedInUser.isAdminUser){
 
-            UIAlertAction *removeAction = [UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"removeText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Remove", @"") stringByAppendingString: @" %@"], memberNames[row]]
+            UIAlertAction *removeAction = [UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"removeText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Remove", @"") stringByAppendingString: @" %@"], [alContact getDisplayName]]
                                                                    style:UIAlertActionStyleDefault
                                                                  handler:^(UIAlertAction *action) {
 
@@ -584,7 +579,7 @@
             if(!alChannelUserX.isAdminUser  && !channel.isBroadcastGroup){
 
             [theController addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:[NSLocalizedStringWithDefaultValue(@"makeAdminText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Make admin", @"") stringByAppendingString: @" %@"]
-                                                                     , memberNames[row]]
+                                                                     , [alContact getDisplayName]]
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction *action) {
 
@@ -726,6 +721,10 @@
     ALChannelDBService *channelDBService = [[ALChannelDBService alloc] init];
     ALChannelUserX *alChannelUserX = [channelDBService loadChannelUserXByUserId:self.channelKeyID andUserId:memberIds[row]];
 
+    ALContactDBService * alContactDBService = [[ALContactDBService alloc] init];
+    ALContact * alContact = [alContactDBService loadContactByKey:@"userId" value:memberIds[row]];
+
+
     if(alChannelUserX.isAdminUser)
     {
         [memberCell.adminLabel setHidden:NO];
@@ -734,18 +733,19 @@
     //    Member Name Label
     [memberCell.lastSeenTimeLabel setTextAlignment:NSTextAlignmentNatural];
     [memberCell.nameLabel setTextAlignment:NSTextAlignmentNatural];
-    memberCell.nameLabel.text = [NSString stringWithFormat:@"%@", memberNames[row]];
+    if([alContact.userId isEqualToString:[ALUserDefaultsHandler getUserId]]){
+        memberCell.nameLabel.text = NSLocalizedStringWithDefaultValue(@"youText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"You", @"");
+    }else{
+        memberCell.nameLabel.text =  [alContact getDisplayName];
+    }
 
     [memberCell.alphabeticLabel setHidden:YES];
     [memberCell.profileImageView setHidden:NO];
 
-    ALContactDBService * alContactDBService = [[ALContactDBService alloc] init];
-    ALContact * alContact = [alContactDBService loadContactByKey:@"userId" value:memberIds[row]];
-
     if (![alContact.userId isEqualToString:[ALUserDefaultsHandler getUserId]])
     {
         [memberCell.lastSeenTimeLabel setHidden:NO];
-        [memberCell.lastSeenTimeLabel setText:self.lastSeenMembersArray[row]];
+        [memberCell.lastSeenTimeLabel setText:[self getLastSeenForMember:alContact.userId withLastSeenAtTime:alContact.lastSeenAt]];
     }
 
     if (alContact.localImageResourceName)

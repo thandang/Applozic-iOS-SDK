@@ -373,7 +373,10 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
     if (self.channelKey) {
         [self checkIfChannelLeft];
+    }else{
+        self.typingMessageView.hidden = NO;
     }
+    
     [self setCallButtonInNavigationBar];
     [self checkUserBlockStatus];
     if(self.contactIds ){
@@ -967,15 +970,10 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         [self freezeView:NO];
     }
 
-    if(self.channelKey){
-        ALChannelDBService *channelDBService = [[ALChannelDBService alloc]init];
-
-        ALChannelUserX *alChannelUserXLoggedInUser = [channelDBService loadChannelUserXByUserId:self.channelKey andUserId:[ALUserDefaultsHandler getUserId]];
-
-        if([channelDBService isAdminBroadcastChannel:self.channelKey] && !alChannelUserXLoggedInUser.isAdminUser){
-            self.typingMessageView.hidden = YES;
-        }
-
+    if(self.alChannel.metadata != nil && [[self.alChannel.metadata valueForKey:@"AL_ADMIN_BROADCAST"] isEqualToString:@"true"] && ![[self.alChannel.metadata  valueForKey:@"AL_ADMIN_USERID"] isEqualToString:[ALUserDefaultsHandler getUserId]]){
+        self.typingMessageView.hidden = YES;
+    }else{
+        self.typingMessageView.hidden = NO;
     }
 }
 
@@ -3628,7 +3626,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
     if(self.channelKey != nil)
     {
-        ALChannelService * channelService = [[ALChannelService alloc] init];
         if(self.alChannel.type == GROUP_OF_TWO )
         {
             if(value > 0)
@@ -3642,11 +3639,13 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }
         else if (self.alChannel.type != GROUP_OF_TWO)
         {
-            if([ALApplozicSettings isChannelMembersInfoInNavigationBarEnabled]){
-                [self.label setText:[channelService stringFromChannelUserList:self.channelKey]];
-            }else{
-                [self.label setText:@""];
-            }
+            [self.label setText:@""];
+
+//            if([ALApplozicSettings isChannelMembersInfoInNavigationBarEnabled]){
+//                [self.label setText:[channelService stringFromChannelUserList:self.channelKey]];
+//            }else{
+//                [self.label setText:@""];
+//            }
         }
     }
     else if (value > 0)

@@ -9,6 +9,7 @@
 #import "ALDBHandler.h"
 #import "DB_CONTACT.h"
 #import "ALContact.h"
+#import "ALApplozicSettings.h"
 
 @implementation ALDBHandler
 
@@ -58,8 +59,18 @@
 - (NSURL *)applicationDocumentsDirectory {
     
     // The directory the application uses to store the Core Data store file. This code uses a directory named "tricon-infotech.coredata_demo" in the application's documents directory.
-    
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+
+    NSURL * urlForDocumentsDirectory;
+    if([ALApplozicSettings getShareExtentionGroup]){
+         urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+    }
+
+    //Check if group is not there in app which is passed then use the deafult Directory
+    if(urlForDocumentsDirectory == nil){
+        urlForDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    }
+
+    return urlForDocumentsDirectory;
 }
 
 - (NSManagedObjectModel *)managedObjectModel {

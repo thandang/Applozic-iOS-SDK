@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		15102E152CFA927B82CEA1B8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C53010819B64C000F9AF3B /* CoreText.framework */; };
+		18330A7E2271F6A7004C7552 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18330A7D2271F6A7004C7552 /* ShareViewController.m */; };
+		18330A812271F6A7004C7552 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18330A7F2271F6A7004C7552 /* MainInterface.storyboard */; };
+		18330A852271F6A7004C7552 /* ApplozicShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 18330A7A2271F6A7004C7552 /* ApplozicShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		18AD69702278B49100AB17BE /* ALChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7F4C6F1C314EBD00AE04CF /* ALChatManager.m */; };
+		18AD6971227B21C500AB17BE /* Applozic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA09D61BE39F6B00CBF133 /* Applozic.framework */; };
 		1DE667DF7B311A11C9675E35 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1B9732748F398619EB8200 /* CoreVideo.framework */; };
 		28AE0C1B9834A2349B7A30F0 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 162EC4668DEC45215321962B /* BuddyBuildSDK.framework */; };
 		29B643C91CE9F24800FE8A73 /* ALSettingsForDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B643C81CE9F24800FE8A73 /* ALSettingsForDebug.m */; };
@@ -44,6 +49,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		18330A832271F6A7004C7552 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D6DF1E91BC551FA00EBA00F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18330A792271F6A7004C7552;
+			remoteInfo = ApplozicShare;
+		};
 		6DAA09D51BE39F6B00CBF133 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DAA09D11BE39F6A00CBF133 /* Applozic.xcodeproj */;
@@ -68,6 +80,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		18330A892271F6A7004C7552 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				18330A852271F6A7004C7552 /* ApplozicShare.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D46B6C21BCE4C8F0014A5D3 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -86,6 +109,12 @@
 		0DC495FFC34D1F473FCFB224 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0E71166F2B6E73BE1C8CE86E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		162EC4668DEC45215321962B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
+		18330A7A2271F6A7004C7552 /* ApplozicShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ApplozicShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		18330A7C2271F6A7004C7552 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		18330A7D2271F6A7004C7552 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		18330A802271F6A7004C7552 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		18330A822271F6A7004C7552 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18D36C7A2277411C00307282 /* ApplozicShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ApplozicShare.entitlements; sourceTree = "<group>"; };
 		254D88CF49A190C80498EFA6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		29B643C71CE9F24800FE8A73 /* ALSettingsForDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSettingsForDebug.h; sourceTree = "<group>"; };
 		29B643C81CE9F24800FE8A73 /* ALSettingsForDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSettingsForDebug.m; sourceTree = "<group>"; };
@@ -130,6 +159,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		18330A772271F6A7004C7552 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18AD6971227B21C500AB17BE /* Applozic.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D6DF1EE1BC551FA00EBA00F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -162,6 +199,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18330A7B2271F6A7004C7552 /* ApplozicShare */ = {
+			isa = PBXGroup;
+			children = (
+				18D36C7A2277411C00307282 /* ApplozicShare.entitlements */,
+				18330A7C2271F6A7004C7552 /* ShareViewController.h */,
+				18330A7D2271F6A7004C7552 /* ShareViewController.m */,
+				18330A7F2271F6A7004C7552 /* MainInterface.storyboard */,
+				18330A822271F6A7004C7552 /* Info.plist */,
+			);
+			path = ApplozicShare;
+			sourceTree = "<group>";
+		};
 		462D5B421DA40C7000F5CD73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +263,7 @@
 				6DAA09D11BE39F6A00CBF133 /* Applozic.xcodeproj */,
 				6D6DF1F31BC551FA00EBA00F /* applozicdemo */,
 				8B1461A320DA33DB00785DF2 /* applozicdemoTests */,
+				18330A7B2271F6A7004C7552 /* ApplozicShare */,
 				6D6DF1F21BC551FA00EBA00F /* Products */,
 				462D5B421DA40C7000F5CD73 /* Frameworks */,
 			);
@@ -224,6 +274,7 @@
 			children = (
 				6D6DF1F11BC551FA00EBA00F /* applozicdemo.app */,
 				8B1461A220DA33DB00785DF2 /* applozicdemoTests.xctest */,
+				18330A7A2271F6A7004C7552 /* ApplozicShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +331,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		18330A792271F6A7004C7552 /* ApplozicShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18330A882271F6A7004C7552 /* Build configuration list for PBXNativeTarget "ApplozicShare" */;
+			buildPhases = (
+				18330A762271F6A7004C7552 /* Sources */,
+				18330A772271F6A7004C7552 /* Frameworks */,
+				18330A782271F6A7004C7552 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ApplozicShare;
+			productName = ApplozicShare;
+			productReference = 18330A7A2271F6A7004C7552 /* ApplozicShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		6D6DF1F01BC551FA00EBA00F /* applozicdemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D6DF20B1BC551FA00EBA00F /* Build configuration list for PBXNativeTarget "applozicdemo" */;
@@ -289,11 +357,13 @@
 				6D6DF1EF1BC551FA00EBA00F /* Resources */,
 				6D46B6C21BCE4C8F0014A5D3 /* Embed Frameworks */,
 				C7ACBBC61DB650600087EE35 /* ShellScript */,
+				18330A892271F6A7004C7552 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				6DAA09D81BE39F8D00CBF133 /* PBXTargetDependency */,
+				18330A842271F6A7004C7552 /* PBXTargetDependency */,
 			);
 			name = applozicdemo;
 			productName = applozicdemo;
@@ -327,11 +397,24 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "applozic Inc";
 				TargetAttributes = {
+					18330A792271F6A7004C7552 = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = C25JNDCBM4;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
+					};
 					6D6DF1F01BC551FA00EBA00F = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = C25JNDCBM4;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -375,6 +458,7 @@
 			targets = (
 				6D6DF1F01BC551FA00EBA00F /* applozicdemo */,
 				8B1461A120DA33DB00785DF2 /* applozicdemoTests */,
+				18330A792271F6A7004C7552 /* ApplozicShare */,
 			);
 		};
 /* End PBXProject section */
@@ -390,6 +474,14 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		18330A782271F6A7004C7552 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18330A812271F6A7004C7552 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D6DF1EF1BC551FA00EBA00F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,6 +522,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		18330A762271F6A7004C7552 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18AD69702278B49100AB17BE /* ALChatManager.m in Sources */,
+				18330A7E2271F6A7004C7552 /* ShareViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D6DF1ED1BC551FA00EBA00F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -458,6 +559,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		18330A842271F6A7004C7552 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18330A792271F6A7004C7552 /* ApplozicShare */;
+			targetProxy = 18330A832271F6A7004C7552 /* PBXContainerItemProxy */;
+		};
 		6DAA09D81BE39F8D00CBF133 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Applozic;
@@ -471,6 +577,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		18330A7F2271F6A7004C7552 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18330A802271F6A7004C7552 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		32A5E8901F3B870500E99655 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -490,6 +604,80 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		18330A862271F6A7004C7552 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = C25JNDCBM4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ApplozicShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.customer.demo.ApplozicShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ApplozicShare Development";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		18330A872271F6A7004C7552 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adarsh Kumar (RN66F37TC5)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = C25JNDCBM4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ApplozicShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applozic.customer.demo.ApplozicShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ApplozicShare Development";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		6D6DF2091BC551FA00EBA00F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -723,6 +911,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		18330A882271F6A7004C7552 /* Build configuration list for PBXNativeTarget "ApplozicShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18330A862271F6A7004C7552 /* Debug */,
+				18330A872271F6A7004C7552 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6D6DF1EC1BC551FA00EBA00F /* Build configuration list for PBXProject "applozicdemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

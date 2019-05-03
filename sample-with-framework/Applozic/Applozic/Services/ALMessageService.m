@@ -204,7 +204,7 @@ static ALMessageClientService *alMsgClientService;
                        ALContactService *contactService = [ALContactService new];
                        NSMutableArray * userNotPresentIds = [NSMutableArray new];
 
-                       for (int i=0; i<messages.count; i++) {
+                       for (int i = messages.count - 1; i >= 0; i--) {
                            ALMessage * message = messages[i];
                            if ([message isHiddenMessage] && ![message isVOIPNotificationMessage]) {
                                [messages removeObjectAtIndex:i];

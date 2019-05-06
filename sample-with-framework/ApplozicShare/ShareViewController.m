@@ -24,29 +24,7 @@
 
 - (void)didSelectPost {
 
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-        ALMessage * theMessage = [ALMessage new];
-        theMessage.type = @"5";
-        theMessage.createdAtTime = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
-        theMessage.deviceKey = [ALUserDefaultsHandler getDeviceKeyString];
-        theMessage.message = @"This is text message";
-        theMessage.sendToDevice = NO;
-        theMessage.shared = NO;
-        theMessage.fileMeta = nil;
-        theMessage.storeOnDevice = NO;
-        theMessage.key = [[NSUUID UUID] UUIDString];
-        theMessage.delivered = NO;
-        theMessage.fileMetaKey = nil;
-        theMessage.source = SOURCE_IOS;
-
-        ALChatLauncher* chatmanager = [[ALChatLauncher alloc] init];
-        [chatmanager launchContactScreenWithMessage:theMessage andFromViewController:self];
-
-    });
-
-
+    self.passSelectedItemsToApp;
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     
     // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
@@ -54,26 +32,91 @@
 }
 
 
-- ( NSString * ) saveImageToAppGroupFolder: ( UIImage * ) image
-                                imageIndex: ( int ) imageIndex
-{
+- ( NSString * ) saveImageToAppGroupFolder: ( UIImage * ) image{
+
     assert( NULL != image );
 
-    NSData * jpegData = UIImageJPEGRepresentation( image, 1.0 );
-
-    NSURL * containerURL = [ [ NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier: @"group.com.applozic.share"];
-    NSString * documentsPath = containerURL.path;
-
-    // Note that we aren't using massively unique names for the files in this example:
-    NSString * fileName = [ NSString stringWithFormat: @"image%d.jpg", imageIndex ];
-
-    NSString * filePath = [ documentsPath stringByAppendingPathComponent: fileName ];
-    [ jpegData writeToFile: filePath atomically: YES ];
-
-    //Mahantesh -- Store image url to NSUserDefaults
+    NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString * timestamp = [NSString stringWithFormat:@"IMG-%f.jpeg",[[NSDate date] timeIntervalSince1970] * 1000];
+    NSString * filePath = [docDirPath stringByAppendingPathComponent:timestamp];
+    NSData * imageData = [image getCompressedImageData];
+    [ imageData writeToFile: filePath atomically: YES ];
     return filePath;
 }
 
+
+
+- ( void ) passSelectedItemsToApp
+{
+    NSExtensionItem * item = self.extensionContext.inputItems.firstObject;
+
+    // Reset the counter and the argument list for invoking the app:
+
+    // Iterate through the attached files
+    for ( NSItemProvider * itemProvider in item.attachments )
+    {
+        // Check if we are sharing a Image
+        if ( [ itemProvider hasItemConformingToTypeIdentifier: ( NSString * ) kUTTypeImage ] )
+        {
+            // Load it, so we can get the path to it
+            [ itemProvider loadItemForTypeIdentifier: ( NSString * ) kUTTypeImage
+                                             options: NULL
+                                   completionHandler: ^ ( UIImage * image, NSError * error )
+             {
+
+                 if ( NULL != error )
+                 {
+                     NSLog( @"There was an error retrieving the attachments: %@", error );
+                     return;
+                 }
+
+                 // The app won't be able to access the images by path directly in the Camera Roll folder,
+                 // so we temporary copy them to a folder which both the extension and the app can access:
+                 NSString * filePath = [ self saveImageToAppGroupFolder: image];
+                 [self buildAttachmentMessageWithFilePath:filePath];
+             } ];
+        }
+    }
+}
+
+
+-(void)buildAttachmentMessageWithFilePath:(NSString *)filePath{
+
+    ALFileMetaInfo *info = [ALFileMetaInfo new];
+
+    info.blobKey = nil;
+    info.contentType = @"";
+    info.createdAtTime = nil;
+    info.key = nil;
+    info.name = @"";
+    info.size = @"";
+    info.userKey = @"";
+    info.thumbnailUrl = @"";
+    info.progressValue = 0;
+
+    ALMessage * theMessage = [ALMessage new];
+    theMessage.type = @"5";
+    theMessage.fileMeta = info;
+    theMessage.imageFilePath = [filePath lastPathComponent];
+    theMessage.createdAtTime = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
+    theMessage.deviceKey = [ALUserDefaultsHandler getDeviceKeyString];
+    theMessage.message = @"This is text message";
+    theMessage.sendToDevice = NO;
+    theMessage.shared = NO;
+    theMessage.fileMeta = info;
+    theMessage.storeOnDevice = NO;
+    theMessage.key = [[NSUUID UUID] UUIDString];
+    theMessage.delivered = NO;
+    theMessage.fileMetaKey = nil;
+    theMessage.source = SOURCE_IOS;
+    [self launchContactScreen:theMessage];
+}
+
+
+-(void)launchContactScreen:(ALMessage *)message{
+        ALChatLauncher* chatmanager = [[ALChatLauncher alloc] init];
+        [chatmanager launchContactScreenWithMessage:message andFromViewController:self];
+}
 
 
 - (NSArray *)configurationItems {

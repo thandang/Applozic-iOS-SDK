@@ -208,6 +208,10 @@
 
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"FILE,%@",message.key]];
 
+        if(ALApplozicSettings.getShareExtentionGroup){
+            config.sharedContainerIdentifier = ALApplozicSettings.getShareExtentionGroup;
+        }
+
         NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
         NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:request];
         [nsurlSessionDataTask resume];
@@ -294,6 +298,9 @@
 
                 NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"FILE,%@",alMessage.key]];
 
+                if(ALApplozicSettings.getShareExtentionGroup){
+                    config.sharedContainerIdentifier = ALApplozicSettings.getShareExtentionGroup;
+                }
                 NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
 
                 NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:theRequest];
@@ -313,6 +320,10 @@
                     NSMutableURLRequest * urlRequest =  [ALRequestHandler createGETRequestWithUrlStringWithoutHeader:theUrlString paramString:nil];
 
                     NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"THUMBNAIL,%@", alMessage.key]];
+
+                    if(ALApplozicSettings.getShareExtentionGroup){
+                        config.sharedContainerIdentifier = ALApplozicSettings.getShareExtentionGroup;
+                    }
 
                     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
 
@@ -370,6 +381,7 @@
         [request setURL:[NSURL URLWithString:uploadURL]];
 
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+
 
         NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             completion(data,error);

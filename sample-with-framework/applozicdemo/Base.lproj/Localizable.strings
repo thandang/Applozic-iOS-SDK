@@ -300,4 +300,6 @@
 "Recording" = "Recording";
 "DocumentText" = "Document";
 "ContactSaveMessage" = "Contact Saved Successfully";
+"SendingMessage" = "Sending...";
+
 

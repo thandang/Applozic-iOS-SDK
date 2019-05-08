@@ -360,9 +360,17 @@
     
     if(alMessage.imageFilePath != nil && alMessage.fileMeta.blobKey)
     {
+
         NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
-        self.videoFileURL = [NSURL fileURLWithPath:filePath];
+        if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+            self.videoFileURL  = [NSURL fileURLWithPath:filePath];
+        }else{
+            NSURL *documentDirectory   = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+            documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.imageFilePath];
+            self.videoFileURL  = [NSURL fileURLWithPath:documentDirectory.path];
+        }
+
         [self.mImageView addGestureRecognizer:self.tapper];
         [self.videoPlayFrontView setHidden:NO];
         [self setVideoThumbnail:filePath];

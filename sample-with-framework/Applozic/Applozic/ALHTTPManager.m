@@ -145,11 +145,21 @@
     alUploadTask.identifier = message.key;
     self.uploadTask = alUploadTask;
 
+    NSString * filePath;
     NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * timestamp = message.imageFilePath;
-    NSString * filePath = [docDirPath stringByAppendingPathComponent:timestamp];
+    filePath = [docDirPath stringByAppendingPathComponent:timestamp];
+
+    if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+        NSURL *docURL = ALUtilityClass.getAppsGroupDirectory;
+        if(docURL != nil){
+            docURL = [docURL URLByAppendingPathComponent:message.imageFilePath];
+            filePath = docURL.path;
+        }
+    }
     ALSLog(ALLoggerSeverityInfo, @"FILE_PATH : %@",filePath);
     NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
+
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         //Create boundary, it can be anything
         NSString *boundary = @"------ApplogicBoundary4QuqLuM1cE5lMwCy";
@@ -256,7 +266,17 @@
 
     NSString* fileName  = [NSString stringWithFormat:attachmentDownloadFlag? @"%@_local.%@": @"%@_thumbnail_local.%@",alMessage.key,fileExtension];
 
-    NSString * filePath  = [ [ALUtilityClass getDocumentDirectory] stringByAppendingPathComponent:fileName];
+    NSString * filePath;
+    NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    filePath = [docDirPath stringByAppendingPathComponent:fileName];
+
+    if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+        NSURL *docURL = ALUtilityClass.getAppsGroupDirectory;
+        if(docURL != nil){
+            docURL = [docURL URLByAppendingPathComponent:fileName];
+            filePath = docURL.path;
+        }
+    }
 
     NSData * data =  [[NSData alloc] initWithContentsOfFile:filePath];
     ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
@@ -302,6 +322,7 @@
                     config.sharedContainerIdentifier = ALApplozicSettings.getShareExtentionGroup;
                 }
                 NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+
 
                 NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:theRequest];
                 [nsurlSessionDataTask resume];

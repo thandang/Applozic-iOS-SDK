@@ -1718,5 +1718,29 @@
     return [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
 }
 
++(void) setUserDefaultsMigratedFlag:(BOOL)flag {
+    NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    [userDefaults setBool:flag forKey:AL_USER_DEFAULTS_MIGRATION];
+    [userDefaults synchronize];
+}
+
++(BOOL) isUserDefaultsMigrated {
+    NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    return  [userDefaults boolForKey:AL_USER_DEFAULTS_MIGRATION];
+}
+
+
++(void)migrateUserDefaultsToAppGroups{
+        //Old
+        NSUserDefaults * oldUserDefaults =  [NSUserDefaults standardUserDefaults];
+        NSUserDefaults * groupUserDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
+        if(groupUserDefaults != nil){
+            for(NSString * key in oldUserDefaults.dictionaryRepresentation.allKeys){
+                [groupUserDefaults setObject:oldUserDefaults.dictionaryRepresentation[key] forKey:key];
+            }
+            [groupUserDefaults synchronize];
+        }
+}
+
 
 @end

@@ -376,6 +376,15 @@
     {
         NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
+        if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+            fileSourceURL = [NSURL fileURLWithPath:filePath];
+        }else{
+            NSURL *documentDirectory   = ALUtilityClass.getAppsGroupDirectory;
+            if(documentDirectory){
+                documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.imageFilePath];
+                fileSourceURL = [NSURL fileURLWithPath:documentDirectory.path];
+            }
+        }
         [self.mBubleImageView setUserInteractionEnabled:YES];
         [self.mBubleImageView addGestureRecognizer:self.tapper];
         fileSourceURL = [NSURL fileURLWithPath:filePath];

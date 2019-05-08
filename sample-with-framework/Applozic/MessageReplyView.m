@@ -224,13 +224,25 @@
             [self.attachmentImage setImage:[ALUtilityClass getImageFromFramworkBundle:@"ic_mic.png"]];
             return;
         }else if([replyMessage.fileMeta.contentType hasPrefix:@"video"]){
-        
+
             if(replyMessage.imageFilePath){
-                NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                NSString * filePath = [docDir stringByAppendingPathComponent:replyMessage.imageFilePath];
-                NSURL *url = [NSURL fileURLWithPath:filePath];
-                
-                [ALUtilityClass subVideoImage:url withCompletion:^(UIImage *image) {
+
+                NSURL * theUrl;
+                NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+                NSString * filePath = [docDirPath stringByAppendingPathComponent:replyMessage.imageFilePath];
+                if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+                    NSURL *docAppGroupURL = [ALUtilityClass getAppsGroupDirectory];
+
+                    if(docAppGroupURL != nil){
+                        [docAppGroupURL URLByAppendingPathComponent:replyMessage.imageFilePath];
+                        theUrl = [NSURL fileURLWithPath:docAppGroupURL.path];
+                    }
+                }else{
+                    theUrl = [NSURL fileURLWithPath:filePath];
+                }
+
+                [ALUtilityClass subVideoImage:theUrl withCompletion:^(UIImage *image) {
                     dispatch_async(dispatch_get_main_queue(), ^(void){
                         [self.attachmentImage setImage:image];
                         return;
@@ -243,10 +255,23 @@
         }else if([replyMessage.fileMeta.contentType hasPrefix:@"image"]){
             if ( replyMessage.imageFilePath != NULL)
             {
-                NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                NSString * filePath = [docDir stringByAppendingPathComponent:replyMessage.imageFilePath];
-//                url = [NSURL fileURLWithPath:filePath];
-                [self setImage:[NSURL fileURLWithPath:filePath]];
+
+                NSURL * theUrl;
+                NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+                NSString * filePath = [docDirPath stringByAppendingPathComponent:replyMessage.imageFilePath];
+                if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+                    NSURL *docAppGroupURL = [ALUtilityClass getAppsGroupDirectory];
+
+                    if(docAppGroupURL != nil){
+                      [docAppGroupURL URLByAppendingPathComponent:replyMessage.imageFilePath];
+                        theUrl = [NSURL fileURLWithPath:docAppGroupURL.path];
+                    }
+                }else{
+                    theUrl = [NSURL fileURLWithPath:filePath];
+                }
+
+                [self setImage:theUrl];
             }
             else
             {
@@ -261,7 +286,6 @@
                     [self setImage:[NSURL URLWithString:fileURL]];
                 }];
                 
-//                url = [NSURL URLWithString:replyMessage.fileMeta.thumbnailUrl];
             }
         }else{
             [self.attachmentImage setImage:[ALUtilityClass getImageFromFramworkBundle:@"documentReceive.png"]];

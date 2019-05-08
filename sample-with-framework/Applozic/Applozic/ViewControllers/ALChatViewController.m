@@ -4407,9 +4407,22 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
             if (message.imageFilePath != NULL)
             {
-                NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                NSString * filePath = [docDir stringByAppendingPathComponent:message.imageFilePath];
-                [self showImage: [NSURL fileURLWithPath:filePath]];
+
+                NSURL * theUrl;
+                NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+                NSString * filePath = [docDirPath stringByAppendingPathComponent:message.imageFilePath];
+
+                if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+                    NSURL *docAppGroupURL = ALUtilityClass.getAppsGroupDirectory;
+                    if(docAppGroupURL != nil){
+                     [docAppGroupURL URLByAppendingPathComponent:message.imageFilePath];
+                        theUrl = [NSURL fileURLWithPath:docAppGroupURL.path];
+                    }
+                }else{
+                    theUrl = [NSURL fileURLWithPath:filePath];
+                }
+                [self showImage: theUrl];
             }
             else
             {
@@ -4429,9 +4442,18 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }else if([message.fileMeta.contentType hasPrefix:@"video"]){
             UIImage * globalThumbnail = [UIImage new];
 
-            NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSString * filePath = [docDir stringByAppendingPathComponent:message.imageFilePath];
-            NSURL *theUrl = [NSURL fileURLWithPath:filePath];
+            NSURL *theUrl;
+            NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+            NSString * filePath = [docDirPath stringByAppendingPathComponent:message.imageFilePath];
+            if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+                NSURL *docAppGroupURL = [[ALUtilityClass getAppsGroupDirectory] URLByAppendingPathComponent:message.imageFilePath];
+                if(docAppGroupURL != nil){
+                    theUrl = [NSURL fileURLWithPath:docAppGroupURL.path];
+                }
+            }else{
+                theUrl = [NSURL fileURLWithPath:filePath];
+            }
 
             globalThumbnail = [ALUtilityClass subProcessThumbnail:theUrl];
 
@@ -4444,7 +4466,6 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
             [self.replyAttachmentPreview setImage:globalThumbnail];
             [self.replyIcon setImage:[ALUtilityClass getImageFromFramworkBundle:@"ic_action_video.png"]];
-
 
         }
         else if(message.contentType == ALMESSAGE_CONTENT_VCARD)

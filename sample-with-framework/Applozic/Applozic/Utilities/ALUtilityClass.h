@@ -62,5 +62,6 @@
 +(NSString *)stringFromTimeInterval:(NSTimeInterval)interval;
 +(UIImage *)getVOIPMessageImage:(ALMessage *)alMessage;
 +(NSString *)getFileExtensionWithFileName:(NSString *)fileName;
-+(NSString *)getDocumentDirectory;
++(NSURL *)getDocumentDirectory;
++(NSURL *)getAppsGroupDirectory;
 @end

@@ -143,7 +143,8 @@ static NSString *const AL_ALPHABETIC_COLOR_CODES = @"com.applozic.AL_ALPHABETIC_
 static NSString *const DISABLE_UNBLOCK_FROM_CHAT = @"com.applozic.DISABLE_UNBLOCK_FROM_CHAT";
 static NSString *const AL_SHARE_EXTENSION = @"com.applozic.AL_SHARE_EXTENSION";
 static NSString *const AL_USER_DEFAULTS_GROUP_NAME = @"group.com.applozic.share";
-
+static NSString *const AL_USER_DEFAULTS_GROUP_MIGRATION = @"com.applozic.AL_USER_DEFAULTS_GROUP_MIGRATION";
+static NSString *const AL_USER_DEFAULTS_MIGRATION = @"com.applozic.AL_USER_DEFAULTS_MIGRATION";
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -579,4 +580,5 @@ static NSString *const AL_USER_DEFAULTS_GROUP_NAME = @"group.com.applozic.share"
 +(void)setShareExtentionGroup:(NSString *)group;
 +(NSString *)getShareExtentionGroup;
 
++(void)migrateUserDefaultsToAppGroups;
 @end

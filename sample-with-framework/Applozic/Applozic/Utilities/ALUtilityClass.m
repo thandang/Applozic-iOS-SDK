@@ -663,8 +663,18 @@
     return componentsArray.count  > 0 ? [componentsArray lastObject]:nil;
 }
 
-+(NSString *)getDocumentDirectory{
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) objectAtIndex:0];
++(NSURL *)getDocumentDirectory{
+
+    return  [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
++(NSURL *)getAppsGroupDirectory{
+
+    NSURL * urlForDocumentsDirectory;
+    if([ALApplozicSettings getShareExtentionGroup]){
+        urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+    }
+    return urlForDocumentsDirectory;
 }
 
 @end

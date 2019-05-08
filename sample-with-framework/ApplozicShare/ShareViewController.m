@@ -12,6 +12,7 @@
 
 
 @interface ShareViewController ()
+@property (strong, nonatomic) ALMessage *theMessage;
 
 @end
 
@@ -22,9 +23,15 @@
     return YES;
 }
 
+
+
+
 - (void)didSelectPost {
 
-    self.passSelectedItemsToApp;
+    if([ALUserDefaultsHandler isLoggedIn]){
+
+        self.passSelectedItemsToApp;
+    }
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     
     // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
@@ -36,12 +43,13 @@
 
     assert( NULL != image );
 
-    NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSURL * urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
     NSString * timestamp = [NSString stringWithFormat:@"IMG-%f.jpeg",[[NSDate date] timeIntervalSince1970] * 1000];
-    NSString * filePath = [docDirPath stringByAppendingPathComponent:timestamp];
+    NSURL * fileURL =  [urlForDocumentsDirectory URLByAppendingPathComponent:timestamp];
     NSData * imageData = [image getCompressedImageData];
-    [ imageData writeToFile: filePath atomically: YES ];
-    return filePath;
+    [imageData writeToURL:fileURL atomically:YES];
+
+    return fileURL.path;
 }
 
 
@@ -55,6 +63,7 @@
     // Iterate through the attached files
     for ( NSItemProvider * itemProvider in item.attachments )
     {
+        
         // Check if we are sharing a Image
         if ( [ itemProvider hasItemConformingToTypeIdentifier: ( NSString * ) kUTTypeImage ] )
         {
@@ -73,14 +82,14 @@
                  // The app won't be able to access the images by path directly in the Camera Roll folder,
                  // so we temporary copy them to a folder which both the extension and the app can access:
                  NSString * filePath = [ self saveImageToAppGroupFolder: image];
-                 [self buildAttachmentMessageWithFilePath:filePath];
+                 [self buildAttachmentMessageWithFilePath:filePath withMessageText:self.textView.text];
              } ];
         }
     }
 }
 
 
--(void)buildAttachmentMessageWithFilePath:(NSString *)filePath{
+-(void)buildAttachmentMessageWithFilePath:(NSString *)filePath withMessageText:(NSString*) messageText{
 
     ALFileMetaInfo *info = [ALFileMetaInfo new];
 
@@ -93,29 +102,29 @@
     info.userKey = @"";
     info.thumbnailUrl = @"";
     info.progressValue = 0;
-
-    ALMessage * theMessage = [ALMessage new];
-    theMessage.type = @"5";
-    theMessage.fileMeta = info;
-    theMessage.imageFilePath = [filePath lastPathComponent];
-    theMessage.createdAtTime = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
-    theMessage.deviceKey = [ALUserDefaultsHandler getDeviceKeyString];
-    theMessage.message = @"This is text message";
-    theMessage.sendToDevice = NO;
-    theMessage.shared = NO;
-    theMessage.fileMeta = info;
-    theMessage.storeOnDevice = NO;
-    theMessage.key = [[NSUUID UUID] UUIDString];
-    theMessage.delivered = NO;
-    theMessage.fileMetaKey = nil;
-    theMessage.source = SOURCE_IOS;
-    [self launchContactScreen:theMessage];
+    self.theMessage = [ALMessage alloc];
+    self.theMessage.type = @"5";
+    self.theMessage.message = messageText;
+    self.theMessage.fileMeta = info;
+    self.theMessage.imageFilePath = [filePath lastPathComponent];
+    self.theMessage.createdAtTime = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
+     self.theMessage.deviceKey = [ALUserDefaultsHandler getDeviceKeyString];
+    self.theMessage.sendToDevice = NO;
+    self.theMessage.shared = NO;
+    self.theMessage.fileMeta = info;
+    self.theMessage.storeOnDevice = NO;
+    self.theMessage.key = [[NSUUID UUID] UUIDString];
+    self.theMessage.delivered = NO;
+    self.theMessage.fileMetaKey = nil;
+    self.theMessage.source = SOURCE_IOS;
+    [self launchContactScreen:self.theMessage];
 }
 
 
 -(void)launchContactScreen:(ALMessage *)message{
-        ALChatLauncher* chatmanager = [[ALChatLauncher alloc] init];
-        [chatmanager launchContactScreenWithMessage:message andFromViewController:self];
+    ALChatLauncher* chatmanager = [[ALChatLauncher alloc] init];
+    [chatmanager launchContactScreenWithMessage:message andFromViewController:self];
+
 }
 
 
@@ -123,5 +132,21 @@
     // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
     return @[];
 }
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dismissViewController:)
+                                                 name:@"DISMISS_SHARE_EXTENSION"
+                                               object:nil];
+}
+
+-(void)dismissViewController:(NSNotification *)notifyObject{
+    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+}
+
+
+
+
 
 @end

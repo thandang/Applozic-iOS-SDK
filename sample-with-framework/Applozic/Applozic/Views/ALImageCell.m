@@ -437,17 +437,32 @@ UIViewController * modalCon;
     {
         NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
-        [self setInImageView:[NSURL fileURLWithPath:filePath]];
+        if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+            [self setInImageView:[NSURL fileURLWithPath:filePath]];
+        }else{
+            NSURL *documentDirectory   = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+            documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.imageFilePath];
+            [self setInImageView:[NSURL fileURLWithPath:documentDirectory.path]];
+        }
+
     }
     else
     {
         if(alMessage.fileMeta.thumbnailFilePath == nil){
             [self.delegate thumbnailDownload:alMessage.key];
         }else{
-
             NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSString * filePath = [docDir  stringByAppendingPathComponent:alMessage.fileMeta.thumbnailFilePath];
-            [self setInImageView:[NSURL fileURLWithPath:filePath]];
+
+            if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+                [self setInImageView:[NSURL fileURLWithPath:filePath]];
+            }else{
+                NSURL *documentDirectory   = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+                documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.fileMeta.thumbnailFilePath];
+
+                [self setInImageView:[NSURL fileURLWithPath:documentDirectory.path]];
+
+            }
         }
 
     }

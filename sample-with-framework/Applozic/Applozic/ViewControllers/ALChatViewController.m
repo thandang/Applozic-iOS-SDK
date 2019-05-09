@@ -4719,8 +4719,10 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
         dispatch_async(dispatch_get_main_queue(), ^{
             NSIndexPath * path = [self getIndexPathForMessage:alMessage.key];
-            [self.alMessageWrapper getUpdatedMessageArray][path.row] = alMessage;
-            [self.mTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+            if(path.row < [self.alMessageWrapper getUpdatedMessageArray].count){
+                [self.alMessageWrapper getUpdatedMessageArray][path.row] = alMessage;
+                [self.mTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+            }
 
         });
     }
@@ -4760,10 +4762,10 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         dispatch_async(dispatch_get_main_queue(), ^{
 
            NSIndexPath * path = [self getIndexPathForMessage:oldMessageKey];
-
+            if(path.row < [self.alMessageWrapper getUpdatedMessageArray].count){
             [self.alMessageWrapper getUpdatedMessageArray][path.row] = alMessage;
             [self.mTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-
+          }
         });
     }
 }

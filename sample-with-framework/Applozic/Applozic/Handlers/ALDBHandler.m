@@ -60,18 +60,19 @@
     
     // The directory the application uses to store the Core Data store file. This code uses a directory named "tricon-infotech.coredata_demo" in the application's documents directory.
 
+      return  [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (NSURL *)applicationGroupDocumentDirectory {
+
     NSURL * urlForDocumentsDirectory;
     if([ALApplozicSettings getShareExtentionGroup]){
-         urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
-    }
-
-    //Check if group is not there in app which is passed then use the deafult Directory
-    if(urlForDocumentsDirectory == nil){
-        urlForDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
     }
 
     return urlForDocumentsDirectory;
 }
+
 
 - (NSManagedObjectModel *)managedObjectModel {
     
@@ -101,33 +102,51 @@
         }
 
         // Create the coordinator and store
-
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 
-        NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"AppLozic.sqlite"];
+        NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:AL_DATAT_BASE_NAME];
+
+        NSURL *groupURL =  [self applicationGroupDocumentDirectory];
+
+        if(groupURL){
+            groupURL = [groupURL URLByAppendingPathComponent:AL_DATAT_BASE_NAME];
+        }
 
         NSError *error = nil;
+        NSPersistentStore  *sourceStore  = nil;
+        NSPersistentStore  *destinationStore  = nil;
+        NSDictionary *options =   @{NSInferMappingModelAutomaticallyOption:[NSNumber numberWithBool:YES],NSMigratePersistentStoresAutomaticallyOption:[NSNumber numberWithBool:YES]};
 
-        NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+        if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]){
+            ALSLog(ALLoggerSeverityError, @"Failed to setup the persistentStoreCoordinator %@, %@", error, [error userInfo]);
+        } else {
+            sourceStore = [_persistentStoreCoordinator persistentStoreForURL:storeURL];
+            if (sourceStore != nil && groupURL){
+                // Perform the migration
 
-        if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:@{NSInferMappingModelAutomaticallyOption:[NSNumber numberWithBool:YES],NSMigratePersistentStoresAutomaticallyOption:[NSNumber numberWithBool:YES]} error:&error]) {
+                destinationStore = [_persistentStoreCoordinator migratePersistentStore:sourceStore toURL:groupURL options:options withType:NSSQLiteStoreType error:&error];
+                if (destinationStore == nil){
+                    ALSLog(ALLoggerSeverityError, @"Failed to migratePersistentStore");
+                } else {
+                    // You can now remove the old data at oldStoreURL
+                    // Note that you should do this using the NSFileCoordinator/NSFilePresenter APIs, and you should remove the other files
+                    // described in QA1809 as well.
 
-            // Report any error we got.
+                    NSFileCoordinator *coord = [[NSFileCoordinator alloc]initWithFilePresenter:nil];
+                    [coord coordinateWritingItemAtURL:storeURL options:0 error:nil byAccessor:^(NSURL *url)
+                     {
+                         NSError *error;
+                         [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
+                         if(error){
+                             ALSLog(ALLoggerSeverityError, @"Failed to Delete the data base file %@, %@", error, [error userInfo]);
+                         }
 
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                     }];
 
-            dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
-
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason;
-
-            dict[NSUnderlyingErrorKey] = error;
-
-            error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-
-
-            ALSLog(ALLoggerSeverityError, @"Unresolved error %@, %@", error, [error userInfo]);
-
+                }
+            }
         }
+
     }
 
     return _persistentStoreCoordinator;

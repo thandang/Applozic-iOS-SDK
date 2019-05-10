@@ -1704,20 +1704,20 @@
 }
 
 +(void)setShareExtentionGroup:(NSString *)group {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    ALApplozicSettings.migrateUserDefaultsToAppGroups;
+    NSUserDefaults *userDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
     [userDefaults setValue:group forKey:AL_SHARE_EXTENSION];
     [userDefaults synchronize];
 }
 
 +(NSString *)getShareExtentionGroup {
 
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
+    NSUserDefaults *userDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
     return  [userDefaults valueForKey:AL_SHARE_EXTENSION];
 }
 
 +(NSUserDefaults *)getUserDefaults {
-    return [NSUserDefaults standardUserDefaults];
+    return [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
 }
 
 +(void) setUserDefaultsMigratedFlag:(BOOL)flag {
@@ -1735,18 +1735,14 @@
 +(void)migrateUserDefaultsToAppGroups{
     //Old NSUserDefaults
     NSUserDefaults * oldUserDefaults =  [[NSUserDefaults standardUserDefaults]init];
-
-    if([ALApplozicSettings getShareExtentionGroup] == nil) { return; }
-
     NSDictionary *dictionary = [oldUserDefaults dictionaryRepresentation];
-    //App Group NSUserDefaults
-
-    NSUserDefaults * groupUserDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
-    if(groupUserDefaults != nil && ![ALApplozicSettings isUserDefaultsMigrated]){
+    //Will use the deafault group for access and other places as well
+    NSUserDefaults * groupUserDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
+    if(groupUserDefaults != nil && ![ALApplozicSettings isUserDefaultsMigrated] ){
         for(NSString * key in dictionary.allKeys){
             [groupUserDefaults setObject:dictionary[key] forKey:key];
+            [groupUserDefaults synchronize];
         }
-        [groupUserDefaults synchronize];
         [ALApplozicSettings setUserDefaultsMigratedFlag:YES];
     }
 }

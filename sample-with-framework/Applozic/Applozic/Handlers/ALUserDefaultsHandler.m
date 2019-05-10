@@ -855,7 +855,7 @@
 }
 
 +(NSUserDefaults *)getUserDefaults{
-    return [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
+    return [NSUserDefaults standardUserDefaults];
 
 }
 

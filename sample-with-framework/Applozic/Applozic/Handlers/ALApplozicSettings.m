@@ -1704,18 +1704,20 @@
 }
 
 +(void)setShareExtentionGroup:(NSString *)group {
-    NSUserDefaults *userDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_USER_DEFAULTS_GROUP_NAME];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:group forKey:AL_SHARE_EXTENSION];
     [userDefaults synchronize];
 }
 
 +(NSString *)getShareExtentionGroup {
 
-    return  [[[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_USER_DEFAULTS_GROUP_NAME] valueForKey:AL_SHARE_EXTENSION];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+    return  [userDefaults valueForKey:AL_SHARE_EXTENSION];
 }
 
 +(NSUserDefaults *)getUserDefaults {
-    return [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
+    return [NSUserDefaults standardUserDefaults];
 }
 
 +(void) setUserDefaultsMigratedFlag:(BOOL)flag {
@@ -1731,15 +1733,22 @@
 
 
 +(void)migrateUserDefaultsToAppGroups{
-        //Old
-        NSUserDefaults * oldUserDefaults =  [NSUserDefaults standardUserDefaults];
-        NSUserDefaults * groupUserDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
-        if(groupUserDefaults != nil){
-            for(NSString * key in oldUserDefaults.dictionaryRepresentation.allKeys){
-                [groupUserDefaults setObject:oldUserDefaults.dictionaryRepresentation[key] forKey:key];
-            }
-            [groupUserDefaults synchronize];
+    //Old NSUserDefaults
+    NSUserDefaults * oldUserDefaults =  [[NSUserDefaults standardUserDefaults]init];
+
+    if([ALApplozicSettings getShareExtentionGroup] == nil) { return; }
+
+    NSDictionary *dictionary = [oldUserDefaults dictionaryRepresentation];
+    //App Group NSUserDefaults
+
+    NSUserDefaults * groupUserDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:ALApplozicSettings.getShareExtentionGroup];
+    if(groupUserDefaults != nil && ![ALApplozicSettings isUserDefaultsMigrated]){
+        for(NSString * key in dictionary.allKeys){
+            [groupUserDefaults setObject:dictionary[key] forKey:key];
         }
+        [groupUserDefaults synchronize];
+        [ALApplozicSettings setUserDefaultsMigratedFlag:YES];
+    }
 }
 
 

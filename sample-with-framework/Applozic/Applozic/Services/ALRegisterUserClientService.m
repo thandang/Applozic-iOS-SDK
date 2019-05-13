@@ -26,7 +26,7 @@
 {
 
     if([ALUserDefaultsHandler isLoggedIn]){
-        ALSLog(ALLoggerSeverityInfo, @"User is already loign to applozic with userId %@",ALUserDefaultsHandler.getUserId);
+        ALSLog(ALLoggerSeverityInfo, @"User is already login to applozic with userId %@",ALUserDefaultsHandler.getUserId);
         ALRegistrationResponse *registrationResponse = [self getLoginRegistrationResponse];
         completion(registrationResponse,nil);
         return;

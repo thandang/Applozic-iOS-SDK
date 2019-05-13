@@ -11,6 +11,7 @@
 		18330A7E2271F6A7004C7552 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18330A7D2271F6A7004C7552 /* ShareViewController.m */; };
 		18330A812271F6A7004C7552 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18330A7F2271F6A7004C7552 /* MainInterface.storyboard */; };
 		18330A852271F6A7004C7552 /* ApplozicShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 18330A7A2271F6A7004C7552 /* ApplozicShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		18A2B2AC2289F36B00CE93BC /* Applozic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA09D61BE39F6B00CBF133 /* Applozic.framework */; };
 		1DE667DF7B311A11C9675E35 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1B9732748F398619EB8200 /* CoreVideo.framework */; };
 		28AE0C1B9834A2349B7A30F0 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 162EC4668DEC45215321962B /* BuddyBuildSDK.framework */; };
 		29B643C91CE9F24800FE8A73 /* ALSettingsForDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B643C81CE9F24800FE8A73 /* ALSettingsForDebug.m */; };
@@ -161,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18A2B2AC2289F36B00CE93BC /* Applozic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

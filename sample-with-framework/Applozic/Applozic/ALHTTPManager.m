@@ -145,18 +145,16 @@
     alUploadTask.identifier = message.key;
     self.uploadTask = alUploadTask;
 
-    NSString * filePath;
-    NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString * timestamp = message.imageFilePath;
-    filePath = [docDirPath stringByAppendingPathComponent:timestamp];
+    NSURL * docDirectory =  [ALUtilityClass getApplicationDirectoryWithFilePath:message.imageFilePath];
+    NSString * filePath = docDirectory.path;
 
     if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
-        NSURL *docURL = ALUtilityClass.getAppsGroupDirectory;
+        NSURL *docURL = [ALUtilityClass getAppsGroupDirectoryWithFilePath:message.imageFilePath];
         if(docURL != nil){
-            docURL = [docURL URLByAppendingPathComponent:message.imageFilePath];
             filePath = docURL.path;
         }
     }
+
     ALSLog(ALLoggerSeverityInfo, @"FILE_PATH : %@",filePath);
     NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
 
@@ -266,14 +264,12 @@
 
     NSString* fileName  = [NSString stringWithFormat:attachmentDownloadFlag? @"%@_local.%@": @"%@_thumbnail_local.%@",alMessage.key,fileExtension];
 
-    NSString * filePath;
-    NSString * docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    filePath = [docDirPath stringByAppendingPathComponent:fileName];
+    NSURL * docDirectory =  [ALUtilityClass getApplicationDirectoryWithFilePath:fileName];
+    NSString * filePath = docDirectory.path;
 
     if(![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
-        NSURL *docURL = ALUtilityClass.getAppsGroupDirectory;
+        NSURL *docURL = [ALUtilityClass getAppsGroupDirectoryWithFilePath:fileName];
         if(docURL != nil){
-            docURL = [docURL URLByAppendingPathComponent:fileName];
             filePath = docURL.path;
         }
     }

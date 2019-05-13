@@ -9,6 +9,7 @@
 #import "ALDBHandler.h"
 #import "DB_CONTACT.h"
 #import "ALContact.h"
+#import "ALUtilityClass.h"
 #import "ALApplozicSettings.h"
 
 @implementation ALDBHandler
@@ -56,24 +57,6 @@
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-- (NSURL *)applicationDocumentsDirectory {
-    
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "tricon-infotech.coredata_demo" in the application's documents directory.
-
-      return  [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
-- (NSURL *)applicationGroupDocumentDirectory {
-
-    NSURL * urlForDocumentsDirectory;
-    if([ALApplozicSettings getShareExtentionGroup]){
-        urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
-    }
-
-    return urlForDocumentsDirectory;
-}
-
-
 - (NSManagedObjectModel *)managedObjectModel {
     
     // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
@@ -104,13 +87,9 @@
         // Create the coordinator and store
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 
-        NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:AL_DATAT_BASE_NAME];
+        NSURL *storeURL =  [ALUtilityClass getApplicationDirectoryWithFilePath:AL_SQLITE_FILE_NAME];
 
-        NSURL *groupURL =  [self applicationGroupDocumentDirectory];
-
-        if(groupURL){
-            groupURL = [groupURL URLByAppendingPathComponent:AL_DATAT_BASE_NAME];
-        }
+        NSURL *groupURL = [ALUtilityClass getAppsGroupDirectoryWithFilePath:AL_SQLITE_FILE_NAME];
 
         NSError *error = nil;
         NSPersistentStore  *sourceStore  = nil;

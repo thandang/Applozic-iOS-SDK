@@ -64,4 +64,6 @@
 +(NSString *)getFileExtensionWithFileName:(NSString *)fileName;
 +(NSURL *)getDocumentDirectory;
 +(NSURL *)getAppsGroupDirectory;
++(NSURL *)getAppsGroupDirectoryWithFilePath:(NSString *) path;
++(NSURL *)getApplicationDirectoryWithFilePath:(NSString*) path;
 @end

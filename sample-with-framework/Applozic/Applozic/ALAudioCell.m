@@ -354,16 +354,20 @@
     
     if(alMessage.imageFilePath != nil && alMessage.fileMeta.blobKey)
     {
-        NSURL * soundFileURL ;
-        NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
+        NSURL * soundFileURL;
+        NSURL *documentDirectory =  [ALUtilityClass getApplicationDirectoryWithFilePath:alMessage.imageFilePath];
+        NSString *filePath = documentDirectory.path;
+
         if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
-            soundFileURL  = [NSURL fileURLWithPath:filePath];
+            soundFileURL = [NSURL fileURLWithPath:documentDirectory.path];
         }else{
-            NSURL *documentDirectory   = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
-            documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.imageFilePath];
-          soundFileURL  = [NSURL fileURLWithPath:documentDirectory.path];
+            NSURL *appGroupDirectory =  [ALUtilityClass getAppsGroupDirectoryWithFilePath:alMessage.imageFilePath];
+
+            if(appGroupDirectory){
+                soundFileURL = [NSURL fileURLWithPath:appGroupDirectory.path];
+            }
         }
+
         ALSLog(ALLoggerSeverityInfo, @"SOUND_URL :: %@",[soundFileURL path]);
         [self.playPauseStop setHidden:NO];
     }

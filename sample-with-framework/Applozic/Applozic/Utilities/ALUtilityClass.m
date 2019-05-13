@@ -671,8 +671,25 @@
 +(NSURL *)getAppsGroupDirectory{
 
     NSURL * urlForDocumentsDirectory;
-    if([ALApplozicSettings getShareExtentionGroup]){
-        urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+    NSString * shareExtentionGroupName =  [ALApplozicSettings getShareExtentionGroup];
+    if(shareExtentionGroupName){
+        urlForDocumentsDirectory =  [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:shareExtentionGroupName];
+    }
+    return urlForDocumentsDirectory;
+}
+
++(NSURL *)getApplicationDirectoryWithFilePath:(NSString*) path {
+
+    NSURL * directory  =   [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    directory = [directory URLByAppendingPathComponent:path];
+    return directory;
+}
+
++(NSURL *)getAppsGroupDirectoryWithFilePath:(NSString*) path {
+
+    NSURL * urlForDocumentsDirectory = self. getAppsGroupDirectory;
+    if(urlForDocumentsDirectory){
+        urlForDocumentsDirectory = [urlForDocumentsDirectory URLByAppendingPathComponent:path];
     }
     return urlForDocumentsDirectory;
 }

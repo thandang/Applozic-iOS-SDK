@@ -11,7 +11,7 @@
 #import "DB_CONTACT.h"
 
 @class ALContact;
-static NSString *const AL_DATAT_BASE_NAME = @"AppLozic.sqlite";
+static NSString *const AL_SQLITE_FILE_NAME = @"AppLozic.sqlite";
 
 @interface ALDBHandler : NSObject
 

@@ -1737,9 +1737,9 @@
     NSUserDefaults * oldUserDefaults =  [[NSUserDefaults standardUserDefaults]init];
     NSDictionary *dictionary = [oldUserDefaults dictionaryRepresentation];
 
-    NSArray * dictionary = [dictionary allKeys];
+    NSArray * keyArray = [dictionary allKeys];
 
-    for(NSString * defaultKeyString in dictionary)
+    for(NSString * defaultKeyString in keyArray)
     {
         if([defaultKeyString hasPrefix:KEY_PREFIX] && ![defaultKeyString isEqualToString:APN_DEVICE_TOKEN])
         {

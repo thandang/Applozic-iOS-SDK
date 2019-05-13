@@ -581,5 +581,4 @@ static NSString *const AL_DEFAULT_APP_GROUP = @"group.com.applozic.share";
 +(void)setShareExtentionGroup:(NSString *)group;
 +(NSString *)getShareExtentionGroup;
 
-+(void)migrateUserDefaultsToAppGroups;
 @end

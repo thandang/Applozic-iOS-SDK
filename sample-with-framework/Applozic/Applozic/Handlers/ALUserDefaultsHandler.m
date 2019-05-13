@@ -867,7 +867,7 @@
 +(NSString*)getRegistrationStatusMessage{
 
     NSString *pushRegistrationStatusMessage  =  [[NSUserDefaults standardUserDefaults] valueForKey:REGISTRATION_STATUS_MESSAGE];
-    return pushRegistrationStatusMessage  != nil ? pushRegistrationStatusMessage : "REGISTERED";
+    return pushRegistrationStatusMessage  != nil ? pushRegistrationStatusMessage : AL_REGISTERED;
 
 }
 

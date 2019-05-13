@@ -128,9 +128,6 @@
                 if (destinationStore == nil){
                     ALSLog(ALLoggerSeverityError, @"Failed to migratePersistentStore");
                 } else {
-                    // You can now remove the old data at oldStoreURL
-                    // Note that you should do this using the NSFileCoordinator/NSFilePresenter APIs, and you should remove the other files
-                    // described in QA1809 as well.
 
                     NSFileCoordinator *coord = [[NSFileCoordinator alloc]initWithFilePresenter:nil];
                     [coord coordinateWritingItemAtURL:storeURL options:0 error:nil byAccessor:^(NSURL *url)

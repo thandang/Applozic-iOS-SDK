@@ -945,6 +945,7 @@
     {
         self.alMessage.contactIds = contactId;
         self.alMessage.groupId = channelKey;
+        [self showAlertControllerView];
         [self sendMessage:self.alMessage];
         return;
     }
@@ -993,6 +994,21 @@
             self.navigationController.viewControllers = viewControllersFromStack;
         }
     }
+}
+
+-(void)showAlertControllerView{
+    self.uiAlertController = [UIAlertController alertControllerWithTitle:@""
+                                                                 message:NSLocalizedStringWithDefaultValue(@"SendingMessage", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Sending..." , @"")
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+
+    self.uiProgress = [[UIProgressView alloc] init];
+
+    [self.uiProgress setProgress:0];
+
+    self.uiProgress.frame = CGRectMake(10, 17,
+                                       250,0);
+    [self.uiAlertController.view addSubview:self.uiProgress];
+    [self presentViewController:self.uiAlertController animated:YES completion:nil];
 }
 
 -(UIView *)setCustomBackButton:(NSString *)text
@@ -1570,27 +1586,14 @@
 
 -(void)sendMessage:(ALMessage *) msgObject{
 
-    self.uiAlertController = [UIAlertController alertControllerWithTitle:@""
-            message:NSLocalizedStringWithDefaultValue(@"SendingMessage", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Sending..." , @"")
-                                             preferredStyle:UIAlertControllerStyleAlert];
-
-    self.uiProgress = [[UIProgressView alloc] init];
-
-    [self.uiProgress setProgress:0];
-
-    self.uiProgress.frame = CGRectMake(10, 17,
-                                        250,0);
-    [self.uiAlertController.view addSubview:self.uiProgress];
-    [self presentViewController:self.uiAlertController animated:YES completion:nil];
-
     ALMessage *alMessage = [ALMessage build:^(ALMessageBuilder * alMessageBuilder) {
         if(msgObject.contactIds){
-            alMessageBuilder.to = msgObject.contactIds; // Pass userId to whom you want to send a message
+            alMessageBuilder.to = msgObject.contactIds;
         }else if(msgObject.groupId != nil){
-            alMessageBuilder.groupId = msgObject.groupId; // Pass userId to whom you want to send a message
+            alMessageBuilder.groupId = msgObject.groupId;
         }
-        alMessageBuilder.message = msgObject.message; // File path
-        alMessageBuilder.imageFilePath = msgObject.imageFilePath; // File path
+        alMessageBuilder.message = msgObject.message;
+        alMessageBuilder.imageFilePath = msgObject.imageFilePath;
         alMessageBuilder.contentType = ALMESSAGE_CONTENT_ATTACHMENT;
 
     }];
@@ -1613,20 +1616,19 @@
 
 - (void)onUpdateBytesUploaded:(int64_t)bytesSent withMessage:(ALMessage *)alMessage {
 
+    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
+
+    unsigned long long fileSize;
+
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+        fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
+    }else{
+        NSURL *documentDirectory   = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
+        documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.imageFilePath];
+        fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:documentDirectory.path error:nil] fileSize];
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
-
-        NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString * filePath = [docDir stringByAppendingPathComponent:alMessage.imageFilePath];
-
-        unsigned long long fileSize;
-
-        if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
-            fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
-        }else{
-            NSURL *documentDirectory   = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[ALApplozicSettings getShareExtentionGroup]];
-            documentDirectory = [documentDirectory  URLByAppendingPathComponent:alMessage.imageFilePath];
-            fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:documentDirectory.path error:nil] fileSize];
-        }
         self.uiProgress.progress = ((100.0/fileSize)*bytesSent)/100;
     });
 

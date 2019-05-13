@@ -24,6 +24,14 @@
 
 -(void) initWithCompletion:(ALUser *)user withCompletion:(void(^)(ALRegistrationResponse * response, NSError *error)) completion
 {
+
+    if([ALUserDefaultsHandler isLoggedIn]){
+        ALSLog(ALLoggerSeverityInfo, @"User is already loign to applozic with userId %@",ALUserDefaultsHandler.getUserId);
+        ALRegistrationResponse *registrationResponse = [self getLoginRegistrationResponse];
+        completion(registrationResponse,nil);
+        return;
+    }
+
     NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/register/client",KBASE_URL];
     
     [ALUserDefaultsHandler setUserId:user.userId];
@@ -92,7 +100,8 @@
             [ALUserDefaultsHandler setLastSyncTimeForMetaData:[NSNumber numberWithDouble:[response.currentTimeStamp doubleValue]]];
             [ALUserDefaultsHandler setLastSyncTime:[NSNumber numberWithDouble:[response.currentTimeStamp doubleValue]]];
             [ALUserDefaultsHandler setLastSyncChannelTime:(NSNumber *)response.currentTimeStamp];
-            
+
+
             if(user.pushNotificationFormat){
                 [ALUserDefaultsHandler setPushNotificationFormat:user.pushNotificationFormat];
             }
@@ -128,6 +137,10 @@
             if(response.encryptionKey)
             {
                 [ALUserDefaultsHandler setEncryptionKey:response.encryptionKey];
+            }
+
+            if(response.message){
+                [ALUserDefaultsHandler setRegistrationStatusMessage:response.message];
             }
             
             ALContactDBService  * alContactDBService = [[ALContactDBService alloc] init];
@@ -245,6 +258,11 @@
             return ;
         }
         ALRegistrationResponse *response = [[ALRegistrationResponse alloc] initWithJSONString:statusStr];
+
+        if(response && response.message){
+            [ALUserDefaultsHandler setRegistrationStatusMessage:response.message];
+        }
+
         completion(response,nil);
     }];
 }
@@ -399,6 +417,31 @@
         }
         ALSLog(ALLoggerSeverityInfo, @"RESPONSE_SYNC_ACCOUNT_STATUS :: %@",(NSString *)theJson);
     }];
+}
+
+
+-(ALRegistrationResponse *) getLoginRegistrationResponse{
+    ALRegistrationResponse * registrationResponse = [[ALRegistrationResponse alloc]init];
+    registrationResponse.deviceKey = [ALUserDefaultsHandler getDeviceKeyString];
+    registrationResponse.userKey = [ALUserDefaultsHandler getUserKeyString];
+    registrationResponse.message = [ALUserDefaultsHandler getRegistrationStatusMessage];
+    ALContactDBService * contactDatabase = [[ALContactDBService alloc]init];
+    ALContact *loginUserContact = [contactDatabase loadContactByKey:@"userId"value:[ALUserDefaultsHandler getUserId]];
+    registrationResponse.contactNumber = loginUserContact.contactNumber;
+    registrationResponse.lastSyncTime = [ALUserDefaultsHandler.getLastSyncTime stringValue];
+    registrationResponse.imageLink = loginUserContact.contactImageUrl;
+    registrationResponse.encryptionKey = ALUserDefaultsHandler.getEncryptionKey;
+    registrationResponse.pricingPackage = ALUserDefaultsHandler.getUserPricingPackage;
+    registrationResponse.brokerURL = [NSString stringWithFormat:@"tcp://%@:%@",[ALUserDefaultsHandler getMQTTURL],[ALUserDefaultsHandler getMQTTPort]];
+    registrationResponse.displayName = loginUserContact.displayName;
+    registrationResponse.notificationSoundFileName = ALUserDefaultsHandler.getNotificationSoundFileName;
+    registrationResponse.statusMessage = [ALUserDefaultsHandler getLoggedInUserStatus];
+    registrationResponse.metadata = loginUserContact.metadata;
+    registrationResponse.roleType = ALUserDefaultsHandler.getUserRoleType;
+    registrationResponse.userEncryptionKey  = ALUserDefaultsHandler.getUserEncryptionKey;
+    registrationResponse.message  = ALUserDefaultsHandler.getRegistrationStatusMessage;
+
+    return registrationResponse;
 }
 
 -(NSString *)getUserParamTextForLogging:(ALUser *)user

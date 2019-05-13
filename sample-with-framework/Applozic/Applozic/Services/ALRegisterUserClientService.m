@@ -19,6 +19,8 @@
 #import "ALConstant.h"
 #import "ALUserService.h"
 #import "ALContactDBService.h"
+#import "ALInternalSettings.h"
+
 
 @implementation ALRegisterUserClientService
 
@@ -140,7 +142,7 @@
             }
 
             if(response.message){
-                [ALUserDefaultsHandler setRegistrationStatusMessage:response.message];
+                [ALInternalSettings setRegistrationStatusMessage:response.message];
             }
             
             ALContactDBService  * alContactDBService = [[ALContactDBService alloc] init];
@@ -260,7 +262,7 @@
         ALRegistrationResponse *response = [[ALRegistrationResponse alloc] initWithJSONString:statusStr];
 
         if(response && response.message){
-            [ALUserDefaultsHandler setRegistrationStatusMessage:response.message];
+            [ALInternalSettings setRegistrationStatusMessage:response.message];
         }
 
         completion(response,nil);
@@ -424,7 +426,7 @@
     ALRegistrationResponse * registrationResponse = [[ALRegistrationResponse alloc]init];
     registrationResponse.deviceKey = [ALUserDefaultsHandler getDeviceKeyString];
     registrationResponse.userKey = [ALUserDefaultsHandler getUserKeyString];
-    registrationResponse.message = [ALUserDefaultsHandler getRegistrationStatusMessage];
+    registrationResponse.message = [ALInternalSettings getRegistrationStatusMessage];
     ALContactDBService * contactDatabase = [[ALContactDBService alloc]init];
     ALContact *loginUserContact = [contactDatabase loadContactByKey:@"userId"value:[ALUserDefaultsHandler getUserId]];
     registrationResponse.contactNumber = loginUserContact.contactNumber;
@@ -439,7 +441,6 @@
     registrationResponse.metadata = loginUserContact.metadata;
     registrationResponse.roleType = ALUserDefaultsHandler.getUserRoleType;
     registrationResponse.userEncryptionKey  = ALUserDefaultsHandler.getUserEncryptionKey;
-    registrationResponse.message  = ALUserDefaultsHandler.getRegistrationStatusMessage;
 
     return registrationResponse;
 }

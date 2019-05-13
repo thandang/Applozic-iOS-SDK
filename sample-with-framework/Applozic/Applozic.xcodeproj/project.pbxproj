@@ -32,6 +32,8 @@
 		186885A220ECC5FE00919802 /* ALMessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 186885A020ECC5FE00919802 /* ALMessageBuilder.m */; };
 		1868F12C21B570ED00B237B3 /* ALGroupDetailsMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868F12A21B570ED00B237B3 /* ALGroupDetailsMemberCell.m */; };
 		1868F12E21B57C2200B237B3 /* ALGroupDetailsMemberCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1868F12D21B57C2200B237B3 /* ALGroupDetailsMemberCell.h */; };
+		18A2B2A82289D2A300CE93BC /* ALInternalSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A2B2A62289D2A300CE93BC /* ALInternalSettings.h */; };
+		18A2B2A92289D2A300CE93BC /* ALInternalSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2B2A72289D2A300CE93BC /* ALInternalSettings.m */; };
 		18A2BA2020C44DB500AD47A2 /* ALTemplateMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */; };
 		18A2BA2220C44E5400AD47A2 /* ALTemplateMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */; };
 		18A2BA2620C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */; };
@@ -519,6 +521,8 @@
 		1868F12A21B570ED00B237B3 /* ALGroupDetailsMemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALGroupDetailsMemberCell.m; path = Applozic/Views/ALGroupDetailsMemberCell.m; sourceTree = "<group>"; };
 		1868F12D21B57C2200B237B3 /* ALGroupDetailsMemberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALGroupDetailsMemberCell.h; path = Applozic/Views/ALGroupDetailsMemberCell.h; sourceTree = "<group>"; };
 		187E3E562152BCB7002B2459 /* AppLozic 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 9.xcdatamodel"; sourceTree = "<group>"; };
+		18A2B2A62289D2A300CE93BC /* ALInternalSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALInternalSettings.h; path = Applozic/ALInternalSettings.h; sourceTree = "<group>"; };
+		18A2B2A72289D2A300CE93BC /* ALInternalSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALInternalSettings.m; path = Applozic/ALInternalSettings.m; sourceTree = "<group>"; };
 		18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageCell.swift; path = Applozic/ALTemplateMessageCell.swift; sourceTree = "<group>"; };
 		18A2BA2120C44E5400AD47A2 /* ALTemplateMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesView.swift; path = Applozic/ALTemplateMessagesView.swift; sourceTree = "<group>"; };
 		18A2BA2420C44E9200AD47A2 /* ALTemplateMessagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessagesViewModel.swift; path = Applozic/ALTemplateMessagesViewModel.swift; sourceTree = "<group>"; };
@@ -1625,6 +1629,8 @@
 				6D6DF09B1BC5364C00EBA00F /* ALUserDefaultsHandler.h */,
 				6D36F2061BFF3EE3003D46D3 /* ALApplozicSettings.h */,
 				6D36F2071BFF3EE3003D46D3 /* ALApplozicSettings.m */,
+				18A2B2A62289D2A300CE93BC /* ALInternalSettings.h */,
+				18A2B2A72289D2A300CE93BC /* ALInternalSettings.m */,
 			);
 			name = prefrence;
 			sourceTree = "<group>";
@@ -2004,6 +2010,7 @@
 				18BD2F2E225E15D000B180A9 /* SDWeakProxy.h in Headers */,
 				18BD2EF8225E15AD00B180A9 /* SDWebImageDownloaderConfig.h in Headers */,
 				4612E9171E13882D0022DB23 /* MQTTTransport.h in Headers */,
+				18A2B2A82289D2A300CE93BC /* ALInternalSettings.h in Headers */,
 				4612E8F61E13882D0022DB23 /* MQTTCFSocketEncoder.h in Headers */,
 				4612E8FA1E13882D0022DB23 /* MQTTClient-Prefix.pch in Headers */,
 				4612E8F81E13882D0022DB23 /* MQTTCFSocketTransport.h in Headers */,
@@ -2111,6 +2118,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -2254,6 +2262,7 @@
 				8B1AD6992110809800AB2060 /* ALLogger.m in Sources */,
 				18BD2EBB225E15AD00B180A9 /* SDImageAPNGCoder.m in Sources */,
 				6D95476A1BE38DFF00776652 /* ALContactDBService.m in Sources */,
+				18A2B2A92289D2A300CE93BC /* ALInternalSettings.m in Sources */,
 				6D0D107B1D4CD7B6009853FB /* ALImagePickerController.m in Sources */,
 				18BD2EE1225E15AD00B180A9 /* SDAnimatedImageView+WebCache.m in Sources */,
 				18BD2F0B225E15AD00B180A9 /* UIImage+Transform.m in Sources */,

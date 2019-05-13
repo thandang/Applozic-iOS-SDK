@@ -63,8 +63,6 @@
 #define USER_MQTT_ENCRYPTION_KEY @"com.applozic.userdefault.USER_MQTT_ENCRYPTION_KEY"
 #define LAST_SYNC_TIME_FOR_META_DATA @"com.applozic.userdefault.LAST_SYNC_TIME_FOR_META_DATA"
 static NSString *const NOTIFICATION_TITLE_KEY = @"NOTIFICATION_TITLE";
-static NSString *const REGISTRATION_STATUS_MESSAGE = @"com.applozic.userdefault.REGISTRATION_STATUS_MESSAGE";
-static NSString *const AL_REGISTERED = @"AL_REGISTERED";
 
 #import <Foundation/Foundation.h>
 #import "ALApplozicSettings.h"
@@ -259,6 +257,4 @@ static NSString *const AL_REGISTERED = @"AL_REGISTERED";
 +(void)setLastSyncTimeForMetaData :( NSNumber *) metaDataLastSyncTime;
 +(NSNumber *)getLastSyncTimeForMetaData;
 
-+(void)setRegistrationStatusMessage:(NSString*)message;
-+(NSString*)getRegistrationStatusMessage;
 @end

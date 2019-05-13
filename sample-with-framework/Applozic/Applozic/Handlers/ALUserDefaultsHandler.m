@@ -858,17 +858,6 @@
     return [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
 }
 
-+(void)setRegistrationStatusMessage:(NSString*)message{
 
-    [[NSUserDefaults standardUserDefaults] setValue:message forKey:REGISTRATION_STATUS_MESSAGE];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+(NSString*)getRegistrationStatusMessage{
-
-    NSString *pushRegistrationStatusMessage  =  [[NSUserDefaults standardUserDefaults] valueForKey:REGISTRATION_STATUS_MESSAGE];
-    return pushRegistrationStatusMessage  != nil ? pushRegistrationStatusMessage : AL_REGISTERED;
-
-}
 
 @end

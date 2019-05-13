@@ -42,7 +42,7 @@
     
     ALAppLocalNotifications *localNotification = [ALAppLocalNotifications appLocalNotificationHandler];
     [localNotification dataConnectionNotificationHandler];
-    
+    [ALApplozicSettings setupSuiteAndMigrate];
     if ([ALUserDefaultsHandler isLoggedIn])
     {
         [ALPushNotificationService userSync];

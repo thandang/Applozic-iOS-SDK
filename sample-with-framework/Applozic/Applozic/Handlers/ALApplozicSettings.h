@@ -578,7 +578,7 @@ static NSString *const AL_DEFAULT_APP_GROUP = @"group.com.applozic.share";
 +(void) setIsUnblockInChatDisabled:(BOOL)flag;
 +(BOOL) isUnblockInChatDisabled;
 
-+(void)setShareExtentionGroup:(NSString *)group;
++(void)setupSuiteAndMigrate;
 +(NSString *)getShareExtentionGroup;
 
 @end

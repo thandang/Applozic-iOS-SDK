@@ -427,6 +427,8 @@
     [ALApplozicSettings setCustomMessageBackgroundColor:[UIColor lightGrayColor]];              /*  SET CUSTOM MESSAGE COLOR */
     [ALApplozicSettings setCustomMessageFontSize:14];                                     /*  SET CUSTOM MESSAGE FONT SIZE */
     [ALApplozicSettings setCustomMessageFont:@"Helvetica"];
+    [ALApplozicSettings setupSuiteAndMigrate];
+
     
 //    [ALApplozicSettings setChatCellFontTextStyle:UIFontTextStyleSubheadline];
 //    [ALApplozicSettings setChatChannelCellFontTextStyle:UIFontTextStyleSubheadline];

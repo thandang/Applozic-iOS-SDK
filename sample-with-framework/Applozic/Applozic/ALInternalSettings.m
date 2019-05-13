@@ -11,16 +11,20 @@
 @implementation ALInternalSettings
 
 +(void)setRegistrationStatusMessage:(NSString*)message{
-
-    [[NSUserDefaults standardUserDefaults] setValue:message forKey:REGISTRATION_STATUS_MESSAGE];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSUserDefaults * userDefaults = ALInternalSettings.getUserDefaults;
+    [userDefaults setValue:message forKey:REGISTRATION_STATUS_MESSAGE];
+    [userDefaults synchronize];
 }
 
 +(NSString*)getRegistrationStatusMessage{
 
-    NSString *pushRegistrationStatusMessage  =  [[NSUserDefaults standardUserDefaults] valueForKey:REGISTRATION_STATUS_MESSAGE];
+    NSUserDefaults * userDefaults = ALInternalSettings.getUserDefaults;
+    NSString *pushRegistrationStatusMessage  =  [userDefaults valueForKey:REGISTRATION_STATUS_MESSAGE];
     return pushRegistrationStatusMessage  != nil ? pushRegistrationStatusMessage : AL_REGISTERED;
+}
 
++(NSUserDefaults *)getUserDefaults{
+    return [[NSUserDefaults standardUserDefaults] initWithSuiteName:@"group.com.applozic.share"];
 }
 
 @end

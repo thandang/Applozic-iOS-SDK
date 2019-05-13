@@ -1703,10 +1703,10 @@
     return key;
 }
 
-+(void)setShareExtentionGroup:(NSString *)group {
-    ALApplozicSettings.migrateUserDefaultsToAppGroups;
++(void)setupSuiteAndMigrate {
+    [ALApplozicSettings migrateUserDefaultsToAppGroups];
     NSUserDefaults *userDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
-    [userDefaults setValue:group forKey:AL_SHARE_EXTENSION];
+    [userDefaults setValue:AL_DEFAULT_APP_GROUP forKey:AL_SHARE_EXTENSION];
     [userDefaults synchronize];
 }
 

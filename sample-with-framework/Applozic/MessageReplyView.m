@@ -139,7 +139,7 @@
     
     self.replyMessageText.frame = CGRectMake( REPLY_VIEW_PADDING ,
                                              self.contactName.frame.origin.y + self.contactName.frame.size.height + REPLY_VIEW_PADDING,
-                                             frame.size.width- self.attachmentImage.frame.size.width+5,
+                                             (frame.size.width-10) - self.attachmentImage.frame.size.width+5,
                                              30);
     
 }

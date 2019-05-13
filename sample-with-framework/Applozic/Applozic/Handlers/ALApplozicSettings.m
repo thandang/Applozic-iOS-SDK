@@ -1736,6 +1736,18 @@
     //Old NSUserDefaults
     NSUserDefaults * oldUserDefaults =  [[NSUserDefaults standardUserDefaults]init];
     NSDictionary *dictionary = [oldUserDefaults dictionaryRepresentation];
+
+    NSArray * dictionary = [dictionary allKeys];
+
+    for(NSString * defaultKeyString in dictionary)
+    {
+        if([defaultKeyString hasPrefix:KEY_PREFIX] && ![defaultKeyString isEqualToString:APN_DEVICE_TOKEN])
+        {
+            [oldUserDefaults removeObjectForKey:defaultKeyString];
+            [oldUserDefaults synchronize];
+        }
+    }
+
     //Will use the deafault group for access and other places as well
     NSUserDefaults * groupUserDefaults = [[NSUserDefaults standardUserDefaults] initWithSuiteName:AL_DEFAULT_APP_GROUP];
     if(groupUserDefaults != nil && ![ALApplozicSettings isUserDefaultsMigrated] ){

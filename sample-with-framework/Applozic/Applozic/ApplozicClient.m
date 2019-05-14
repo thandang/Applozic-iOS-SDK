@@ -61,6 +61,7 @@ NSString * const ApplozicClientDomain = @"ApplozicClient";
 }
 
 -(void)setUpServices {
+    [ALApplozicSettings setupSuiteAndMigrate];
     _messageService = [ALMessageService sharedInstance];
     _messageService.delegate = self.delegate;
     _messageDbService = [ALMessageDBService new];

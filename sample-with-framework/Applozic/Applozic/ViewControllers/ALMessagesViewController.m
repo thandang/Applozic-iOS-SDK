@@ -958,12 +958,9 @@
     {
         self.detailChatViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ALChatViewController"];
     }
-    
-    if(message.conversationId)
-    {
-        self.detailChatViewController.conversationId = message.conversationId;
-    }
-    
+
+    self.detailChatViewController.conversationId = message.conversationId;
+
     if([ALApplozicSettings isContactsGroupEnabled ] && _contactsGroupId)
     {
         [ALApplozicSettings setContactsGroupId:_contactsGroupId];

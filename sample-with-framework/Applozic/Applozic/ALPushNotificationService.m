@@ -109,12 +109,10 @@
             [ALMessageService getLatestMessageForUser:[ALUserDefaultsHandler getDeviceKeyString] withDelegate:self.realTimeUpdate
                                        withCompletion:^(NSMutableArray *message, NSError *error) {
 
-                                           dispatch_async(dispatch_get_main_queue(), ^{
+
                                                ALSLog(ALLoggerSeverityInfo, @"ALPushNotificationService's SYNC CALL");
                                                [dict setObject:(alertValue ? alertValue : @"") forKey:@"alertValue"];
                                                [self assitingNotificationMessage:notificationMsg andDictionary:dict withMetadata:metadataDictionary];
-                                           });
-
                                        }];
 
 

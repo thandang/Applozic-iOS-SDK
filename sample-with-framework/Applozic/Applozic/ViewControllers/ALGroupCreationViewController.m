@@ -338,11 +338,14 @@
     }];
     
     UIAlertAction* upload = [UIAlertAction actionWithTitle: NSLocalizedStringWithDefaultValue(@"upload", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Upload!", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        
+
+        [self.activityIndicator startAnimating];
+
         if(![ALDataNetworkConnection checkDataNetworkAvailable])
         {
             ALNotificationView * notification = [ALNotificationView new];
-            [notification noDataConnectionNotificationView];;
+            [notification noDataConnectionNotificationView];
+            [self.activityIndicator stopAnimating];
             return;
         }
         

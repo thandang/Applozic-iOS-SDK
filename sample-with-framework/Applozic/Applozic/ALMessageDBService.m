@@ -653,7 +653,7 @@
     }else if(messageListRequest.channelKey){
         predicate1 = [NSPredicate predicateWithFormat:@"groupId = %@",messageListRequest.channelKey];
     } else{
-        predicate1 = [NSPredicate predicateWithFormat:@"contactId = %@",messageListRequest.userId];
+        predicate1 = [NSPredicate predicateWithFormat:@"contactId = %@ && groupId = nil ",messageListRequest.userId];
     }
 
     NSPredicate* predicateDeletedCheck=[NSPredicate predicateWithFormat:@"deletedFlag == NO"];

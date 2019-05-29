@@ -2486,47 +2486,57 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
 
 -(void)downloadRetryButtonActionDelegate:(int)index andMessage:(ALMessage *)message
 {
-    ALMediaBaseCell *imageCell = (ALMediaBaseCell *)[self.mTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    imageCell.progresLabel.alpha = 1;
-    imageCell.mMessage.fileMeta.progressValue = 0;
-    imageCell.mDowloadRetryButton.alpha = 0;
-    imageCell.downloadRetryView.alpha = 0;
-    imageCell.sizeLabel.alpha = 0;
-    message.inProgress = YES;
 
-    NSMutableArray * sessionArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+    if(message.msgDBObjectId){
+        ALMediaBaseCell *imageCell = (ALMediaBaseCell *)[self.mTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        imageCell.progresLabel.alpha = 1;
+        imageCell.mMessage.fileMeta.progressValue = 0;
+        imageCell.mDowloadRetryButton.alpha = 0;
+        imageCell.downloadRetryView.alpha = 0;
+        imageCell.sizeLabel.alpha = 0;
+        message.inProgress = YES;
 
-    for(NSURLSession *session in sessionArray){
-        NSURLSessionConfiguration *config =  session.configuration;
-        NSArray *array =  [config.identifier componentsSeparatedByString:@","];
-        if(array && array.count>1){
-            //Check if message key are same and first argumnent is not THUMBNAIL
-            if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
-                ALSLog(ALLoggerSeverityInfo, @"Already task in proccess ignoring download retry for the key %@",message.key);
-                return;
+        NSMutableArray * sessionArray = [[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue];
+
+        for(NSURLSession *session in sessionArray){
+            NSURLSessionConfiguration *config =  session.configuration;
+            NSArray *array =  [config.identifier componentsSeparatedByString:@","];
+            if(array && array.count>1){
+                //Check if message key are same and first argumnent is not THUMBNAIL
+                if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
+                    ALSLog(ALLoggerSeverityInfo, @"Already task in proccess ignoring download retry for the key %@",message.key);
+                    return;
+                }
             }
         }
-    }
 
-    message.isUploadFailed = NO;
+        message.isUploadFailed = NO;
+        NSError *error = nil;
+        ALDBHandler * theDbHandler = [ALDBHandler sharedInstance];
+        DB_Message *dbMessage =  (DB_Message*)[theDbHandler.managedObjectContext existingObjectWithID:message.msgDBObjectId error:&error];
+        if(error == nil && dbMessage){
 
-    NSError *error = nil;
-    DB_Message *dbMessage = (DB_Message*)[dbService getMeesageById:message.msgDBObjectId error:&error];
-    dbMessage.inProgress = [NSNumber numberWithBool:YES];
-    dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
+            dbMessage.inProgress = [NSNumber numberWithBool:YES];
+            dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
 
-    [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-    if ([message.type isEqualToString:@"5"]&& !message.fileMeta.key) // upload
-    {
-        [self uploadImage:message];
+            [[ALDBHandler sharedInstance].managedObjectContext save:nil];
+            if ([message.type isEqualToString:@"5"]&& !message.fileMeta.key) // upload
+            {
+                [self uploadImage:message];
+            }
+            else    //download
+            {
+                ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
+                manager.attachmentProgressDelegate = self;
+                [manager processDownloadForMessage:message isAttachmentDownload:YES];
+            }
+            ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
+        }else{
+            ALSLog(ALLoggerSeverityError, @"Error in getting message from db %@",error);
+        }
+    }else{
+        ALSLog(ALLoggerSeverityInfo, @"Message is not in db ");
     }
-    else    //download
-    {
-        ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-        manager.attachmentProgressDelegate = self;
-        [manager processDownloadForMessage:message isAttachmentDownload:YES];
-    }
-    ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
 
 }
 

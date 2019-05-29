@@ -2510,29 +2510,15 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
             }
         }
 
-        message.isUploadFailed = NO;
-        NSError *error = nil;
-        ALDBHandler * theDbHandler = [ALDBHandler sharedInstance];
-        DB_Message *dbMessage =  (DB_Message*)[theDbHandler.managedObjectContext existingObjectWithID:message.msgDBObjectId error:&error];
-        if(error == nil && dbMessage){
-
-            dbMessage.inProgress = [NSNumber numberWithBool:YES];
-            dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
-
-            [[ALDBHandler sharedInstance].managedObjectContext save:nil];
-            if ([message.type isEqualToString:@"5"]&& !message.fileMeta.key) // upload
-            {
-                [self uploadImage:message];
-            }
-            else    //download
-            {
-                ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
-                manager.attachmentProgressDelegate = self;
-                [manager processDownloadForMessage:message isAttachmentDownload:YES];
-            }
-            ALSLog(ALLoggerSeverityInfo, @"starting thread for..%@", message.key);
-        }else{
-            ALSLog(ALLoggerSeverityError, @"Error in getting message from db %@",error);
+        if ([message.type isEqualToString:@"5"]&& !message.fileMeta.key) // upload
+        {
+            [self uploadImage:message];
+        }
+        else    //download
+        {
+            ALHTTPManager * manager =  [[ALHTTPManager alloc] init];
+            manager.attachmentProgressDelegate = self;
+            [manager processDownloadForMessage:message isAttachmentDownload:YES];
         }
     }else{
         ALSLog(ALLoggerSeverityInfo, @"Message is not in db ");
@@ -2728,9 +2714,8 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
         {
            [imageCell hidePlayButtonOnUploading];
         }
-        NSError *error = nil;
         ALMessageDBService  * msgdbService = [[ALMessageDBService alloc] init];
-        DB_Message *dbMessage = (DB_Message*)[msgdbService getMeesageById:theMessage.msgDBObjectId error:&error];
+        DB_Message *dbMessage = (DB_Message*)[msgdbService getMessageByKey:@"key" value:theMessage.key];
         dbMessage.inProgress = [NSNumber numberWithBool:YES];
         dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
         [[ALDBHandler sharedInstance].managedObjectContext save:nil];

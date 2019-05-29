@@ -61,7 +61,6 @@
 #import "PSPDFTextView.h"
 #import "ALChannelMsgCell.h"
 #include <tgmath.h>
-@import AddressBookUI;
 #import "ALAudioVideoBaseVC.h"
 #import "ALVOIPNotificationHandler.h"
 #import "ALChannelService.h"
@@ -2553,7 +2552,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
             //Check if message key are same and first argumnent is not THUMBNAIL
             if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
                 ALSLog(ALLoggerSeverityInfo, @"Already task in proccess cancel current task with key %@",message.key);
-                session.invalidateAndCancel;
+                [session invalidateAndCancel];
                 [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:session];
                 break;
             }

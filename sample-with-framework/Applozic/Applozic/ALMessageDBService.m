@@ -1174,8 +1174,6 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
     message.inProgress = NO;
     message.isUploadFailed = YES;
     message.sentToServer = NO;
-    NSError *error = nil;
-
     DB_Message *dbMessage = (DB_Message*)[self getMessageByKey:@"key" value:message.key];
     dbMessage.inProgress = [NSNumber numberWithBool:NO];
     dbMessage.isUploadFailed = [NSNumber numberWithBool:YES];

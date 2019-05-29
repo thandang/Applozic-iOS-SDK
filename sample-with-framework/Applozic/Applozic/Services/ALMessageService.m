@@ -627,9 +627,7 @@ static ALMessageClientService *alMsgClientService;
         else if(msg.contentType == ALMESSAGE_CONTENT_VCARD)
         {
             ALSLog(ALLoggerSeverityInfo, @"REACH_PRESENT");
-            NSError *THE_ERROR;
             DB_Message *dbMessage = (DB_Message*)[dbService getMessageByKey:@"key" value:msg.key];
-            ALSLog(ALLoggerSeverityError, @"ERROR_IF_ANY : %@", THE_ERROR);
             dbMessage.inProgress = [NSNumber numberWithBool:YES];
             dbMessage.isUploadFailed = [NSNumber numberWithBool:NO];
             [[ALDBHandler sharedInstance].managedObjectContext save:nil];

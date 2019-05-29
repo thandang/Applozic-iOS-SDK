@@ -398,6 +398,11 @@ static ALMessageClientService *alMsgClientService;
                             }
 
                             if (message.groupId != nil && message.contentType == ALMESSAGE_CHANNEL_NOTIFICATION) {
+                                if ([message.metadata[@"action"] isEqual: @"4"]) {
+                                    [[NSNotificationCenter defaultCenter]
+                                     postNotificationName:@"CONVERSATION_DELETION"
+                                     object:message.groupId];
+                                }
                                 [[ALChannelService sharedInstance] syncCallForChannelWithDelegate:delegate];
                             }
 

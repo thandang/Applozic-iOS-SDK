@@ -418,16 +418,18 @@ static ALMessageClientService *alMsgClientService;
 
                         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_MESSAGE_NOTIFICATION object:messageArray userInfo:nil];
 
+                        [ALUserDefaultsHandler setLastSyncTime:syncResponse.lastSyncTime];
+                        ALMessageClientService *messageClientService = [[ALMessageClientService alloc] init];
+                        [messageClientService updateDeliveryReports:syncResponse.messagesList];
+
+                        completion(messageArray,error);
+
                     }];
 
+                }else{
+                    [ALUserDefaultsHandler setLastSyncTime:syncResponse.lastSyncTime];
+                    completion(messageArray,error);
                 }
-
-                [ALUserDefaultsHandler setLastSyncTime:syncResponse.lastSyncTime];
-                ALMessageClientService *messageClientService = [[ALMessageClientService alloc] init];
-                [messageClientService updateDeliveryReports:syncResponse.messagesList];
-
-                completion(messageArray,error);
-
             }
             else
             {

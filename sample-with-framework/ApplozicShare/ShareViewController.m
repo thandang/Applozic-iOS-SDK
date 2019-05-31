@@ -28,7 +28,7 @@
 
     if([ALUserDefaultsHandler isLoggedIn]){
 
-        self.passSelectedItemsToApp;
+        [self passSelectedItemsToApp];
     }
 
 }

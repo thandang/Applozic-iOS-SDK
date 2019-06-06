@@ -377,7 +377,7 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
     }else{
         self.typingMessageView.hidden = NO;
     }
-    
+
     [self setCallButtonInNavigationBar];
     [self checkUserBlockStatus];
     if(self.contactIds ){
@@ -2504,7 +2504,7 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
             NSArray *array =  [config.identifier componentsSeparatedByString:@","];
             if(array && array.count>1){
                 //Check if message key are same and first argumnent is not THUMBNAIL
-                if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
+                if(![array[0] isEqual: @"THUMBNAIL"] && [array[1] isEqualToString: message.key]){
                     ALSLog(ALLoggerSeverityInfo, @"Already task in proccess ignoring download retry for the key %@",message.key);
                     return;
                 }
@@ -2546,8 +2546,9 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
         NSArray *array =  [config.identifier componentsSeparatedByString:@","];
 
         if(array && array.count>1){
+
             //Check if message key are same and first argumnent is not THUMBNAIL
-            if(![array[0] isEqual: @"THUMBNAIL"] && [array[1] isEqual: message.key]){
+            if(![array[0] isEqual: @"THUMBNAIL"] && [array[1] isEqualToString:message.key]){
                 ALSLog(ALLoggerSeverityInfo, @"Already task in proccess cancel current task with key %@",message.key);
                 [session invalidateAndCancel];
                 [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] removeObject:session];
@@ -4731,21 +4732,29 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 }
 
 - (void)onDownloadFailed:(ALMessage *)alMessage {
+    dispatch_async(dispatch_get_main_queue(), ^{
+
     ALMediaBaseCell * imageCell=  [self getCell:alMessage.key];
     imageCell.progresLabel.alpha = 0;
     imageCell.mDowloadRetryButton.alpha = 1;
     imageCell.downloadRetryView.alpha = 1;
     imageCell.sizeLabel.alpha = 1;
+            });
 }
 
 - (void)onUpdateBytesDownloaded:(int64_t)bytesReceived withMessage:(ALMessage *)alMessage {
+    dispatch_async(dispatch_get_main_queue(), ^{
 
     ALMediaBaseCell*  cell=  [self getCell:alMessage.key];
     cell.progresLabel.endDegree = [self bytesConvertsToDegree:[alMessage.fileMeta.size floatValue] comingBytes:(CGFloat)bytesReceived];
 
+    });
+
 }
 
 - (void)onUpdateBytesUploaded:(int64_t)bytesSent withMessage:(ALMessage *)alMessage {
+
+    dispatch_async(dispatch_get_main_queue(), ^{
 
     ALMediaBaseCell*  cell =  [self getCell:alMessage.key];
 
@@ -4754,6 +4763,8 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
       unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
      cell.progresLabel.endDegree = [self bytesConvertsToDegree:(CGFloat)fileSize comingBytes:(CGFloat)bytesSent];
+
+    });
 
 }
 
@@ -4773,11 +4784,15 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 }
 
 - (void)onUploadFailed:(ALMessage *)alMessage {
+    dispatch_async(dispatch_get_main_queue(), ^{
+
     ALMediaBaseCell * imageCell=  [self getCell:alMessage.key];
     imageCell.progresLabel.alpha = 0;
     imageCell.mDowloadRetryButton.alpha = 1;
     imageCell.downloadRetryView.alpha = 1;
     imageCell.sizeLabel.alpha = 1;
+
+    });
 }
 
 @end

@@ -212,7 +212,7 @@ static dispatch_semaphore_t semaphore;
                 NSArray *array =  [config.identifier componentsSeparatedByString:@","];
                 if(array && array.count>1){
                     //Check if message key are same and first argumnent is not THUMBNAIL
-                    if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
+                    if(![array[0] isEqual: @"THUMBNAIL"] && [array[1] isEqualToString: message.key]){
                         ALSLog(ALLoggerSeverityInfo, @"Already present in upload file Queue returing for key %@",message.key);
                         return;
                     }
@@ -253,10 +253,11 @@ static dispatch_semaphore_t semaphore;
         NSArray *array =  [config.identifier componentsSeparatedByString:@","];
         if(array && array.count>1){
             //Check if the currently  its called for file download or THUMBNAIL with messageKey
-            if(attachmentDownloadFlag && [array[0] isEqualToString:@"FILE"] && array[1] == alMessage.key){
-                ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing for  key %@",alMessage.key);
+            if(attachmentDownloadFlag && [array[0] isEqualToString:@"FILE"] &&
+               [array[1] isEqualToString:alMessage.key]){
+                ALSLog(ALLoggerSeverityInfo, @"Already present in file Download Queue returing for  key %@",alMessage.key);
                 return;
-            }else if (!attachmentDownloadFlag &&  [array[0] isEqualToString:@"THUMBNAIL"] && array[1] == alMessage.key){
+            }else if (!attachmentDownloadFlag &&  [array[0] isEqualToString:@"THUMBNAIL"] && [array[1] isEqualToString:alMessage.key]){
                 ALSLog(ALLoggerSeverityInfo, @"Already present in Download Thumbnail download Queue returing for  key %@",alMessage.key);
                 return;
             }

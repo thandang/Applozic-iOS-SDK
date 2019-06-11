@@ -164,7 +164,6 @@ static dispatch_semaphore_t semaphore;
 
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
             //Create boundary, it can be anything
             NSString *boundary = @"------ApplogicBoundary4QuqLuM1cE5lMwCy";
             // set Content-Type in HTTP header
@@ -215,24 +214,19 @@ static dispatch_semaphore_t semaphore;
                     //Check if message key are same and first argumnent is not THUMBNAIL
                     if(![array[0] isEqual: @"THUMBNAIL"] && array[1] == message.key){
                         ALSLog(ALLoggerSeverityInfo, @"Already present in upload file Queue returing for key %@",message.key);
-                        dispatch_semaphore_signal(semaphore);
                         return;
                     }
                 }
             }
 
             NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"FILE,%@",message.key]];
-            config.HTTPMaximumConnectionsPerHost = 2;
 
             if(ALApplozicSettings.getShareExtentionGroup){
                 config.sharedContainerIdentifier = ALApplozicSettings.getShareExtentionGroup;
             }
 
             NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-            NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:request];
-            [nsurlSessionDataTask resume];
-
-            [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
+            [self startSession: session withRequest: request];
         });
     }else{
         ALSLog(ALLoggerSeverityError, @"<<< ERROR >>> :: FILE DO NOT EXIT AT GIVEN PATH");
@@ -302,7 +296,6 @@ static dispatch_semaphore_t semaphore;
         }
     }else{
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
             if(attachmentDownloadFlag){
                 [messageClientService downloadImageUrl:alMessage.fileMeta.blobKey withCompletion:^(NSString *fileURL, NSError *error) {
                     if(error)
@@ -313,7 +306,6 @@ static dispatch_semaphore_t semaphore;
                                 [self.attachmentProgressDelegate onDownloadFailed:alMessage];
                             });
                         }
-                        dispatch_semaphore_signal(semaphore);
                         return;
                     }
                     ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
@@ -326,18 +318,12 @@ static dispatch_semaphore_t semaphore;
                     }
 
                     NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:[NSString stringWithFormat:@"FILE,%@",alMessage.key]];
-                    config.HTTPMaximumConnectionsPerHost = 2;
 
                     if(ALApplozicSettings.getShareExtentionGroup){
                         config.sharedContainerIdentifier = ALApplozicSettings.getShareExtentionGroup;
                     }
                     NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-
-
-                    NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:theRequest];
-                    [nsurlSessionDataTask resume];
-
-                    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
+                    [self startSession: session withRequest:theRequest];
                 }];
             } else {
                 [messageClientService downloadImageThumbnailUrl:alMessage withCompletion:^(NSString *fileURL, NSError *error) {
@@ -357,10 +343,7 @@ static dispatch_semaphore_t semaphore;
 
                         NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
 
-                        NSURLSessionDataTask *nsurlSessionDataTask  = [session dataTaskWithRequest:urlRequest];
-                        [nsurlSessionDataTask resume];
-
-                        [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
+                        [self startSession: session withRequest:urlRequest];
                     }else{
                         ALSLog(ALLoggerSeverityError, @"ERROR  DOWNLOAD Thumbnail : %@", error.description);
                         if(self.attachmentProgressDelegate){
@@ -368,7 +351,6 @@ static dispatch_semaphore_t semaphore;
                                 [self.attachmentProgressDelegate onDownloadFailed:alMessage];
                             });
                         }
-                        dispatch_semaphore_signal(semaphore);
                     }
 
                 }];
@@ -377,7 +359,17 @@ static dispatch_semaphore_t semaphore;
     }
 }
 
-
+-(void) startSession: (NSURLSession *) session withRequest: (NSURLRequest *) urlRequest {
+    [[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] addObject:session];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    if ([[[ALConnectionQueueHandler sharedConnectionQueueHandler] getCurrentConnectionQueue] containsObject:session]) {
+        NSURLSessionDataTask *nsurlSessionDataTask = [session dataTaskWithRequest: urlRequest];
+        [nsurlSessionDataTask resume];
+    } else {
+        dispatch_semaphore_signal(semaphore);
+        return;
+    }
+}
 
 -(void)uploadProfileImage:(UIImage *)profileImage withFilePath:(NSString *)filePath uploadURL:(NSString *)uploadURL withCompletion:(void(^)(NSData * data,NSError *error)) completion{
 
@@ -387,7 +379,6 @@ static dispatch_semaphore_t semaphore;
     NSMutableURLRequest * request = [ALRequestHandler createPOSTRequestWithUrlString:uploadURL paramString:nil];
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         //Create boundary, it can be anything
         NSString *boundary = @"------ApplogicBoundary4QuqLuM1cE5lMwCy";
         // set Content-Type in HTTP header

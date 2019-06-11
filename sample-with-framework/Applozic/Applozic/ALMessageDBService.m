@@ -1185,6 +1185,10 @@ FETCH LATEST MESSSAGE FOR SUB GROUPS
 }
 
 - (NSData *)compressImage:(NSData *) data forMessage:(DB_Message *)message{
+    /// Only for image, rest good to go
+    if (![message.fileMetaInfo.contentType hasPrefix:@"image"]) {
+        return data;
+    }
     float compressRatio;
     switch (message.fileMetaInfo.size.intValue) {
         case 0 ...  10 * 1024 * 1024:

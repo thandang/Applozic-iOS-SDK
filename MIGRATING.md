@@ -1,5 +1,9 @@
 ## Migration Guides
 
+#### Migrating from old version to new version 6.11.0
+
+1) Updates to ApplozicAttachmentDelegate will now come in main thread, so you can directly update your UI from the delegate methods.
+
 #### Migrating from old version to new version 6.9.5
 
 Add the below settings in two files 

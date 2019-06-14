@@ -83,6 +83,7 @@ NSString * const ThirdPartyDetailVCNotification = @"ThirdPartyDetailVCNotificati
 NSString * const ThirdPartyDetailVCNotificationNavigationVC = @"ThirdPartyDetailVCNotificationNavigationVC";
 NSString * const ThirdPartyDetailVCNotificationALContact = @"ThirdPartyDetailVCNotificationALContact";
 NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVCNotificationChannelKey";
+NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotification";
 
 
 @interface ALChatViewController ()<ALMediaBaseCellDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate, ALLocationDelegate, ALAudioRecorderViewProtocol, ALAudioRecorderProtocol,
@@ -4287,6 +4288,12 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
 -(void)openUserChatOnTap:(NSString *)userId
 {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:ThirdPartyProfileTapNotification
+     object:nil
+     userInfo:@{ThirdPartyDetailVCNotificationNavigationVC : self.navigationController,
+                ThirdPartyDetailVCNotificationALContact : userId}
+     ];
     BOOL tapFlag = ([ALApplozicSettings isChatOnTapUserProfile] && [self isGroup]);
 
     if (!tapFlag)

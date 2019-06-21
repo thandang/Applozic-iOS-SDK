@@ -6,7 +6,7 @@ iOS Chat SDK
 
 Open source iOS Chat and Messaging SDK that lets you add real time messaging in your mobile (android, iOS) applications and website.
 
-Signup at [https://www.applozic.com/signup.html](https://www.applozic.com/signup.html?utm_source=github&utm_medium=readme&utm_campaign=ios) to get the application key.
+Signup at [https://www.applozic.com/signup.html](https://www.applozic.com/signup.html?utm_source=github&utm_medium=readme&utm_campaign=ios) to get the App ID.
 
 
 Works for both Objective-C and Swift.
@@ -62,23 +62,13 @@ Applozic One to One and Group Chat SDK
 
 **Create your Application**
 
-a) [**Sign up**](https://www.applozic.com/signup.html?utm_source=github&utm_medium=readme&utm_campaign=ios) with applozic to get your application key.
+a) [**Sign up**](https://www.applozic.com/signup.html?utm_source=github&utm_medium=readme&utm_campaign=ios) with applozic to get your App ID.
 
-b) Once you signed up create your Application with required details on admin dashboard. Upload your push-notification certificate to our portal to enable real time notification.         
-
-
-
-
-![dashboard-blank-content](https://raw.githubusercontent.com/AppLozic/Applozic-Chat-SDK-Documentation/master/Dashboard.png)         
+b) Once you signed up create your Application with required details on admin dashboard. Upload your push-notification certificate to our portal to enable real time notification.      
 
 
 
-c) Once you create your application you can see your application key listed on admin dashboard. Please use same application key explained in further steps.          
-
-
-
-
-![dashboard-blank-content](https://raw.githubusercontent.com/AppLozic/Applozic-Chat-SDK-Documentation/master/Resized-dashboard-content-page.png)         
+c) Once you create your application you can see your App ID listed on admin dashboard. Please use same App ID explained in further steps.          
 
 
 
@@ -115,7 +105,7 @@ Change applicationID in ALChatManager and you are ready to launch your chat from
 Launch your chat
 
 ```
-//Replace with your application key in ALChatManager.h
+//Replace with your App ID in ALChatManager.h
 
 #define APPLICATION_ID @"applozic-sample-app" 
 
@@ -278,108 +268,9 @@ return true
 ```
 
 
-###Documentation:
+### Documentation:
 For advanced options and customization, visit [Applozic iOS Chat & Messaging SDK Documentation](https://www.applozic.com/docs/ios-chat-sdk.html?utm_source=github&utm_medium=readme&utm_campaign=ios)
 
-
-
-### Changelog
-
-__Version 3.3__
-
-* Dynamic Application
-* Group Delete Feature
-* Contact and UI Bug fixes
-
-__Version 3.2.1__
-
-* Context Chat Display Name fixes
-* User's email for Registration fixes
-
-__Version 3.2__
-
-* Group Image Upload on creation
-* Login User Profile and Receiver User Information Updates
-* Typing Indicator in group
-* APNs enhancements
-* Image Sharing
-
-__Version 3.0__
-
- * HyperLink Underline fixes(iOS < 9)
- * Typing Indicator UI fixes
- * Send/Receive messages text color settings
- * No conversation Label added if chat is empty in individual chat
- * App icon and APNs tap action fixes 
-
-__Version 2.8__
-
- * Calling option with option to enable/disable this feature
- * SMS fallback functionality if reciever/sender do not reads thier messages within specific time period
-  
- (For above two features to work, User contacts should be registered with their phone numbers)
- * Enable/disable Context-based-chat's view
-
-__Version 2.7__
-
- * Group-Exit, Add-Member UI updates
- * UserTypeId parameters added for registration
- * Group sync call bug fixes
- * Block user handled even if other’s app is killed
- * Online/Offline UI updates for block user
- * User’s display name updating
- * Chat Background wallpaper
- * Hidden Messages
- * Custom Messsages (Custom Layout)
- * Contact List with Online Users with configurable limit
- * New Group Addition bug fixes
- * Contact Image bug fixes
-
-__Version 2.6__
- * Settings to toggle buttons:
-    * Group-Exit Button
-    * Group-Member-Add Button
-    * Group-Member-Remove Button
-
-__Version 2.5__
- * Typing indicator UI fixes
- * Block user UI bug fixes
- * First time messages to new user bug fixes
- * Location bug fixes
- * Chat list user profile view fixes
- * Contact list enhancement
- * App module
- * Display name & group name bug fixes
- * Notification bug fixes
- * Multiple attachment with configurable limit
-
-__Version 2.2__
- * Contact sharing. 
- * Offline message sync.
- * User block/unblock background sync.
- * Background message sync on APNs notification.
- * Delivery reports on background mode.
- * Unread count bug fix.
- * Multi-Receiver APIs.
- * Group UI and API changes
- * Handle operations on no network
-
-__Version 2.1__
- * Read Receipts for Messages
- * Message Information details
- * User Block/Unblock
- * Offline Message Sending for types:
-   * Text
-   * Location
-
-__Version 2.0__
- * Context-based messaging
- * Group messaging
- * Attachments support
-   * Audio messages
-   * Video messages
- * Image compression (Configurable)
- 
 
 
 ### Sample source code in Objective-C to build messenger and chat app
@@ -393,16 +284,16 @@ https://www.applozic.com/blog/add-applozic-chat-framework-ios/
 https://github.com/AppLozic/Applozic-iOS-SDK/tree/master/sampleapp-swift
 
 
-##Help
+### Help
 
 We provide support over at [StackOverflow] (http://stackoverflow.com/questions/tagged/applozic) when you tag using applozic, ask us anything.
 
 Applozic is the best ios chat sdk for instant messaging, still not convinced? Write to us at github@applozic.com and we will be happy to schedule a demo for you.
 
-###Free iOS Chat SDK - Supports both Objective-C and Swift
+### Free iOS Chat SDK - Supports both Objective-C and Swift
 Special plans for startup and open source contributors, write to us at github@applozic.com 
 
-##Github projects
+### Github projects
 
 Android Chat SDK https://github.com/AppLozic/Applozic-Android-SDK
 

@@ -146,6 +146,8 @@ static NSString *const AL_USER_DEFAULTS_GROUP_MIGRATION = @"com.applozic.AL_USER
 static NSString *const AL_USER_DEFAULTS_MIGRATION = @"com.applozic.AL_USER_DEFAULTS_MIGRATION";
 static NSString *const AL_DEFAULT_APP_GROUP = @"group.com.applozic.share";
 static NSString *const AL_DOCUMENT_OPTION = @"com.applozic.AL_DOCUMENT_OPTION";
+static NSString *const AL_SENT_MESSAGE_CONTACT_BUTTON = @"com.applozic.AL_SENT_MESSAGE_CONTACT_BUTTON";
+
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -583,5 +585,8 @@ static NSString *const AL_DOCUMENT_OPTION = @"com.applozic.AL_DOCUMENT_OPTION";
 
 +(BOOL)isDocumentOptionEnabled;
 +(void)enableDocumentOption:(BOOL)flag;
+
++(BOOL)isAddContactButtonHiddenForSentMessage;
++(void)disableContcatAddButtonForSentMessage;
 
 @end

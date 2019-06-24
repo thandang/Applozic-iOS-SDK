@@ -169,6 +169,8 @@
 		18BD2F34225E15E500B180A9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BD2F32225E15E400B180A9 /* MKAnnotationView+WebCache.m */; };
 		18BDB35E21A7080A003B405D /* ALLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18BDB35C21A7080A003B405D /* ALLinkCell.h */; };
 		18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB35D21A7080A003B405D /* ALLinkCell.m */; };
+		18CAD6F922A967D000DE684C /* MyContactMessageCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18CAD6F722A967D000DE684C /* MyContactMessageCell.h */; };
+		18CAD6FA22A967D000DE684C /* MyContactMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CAD6F822A967D000DE684C /* MyContactMessageCell.m */; };
 		18F400652265E2ED0070CBB7 /* ALDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F400612265E2EC0070CBB7 /* ALDownloadTask.m */; };
 		18F400662265E2ED0070CBB7 /* ALUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F400622265E2EC0070CBB7 /* ALUploadTask.m */; };
 		18F400672265E2ED0070CBB7 /* ALUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 18F400632265E2EC0070CBB7 /* ALUploadTask.h */; };
@@ -656,6 +658,8 @@
 		18BD2F32225E15E400B180A9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		18BDB35C21A7080A003B405D /* ALLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALLinkCell.h; path = Applozic/Views/ALLinkCell.h; sourceTree = "<group>"; };
 		18BDB35D21A7080A003B405D /* ALLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALLinkCell.m; path = Applozic/Views/ALLinkCell.m; sourceTree = "<group>"; };
+		18CAD6F722A967D000DE684C /* MyContactMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyContactMessageCell.h; path = Applozic/Views/MyContactMessageCell.h; sourceTree = "<group>"; };
+		18CAD6F822A967D000DE684C /* MyContactMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyContactMessageCell.m; path = Applozic/Views/MyContactMessageCell.m; sourceTree = "<group>"; };
 		18F400612265E2EC0070CBB7 /* ALDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALDownloadTask.m; path = Applozic/ALDownloadTask.m; sourceTree = "<group>"; };
 		18F400622265E2EC0070CBB7 /* ALUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALUploadTask.m; path = Applozic/ALUploadTask.m; sourceTree = "<group>"; };
 		18F400632265E2EC0070CBB7 /* ALUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALUploadTask.h; path = Applozic/ALUploadTask.h; sourceTree = "<group>"; };
@@ -1056,6 +1060,8 @@
 				6DBA7D0C1C943BFF001263F4 /* ALContactMessageCell.m */,
 				18BDB35C21A7080A003B405D /* ALLinkCell.h */,
 				18BDB35D21A7080A003B405D /* ALLinkCell.m */,
+				18CAD6F722A967D000DE684C /* MyContactMessageCell.h */,
+				18CAD6F822A967D000DE684C /* MyContactMessageCell.m */,
 			);
 			name = "Media Base Cells";
 			sourceTree = "<group>";
@@ -1898,6 +1904,7 @@
 				6D77571D1D5B838A0025560B /* ALSendMessageResponse.h in Headers */,
 				6D7757011D5B82ED0025560B /* DB_CHANNEL.h in Headers */,
 				6D7757391D5B84D60025560B /* ALMediaBaseCell.h in Headers */,
+				18CAD6F922A967D000DE684C /* MyContactMessageCell.h in Headers */,
 				6D7757451D5B85100025560B /* ALDocumentsCell.h in Headers */,
 				18BD2F2C225E15D000B180A9 /* SDmetamacros.h in Headers */,
 				6D7756B71D5B80DF0025560B /* ALChannelSyncResponse.h in Headers */,
@@ -2208,6 +2215,7 @@
 				1AC5A597223A92E50044A9BD /* ALTabViewController.m in Sources */,
 				18BD2EB0225E15AD00B180A9 /* SDWebImagePrefetcher.m in Sources */,
 				6D6DF1631BC5364C00EBA00F /* ALContactCell.m in Sources */,
+				18CAD6FA22A967D000DE684C /* MyContactMessageCell.m in Sources */,
 				C76366091DF82B500087221C /* ALNavigationController.m in Sources */,
 				18BD2D83225D142400B180A9 /* MQTTProperties.m in Sources */,
 				6D6DF15D1BC5364C00EBA00F /* ALNewContactsViewController.m in Sources */,

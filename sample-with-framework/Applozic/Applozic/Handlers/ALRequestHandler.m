@@ -95,12 +95,7 @@
 +(void) addGlobalHeader: (NSMutableURLRequest*) request
 {
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    if(APPLOZIC == [ALUserDefaultsHandler getUserAuthenticationTypeId])
-    {
-        [request setValue:[ALUserDefaultsHandler getPassword] forHTTPHeaderField:@"Access-Token"];
-    }
-    
+    [request setValue:[ALUserDefaultsHandler getPassword] forHTTPHeaderField:@"Access-Token"];
     [request addValue:[ALUserDefaultsHandler getApplicationKey] forHTTPHeaderField:@"Application-Key"];
     [request addValue:@"true" forHTTPHeaderField:@"UserId-Enabled"];
     [request addValue:[ALUserDefaultsHandler getDeviceKeyString] forHTTPHeaderField:@"Device-Key"];

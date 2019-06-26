@@ -107,8 +107,8 @@
     NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *authString = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
     [request setValue:authString forHTTPHeaderField:@"Authorization"];
-    //Add header for device key ....
-    
+    [request setValue:authString forHTTPHeaderField:@"Application-User"];
+
     ALSLog(ALLoggerSeverityInfo, @"Basic string...%@",authString);
 }
 @end

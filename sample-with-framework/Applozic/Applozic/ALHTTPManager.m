@@ -231,7 +231,10 @@ static dispatch_semaphore_t semaphore;
     }else{
         ALSLog(ALLoggerSeverityError, @"<<< ERROR >>> :: FILE DO NOT EXIT AT GIVEN PATH");
         if(self.attachmentProgressDelegate){
-            [self.attachmentProgressDelegate onUploadFailed:message];
+
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self.attachmentProgressDelegate onUploadFailed:message];
+            });
         }
     }
 
@@ -293,7 +296,9 @@ static dispatch_semaphore_t semaphore;
         [[ALDBHandler sharedInstance].managedObjectContext save:nil];
         alMessage =  [messageDatabase createMessageEntity:messageEntity];
         if(self.attachmentProgressDelegate){
-            [self.attachmentProgressDelegate onDownloadCompleted:alMessage];
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self.attachmentProgressDelegate onDownloadCompleted:alMessage];
+            });
         }
     }else{
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {

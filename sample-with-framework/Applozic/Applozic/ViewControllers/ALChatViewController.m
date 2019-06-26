@@ -4743,56 +4743,39 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 }
 
 - (void)onUpdateBytesDownloaded:(int64_t)bytesReceived withMessage:(ALMessage *)alMessage {
-    dispatch_async(dispatch_get_main_queue(), ^{
-
     ALMediaBaseCell*  cell=  [self getCell:alMessage.key];
     cell.progresLabel.endDegree = [self bytesConvertsToDegree:[alMessage.fileMeta.size floatValue] comingBytes:(CGFloat)bytesReceived];
-
-    });
-
 }
 
 - (void)onUpdateBytesUploaded:(int64_t)bytesSent withMessage:(ALMessage *)alMessage {
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-
     ALMediaBaseCell*  cell =  [self getCell:alMessage.key];
 
     NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-     NSString * filePath = [docDir  stringByAppendingPathComponent:alMessage.imageFilePath];
+    NSString * filePath = [docDir  stringByAppendingPathComponent:alMessage.imageFilePath];
 
-      unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
-     cell.progresLabel.endDegree = [self bytesConvertsToDegree:(CGFloat)fileSize comingBytes:(CGFloat)bytesSent];
-
-    });
-
+    unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
+    cell.progresLabel.endDegree = [self bytesConvertsToDegree:(CGFloat)fileSize comingBytes:(CGFloat)bytesSent];
 }
 
 - (void)onUploadCompleted:(ALMessage *)alMessage withOldMessageKey:(NSString *)oldMessageKey{
 
     if(alMessage != nil){
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-
            NSIndexPath * path = [self getIndexPathForMessage:oldMessageKey];
             if(path.row < [self.alMessageWrapper getUpdatedMessageArray].count){
             [self.alMessageWrapper getUpdatedMessageArray][path.row] = alMessage;
             [self.mTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
           }
-        });
     }
 }
 
 - (void)onUploadFailed:(ALMessage *)alMessage {
-    dispatch_async(dispatch_get_main_queue(), ^{
-
     ALMediaBaseCell * imageCell=  [self getCell:alMessage.key];
     imageCell.progresLabel.alpha = 0;
     imageCell.mDowloadRetryButton.alpha = 1;
     imageCell.downloadRetryView.alpha = 1;
     imageCell.sizeLabel.alpha = 1;
-
-    });
 }
 
 @end

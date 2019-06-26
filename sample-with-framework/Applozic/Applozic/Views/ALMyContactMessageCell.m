@@ -70,6 +70,11 @@
     [self addContactButtonEnable:NO];
     
     if ([alMessage isSentMessage]){
+
+        [self.contactPerson setTextColor:[ALApplozicSettings getSentContactMsgLabelColor]];
+        [self.userContact setTextColor:[ALApplozicSettings getSentContactMsgLabelColor]];
+        [self.emailId setTextColor:[ALApplozicSettings getSentContactMsgLabelColor]];
+
         self.mUserProfileImageView.frame = CGRectMake(viewSize.width - USER_PROFILE_PADDING_X_OUTBOX, 0, 0, USER_PROFILE_HEIGHT);
 
         self.mBubleImageView.backgroundColor = [ALApplozicSettings getSendMsgColor];

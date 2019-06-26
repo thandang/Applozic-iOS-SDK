@@ -74,7 +74,7 @@
 #import "ALHTTPManager.h"
 #import "ALUploadTask.h"
 #import "ALDownloadTask.h"
-
+#import "ALMyContactMessageCell.h"
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -1039,6 +1039,8 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
     [self.mTableView registerClass:[ALVOIPCell class] forCellReuseIdentifier:@"VOIPCell"];
     [self.mTableView registerClass:[ALChannelMsgCell class] forCellReuseIdentifier:@"ALChannelMsgCell"];
 
+    [self.mTableView registerClass:[ALMyContactMessageCell class] forCellReuseIdentifier:@"MyContactMessageCell"];
+
     if([ALApplozicSettings getContextualChatOption])
     {
         self.pickerView.delegate = self;
@@ -1812,15 +1814,29 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
     }
     else if (theMessage.contentType == ALMESSAGE_CONTENT_VCARD)
     {
-        ALContactMessageCell *theCell = (ALContactMessageCell *)[tableView dequeueReusableCellWithIdentifier:@"ContactMessageCell"];
-        theCell.tag = indexPath.row;
-        theCell.delegate = self;
-        theCell.channel = self.alChannel;
-        theCell.contact = self.alContact;
-        theCell.alphabetiColorCodesDictionary = self.alphabetiColorCodesDictionary;
-        [theCell populateCell:theMessage viewSize:self.view.frame.size];
-        [self.view layoutIfNeeded];
-        return theCell;
+        
+        if([theMessage isSentMessage]){
+            ALMyContactMessageCell *theCell = (ALMyContactMessageCell *)[tableView dequeueReusableCellWithIdentifier:@"MyContactMessageCell"];
+            theCell.tag = indexPath.row;
+            theCell.delegate = self;
+            theCell.channel = self.alChannel;
+            theCell.contact = self.alContact;
+            theCell.alphabetiColorCodesDictionary = self.alphabetiColorCodesDictionary;
+            [theCell populateCell:theMessage viewSize:self.view.frame.size];
+            [self.view layoutIfNeeded];
+            return theCell;
+        }else{
+            ALContactMessageCell *theCell = (ALContactMessageCell *)[tableView dequeueReusableCellWithIdentifier:@"ContactMessageCell"];
+            theCell.tag = indexPath.row;
+            theCell.delegate = self;
+            theCell.channel = self.alChannel;
+            theCell.contact = self.alContact;
+            theCell.alphabetiColorCodesDictionary = self.alphabetiColorCodesDictionary;
+            [theCell populateCell:theMessage viewSize:self.view.frame.size];
+            [self.view layoutIfNeeded];
+            return theCell;
+        }
+
     }
     else
     {

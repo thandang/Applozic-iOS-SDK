@@ -56,7 +56,7 @@
 
 +(CGFloat)getContactCellHeight:(ALMessage*)message
 {
-    CGFloat HEIGHT = (message.isSentMessage && ALApplozicSettings.isAddContactButtonHiddenForSentMessage) ? 210 : 265;
+    CGFloat HEIGHT = (message.isSentMessage && ALApplozicSettings.isAddContactButtonForSenderDisabled) ? 210 : 265;
     return HEIGHT;
 }
 

@@ -586,7 +586,7 @@ static NSString *const AL_SENT_MESSAGE_CONTACT_BUTTON = @"com.applozic.AL_SENT_M
 +(BOOL)isDocumentOptionEnabled;
 +(void)enableDocumentOption:(BOOL)flag;
 
-+(BOOL)isAddContactButtonHiddenForSentMessage;
-+(void)disableContcatAddButtonForSentMessage;
++(BOOL)isAddContactButtonForSenderDisabled;
++(void)disableAddContactButtonForSender;
 
 @end

@@ -19,6 +19,10 @@
 		10B6DABD204E980400B6E024 /* ALGroupUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B6DABB204E980300B6E024 /* ALGroupUser.m */; };
 		10C89FBE1FD9A5CF001C2FFC /* MessageReplyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10C89FBF1FD9A5CF001C2FFC /* MessageReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */; };
+		1804731322C3BB8A0062CC52 /* ALContactMessageBaseCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1804731122C3BB8A0062CC52 /* ALContactMessageBaseCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1804731422C3BB8A0062CC52 /* ALContactMessageBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804731222C3BB8A0062CC52 /* ALContactMessageBaseCell.m */; };
+		1804731722C3C6CC0062CC52 /* ALContactMessageCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1804731522C3C6CC0062CC52 /* ALContactMessageCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1804731822C3C6CC0062CC52 /* ALContactMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804731622C3C6CC0062CC52 /* ALContactMessageCell.m */; };
 		1810D124215A79F600557E22 /* ALAttachmentService.h in Headers */ = {isa = PBXBuildFile; fileRef = 1810D122215A79F600557E22 /* ALAttachmentService.h */; };
 		1810D125215A79F600557E22 /* ALAttachmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1810D123215A79F600557E22 /* ALAttachmentService.m */; };
 		18587A7C2177A81E006AA149 /* ALImagePreviewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18587A7A2177A81E006AA149 /* ALImagePreviewController.h */; };
@@ -169,8 +173,8 @@
 		18BD2F34225E15E500B180A9 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BD2F32225E15E400B180A9 /* MKAnnotationView+WebCache.m */; };
 		18BDB35E21A7080A003B405D /* ALLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18BDB35C21A7080A003B405D /* ALLinkCell.h */; };
 		18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BDB35D21A7080A003B405D /* ALLinkCell.m */; };
-		18CAD6F922A967D000DE684C /* MyContactMessageCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18CAD6F722A967D000DE684C /* MyContactMessageCell.h */; };
-		18CAD6FA22A967D000DE684C /* MyContactMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CAD6F822A967D000DE684C /* MyContactMessageCell.m */; };
+		18CAD6F922A967D000DE684C /* ALMyContactMessageCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18CAD6F722A967D000DE684C /* ALMyContactMessageCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		18CAD6FA22A967D000DE684C /* ALMyContactMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CAD6F822A967D000DE684C /* ALMyContactMessageCell.m */; };
 		18F400652265E2ED0070CBB7 /* ALDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F400612265E2EC0070CBB7 /* ALDownloadTask.m */; };
 		18F400662265E2ED0070CBB7 /* ALUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F400622265E2EC0070CBB7 /* ALUploadTask.m */; };
 		18F400672265E2ED0070CBB7 /* ALUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 18F400632265E2EC0070CBB7 /* ALUploadTask.h */; };
@@ -461,8 +465,6 @@
 		6D95476A1BE38DFF00776652 /* ALContactDBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9547641BE38DFF00776652 /* ALContactDBService.m */; };
 		6D95476B1BE38DFF00776652 /* ALContactService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D9547651BE38DFF00776652 /* ALContactService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D95476C1BE38DFF00776652 /* ALContactService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9547661BE38DFF00776652 /* ALContactService.m */; };
-		6DBA7D0D1C943BFF001263F4 /* ALContactMessageCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DBA7D0B1C943BFF001263F4 /* ALContactMessageCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6DBA7D0E1C943BFF001263F4 /* ALContactMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA7D0C1C943BFF001263F4 /* ALContactMessageCell.m */; };
 		6DC729661C7854E100A8A268 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC729651C7854E100A8A268 /* MediaPlayer.framework */; };
 		6DEAEE8C1D4CDBC700360060 /* ALUserProfileVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DEAEE8A1D4CDBC700360060 /* ALUserProfileVC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6DEAEE8D1D4CDBC700360060 /* ALUserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */; };
@@ -505,6 +507,10 @@
 		10C89FBC1FD9A5CE001C2FFC /* MessageReplyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReplyView.h; sourceTree = "<group>"; };
 		10C89FBD1FD9A5CF001C2FFC /* MessageReplyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReplyView.m; sourceTree = "<group>"; };
 		10C89FC61FDA7DC4001C2FFC /* AppLozic 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 7.xcdatamodel"; sourceTree = "<group>"; };
+		1804731122C3BB8A0062CC52 /* ALContactMessageBaseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALContactMessageBaseCell.h; path = Applozic/Views/ALContactMessageBaseCell.h; sourceTree = "<group>"; };
+		1804731222C3BB8A0062CC52 /* ALContactMessageBaseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALContactMessageBaseCell.m; path = Applozic/Views/ALContactMessageBaseCell.m; sourceTree = "<group>"; };
+		1804731522C3C6CC0062CC52 /* ALContactMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALContactMessageCell.h; path = Applozic/Views/ALContactMessageCell.h; sourceTree = "<group>"; };
+		1804731622C3C6CC0062CC52 /* ALContactMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALContactMessageCell.m; path = Applozic/Views/ALContactMessageCell.m; sourceTree = "<group>"; };
 		1808CE562260B251006BAEA3 /* AppLozic 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AppLozic 12.xcdatamodel"; sourceTree = "<group>"; };
 		1810D122215A79F600557E22 /* ALAttachmentService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALAttachmentService.h; path = Applozic/ALAttachmentService.h; sourceTree = "<group>"; };
 		1810D123215A79F600557E22 /* ALAttachmentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALAttachmentService.m; path = Applozic/ALAttachmentService.m; sourceTree = "<group>"; };
@@ -658,8 +664,8 @@
 		18BD2F32225E15E400B180A9 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		18BDB35C21A7080A003B405D /* ALLinkCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALLinkCell.h; path = Applozic/Views/ALLinkCell.h; sourceTree = "<group>"; };
 		18BDB35D21A7080A003B405D /* ALLinkCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALLinkCell.m; path = Applozic/Views/ALLinkCell.m; sourceTree = "<group>"; };
-		18CAD6F722A967D000DE684C /* MyContactMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyContactMessageCell.h; path = Applozic/Views/MyContactMessageCell.h; sourceTree = "<group>"; };
-		18CAD6F822A967D000DE684C /* MyContactMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyContactMessageCell.m; path = Applozic/Views/MyContactMessageCell.m; sourceTree = "<group>"; };
+		18CAD6F722A967D000DE684C /* ALMyContactMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALMyContactMessageCell.h; path = Applozic/Views/ALMyContactMessageCell.h; sourceTree = "<group>"; };
+		18CAD6F822A967D000DE684C /* ALMyContactMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALMyContactMessageCell.m; path = Applozic/Views/ALMyContactMessageCell.m; sourceTree = "<group>"; };
 		18F400612265E2EC0070CBB7 /* ALDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALDownloadTask.m; path = Applozic/ALDownloadTask.m; sourceTree = "<group>"; };
 		18F400622265E2EC0070CBB7 /* ALUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALUploadTask.m; path = Applozic/ALUploadTask.m; sourceTree = "<group>"; };
 		18F400632265E2EC0070CBB7 /* ALUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALUploadTask.h; path = Applozic/ALUploadTask.h; sourceTree = "<group>"; };
@@ -954,8 +960,6 @@
 		6D9547641BE38DFF00776652 /* ALContactDBService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALContactDBService.m; path = Applozic/ALContactDBService.m; sourceTree = "<group>"; };
 		6D9547651BE38DFF00776652 /* ALContactService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALContactService.h; path = Applozic/ALContactService.h; sourceTree = "<group>"; };
 		6D9547661BE38DFF00776652 /* ALContactService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALContactService.m; path = Applozic/ALContactService.m; sourceTree = "<group>"; };
-		6DBA7D0B1C943BFF001263F4 /* ALContactMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALContactMessageCell.h; path = Applozic/ViewControllers/ALContactMessageCell.h; sourceTree = "<group>"; };
-		6DBA7D0C1C943BFF001263F4 /* ALContactMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALContactMessageCell.m; path = Applozic/ViewControllers/ALContactMessageCell.m; sourceTree = "<group>"; };
 		6DC729651C7854E100A8A268 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		6DEAEE8A1D4CDBC700360060 /* ALUserProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALUserProfileVC.h; sourceTree = "<group>"; };
 		6DEAEE8B1D4CDBC700360060 /* ALUserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALUserProfileVC.m; sourceTree = "<group>"; };
@@ -1044,6 +1048,8 @@
 		29867A2D1CDB4F8F00CAA49D /* Media Base Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1804731522C3C6CC0062CC52 /* ALContactMessageCell.h */,
+				1804731622C3C6CC0062CC52 /* ALContactMessageCell.m */,
 				6D77573F1D5B85100025560B /* ALDocumentsCell.h */,
 				6D7757401D5B85100025560B /* ALDocumentsCell.m */,
 				6D7757411D5B85100025560B /* ALLocationCell.h */,
@@ -1056,12 +1062,12 @@
 				6D7757381D5B84D60025560B /* ALMediaBaseCell.m */,
 				6D6DF0B31BC5364C00EBA00F /* ALImageCell.h */,
 				6D6DF0B41BC5364C00EBA00F /* ALImageCell.m */,
-				6DBA7D0B1C943BFF001263F4 /* ALContactMessageCell.h */,
-				6DBA7D0C1C943BFF001263F4 /* ALContactMessageCell.m */,
 				18BDB35C21A7080A003B405D /* ALLinkCell.h */,
 				18BDB35D21A7080A003B405D /* ALLinkCell.m */,
-				18CAD6F722A967D000DE684C /* MyContactMessageCell.h */,
-				18CAD6F822A967D000DE684C /* MyContactMessageCell.m */,
+				18CAD6F722A967D000DE684C /* ALMyContactMessageCell.h */,
+				18CAD6F822A967D000DE684C /* ALMyContactMessageCell.m */,
+				1804731122C3BB8A0062CC52 /* ALContactMessageBaseCell.h */,
+				1804731222C3BB8A0062CC52 /* ALContactMessageBaseCell.m */,
 			);
 			name = "Media Base Cells";
 			sourceTree = "<group>";
@@ -1843,8 +1849,11 @@
 				18587A7C2177A81E006AA149 /* ALImagePreviewController.h in Headers */,
 				C75576EE1E27A5B300358D9B /* ALMuteRequest.h in Headers */,
 				29C849A21CC932050042643C /* NSString+Encode.h in Headers */,
+				1804731322C3BB8A0062CC52 /* ALContactMessageBaseCell.h in Headers */,
 				18BD2ED1225E15AD00B180A9 /* SDWebImagePrefetcher.h in Headers */,
+				18CAD6F922A967D000DE684C /* ALMyContactMessageCell.h in Headers */,
 				6D0877081D01B0F900DB491A /* UIView+Toast.h in Headers */,
+				1804731722C3C6CC0062CC52 /* ALContactMessageCell.h in Headers */,
 				6D6DF1501BC5364C00EBA00F /* ALRegisterUserClientService.h in Headers */,
 				18BD2EE8225E15AD00B180A9 /* NSImage+Compatibility.h in Headers */,
 				18BD2EAF225E15AD00B180A9 /* SDImageCacheConfig.h in Headers */,
@@ -1904,7 +1913,6 @@
 				6D77571D1D5B838A0025560B /* ALSendMessageResponse.h in Headers */,
 				6D7757011D5B82ED0025560B /* DB_CHANNEL.h in Headers */,
 				6D7757391D5B84D60025560B /* ALMediaBaseCell.h in Headers */,
-				18CAD6F922A967D000DE684C /* MyContactMessageCell.h in Headers */,
 				6D7757451D5B85100025560B /* ALDocumentsCell.h in Headers */,
 				18BD2F2C225E15D000B180A9 /* SDmetamacros.h in Headers */,
 				6D7756B71D5B80DF0025560B /* ALChannelSyncResponse.h in Headers */,
@@ -1978,7 +1986,6 @@
 				6D77572A1D5B845C0025560B /* Applozic_Prefix.pch in Headers */,
 				18BD2ED7225E15AD00B180A9 /* UIView+WebCache.h in Headers */,
 				18BC191621E4F3B8002B33C9 /* ALDocumentPickerHandler.h in Headers */,
-				6DBA7D0D1C943BFF001263F4 /* ALContactMessageCell.h in Headers */,
 				6D1385781CA9B83C009E6F50 /* AlMultipleAttachmentCell.h in Headers */,
 				18BD2EFE225E15AD00B180A9 /* SDImageAPNGCoder.h in Headers */,
 				18BD2EC2225E15AD00B180A9 /* SDDiskCache.h in Headers */,
@@ -2215,7 +2222,7 @@
 				1AC5A597223A92E50044A9BD /* ALTabViewController.m in Sources */,
 				18BD2EB0225E15AD00B180A9 /* SDWebImagePrefetcher.m in Sources */,
 				6D6DF1631BC5364C00EBA00F /* ALContactCell.m in Sources */,
-				18CAD6FA22A967D000DE684C /* MyContactMessageCell.m in Sources */,
+				18CAD6FA22A967D000DE684C /* ALMyContactMessageCell.m in Sources */,
 				C76366091DF82B500087221C /* ALNavigationController.m in Sources */,
 				18BD2D83225D142400B180A9 /* MQTTProperties.m in Sources */,
 				6D6DF15D1BC5364C00EBA00F /* ALNewContactsViewController.m in Sources */,
@@ -2224,6 +2231,7 @@
 				6D7757341D5B84BE0025560B /* ALMessageArrayWrapper.m in Sources */,
 				18BD2EFB225E15AD00B180A9 /* SDImageCodersManager.m in Sources */,
 				6D6DF15B1BC5364C00EBA00F /* ALMessagesViewController.m in Sources */,
+				1804731422C3BB8A0062CC52 /* ALContactMessageBaseCell.m in Sources */,
 				6D7756D21D5B82000025560B /* ALContactsResponse.m in Sources */,
 				6D6DF13C1BC5364C00EBA00F /* ALPushNotificationService.m in Sources */,
 				6D81979B1CC55B5700E53EC3 /* ALCollectionReusableView.m in Sources */,
@@ -2311,6 +2319,7 @@
 				C592EC8721624C190082D4FA /* ALVideoCoder.swift in Sources */,
 				8B6C119F1FC2D9AF007CFB54 /* SoundRecordingView.swift in Sources */,
 				6D7757481D5B85100025560B /* ALLocationCell.m in Sources */,
+				1804731822C3C6CC0062CC52 /* ALContactMessageCell.m in Sources */,
 				6D7756B01D5B80DF0025560B /* ALChannelDBService.m in Sources */,
 				18BD2EEC225E15AD00B180A9 /* UIImage+MultiFormat.m in Sources */,
 				18BD2EB1225E15AD00B180A9 /* UIButton+WebCache.m in Sources */,
@@ -2402,7 +2411,6 @@
 				1A113EFD21C006230000A7CC /* ALAudioRecordingView.swift in Sources */,
 				6D77570F1D5B83660025560B /* ALPushAssist.m in Sources */,
 				18BD2F20225E15D000B180A9 /* NSBezierPath+RoundedCorners.m in Sources */,
-				6DBA7D0E1C943BFF001263F4 /* ALContactMessageCell.m in Sources */,
 				4612E9121E13882D0022DB23 /* MQTTSSLSecurityPolicyDecoder.m in Sources */,
 				18BD2ED4225E15AD00B180A9 /* SDWebImageTransition.m in Sources */,
 			);

@@ -74,7 +74,7 @@
 #import "ALHTTPManager.h"
 #import "ALUploadTask.h"
 #import "ALDownloadTask.h"
-#import "MyContactMessageCell.h"
+#import "ALMyContactMessageCell.h"
 
 #define MQTT_MAX_RETRY 3
 #define NEW_MESSAGE_NOTIFICATION @"newMessageNotification"
@@ -1038,9 +1038,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     [self.mTableView registerClass:[ALVOIPCell class] forCellReuseIdentifier:@"VOIPCell"];
     [self.mTableView registerClass:[ALChannelMsgCell class] forCellReuseIdentifier:@"ALChannelMsgCell"];
 
-    [self.mTableView registerClass:[MyContactMessageCell class] forCellReuseIdentifier:@"MyContactMessageCell"];
-
-
+    [self.mTableView registerClass:[ALMyContactMessageCell class] forCellReuseIdentifier:@"MyContactMessageCell"];
 
     if([ALApplozicSettings getContextualChatOption])
     {
@@ -1817,7 +1815,7 @@ NSString * const ThirdPartyDetailVCNotificationChannelKey = @"ThirdPartyDetailVC
     {
         
         if([theMessage isSentMessage]){
-            MyContactMessageCell *theCell = (MyContactMessageCell *)[tableView dequeueReusableCellWithIdentifier:@"MyContactMessageCell"];
+            ALMyContactMessageCell *theCell = (ALMyContactMessageCell *)[tableView dequeueReusableCellWithIdentifier:@"MyContactMessageCell"];
             theCell.tag = indexPath.row;
             theCell.delegate = self;
             theCell.channel = self.alChannel;

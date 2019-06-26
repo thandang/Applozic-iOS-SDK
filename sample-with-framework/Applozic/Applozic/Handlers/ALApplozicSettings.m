@@ -1744,13 +1744,13 @@
     return  [userDefaults boolForKey:AL_USER_DEFAULTS_MIGRATION];
 }
 
-+(BOOL)isAddContactButtonHiddenForSentMessage
++(BOOL)isAddContactButtonForSenderDisabled
 {
     NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
     return  [userDefaults boolForKey:AL_SENT_MESSAGE_CONTACT_BUTTON];
 }
 
-+(void)disableContcatAddButtonForSentMessage
++(void)disableAddContactButtonForSender
 {
     NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
     [userDefaults setBool:YES forKey:AL_SENT_MESSAGE_CONTACT_BUTTON];

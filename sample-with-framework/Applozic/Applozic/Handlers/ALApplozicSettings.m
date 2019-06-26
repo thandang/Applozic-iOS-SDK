@@ -1757,6 +1757,42 @@
     [userDefaults synchronize];
 }
 
++(void)setColorForSentContactMsgLabel:(UIColor *)sentContactLabelMsgColor
+{   NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    NSData *sendColorData = [NSKeyedArchiver archivedDataWithRootObject:sentContactLabelMsgColor];
+    [userDefaults setObject:sendColorData forKey:AL_SENT_CONTACT_MSG_LABEL_COLOR];
+    [userDefaults synchronize];
+}
+
++(void)setColorForReceivedContactMsgLabel:(UIColor *)receivedMsgColor
+{   NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    NSData *receiveColorData = [NSKeyedArchiver archivedDataWithRootObject:receivedMsgColor];
+    [userDefaults setObject:receiveColorData forKey:AL_RECEIVED_CONTACT_MSG_LABEL_COLOR];
+    [userDefaults synchronize];
+}
+
++(UIColor *)getSentContactMsgLabelColor
+{   NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    NSData *sentColorData = [userDefaults objectForKey:AL_SENT_CONTACT_MSG_LABEL_COLOR];
+    UIColor *sentContactMsgLabelColor = [NSKeyedUnarchiver unarchiveObjectWithData:sentColorData];
+    if(sentContactMsgLabelColor)
+    {
+        return sentContactMsgLabelColor;
+    }
+    return [UIColor whiteColor];
+}
+
++(UIColor *)getReceivedContactMsgLabelColor
+{   NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    NSData *receivedColorData = [userDefaults objectForKey:AL_RECEIVED_CONTACT_MSG_LABEL_COLOR];
+    UIColor *recivedContactMsgLabelColor = [NSKeyedUnarchiver unarchiveObjectWithData:receivedColorData];
+    if(recivedContactMsgLabelColor)
+    {
+        return recivedContactMsgLabelColor;
+    }
+    return [UIColor blackColor];
+}
+
 +(void)migrateUserDefaultsToAppGroups{
     //Old NSUserDefaults
     NSUserDefaults * oldUserDefaults =  [NSUserDefaults standardUserDefaults];

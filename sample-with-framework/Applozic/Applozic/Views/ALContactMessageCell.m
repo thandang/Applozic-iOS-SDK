@@ -66,6 +66,10 @@
 
     if ([alMessage isReceivedMessage])
     {
+        [self.contactPerson setTextColor:[ALApplozicSettings getReceivedContactMsgLabelColor]];
+        [self.userContact setTextColor:[ALApplozicSettings getReceivedContactMsgLabelColor]];
+        [self.emailId setTextColor:[ALApplozicSettings getReceivedContactMsgLabelColor]];
+
         if([ALApplozicSettings isUserProfileHidden])
         {
             self.mUserProfileImageView.frame = CGRectMake(USER_PROFILE_PADDING_X, 0, 0, USER_PROFILE_HEIGHT);

@@ -147,7 +147,8 @@ static NSString *const AL_USER_DEFAULTS_MIGRATION = @"com.applozic.AL_USER_DEFAU
 static NSString *const AL_DEFAULT_APP_GROUP = @"group.com.applozic.share";
 static NSString *const AL_DOCUMENT_OPTION = @"com.applozic.AL_DOCUMENT_OPTION";
 static NSString *const AL_SENT_MESSAGE_CONTACT_BUTTON = @"com.applozic.AL_SENT_MESSAGE_CONTACT_BUTTON";
-
+static NSString *const AL_SENT_CONTACT_MSG_LABEL_COLOR = @"com.applozic.AL_SENT_CONTACT_MSG_LABEL_COLOR";
+static NSString *const AL_RECEIVED_CONTACT_MSG_LABEL_COLOR = @"com.applozic.AL_RECEIVED_CONTACT_MSG_LABEL_COLOR";
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -588,5 +589,11 @@ static NSString *const AL_SENT_MESSAGE_CONTACT_BUTTON = @"com.applozic.AL_SENT_M
 
 +(BOOL)isAddContactButtonForSenderDisabled;
 +(void)disableAddContactButtonForSender;
+
++(void)setColorForSentContactMsgLabel:(UIColor *)sentContactLabelMsgColor;
++(void)setColorForReceivedContactMsgLabel:(UIColor *)receivedMsgColor;
+
++(UIColor *)getSentContactMsgLabelColor;
++(UIColor *)getReceivedContactMsgLabelColor;
 
 @end

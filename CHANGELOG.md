@@ -1,5 +1,37 @@
 ### Changelog
 
+
+6.12.0
+---
+
+## Enhancements
+
+* Hide add contact button for the sender 
+
+For example, to hide the add contact button for sender side add this setting in ALChatManager file, in the method `ALDefaultChatViewSettings`:
+
+Code :
+``` [ALApplozicSettings disableAddContactButtonForSender]; ```
+
+* For changing the color of contact message label 
+
+For example, to change the contact message label colors  add this setting in ALChatManager file, in the method `ALDefaultChatViewSettings`:
+
+```
+[ALApplozicSettings setColorForReceivedContactMsgLabel:[UIColor blackColor]];
+
+[ALApplozicSettings setColorForSentContactMsgLabel:[UIColor whiteColor]];
+```
+
+
+* Pass access token header for all authentication types
+* API for reporting user messages 
+
+### Bug fixes 
+
+* Fix for user defaults migration.
+
+
 6.3.0
 ---
 ### Enhancements

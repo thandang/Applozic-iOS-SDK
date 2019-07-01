@@ -29,39 +29,6 @@
 
 @implementation ALMessageClientService
 
--(void) updateDeliveryReports:(NSMutableArray *) messages
-{
-    for (ALMessage * theMessage in messages) {
-        if ([theMessage.type isEqualToString: @"4"]) {
-            [self updateDeliveryReport:theMessage.pairedMessageKey];
-        }
-    }
-}
-
--(void) updateDeliveryReport: (NSString *) key
-{
-    ALSLog(ALLoggerSeverityInfo, @"updating delivery report for: %@", key);
-    NSString * theUrlString = [NSString stringWithFormat:@"%@/rest/ws/message/delivered",KBASE_URL];
-    NSString *theParamString=[NSString stringWithFormat:@"userId=%@&key=%@",[[ALUserDefaultsHandler getUserId] urlEncodeUsingNSUTF8StringEncoding],key];
-    
-    NSMutableURLRequest * theRequest = [ALRequestHandler createGETRequestWithUrlString:theUrlString paramString:theParamString];
-    
-    [ALResponseHandler processRequest:theRequest andTag:@"DEILVERY_REPORT" WithCompletionHandler:^(id theJson, NSError *theError) {
-        ALSLog(ALLoggerSeverityInfo, @"server response received for delivery report %@", theJson);
-        
-        if (theError) {
-            
-            //completion(nil,theError);
-            
-            return ;
-        }
-        
-        //completion(response,nil);
-        
-    }];
-
-}
-
 -(void) downloadImageUrl: (NSString *) blobKey withCompletion:(void(^)(NSString * fileURL, NSError *error)) completion{
      [self getNSMutableURLRequestForImage:blobKey withCompletion:^(NSMutableURLRequest *urlRequest, NSString *fileUrl) {
          NSMutableURLRequest * nsMutableURLRequest = urlRequest;

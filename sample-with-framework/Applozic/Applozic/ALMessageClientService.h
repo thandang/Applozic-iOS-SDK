@@ -56,4 +56,10 @@
 
 -(void)updateMessageMetadataOfKey:(NSString*) messageKey withMetadata: (NSMutableDictionary *) metadata withCompletion:(void(^)(id theJson, NSError *theError))completion;
 
+-(void)getMessageListForUser: (MessageListRequest *)messageListRequest
+                    isSearch: (BOOL)flag
+              withCompletion: (void (^)(NSMutableArray<ALMessage *> *, NSError *))completion;
+
+-(void)searchMessage: (NSString *)key withCompletion: (void (^)(NSMutableArray<ALMessage *> *, NSError *))completion;
+
 @end

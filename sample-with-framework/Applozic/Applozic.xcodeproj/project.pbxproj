@@ -187,6 +187,8 @@
 		1A113EFD21C006230000A7CC /* ALAudioRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A113EFB21C006230000A7CC /* ALAudioRecordingView.swift */; };
 		1A3264D2211C116700737C79 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */; };
 		1A637E5E2125729B00E62537 /* UIImage+animatedGIF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1A98D72C22CB3043003A5B09 /* SearchResultCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A98D72B22CB3043003A5B09 /* SearchResultCache.m */; };
+		1A98D72E22CB3068003A5B09 /* SearchResultCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A98D72D22CB3068003A5B09 /* SearchResultCache.h */; };
 		1A9CB20E211D8E7C00B19EC2 /* ALMultimediaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9CB20F211D8E7C00B19EC2 /* ALMultimediaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */; };
 		1AC5A596223A92E50044A9BD /* ALTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC5A594223A92E40044A9BD /* ALTabViewController.h */; };
@@ -681,6 +683,8 @@
 		1A113EFB21C006230000A7CC /* ALAudioRecordingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALAudioRecordingView.swift; path = Applozic/ALAudioRecordingView.swift; sourceTree = "<group>"; };
 		1A3264D0211C112200737C79 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		1A98D72B22CB3043003A5B09 /* SearchResultCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultCache.m; sourceTree = "<group>"; };
+		1A98D72D22CB3068003A5B09 /* SearchResultCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultCache.h; sourceTree = "<group>"; };
 		1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALMultimediaData.h; sourceTree = "<group>"; };
 		1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALMultimediaData.m; sourceTree = "<group>"; };
 		1AC5A594223A92E40044A9BD /* ALTabViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALTabViewController.h; sourceTree = "<group>"; };
@@ -1217,6 +1221,8 @@
 				1A3264D1211C116700737C79 /* UIImage+animatedGIF.m */,
 				1A9CB20C211D8E7C00B19EC2 /* ALMultimediaData.h */,
 				1A9CB20D211D8E7C00B19EC2 /* ALMultimediaData.m */,
+				1A98D72B22CB3043003A5B09 /* SearchResultCache.m */,
+				1A98D72D22CB3068003A5B09 /* SearchResultCache.h */,
 			);
 			name = Utilities;
 			path = Applozic/Utilities;
@@ -1877,6 +1883,7 @@
 				6D6DF1881BC5364C00EBA00F /* ALConstant.h in Headers */,
 				1871E62622CFBEF30048AA9E /* SDWebImageDefine.h in Headers */,
 				18BD2D8A225D142400B180A9 /* MQTTProperties.h in Headers */,
+				1A98D72E22CB3068003A5B09 /* SearchResultCache.h in Headers */,
 				6D6DF1D31BC5364C00EBA00F /* KAProgressLabel.h in Headers */,
 				18BD2D86225D142400B180A9 /* ForegroundReconnection.h in Headers */,
 				1871E5CB22CFBEF20048AA9E /* SDAnimatedImageView+WebCache.h in Headers */,
@@ -2399,6 +2406,7 @@
 				294637B71C6F16050025ED76 /* ALGroupCreationViewController.m in Sources */,
 				1871E5DF22CFBEF20048AA9E /* SDImageCachesManager.m in Sources */,
 				6D95476C1BE38DFF00776652 /* ALContactService.m in Sources */,
+				1A98D72C22CB3043003A5B09 /* SearchResultCache.m in Sources */,
 				18BDB35F21A7080A003B405D /* ALLinkCell.m in Sources */,
 				6D7756961D5B80110025560B /* ALMediaPlayer.m in Sources */,
 				1871E5EC22CFBEF30048AA9E /* SDImageCoderHelper.m in Sources */,

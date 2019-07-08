@@ -7,13 +7,13 @@
  */
 
 #import "UIButton+WebCache.h"
-#import "SDInternalMacros.h"
 
 #if SD_UIKIT
 
 #import "objc/runtime.h"
 #import "UIView+WebCacheOperation.h"
 #import "UIView+WebCache.h"
+#import "SDInternalMacros.h"
 
 static char imageURLStorageKey;
 
@@ -189,7 +189,7 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
     } else {
         mutableContext = [NSMutableDictionary dictionary];
     }
-    mutableContext[SDWebImageContextSetImageOperationKey] = imageOperationKeyForState(state);
+    mutableContext[SDWebImageContextSetImageOperationKey] = backgroundImageOperationKeyForState(state);
     @weakify(self);
     [self sd_internalSetImageWithURL:url
                     placeholderImage:placeholder

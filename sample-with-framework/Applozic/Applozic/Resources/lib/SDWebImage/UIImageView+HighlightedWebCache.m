@@ -7,12 +7,12 @@
  */
 
 #import "UIImageView+HighlightedWebCache.h"
-#import "SDInternalMacros.h"
 
 #if SD_UIKIT
 
 #import "UIView+WebCacheOperation.h"
 #import "UIView+WebCache.h"
+#import "SDInternalMacros.h"
 
 static NSString * const SDHighlightedImageOperationKey = @"UIImageViewImageOperationHighlighted";
 

@@ -8,8 +8,8 @@
 
 #import "SDWebImagePrefetcher.h"
 #import "SDAsyncBlockOperation.h"
-#import <stdatomic.h>
 #import "SDInternalMacros.h"
+#import <stdatomic.h>
 
 @interface SDWebImagePrefetchToken () {
     @public

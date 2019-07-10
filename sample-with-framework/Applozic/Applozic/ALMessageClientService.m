@@ -549,6 +549,17 @@
              completion(nil, theError);
              return;
          }
+         if (![[theJson valueForKey:@"status"] isEqualToString:@"success"]) {
+             ALSLog(ALLoggerSeverityError, @"Search messages ERROR :: %@",theError.description);
+             NSError *error = [NSError
+                               errorWithDomain:@"Applozic"
+                               code:1
+                               userInfo:[NSDictionary
+                                         dictionaryWithObject:@"Status fail in response"
+                                         forKey:NSLocalizedDescriptionKey]];
+             completion(nil, error);
+             return;
+         }
          NSDictionary *response = [theJson valueForKey: @"response"];
          if (response == nil) {
              ALSLog(ALLoggerSeverityError, @"Search messages RESPONSE is nil");

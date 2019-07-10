@@ -67,10 +67,7 @@
 }
 
 - (void) share:(id)sender{
-    
-    ALSLog(ALLoggerSeverityInfo, @"shareButton pressed");
-    
-    //Image iteself
+    ALSLog(ALLoggerSeverityInfo, @"Share button pressed");
     UIImage *imagetoshare = self.image;
     if(self.image){
         // Message if associated with image
@@ -79,21 +76,15 @@
         ALSLog(ALLoggerSeverityInfo, @"MSG_STRING :: %@",messageString);
 
         NSArray *activityItems = @[imagetoshare];
-
-        //Custom Activity for Applozic Sharing
-        // set "uiActivityArray" for "applicationActivities:nil" instead of nill to add this fuctionality
-        //    NSArray *uiActivityArray = @[self.alImageActivity];
-
         UIActivityViewController *activityVC = [[UIActivityViewController alloc]
                                                 initWithActivityItems:activityItems
                                                 applicationActivities:nil];
-
         activityVC.excludedActivityTypes = @[UIActivityTypeAssignToContact,
                                              UIActivityTypePrint,
                                              UIActivityTypePostToTwitter,
                                              UIActivityTypePostToWeibo,
                                              UIActivityTypeMail];
-
+        activityVC.popoverPresentationController.barButtonItem = self.shareToolBarButton;
         [self presentViewController:activityVC animated:TRUE completion:nil];
     }
 }

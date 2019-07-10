@@ -17,10 +17,6 @@
 
 @interface ALMessageClientService : NSObject
 
--(void)updateDeliveryReports:(NSMutableArray *)messages;
-
--(void)updateDeliveryReport:(NSString *)key;
-
 -(void)addWelcomeMessage:(NSNumber *)channelKey;
 
 -(void)getLatestMessageGroupByContact:(NSUInteger)mainPageSize startTime:(NSNumber *)startTime

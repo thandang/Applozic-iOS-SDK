@@ -26,6 +26,7 @@
 #import "UIImageView+WebCache.h"
 #import "ALConnectionQueueHandler.h"
 #import "ALApplozicSettings.h"
+#import "SearchResultCache.h"
 
 @implementation ALMessageClientService
 
@@ -496,6 +497,92 @@
         }
         ALSLog(ALLoggerSeverityInfo, @"Message metadata updated successfully with result : %@", theJson);
         completion(theJson,nil);
+    }];
+}
+
+- (void)searchMessage: (NSString *)key withCompletion: (void (^)(NSMutableArray<ALMessage *> *, NSError *))completion {
+    ALSLog(ALLoggerSeverityInfo, @"Search messages with %@", key);
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/ws/group/support", KBASE_URL];
+    NSString *paramString = [NSString stringWithFormat:@"search=%@", key];
+    NSMutableURLRequest *urlRequest = [ALRequestHandler
+                                       createGETRequestWithUrlString: urlString
+                                       paramString: paramString];
+    [ALResponseHandler
+     processRequest: urlRequest
+     andTag: @"Search messages"
+     WithCompletionHandler: ^(id theJson, NSError *theError) {
+         if (theError) {
+             ALSLog(ALLoggerSeverityError, @"Search messages ERROR :: %@",theError.description);
+             completion(nil, theError);
+             return;
+         }
+         if (![[theJson valueForKey:@"status"] isEqualToString:@"success"]) {
+             ALSLog(ALLoggerSeverityError, @"Search messages ERROR :: %@",theError.description);
+             NSError *error = [NSError
+                               errorWithDomain:@"Applozic"
+                               code:1
+                               userInfo:[NSDictionary
+                                         dictionaryWithObject:@"Status fail in response"
+                                         forKey:NSLocalizedDescriptionKey]];
+             completion(nil, error);
+             return;
+         }
+         NSDictionary *response = [theJson valueForKey: @"response"];
+         if (response == nil) {
+             ALSLog(ALLoggerSeverityError, @"Search messages RESPONSE is nil");
+             NSError *error = [NSError errorWithDomain:@"response is nil" code:0 userInfo:nil];
+             completion(nil, error);
+             return;
+         }
+         ALSLog(ALLoggerSeverityInfo, @"Search messages RESPONSE :: %@", (NSString *)theJson);
+         NSMutableArray<ALMessage *> *messages = [NSMutableArray new];
+         NSDictionary *messageDict = [response valueForKey: @"message"];
+         for (NSDictionary *dict in messageDict)
+         {
+             ALMessage *message = [[ALMessage alloc] initWithDictonary: dict];
+             [messages addObject: message];
+         }
+         ALChannelFeed *channelFeed = [[ALChannelFeed alloc] initWithJSONString: response];
+         [[SearchResultCache shared] saveChannels: channelFeed.channelFeedsList];
+         completion(messages, nil);
+         return;
+     }];
+}
+
+- (void)getMessageListForUser: (MessageListRequest *)messageListRequest
+                     isSearch: (BOOL)flag
+               withCompletion: (void (^)(NSMutableArray<ALMessage *> *, NSError *))completion {
+    NSString * theUrlString = [NSString stringWithFormat: @"%@/rest/ws/message/list", KBASE_URL];
+    NSMutableURLRequest * theRequest = [ALRequestHandler
+                                        createGETRequestWithUrlString: theUrlString
+                                        paramString: messageListRequest.getParamString];
+
+    [ALResponseHandler processRequest:theRequest andTag:@"Messages for searched conversation" WithCompletionHandler:^(id theJson, NSError *theError) {
+
+        if (theError)
+        {
+            ALSLog(ALLoggerSeverityError, @"Error while getting messages :: %@", theError.description);
+            completion(nil, theError);
+            return;
+        }
+        ALSLog(ALLoggerSeverityInfo, @"Messages fetched succesfully :: %@", (NSString *)theJson);
+
+        NSDictionary * messageDict = [theJson valueForKey:@"message"];
+        NSMutableArray<ALMessage *> *messages = [NSMutableArray new];
+        for (NSDictionary * dict in messageDict) {
+            ALMessage *message = [[ALMessage alloc] initWithDictonary: dict];
+            [messages addObject: message];
+        }
+
+        NSDictionary * userDetailDict = [theJson valueForKey:@"userDetails"];
+        NSMutableArray<ALUserDetail *> *userDetails = [NSMutableArray new];
+        for (NSDictionary * dict in userDetailDict) {
+            ALUserDetail * userDetail = [[ALUserDetail alloc] initWithDictonary: dict];
+            [userDetails addObject: userDetail];
+        }
+        [[SearchResultCache shared] saveUserDetails: userDetails];
+
+        completion(messages, nil);
     }];
 }
 

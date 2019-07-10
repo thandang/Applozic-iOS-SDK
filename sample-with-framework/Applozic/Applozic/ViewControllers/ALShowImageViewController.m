@@ -51,6 +51,9 @@
     [super viewWillAppear:animated];
     
     [self.imageView setImage:self.image];
+
+    self.view.backgroundColor = [ALApplozicSettings getImagePreviewBackgroundColor];
+
 }
 
 - (void)didReceiveMemoryWarning {

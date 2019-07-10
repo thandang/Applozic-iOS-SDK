@@ -7,13 +7,13 @@
  */
 
 #import "MKAnnotationView+WebCache.h"
-#import "SDInternalMacros.h"
 
 #if SD_UIKIT || SD_MAC
 
 #import "objc/runtime.h"
 #import "UIView+WebCacheOperation.h"
 #import "UIView+WebCache.h"
+#import "SDInternalMacros.h"
 
 @implementation MKAnnotationView (WebCache)
 

@@ -97,7 +97,7 @@
         [request setValue:[userId urlEncodeUsingNSUTF8StringEncoding] forHTTPHeaderField:@"Of-User-Id"];
     }
 
-    if ([ALUserDefaultsHandler getUserRoleType] == 8) {
+    if ([ALUserDefaultsHandler getUserRoleType] == 8 && userId != nil) {
         [request addValue:[ALUserDefaultsHandler getApplicationKey] forHTTPHeaderField:@"Apz-AppId"];
         NSString *product = @"true";
         [request setValue:product forHTTPHeaderField:@"Apz-Product-App"];

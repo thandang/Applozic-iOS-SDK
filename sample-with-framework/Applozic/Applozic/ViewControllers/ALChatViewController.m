@@ -2360,6 +2360,16 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
 #pragma mark - VIEW HELPER METHODS
 //==============================================================================================================================================
 
+-(void) enableLoadMoreOption:(BOOL) enable {
+    NSString *chatId;
+    if (self.conversationId && [ALApplozicSettings getContextualChatOption]) {
+        chatId = [self.conversationId stringValue];
+    } else {
+        chatId = self.channelKey ? [self.channelKey stringValue] : self.contactIds;
+    }
+    [ALUserDefaultsHandler setShowLoadEarlierOption:enable forContactId:chatId];
+}
+
 -(void)loadChatView
 {
     [self setTitle];
@@ -2392,6 +2402,7 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
     [theRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]]];
 
     NSArray * theArray = [theDbHandler.managedObjectContext executeFetchRequest:theRequest error:nil];
+    [self enableLoadMoreOption: !(theArray.count < 50)];
     ALMessageDBService* messageDBService = [[ALMessageDBService alloc]init];
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
@@ -3492,18 +3503,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if(!error)
         {
             self.loadEarlierAction.hidden = YES;
-            if(messages.count < 50)
-            {
-                if(self.conversationId && [ALApplozicSettings getContextualChatOption])
-                {
-                    [ALUserDefaultsHandler setShowLoadEarlierOption:NO forContactId:[self.conversationId stringValue]];
-                }
-                else
-                {
-                    NSString * IDs = (self.channelKey ? [self.channelKey stringValue] : self.contactIds);
-                    [ALUserDefaultsHandler setShowLoadEarlierOption:NO forContactId:IDs];
-                }
-            }
+            [self enableLoadMoreOption:(messages.count > 0)];
 
             if(messages.count == 0)
             {

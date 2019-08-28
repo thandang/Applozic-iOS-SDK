@@ -1487,6 +1487,21 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
             return YES;
         }
     }
+
+    NSString * restrictedMessageRegexPattern =   [ALApplozicSettings getRestrictedMessageRegexPattern];
+
+    if(restrictedMessageRegexPattern){
+        @try {
+            NSError *error = nil;
+            NSRegularExpression * regularExpression =  [[NSRegularExpression alloc] initWithPattern:restrictedMessageRegexPattern options:0 error:&error];
+            NSUInteger integer =  [regularExpression numberOfMatchesInString:msgText options:0 range: NSMakeRange(0, msgText.length)];
+
+            return integer > 0;
+        }
+        @catch (NSException *exception) {
+            ALSLog(ALLoggerSeverityError, @"Exception in matching string %@",exception.description);
+        }
+    }
     return NO;
 }
 

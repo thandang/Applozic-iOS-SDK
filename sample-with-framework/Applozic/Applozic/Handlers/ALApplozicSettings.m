@@ -1834,4 +1834,15 @@
     return (color != nil) ? color : [UIColor lightGrayColor];
 }
 
++(void)restrictedMessageRegexPattern:(NSString *)pattern {
+    NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    [userDefaults setValue:pattern forKey:AL_RESTRICTED_MESSAGE_PATTERN];
+    [userDefaults synchronize];
+}
+
++(NSString *)getRestrictedMessageRegexPattern {
+    NSUserDefaults * userDefaults  =  ALApplozicSettings.getUserDefaults;
+    return [userDefaults valueForKey:AL_RESTRICTED_MESSAGE_PATTERN];
+}
+
 @end

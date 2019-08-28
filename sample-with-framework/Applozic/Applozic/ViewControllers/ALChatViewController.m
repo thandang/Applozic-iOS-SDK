@@ -1493,10 +1493,17 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
     if(restrictedMessageRegexPattern){
         @try {
             NSError *error = nil;
-            NSRegularExpression * regularExpression =  [[NSRegularExpression alloc] initWithPattern:restrictedMessageRegexPattern options:0 error:&error];
-            NSUInteger integer =  [regularExpression numberOfMatchesInString:msgText options:0 range: NSMakeRange(0, msgText.length)];
+            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern: restrictedMessageRegexPattern options:NSRegularExpressionCaseInsensitive error:&error];
 
-            return integer > 0;
+            NSArray* matches = [regex matchesInString:msgText options:0 range: NSMakeRange(0, msgText.length)];
+
+            for (NSTextCheckingResult* match in matches) {
+                NSString* matchText = [msgText substringWithRange:[match range]];
+                if(matchText != nil && matchText.length > 0 ){
+                    return YES;
+                }
+            }
+
         }
         @catch (NSException *exception) {
             ALSLog(ALLoggerSeverityError, @"Exception in matching string %@",exception.description);

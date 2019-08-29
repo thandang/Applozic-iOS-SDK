@@ -348,7 +348,6 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
         }
     }
 
-    [self serverCallForLastSeen];
     [self handleAttachmentButtonVisibility];
 
     [self setTitle];
@@ -395,6 +394,13 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
 
     [self loadMessagesForOpenChannel];
 
+    if (![self isGroup]) {
+        ALContact *contact = [[[ALContactService alloc] init] loadContactByKey:@"userId" value:self.contactIds];
+        [self enableOrDisableChat:contact.isChatDisabled];
+    } else {
+        [self disableChatViewInteraction:NO withPlaceholder:nil];
+    }
+    [self serverCallForLastSeen];
 
 }
 
@@ -3612,6 +3618,37 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }];
 }
 
+-(void) enableOrDisableChat:(BOOL)disable {
+    if (ALUserDefaultsHandler.isChatDisabled) {
+        /// User has disabled chat.
+        NSString *disableMessage = NSLocalizedStringWithDefaultValue(@"YouDisabledChat", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"You have disabled chat", @"");
+        [self disableChatViewInteraction: YES withPlaceholder: disableMessage];
+    } else if (disable) {
+        /// Chat is disabled for this user.
+        NSString *disableMessage = NSLocalizedStringWithDefaultValue(@"UserDisabledChat", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"User has disabled his/her chat", @"");
+        [self disableChatViewInteraction: YES withPlaceholder: disableMessage];
+    } else {
+        [self disableChatViewInteraction:NO withPlaceholder:nil];
+    }
+}
+
+-(void) disableChatViewInteraction:(BOOL) disable withPlaceholder: (NSString *) text{
+    if (text) {
+        self.placeHolderTxt = text;
+        [self.sendMessageTextView setText:self.placeHolderTxt];
+        [self.sendMessageTextView setTextColor:self.placeHolderColor];
+    } else if (![self.sendMessageTextView isFirstResponder]) {
+        self.placeHolderTxt = NSLocalizedStringWithDefaultValue(@"placeHolderText", [ALApplozicSettings getLocalizableName], [NSBundle mainBundle], @"Write a Message...", @"");
+        [self.sendMessageTextView setText:self.placeHolderTxt];
+        [self.sendMessageTextView setTextColor:self.placeHolderColor];
+    }
+
+    [self.sendMessageTextView setUserInteractionEnabled:!disable];
+    [self.sendButton setUserInteractionEnabled:!disable];
+    [micButton setUserInteractionEnabled:!disable];
+    [self.attachmentOutlet setUserInteractionEnabled:!disable];
+}
+
 -(void)serverCallForLastSeen
 {
     if([self isGroup] && self.alChannel.type != GROUP_OF_TWO)
@@ -3630,6 +3667,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self updateLastSeenAtStatus:alUserDetail];
             [self setCallButtonInNavigationBar];
             [self checkUserDeleted];
+            [self enableOrDisableChat: alUserDetail.isChatDisabled];
         }
         else
         {
@@ -4084,6 +4122,7 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self freezeView:isUserDeleted];
         [self.label setHidden:isUserDeleted];
         [titleLabelButton setTitle:[self.alContact getDisplayName] forState:UIControlStateNormal];
+        [self enableOrDisableChat:self.alContact.isChatDisabled];
     }
     [self.mTableView reloadData];
 }

@@ -1831,7 +1831,7 @@
     NSUserDefaults * userDefaults = ALApplozicSettings.getUserDefaults;
     NSData *receivedColorData = [userDefaults objectForKey: AL_IMAGE_PREVIEW_BACKGROUND_COLOR];
     UIColor *color = [NSKeyedUnarchiver unarchiveObjectWithData: receivedColorData];
-    return (color != nil) ? color : [UIColor lightGrayColor];
+    return (color != nil) ? color : [UIColor whiteColor];
 }
 
 +(void)restrictedMessageRegexPattern:(NSString *)pattern {

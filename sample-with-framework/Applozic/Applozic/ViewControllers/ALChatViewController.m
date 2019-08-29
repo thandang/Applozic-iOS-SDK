@@ -2613,9 +2613,13 @@ NSString * const ThirdPartyProfileTapNotification = @"ThirdPartyProfileTapNotifi
     }
 }
 
--(void)showFullScreen:(UIViewController*)uiController
+-(void)showImagePreviewWithFilePath:(NSString *)filePath
 {
-    [self presentViewController:uiController animated:YES completion:nil];
+    UIImage *image =   [ALUtilityClass getImageFromFilePath:filePath];
+    if(image){
+        ALPreviewPhotoViewController * contrller = [[ALPreviewPhotoViewController alloc] initWithImage:image pathExtension:filePath.pathExtension];
+        [self.navigationController pushViewController:contrller animated:NO];
+    }
 }
 
 -(void) thumbnailDownload:(NSString *) key{

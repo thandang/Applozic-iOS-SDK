@@ -4080,6 +4080,9 @@ style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     {
         ALContactService *contactService = [ALContactService new];
         self.alContact = [contactService loadContactByKey:@"userId" value:userDetail.userId];
+        BOOL isUserDeleted = self.alContact.deletedAtTime ? YES : NO;
+        [self freezeView:isUserDeleted];
+        [self.label setHidden:isUserDeleted];
         [titleLabelButton setTitle:[self.alContact getDisplayName] forState:UIControlStateNormal];
     }
     [self.mTableView reloadData];

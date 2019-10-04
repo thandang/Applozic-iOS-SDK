@@ -154,6 +154,8 @@
 		187EEB942319539B008012BC /* SDImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 187EEB1E2319539A008012BC /* SDImageTransformer.m */; };
 		187EEB952319539B008012BC /* SDWebImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 187EEB1F2319539A008012BC /* SDWebImageDownloader.h */; };
 		187EEB962319539B008012BC /* SDAsyncBlockOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 187EEB202319539A008012BC /* SDAsyncBlockOperation.h */; };
+		187EEBA22321130C008012BC /* ALSearchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 187EEBA02321130C008012BC /* ALSearchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		187EEBA32321130C008012BC /* ALSearchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187EEBA12321130C008012BC /* ALSearchRequest.m */; };
 		18A2B2A82289D2A300CE93BC /* ALInternalSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A2B2A62289D2A300CE93BC /* ALInternalSettings.h */; };
 		18A2B2A92289D2A300CE93BC /* ALInternalSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A2B2A72289D2A300CE93BC /* ALInternalSettings.m */; };
 		18A2BA2020C44DB500AD47A2 /* ALTemplateMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */; };
@@ -648,6 +650,8 @@
 		187EEB1E2319539A008012BC /* SDImageTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageTransformer.m; sourceTree = "<group>"; };
 		187EEB1F2319539A008012BC /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
 		187EEB202319539A008012BC /* SDAsyncBlockOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAsyncBlockOperation.h; sourceTree = "<group>"; };
+		187EEBA02321130C008012BC /* ALSearchRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALSearchRequest.h; path = Applozic/ALSearchRequest.h; sourceTree = "<group>"; };
+		187EEBA12321130C008012BC /* ALSearchRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALSearchRequest.m; path = Applozic/ALSearchRequest.m; sourceTree = "<group>"; };
 		18A2B2A62289D2A300CE93BC /* ALInternalSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ALInternalSettings.h; path = Applozic/ALInternalSettings.h; sourceTree = "<group>"; };
 		18A2B2A72289D2A300CE93BC /* ALInternalSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ALInternalSettings.m; path = Applozic/ALInternalSettings.m; sourceTree = "<group>"; };
 		18A2BA1F20C44DB500AD47A2 /* ALTemplateMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ALTemplateMessageCell.swift; path = Applozic/ALTemplateMessageCell.swift; sourceTree = "<group>"; };
@@ -1541,6 +1545,8 @@
 				6D6DF09E1BC5364C00EBA00F /* ALMessageService.h */,
 				C70983051E0177E900FC93A1 /* ALMessageServiceWrapper.h */,
 				C70983061E0177E900FC93A1 /* ALMessageServiceWrapper.m */,
+				187EEBA02321130C008012BC /* ALSearchRequest.h */,
+				187EEBA12321130C008012BC /* ALSearchRequest.m */,
 			);
 			name = message;
 			sourceTree = "<group>";
@@ -2005,6 +2011,7 @@
 				4612E90F1E13882D0022DB23 /* MQTTSSLSecurityPolicy.h in Headers */,
 				187EEB6B2319539B008012BC /* NSImage+Compatibility.h in Headers */,
 				4612E9041E13882D0022DB23 /* MQTTMessage.h in Headers */,
+				187EEBA22321130C008012BC /* ALSearchRequest.h in Headers */,
 				4612E9061E13882D0022DB23 /* MQTTPersistence.h in Headers */,
 				8B00F0E020C65A9A00ADBFC9 /* ALApplicationInfo.h in Headers */,
 				187EEB3A2319539A008012BC /* SDImageLoadersManager.h in Headers */,
@@ -2282,6 +2289,7 @@
 				18EFA99E22FC8CF700E9AC2A /* ALPreviewPhotoViewController.swift in Sources */,
 				6D95476A1BE38DFF00776652 /* ALContactDBService.m in Sources */,
 				18A2B2A92289D2A300CE93BC /* ALInternalSettings.m in Sources */,
+				187EEBA32321130C008012BC /* ALSearchRequest.m in Sources */,
 				6D0D107B1D4CD7B6009853FB /* ALImagePickerController.m in Sources */,
 				6D7756721D5B7EEC0025560B /* ALChatLauncher.m in Sources */,
 				6D77568E1D5B7FBE0025560B /* ALConversationService.m in Sources */,

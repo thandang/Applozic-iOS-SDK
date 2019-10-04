@@ -91,9 +91,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_action_camera" translatesAutoresizingMaskIntoConstraints="NO" id="ng6-Us-xRU">
-                                                    <rect key="frame" x="100" y="41" width="27" height="19"/>
+                                                    <rect key="frame" x="100" y="41" width="25" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="27" id="K9t-DK-prk"/>
+                                                        <constraint firstAttribute="width" constant="25" id="K9t-DK-prk"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image Label " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFm-Yv-yQF">
@@ -147,7 +147,7 @@
                                                 <constraint firstItem="ng6-Us-xRU" firstAttribute="leading" secondItem="FQ8-OW-duW" secondAttribute="trailing" constant="26" id="9Uo-A7-JDS"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="8um-DV-I1M" secondAttribute="bottom" constant="10" id="CXG-Cf-CRn"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="9sE-W8-i33" secondAttribute="bottom" constant="5" id="Dk6-JJ-ZN6"/>
-                                                <constraint firstItem="ng6-Us-xRU" firstAttribute="bottom" secondItem="nFm-Yv-yQF" secondAttribute="bottom" id="EIy-63-gPm"/>
+                                                <constraint firstItem="ng6-Us-xRU" firstAttribute="bottom" secondItem="nFm-Yv-yQF" secondAttribute="bottom" constant="6" id="EIy-63-gPm"/>
                                                 <constraint firstItem="9sE-W8-i33" firstAttribute="centerY" secondItem="jVl-2p-Q74" secondAttribute="centerY" constant="2.5" id="EOK-v8-JNu"/>
                                                 <constraint firstItem="G4M-aZ-RgP" firstAttribute="bottom" secondItem="r8N-HC-XMt" secondAttribute="bottom" id="Eqg-Bn-z8j"/>
                                                 <constraint firstItem="nFm-Yv-yQF" firstAttribute="baseline" secondItem="8um-DV-I1M" secondAttribute="baseline" constant="-2" id="JXL-2W-foa"/>
@@ -169,7 +169,7 @@
                                                 <constraint firstItem="mUK-kK-XjJ" firstAttribute="firstBaseline" secondItem="nFm-Yv-yQF" secondAttribute="firstBaseline" id="iKC-F6-TdA"/>
                                                 <constraint firstItem="G4M-aZ-RgP" firstAttribute="top" secondItem="jVl-2p-Q74" secondAttribute="topMargin" constant="7" id="pGZ-Bu-GYL"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nFm-Yv-yQF" secondAttribute="trailing" constant="20" symbolic="YES" id="qRk-r7-r28"/>
-                                                <constraint firstItem="nFm-Yv-yQF" firstAttribute="leading" secondItem="ng6-Us-xRU" secondAttribute="trailing" constant="5" id="qrq-Y2-Rfj"/>
+                                                <constraint firstItem="nFm-Yv-yQF" firstAttribute="leading" secondItem="ng6-Us-xRU" secondAttribute="trailing" constant="7" id="qrq-Y2-Rfj"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="mUK-kK-XjJ" secondAttribute="bottom" constant="14" id="uAd-Uh-O03"/>
                                                 <constraint firstItem="ng6-Us-xRU" firstAttribute="top" secondItem="G4M-aZ-RgP" secondAttribute="bottom" constant="2" id="upf-G4-QXF"/>
                                             </constraints>

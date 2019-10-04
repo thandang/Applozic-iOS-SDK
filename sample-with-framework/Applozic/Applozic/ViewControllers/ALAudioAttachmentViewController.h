@@ -28,7 +28,7 @@
 
 @property (weak, nonatomic) NSTimer * timer;
 
-@property (weak, nonatomic) NSString * outputFilePath;
+@property (nonatomic) NSString * outputFilePath;
 
 @property (weak, nonatomic) id <ALAudioAttachmentDelegate> audioAttchmentDelegate;
 

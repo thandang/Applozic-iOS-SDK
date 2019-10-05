@@ -194,6 +194,7 @@
         {
             UIStoryboard* storyboardM = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UIViewController *launchChat = [storyboardM instantiateViewControllerWithIdentifier:@"LaunchChatFromSimpleViewController"];
+            launchChat.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:launchChat animated:YES completion:nil];
         }
     }];

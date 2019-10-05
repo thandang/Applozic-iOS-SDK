@@ -49,7 +49,7 @@
         // Get login screen from storyboard and present it
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ApplozicLoginViewController *viewController = (ApplozicLoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LaunchChatFromSimpleViewController"];
-        
+        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self.window makeKeyAndVisible];
         [self.window.rootViewController presentViewController:viewController
                                                      animated:nil

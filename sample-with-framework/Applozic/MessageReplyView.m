@@ -273,8 +273,7 @@
 
                 [self setImage:theUrl];
             }
-            else
-            {
+            else if (replyMessage.fileMeta.thumbnailBlobKey) {
                 ALMessageClientService * messageClientService = [[ALMessageClientService alloc]init];
                 [messageClientService downloadImageUrl:replyMessage.fileMeta.thumbnailBlobKey withCompletion:^(NSString *fileURL, NSError *error) {
                     if(error)
@@ -285,7 +284,19 @@
                     ALSLog(ALLoggerSeverityInfo, @"ATTACHMENT DOWNLOAD URL : %@", fileURL);
                     [self setImage:[NSURL URLWithString:fileURL]];
                 }];
-                
+            } else if (replyMessage.fileMeta.thumbnailFilePath) {
+                NSURL *documentDirectory =  [ALUtilityClass getApplicationDirectoryWithFilePath: replyMessage.fileMeta.thumbnailFilePath];
+                NSString *filePath = documentDirectory.path;
+
+                if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+                    [self setImage:[NSURL fileURLWithPath:filePath]];
+                } else {
+                    [self.attachmentImage setImage:[ALUtilityClass getImageFromFramworkBundle:@"ic_action_camera.png"]];
+                }
+            } else if (replyMessage.fileMeta.thumbnailUrl) {
+                [self setImage:replyMessage.fileMeta.thumbnailUrl];
+            } else {
+                [self.attachmentImage setImage:[ALUtilityClass getImageFromFramworkBundle:@"ic_action_camera.png"]];
             }
         }else{
             [self.attachmentImage setImage:[ALUtilityClass getImageFromFramworkBundle:@"documentReceive.png"]];

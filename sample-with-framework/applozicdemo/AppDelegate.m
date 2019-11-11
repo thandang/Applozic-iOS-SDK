@@ -6,15 +6,8 @@
 //
 
 #import "AppDelegate.h"
-#import <Applozic/ALUserDefaultsHandler.h>
-#import <Applozic/ALRegisterUserClientService.h>
-#import <Applozic/ALPushNotificationService.h>
-#import <Applozic/ALUtilityClass.h>
+#import <Applozic/Applozic.h>
 #import "ApplozicLoginViewController.h"
-#import "Applozic/ALDBHandler.h"
-#import "Applozic/ALMessagesViewController.h"
-#import "Applozic/ALPushAssist.h"
-#import "Applozic/ALMessageService.h"
 #import <UserNotifications/UserNotifications.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -97,6 +90,34 @@
 //    [pushNotificationService processPushNotification:userInfo updateUI:[NSNumber numberWithInt:APP_STATE_BACKGROUND]];
     [pushNotificationService notificationArrivedToApplication:application withDictionary:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification*)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
+
+    ALPushNotificationService *pushNotificationService = [[ALPushNotificationService
+                                                           alloc] init];
+    NSDictionary *userInfo = notification.request.content.userInfo;
+
+    if ([pushNotificationService isApplozicNotification:userInfo]) {
+        [pushNotificationService notificationArrivedToApplication:[UIApplication sharedApplication] withDictionary:userInfo];
+        completionHandler(UNNotificationPresentationOptionNone);
+        return;
+    }
+    completionHandler(UNNotificationPresentationOptionAlert|UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(nonnull UNNotificationResponse* )response withCompletionHandler:(nonnull void (^)(void))completionHandler {
+
+
+    ALPushNotificationService *pushNotificationService = [[ALPushNotificationService
+                                                           alloc] init];
+    NSDictionary *userInfo =  response.notification.request.content.userInfo;
+    if ([pushNotificationService isApplozicNotification:userInfo]) {
+        [pushNotificationService notificationArrivedToApplication:[UIApplication sharedApplication] withDictionary:userInfo];
+        completionHandler();
+        return;
+    }
+    completionHandler();
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
